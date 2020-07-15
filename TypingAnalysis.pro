@@ -21,10 +21,12 @@ win32-msvc*{
 }
 
 SOURCES += \
+    ExceptionHandler.cpp \
     Qt/MainWindow.cpp \
     main.cpp
 
 HEADERS += \
+  ExceptionHandler.h \
   Qt/MainWindow.h
 
 FORMS += \
