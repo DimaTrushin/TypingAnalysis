@@ -21,11 +21,21 @@ win32-msvc*{
 }
 
 SOURCES += \
+    Application.cpp \
+    ApplicationGUI.cpp \
+    ApplicationGlobals.cpp \
+    ApplicationImpl.cpp \
+    ApplicationKernel.cpp \
     ExceptionHandler.cpp \
     Qt/MainWindow.cpp \
     main.cpp
 
 HEADERS += \
+  Application.h \
+  ApplicationGUI.h \
+  ApplicationGlobals.h \
+  ApplicationImpl.h \
+  ApplicationKernel.h \
   ExceptionHandler.h \
   Qt/MainWindow.h
 

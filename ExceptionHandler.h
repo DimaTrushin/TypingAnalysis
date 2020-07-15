@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_CEXCEPTIONHANDLER_H
 #define NSAPPLICATION_CEXCEPTIONHANDLER_H
 
+
 namespace NSApplication {
 
 class CExceptionHandler {
