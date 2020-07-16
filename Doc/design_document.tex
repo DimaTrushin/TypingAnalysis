@@ -31,7 +31,9 @@ Addressable objects must be created on heap via \verb"std::make_unique" or simil
 
 The strategy is to catch exception, show a message, and die. Since Qt environment is not totally exception safe, it is not allowed to throw exceptions in an event loop. If a QObject requires to throw an exception and terminate the program it catches the exception by itself and then sends a signal to CQtLoopException object. CQtLoopException shows a message and stops the event loop. CQtLoopException is a singleton, it uses CAnyGlobalAccess template (see~\ref{section::Singleton}).
 
-\subsection{Application Structure}
+\section{Application Structure}
+
+\subsection{Overview}
 
 CApplication object initialize all required resources for the application including the ones to interact with Qt ecosystem. It may throw an exception while constructing. In order to minimize stack usage CApplication contains \verb"std::unique_ptr" to CApplicationImpl (it is addressable object). CApplicationImpl consists of four parts:
 \begin{enumerate}
@@ -44,6 +46,19 @@ The order of construction is ensured by the inheritance mechanism.
 \begin{center}
 \includegraphics[scale = 0.3]{Figures/CApplicationStructure.png}
 \end{center}
+
+\subsection{Global Objects}
+
+\paragraph{Timer}
+
+Application uses one main timer. This is a singleton with respect to the template here~\ref{section::Singleton}. It starts in the constructor of CApplicationGlobal. Timer return CTime object. It does not depend on particular units but you may convert it to any units you want. Internally \verb"std::chrono" is used.
+
+\subsection{Kernel}
+
+\subsection{Qt Resources}
+
+\subsection{ApplicationImpl}
+
 
 \section{Code}
 
