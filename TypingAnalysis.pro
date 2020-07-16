@@ -38,8 +38,10 @@ HEADERS += \
   ApplicationImpl.h \
   ApplicationKernel.h \
   ExceptionHandler.h \
+  Library/Singleton/AnyGlobalAccess.h \
   Qt/MainWindow.h \
-  Qt/QtLoopExceptionHandler.h
+  Qt/QtLoopExceptionHandler.h \
+  QtLoopException.h
 
 FORMS += \
   Qt/MainWindow.ui

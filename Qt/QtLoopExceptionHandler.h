@@ -18,6 +18,10 @@ class CQtLoopExceptionHandler : public QObject {
   Q_OBJECT
 public:
   CQtLoopExceptionHandler();
+  template<class TO, class TS>
+  void connectSignal(TO* obj, TS&& signal) {
+    connect(obj, std::forward<TS>(signal), this, &CQtLoopExceptionHandler::handleException);
+  }
 signals:
   void quit();
 public slots:
