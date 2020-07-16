@@ -28,6 +28,7 @@ SOURCES += \
     ApplicationKernel.cpp \
     ExceptionHandler.cpp \
     Qt/MainWindow.cpp \
+    Qt/QtLoopExceptionHandler.cpp \
     main.cpp
 
 HEADERS += \
@@ -37,7 +38,8 @@ HEADERS += \
   ApplicationImpl.h \
   ApplicationKernel.h \
   ExceptionHandler.h \
-  Qt/MainWindow.h
+  Qt/MainWindow.h \
+  Qt/QtLoopExceptionHandler.h
 
 FORMS += \
   Qt/MainWindow.ui
