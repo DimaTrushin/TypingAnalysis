@@ -4,19 +4,10 @@
 #include "Library/Singleton/AnyGlobalAccess.h"
 #include "Qt/QtLoopExceptionHandler.h"
 
+
 namespace NSApplication {
-
-// class CLoggerCounterID;
-// class CLoggerCounterInitializer :
-//   CAnyGlobalInitializer<int, CLoggerCounterID> {
-//   using CBase = CAnyGlobalInitializer<int, CLoggerCounterID>;
-// public:
-//   using CBase::CBase;
-// };
-// class CLoggerCounterAccess : public CAnyGlobalAccess<int, CLoggerCounterID> {};
-//
-
 namespace NSQtLoopExceptionHandlerDetail {
+
 namespace nl = NSLibrary;
 namespace nq = NSQt;
 
@@ -31,7 +22,7 @@ public:
 
 class CQtLoopExceptionAccess
   : public nl::CAnyGlobalAccess<nq::CQtLoopExceptionHandler, CQtLoopExceptionMain> {};
-}
+} // NSQtLoopExceptionHandlerDetail
 
 using CQtLoopExceptionInit = NSQtLoopExceptionHandlerDetail::CQtLoopExceptionInit;
 using CQtLoopException = NSQtLoopExceptionHandlerDetail::CQtLoopExceptionAccess;
