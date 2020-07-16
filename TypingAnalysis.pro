@@ -29,6 +29,9 @@ SOURCES += \
     ExceptionHandler.cpp \
     Qt/MainWindow.cpp \
     Qt/QtLoopExceptionHandler.cpp \
+    Time.cpp \
+    Timer.cpp \
+    TimerAccess.cpp \
     main.cpp
 
 HEADERS += \
@@ -41,7 +44,10 @@ HEADERS += \
   Library/Singleton/AnyGlobalAccess.h \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \
-  QtLoopException.h
+  QtLoopException.h \
+  Time.h \
+  Timer.h \
+  TimerAccess.h
 
 FORMS += \
   Qt/MainWindow.ui
