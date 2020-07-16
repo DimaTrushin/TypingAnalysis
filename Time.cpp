@@ -3,11 +3,11 @@
 namespace NSApplication {
 
 CTime operator+(const CTime& first, const CTime& second) {
-  return CTime{first.Microseconds_ + second.Microseconds_};
+  return CTime(first.Microseconds_ + second.Microseconds_);
 }
 
 CTime operator-(const CTime& first, const CTime& second) {
-  return CTime{first.Microseconds_ - second.Microseconds_};
+  return CTime(first.Microseconds_ - second.Microseconds_);
 }
 
 CTime& CTime::operator+=(const CTime& other) {
@@ -45,12 +45,12 @@ bool operator!=(const CTime& first, const CTime& second) {
 }
 
 CTime CTime::operator-() const {
-  return CTime{-Microseconds_};
+  return CTime(-Microseconds_);
 }
 
 long long CTime::toMicroSecondsI() const {
   return Microseconds_;
-};
+}
 
 long long CTime::toMilliSecondsI() const {
   return Microseconds_ / kMicrosecondsInMilliseconds;
@@ -62,7 +62,7 @@ long long CTime::toSecondsI() const {
 
 double CTime::toMicroSecondsF() const {
   return Microseconds_;
-};
+}
 
 double CTime::toMilliSecondsF() const {
   return Microseconds_ / static_cast<double>(kMicrosecondsInMilliseconds);
