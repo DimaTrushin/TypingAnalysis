@@ -30,6 +30,7 @@ SOURCES += \
     Qt/MainWindow.cpp \
     Qt/QtLoopExceptionHandler.cpp \
     Time.cpp \
+    Timer.cpp \
     main.cpp
 
 HEADERS += \
@@ -43,7 +44,8 @@ HEADERS += \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \
   QtLoopException.h \
-  Time.h
+  Time.h \
+  Timer.h
 
 FORMS += \
   Qt/MainWindow.ui
