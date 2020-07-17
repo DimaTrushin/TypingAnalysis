@@ -49,9 +49,40 @@ The order of construction is ensured by the inheritance mechanism.
 
 \subsection{Global Objects}
 
-\paragraph{Timer}
+\subsubsection{Timer}
 
 Application uses one main timer. This is a singleton with respect to the template here~\ref{section::Singleton}. It starts in the constructor of CApplicationGlobal. Timer return CTime object. It does not depend on particular units but you may convert it to any units you want. Internally \verb"std::chrono" is used.
+
+\subsubsection{KeyboardHandler}
+
+Application uses CKeyboardHandler object to intercept keyboard system-wise, that is, it intercepts the keyboard even if application is not in the focus. Qt does not support such functionality. Thus the corresponding mechanism is implemented.
+
+CKeyboardHandler is wrapper into a singleton according to Section~\ref{section::Singleton}. It is initialized in CApplicationGlobal. From the user point of view CKeyboardHandler able to send the following information to the application objects:
+\begin{enumerate}
+\item CRawKeyEvent. This is a system independent representation of a keyboard event (TO DO currently not implemented). This event is sent via Observer pattern (TO DO currently not implemented).
+
+\item CQtException. This is a message with information about an exception encountered. CKeyboardHandler sends a Qt signal to CQtLoopExceptionHandler with the corresponding CQtException object. The application terminates on any exception.
+\end{enumerate}
+
+Interception of the keyboard is implemented as follows. CKeyboardHandler spans a worker thread with OS dependent message loop. There are two objects operate on the worker thread:
+\begin{enumerate}
+\item CKeyboardListener. This object starts an OS dependent event loop with exec() function. It listen to two type of messages:
+\begin{enumerate}
+\item OS key events.
+\item CKeyboardHandler stop event.
+\end{enumerate}
+CKeyboardListener intercepts any key events in OS, transform system dependent key events into CRawKeyEvent-s (TO DO currently not implemented), and sends the events to CKeyboardHandler. If stop event is encountered the event loop on the worker thread is terminated and the thread stops.
+
+\item CListenerExceptionHandler. This object intercepts any exceptions on the working thread, transforms the excetions to CQtException-s, and sends them to CKeyboardHandler. If an exception is encountered the event loop is terminated and the worker thread stops.
+\end{enumerate}
+
+CKeyboardListener is OS dependent. Currently support for Windows, MacOS, and Linux is provided (TO DO only Windows listener is implemented). In order to send the Stop signal in and OS independent fashion the application uses CAnyKeyboardKiller object. It is based on CAnyMoveable object as described in~\ref{section::AnyMovable}.
+
+\begin{center}
+\includegraphics[scale = 0.5]{Figures/KeyboardInterception.png}
+
+Green arrows represent queued Qt signals and yellow arrows represent OS dependent signals.
+\end{center}
 
 \subsection{Kernel}
 
@@ -126,4 +157,86 @@ CLoggerCounterAccess LogCounter;
 std::cout << *LogCounter << std::endl;
 ...
 \end{verbatim}
+
+\subsection{AnyObject}
+\subsubsection{AnyMovable}\label{section::AnyMovable}
+
+\paragraph{Description}
+\verb"CAnyMovable" allows you to store any movable only class without any restrictions on the class. It also allows you to provide  an interface to a class and implementations for different classes of the method.
+
+The \verb"operator->()" goes without any checks and may fail if the object is empty, that is, does not store anything. It is your responsibility to call \verb"isDefined()" method before accessing the interface.
+
+The class \verb"CAnyMovable" does not use Small Object Optimization. In particular, move operations are always cheap. \verb"CAnyMovable" has value semantics and extends the ideas of Sean Parent's talk on cppcon about Run-time Polymorphism.
+
+\paragraph{How to use}
+In order to use the template you need:
+\begin{enumerate}
+\item Create an interface class:
+\begin{verbatim}
+template<class TBase>
+class IAny : public TBase {
+public:
+  virtual void print() const = 0;
+};
+\end{verbatim}
+The class describes the interface of an abstract object you want to support. Do not use names with prefix underscore here, e.g.,
+\begin{itemize}
+\item[\textbf{BAD}:] \verb"virtual void _print() const = 0;"
+\item[\textbf{GOOD}:] \verb"virtual void print() const = 0;"
+\end{itemize}
+This interface will be accessible when using \verb"operator->()" on \verb"CAnyObject". The example is below.
+
+\item Create an implementation class:
+\begin{verbatim}
+template<class TBase, class TObject>
+class CAnyImpl : public TBase {
+  using CBase = TBase;
+public:
+  using CBase::CBase;
+  void print() const override {
+    std::cout << "data = " << CBase::Object() << std::endl;
+  }
+};
+\end{verbatim}
+Here you implement all the functions from the interface. The parameter \verb"TObject" is used to reimplement the behaviour for different types of objects if needed. In the example above, it may happen that \verb"TObject" does not support stream \verb"operator<<" and you want to define  a specialization of the implementation class. Access to the stored object is provided by the method \verb"CBase::Object()".
+
+\item Create your Any class:
+\begin{verbatim}
+class CAny : public CAnyMovable<IAny, CAnyImpl> {
+  using CBase = CAnyMovable<IAny, CAnyImpl>;
+public:
+  using CBase::CBase;
+  friend bool operator==(const CAny&, const CAny&) {
+    ...
+  }
+};
+\end{verbatim}
+You can add any additional functionality to your \verb"CAny" class.
+\end{enumerate}
+Now you can use it like this:
+\begin{verbatim}
+CAny x = 'c';
+x->print();
+x = std::move("123");
+x->print();
+x = 1.45;
+x->print();
+\end{verbatim}
+If you want to store an object of Type \verb"R" and construct it on the fly from the data: \verb"x, y, z". Then use emplace function or emplace constructor like this:
+\begin{verbatim}
+CAny s;
+s.emplace<R>(x, y, z);
+CAny y(std::in_place_type_t<R>(), x, y, z);
+\end{verbatim}
+Then the object of type \verb"R" will be created without creation of intermediate objects.
+
+\paragraph{Implementation}
+Internally \verb"CAnyMovable" stores an \verb"std::unique_ptr" to interface \verb"IObjectStored". Let us look at the diagram below:
+\begin{center}
+\includegraphics[scale = 0.5]{Figures/CAnyMovable.png}
+\end{center}
+The red rectangles are templates provided by the user. \verb"IEmpty" is an empty interface with virtual distructor. Its only purpose is to avoid user having to provide a virtual distructor in the \verb"TInterface" template. Then \verb"IObjectStored" adds some virtual methods to provide required functionality. \verb"CObjectKeeper" is a template storing an instance of an object you want to move into \verb"CAnyMovable". \verb"TImplementation" is a user defined template implementing all virtual methods from \verb"TInterface".
+
 \end{document}
+
+
