@@ -85,12 +85,16 @@ LRESULT CKeyboardListenerWinImpl::WndProc(HWND hwnd, UINT message, WPARAM wparam
 }
 
 void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
-  (void)lParam;
-  // TO DO
-  // Translate the lParam to system independent representation
-  // and send it to the required object
   qDebug() << "Handle lParam";
-  emit KeyboardMessage("Message");
+  const RAWKEYBOARD& KeyboardData = RawInputReader_.getKeyboardData(lParam);
+  // TO DO
+  // Translate the KeyboardData to CRawKeyEvent
+  // and send it to the required object
+
+  qDebug() << "VKey = " << KeyboardData.VKey;
+  qDebug() << "Flags = " << KeyboardData.Flags;
+  // TO DO
+  emit KeyboardMessage(CRawKeyEvent("Message"));
 }
 
 HWND& CKeyboardListenerWinImpl::hwnd() {

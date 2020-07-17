@@ -30,6 +30,7 @@ SOURCES += \
     Keyboard/KeyboardHandler.cpp \
     Keyboard/ListenerExceptionHandler.cpp \
     Keyboard/RawKeyEvent.cpp \
+    Keyboard/Windows/RawInputReader.cpp \
     Qt/MainWindow.cpp \
     Qt/QtLoopExceptionHandler.cpp \
     Time.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
   Keyboard/KeyboardListener.h \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
+  Keyboard/Windows/RawInputReader.h \
   KeyboardHandlerAccess.h \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \

@@ -3,6 +3,7 @@
 
 #include "Keyboard/AnyKeyboardKiller.h"
 #include "RawInputHook.h"
+#include "RawInputReader.h"
 
 #include <future>
 #include <QObject>
@@ -49,6 +50,7 @@ private:
 
   HWND& hwnd();
   CWinRawInputHook KeyboardHook_;
+  CRawInputReader RawInputReader_;
 };
 
 
