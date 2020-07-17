@@ -27,6 +27,7 @@ SOURCES += \
     ApplicationImpl.cpp \
     ApplicationKernel.cpp \
     ExceptionHandler.cpp \
+    Keyboard/RawKeyEvent.cpp \
     Qt/MainWindow.cpp \
     Qt/QtLoopExceptionHandler.cpp \
     Time.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
   ApplicationKernel.h \
   ExceptionHandler.h \
   Keyboard/AnyKeyboardKiller.h \
+  Keyboard/RawKeyEvent.h \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
   Qt/MainWindow.h \
