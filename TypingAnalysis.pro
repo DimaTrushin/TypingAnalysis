@@ -41,6 +41,8 @@ HEADERS += \
   ApplicationImpl.h \
   ApplicationKernel.h \
   ExceptionHandler.h \
+  Keyboard/AnyKeyboardKiller.h \
+  Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \
