@@ -1,8 +1,8 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 #define NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 
-#include <QObject>
 #include <string>
+#include <QObject>
 
 
 namespace NSApplication {

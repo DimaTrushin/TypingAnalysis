@@ -27,12 +27,13 @@ SOURCES += \
     ApplicationImpl.cpp \
     ApplicationKernel.cpp \
     ExceptionHandler.cpp \
+    Keyboard/KeyboardHandler.cpp \
+    Keyboard/ListenerExceptionHandler.cpp \
     Keyboard/RawKeyEvent.cpp \
     Qt/MainWindow.cpp \
     Qt/QtLoopExceptionHandler.cpp \
     Time.cpp \
     Timer.cpp \
-    TimerAccess.cpp \
     main.cpp
 
 HEADERS += \
@@ -43,9 +44,14 @@ HEADERS += \
   ApplicationKernel.h \
   ExceptionHandler.h \
   Keyboard/AnyKeyboardKiller.h \
+  Keyboard/KeyboardHandler.h \
+  Keyboard/KeyboardListener.h \
+  Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
+  KeyboardHandlerAccess.h \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
+  Library/StlExtension/ThreadDetachable.h \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \
   QtLoopException.h \
@@ -55,6 +61,28 @@ HEADERS += \
 
 FORMS += \
   Qt/MainWindow.ui
+
+
+win32 {
+    HEADERS += \
+    Keyboard/Windows/KeyboardListenerWin.h \
+    Keyboard/Windows/MessageWindow.h \
+    Keyboard/Windows/RawInputHook.h
+
+    SOURCES += \
+    Keyboard/Windows/KeyboardListenerWin.cpp
+}
+
+macx {
+    #HEADERS +=
+    #SOURCES +=
+}
+
+linux {
+    #HEADERS +=
+    #SOURCES +=
+}
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
