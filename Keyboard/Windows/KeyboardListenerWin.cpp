@@ -73,10 +73,9 @@ LRESULT CKeyboardListenerWinImpl::WndProc(HWND hwnd, UINT message, WPARAM wparam
     ::PostQuitMessage(0);
     break;
   case WM_INPUT:
-    qDebug() << "WM_INPUT";
-    // Вот эта функция не поддерживает несколько адрессатов!
-    // Надо подумать, как это организовать.
-    // Надо хранить список слушателей и опрашивать их по-порядку.
+    // TO DO
+    // This function does not support several instances of Listeners
+    // Should I implement a singleton tracking all instances?
     getKeyboardListener(hwnd)->HandleRawInput(lparam);
     break;
   default:
@@ -87,6 +86,7 @@ LRESULT CKeyboardListenerWinImpl::WndProc(HWND hwnd, UINT message, WPARAM wparam
 
 void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   (void)lParam;
+  // TO DO
   // Translate the lParam to system independent representation
   // and send it to the required object
   qDebug() << "Handle lParam";
