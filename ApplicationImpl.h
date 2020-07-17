@@ -1,8 +1,9 @@
 #ifndef NSAPPLICATION_CAPPLICATIONIMPL_H
 #define NSAPPLICATION_CAPPLICATIONIMPL_H
 
-#include "ApplicationKernel.h"
 #include "ApplicationGUI.h"
+#include "ApplicationKernel.h"
+
 
 namespace NSApplication {
 

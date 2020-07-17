@@ -1,6 +1,8 @@
 #include "QtLoopExceptionHandler.h"
 #include "ExceptionHandler.h"
+
 #include <QApplication>
+
 
 namespace NSApplication {
 namespace NSQt {

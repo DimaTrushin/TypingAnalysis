@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+
 #include "ui_MainWindow.h"
 
 namespace NSApplication {

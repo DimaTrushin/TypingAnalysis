@@ -2,7 +2,9 @@
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
 #include "Qt/MainWindow.h"
+
 #include <memory>
+
 
 namespace NSApplication {
 

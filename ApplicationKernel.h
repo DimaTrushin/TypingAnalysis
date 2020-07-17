@@ -3,6 +3,7 @@
 
 #include "ApplicationGlobals.h"
 
+
 namespace NSApplication {
 
 class CApplicationKernel : protected CApplicationGlobals {

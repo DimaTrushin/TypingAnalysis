@@ -1,8 +1,8 @@
 #ifndef NSAPPLICATION_NSQT_CQTLOOPEXCEPTIONHANDLER_H
 #define NSAPPLICATION_NSQT_CQTLOOPEXCEPTIONHANDLER_H
 
-#include <QObject>
 #include <stdexcept>
+#include <QObject>
 
 
 namespace NSApplication {

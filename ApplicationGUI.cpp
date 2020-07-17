@@ -1,5 +1,6 @@
 #include "ApplicationGUI.h"
 
+
 namespace NSApplication {
 
 CApplicationGUI::CApplicationGUI() {

@@ -1,4 +1,5 @@
 #include "Application.h"
+
 #include "ExceptionHandler.h"
 #include "QtLoopException.h"
 

@@ -3,6 +3,7 @@
 
 #include <memory>
 
+
 namespace NSApplication {
 
 class CApplicationImpl;

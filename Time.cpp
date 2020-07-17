@@ -1,5 +1,6 @@
 #include "Time.h"
 
+
 namespace NSApplication {
 
 CTime operator+(const CTime& first, const CTime& second) {
