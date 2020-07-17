@@ -11,8 +11,9 @@ namespace NSQt {
 class CQtException : public std::runtime_error {
   using CBase = std::runtime_error;
   using CBase::CBase;
+public:
+  CQtException() : CBase("") {}
 };
-
 
 class CQtLoopExceptionHandler : public QObject {
   Q_OBJECT
@@ -30,5 +31,8 @@ public slots:
 
 } // NSQt
 } // NSApplication
+
+// This macro is required to use the CQtException class in Qt message system
+Q_DECLARE_METATYPE(NSApplication::NSQt::CQtException);
 
 #endif // NSAPPLICATION_NSQT_CQTLOOPEXCEPTIONHANDLER_H

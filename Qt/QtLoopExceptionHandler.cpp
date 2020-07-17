@@ -6,7 +6,10 @@ namespace NSApplication {
 namespace NSQt {
 
 CQtLoopExceptionHandler::CQtLoopExceptionHandler() {
-  connect(this, &CQtLoopExceptionHandler::quit, qApp, &QApplication::quit, Qt::ConnectionType::QueuedConnection);
+  qRegisterMetaType<CQtException>();
+  connect(this, &CQtLoopExceptionHandler::quit,
+          qApp, &QApplication::quit,
+          Qt::ConnectionType::QueuedConnection);
 }
 
 void CQtLoopExceptionHandler::handleException(const CQtException& Exception) {
