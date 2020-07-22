@@ -54,7 +54,7 @@ private:
   HWND& hwnd();
   CWinRawInputHook KeyboardHook_;
   CRawInputReader RawInputReader_;
-  NSWindows::CKeyPositionWin KeyPosition_;
+  CKeyPositionWin KeyPosition_;
 };
 
 
