@@ -47,6 +47,16 @@ The order of construction is ensured by the inheritance mechanism.
 \includegraphics[scale = 0.3]{Figures/CApplicationStructure.png}
 \end{center}
 
+\subsection{Keyboard}
+
+Each key on a keyboard has its position identifier \verb"CKeyPosition" and a key identifier \verb"CKeyId" (TO DO not implemented). CKeyPosition points out a physical location on a keyboard (e.g. a row and a column where the key is located). CKeyId identify the key depending on the keyboard layout (qwerty, Dvorak, etc.) CKeyPosition is an enum with following identifiers (xkb identifiers):
+\begin{center}
+\includegraphics[scale = 0.5]{Figures/KeyPosition.png}
+
+The picture is taken from \href{https://www.charvolant.org/doug/xkb/html/node5.html}{here}
+\end{center}
+It should be noted that the numeric values of the identifiers are slightly different from the one in xkb.
+
 \subsection{Global Objects}
 
 \subsubsection{Timer}
