@@ -21,7 +21,6 @@ win32-msvc*{
 }
 
 SOURCES += \
-  Keyboard/KeyPosition.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \

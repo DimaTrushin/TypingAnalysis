@@ -5,7 +5,11 @@
 namespace NSApplication {
 namespace NSKeyboard {
 
-enum CKeyPosition : unsigned char {
+struct CKeyPositionHelper {
+  using CType = unsigned char;
+};
+
+enum CKeyPosition : CKeyPositionHelper::CType {
   UNKN = 0,
   IGNR = 1,
   ESC  = 9,
@@ -121,7 +125,6 @@ enum CKeyPosition : unsigned char {
   RWIN = 134,
   MENU = 135,
 };
-
 
 } // NSKeyboard
 } // NSApplication
