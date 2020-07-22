@@ -50,3 +50,8 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+
+# Project temporary files
+_tmp
+
+msvc_make.bat

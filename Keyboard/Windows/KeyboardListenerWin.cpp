@@ -91,8 +91,12 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   // Translate the KeyboardData to CRawKeyEvent
   // and send it to the required object
 
-  qDebug() << "VKey = " << KeyboardData.VKey;
+  //qDebug() << "VKey = " << KeyboardData.VKey;
   qDebug() << "Flags = " << KeyboardData.Flags;
+  qDebug() << "MakeCode = " << KeyboardData.MakeCode;
+  //qDebug() << "MapVirtualKey = " << ::MapVirtualKey(KeyboardData.MakeCode, MAPVK_VSC_TO_VK_EX);
+  qDebug() << "KeyPos = "
+           << KeyPosition_.make(KeyboardData.MakeCode, KeyboardData.Flags);
   // TO DO
   emit KeyboardMessage(CRawKeyEvent("Message"));
 }

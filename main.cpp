@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
   namespace NSApp = NSApplication;
   QApplication QAppLoop(argc, argv);
   NSApp::CQtLoopExceptionInit LoopExceptions;
+
   try {
     NSApp::CApplication Application;
     QAppLoop.exec();

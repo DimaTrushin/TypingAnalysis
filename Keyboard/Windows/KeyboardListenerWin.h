@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 
 #include "Keyboard/AnyKeyboardKiller.h"
+#include "KeyPositionWin.h"
 #include "RawInputHook.h"
 #include "RawInputReader.h"
 
@@ -51,6 +52,7 @@ private:
   HWND& hwnd();
   CWinRawInputHook KeyboardHook_;
   CRawInputReader RawInputReader_;
+  NSWindows::CKeyPositionWin KeyPosition_;
 };
 
 
