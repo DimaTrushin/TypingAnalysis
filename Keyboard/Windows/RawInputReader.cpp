@@ -5,7 +5,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-
+namespace NSWindows {
 
 const RAWINPUT* CSafeRawBuffer::operator->() const {
   return PRAWINPUT(Buffer_.data());
@@ -70,5 +70,6 @@ unsigned int CRawInputReader::getRawDataSize(LPARAM lParam) {
   return dwSize;
 }
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication

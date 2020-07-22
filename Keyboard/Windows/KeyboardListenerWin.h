@@ -15,6 +15,8 @@ namespace NSKeyboard {
 class CKeyboardHandler;
 class CRawKeyEvent;
 
+namespace NSWindows {
+
 class CKeyboardListenerWinImpl : public QObject {
   Q_OBJECT
 
@@ -81,6 +83,7 @@ private:
   HWND MessageWindow_;
 };
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication
 
