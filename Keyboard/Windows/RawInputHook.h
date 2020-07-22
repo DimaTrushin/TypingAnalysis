@@ -8,7 +8,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-
+namespace NSWindows {
 
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CRawInputHook : public CMessageWindow<TClassName, TWndProc> {
@@ -42,6 +42,7 @@ public:
   }
 };
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication
 

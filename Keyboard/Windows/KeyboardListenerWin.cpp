@@ -8,6 +8,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
+namespace NSWindows {
 
 
 CKeyboardListenerWinImpl::CKeyboardListenerWinImpl(
@@ -140,5 +141,6 @@ void CKiller::stopListener() const {
     ::PostMessage(MessageWindow_, WM_STOP_LISTENING, 0, 0);
 }
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication

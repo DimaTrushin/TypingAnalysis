@@ -7,7 +7,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-
+namespace NSWindows {
 
 class CSafeRawBuffer {
   struct alignas(alignof(RAWINPUT)) CAlgnBlock {
@@ -44,6 +44,7 @@ private:
   CSafeRawBuffer Buffer_;
 };
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication
 

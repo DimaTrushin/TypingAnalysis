@@ -8,7 +8,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-using CKeyboardListener = CKeyboardListenerWin;
+using CKeyboardListener = NSWindows::CKeyboardListenerWin;
 
 } // NSKeyboard
 } // NSApplication

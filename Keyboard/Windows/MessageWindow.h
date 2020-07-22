@@ -7,6 +7,8 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
+namespace NSWindows {
+
 
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CWindowClassEx {
@@ -103,6 +105,7 @@ private:
   HWND MessageWindow_;
 };
 
+} // NSWindows
 } // NSKeyboard
 } // NSApplication
 
