@@ -6,6 +6,10 @@ namespace NSKeyboard {
 namespace NSWindows {
 
 CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
+  // TO DO
+  // Rewrite this in the form:
+  // 1) UINT ScanCode = getScanCode(MakeCode, Flag);
+  // 2) switch(ScanCode) {...}
   if (hasPrefixE0(Flag)) {
     CKeyPosition result;
     switch (MakeCode) {
