@@ -12,7 +12,7 @@ namespace NSWindows {
 class CKeyPositionWin {
 public:
   CKeyPositionWin() = default;
-  CKeyPosition make(USHORT ScanCode, USHORT Flag);
+  CKeyPosition make(USHORT MakeCode, USHORT Flag);
 private:
   bool hasPrefixE0(USHORT Flag) const;
   bool hasPrefixE1(USHORT Flag) const;
@@ -20,14 +20,11 @@ private:
   bool isPressing(USHORT Flag) const;
   bool isReleasing(USHORT Flag) const;
 
-  CKeyPosition handleE042(USHORT Flag) const;
-
-  CKeyPosition handleE129(USHORT Flag) const;
   CKeyPosition handle69(USHORT Flag) const;
 
-  void update(USHORT ScanCode, USHORT Flag);
+  void update(USHORT MakeCode, USHORT Flag);
 
-  USHORT ScanCodePrevious_ = 0;
+  USHORT MakeCodePrevious_ = 0;
   USHORT FlagPrevious_ = 0;
 };
 

@@ -5,10 +5,10 @@ namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
 
-CKeyPosition CKeyPositionWin::make(USHORT ScanCode, USHORT Flag) {
+CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
   if (hasPrefixE0(Flag)) {
     CKeyPosition result;
-    switch (ScanCode) {
+    switch (MakeCode) {
     case 28:
       result = CKeyPosition::KPEN;
       break;
@@ -61,33 +61,33 @@ CKeyPosition CKeyPositionWin::make(USHORT ScanCode, USHORT Flag) {
       result = CKeyPosition::MENU;
       break;
     case 42:
-      result = handleE042(Flag);
+      result = CKeyPosition::IGNR;
       break;
     case 55:
-      result = CKeyPosition::IGNR;
+      result = CKeyPosition::PRSC;
       break;
     default:
       result = CKeyPosition::UNKN;
       break;
     }
-    update(ScanCode, Flag);
+    update(MakeCode, Flag);
     return result;
   }
   if (hasPrefixE1(Flag)) {
     CKeyPosition result;
-    switch (ScanCode) {
+    switch (MakeCode) {
     case 29:
-      result = handleE129(Flag);
+      result = CKeyPosition::PAUS;
       break;
     default:
       result = CKeyPosition::UNKN;
       break;
     }
-    update(ScanCode, Flag);
+    update(MakeCode, Flag);
     return result;
   }
   CKeyPosition result;
-  switch (ScanCode) {
+  switch (MakeCode) {
   case 1:
     result = CKeyPosition::ESC;
     break;
@@ -347,7 +347,7 @@ CKeyPosition CKeyPositionWin::make(USHORT ScanCode, USHORT Flag) {
     result = CKeyPosition::UNKN;
     break;
   }
-  update(ScanCode, Flag);
+  update(MakeCode, Flag);
   return result;
 }
 
@@ -371,33 +371,17 @@ bool CKeyPositionWin::isReleasing(USHORT Flag) const {
   return (Flag & 1) == RI_KEY_BREAK;
 }
 
-CKeyPosition CKeyPositionWin::handleE042(USHORT Flag) const {
-  assert(hasPrefixE0(Flag));
-  if (isPressing(Flag))
-    return CKeyPosition::PRSC;
-  if (isReleasing(Flag) && ScanCodePrevious_ == 55 && FlagPrevious_ == 3)
-    return CKeyPosition::PRSC;
-  return CKeyPosition::IGNR;
-}
-
-CKeyPosition CKeyPositionWin::handleE129(USHORT Flag) const {
-  assert(hasPrefixE1(Flag));
-  if (isPressing(Flag))
-    return CKeyPosition::PAUS;
-  return CKeyPosition::IGNR;
-}
-
 CKeyPosition CKeyPositionWin::handle69(USHORT Flag) const {
   assert(!hasPrefix(Flag));
-  if (isPressing(Flag) && ScanCodePrevious_ == 29 && FlagPrevious_ == 4)
+  if (isPressing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 4)
     return CKeyPosition::IGNR;
-  if (isReleasing(Flag) && ScanCodePrevious_ == 29 && FlagPrevious_ == 5)
-    return CKeyPosition::PAUS;
+  if (isReleasing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 5)
+    return CKeyPosition::IGNR;
   return CKeyPosition::NMLK;
 }
 
-void CKeyPositionWin::update(USHORT ScanCode, USHORT Flag) {
-  ScanCodePrevious_ = ScanCode;
+void CKeyPositionWin::update(USHORT MakeCode, USHORT Flag) {
+  MakeCodePrevious_ = MakeCode;
   FlagPrevious_ = Flag;
 }
 
