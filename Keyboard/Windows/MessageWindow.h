@@ -96,7 +96,7 @@ public:
     ::DestroyWindow(MessageWindow_);
   }
 
-  HWND hwnd() {
+  HWND hwnd() const {
     return MessageWindow_;
   }
 
