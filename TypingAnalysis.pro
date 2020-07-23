@@ -21,6 +21,7 @@ win32-msvc*{
 }
 
 SOURCES += \
+  Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
   Keyboard/AnyKeyboardKiller.h \
+  Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
@@ -71,12 +73,14 @@ win32 {
     HEADERS += \
     Keyboard/Windows/KeyboardListenerWin.h \
     Keyboard/Windows/MessageWindow.h \
+    Keyboard/Windows/KeyIDWin.h \
     Keyboard/Windows/KeyPositionWin.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h
 
     SOURCES += \
     Keyboard/Windows/KeyboardListenerWin.cpp \
+    Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
     Keyboard/Windows/RawInputReader.cpp
 }

@@ -2,9 +2,9 @@
 
 #include "Keyboard/KeyboardHandler.h"
 #include "Keyboard/RawKeyEvent.h"
+#include "KeyIDWin.h"
 
 #include <QDebug>
-
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -92,10 +92,11 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   // Translate the KeyboardData to CRawKeyEvent
   // and send it to the required object
 
-  qDebug() << "VKey = " << KeyboardData.VKey
-           << "Flags = " << KeyboardData.Flags
-           << "Make = " << KeyboardData.MakeCode
-           << "KeyPos = " << KeyPosition_.make(
+  qDebug() << "VKey =" << KeyboardData.VKey
+           << "MVKey =" << CKeyIDWin::make(KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags)
+           << "Flags =" << KeyboardData.Flags
+           << "Make =" << KeyboardData.MakeCode
+           << "KeyPos =" << KeyPosition_.make(
              KeyboardData.MakeCode, KeyboardData.Flags);
   // TO DO
   //emit KeyboardMessage(CRawKeyEvent("Message"));
