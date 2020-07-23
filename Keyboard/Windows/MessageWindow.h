@@ -13,7 +13,7 @@ namespace NSWindows {
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CWindowClassEx {
 public:
-  static WNDCLASSEX& get() {
+  static const WNDCLASSEX& get() {
     static WNDCLASSEX wc = getWndClass();
     return wc;
   }
@@ -35,7 +35,7 @@ template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CRegisteredWindowClassEx {
   using CWindowClassEx = CWindowClassEx<TClassName, TWndProc>;
 public:
-  static WNDCLASSEX& get() {
+  static const WNDCLASSEX& get() {
     static CRegister Now;
     return CWindowClassEx::get();
   }
@@ -44,7 +44,7 @@ public:
     return get().lpszClassName;
   }
 
-  static HINSTANCE& hInstance() {
+  static HINSTANCE hInstance() {
     return get().hInstance;
   }
 
@@ -65,7 +65,7 @@ private:
       return CWindowClassEx::get().lpszClassName;
     }
 
-    static HINSTANCE& hInstance() {
+    static HINSTANCE hInstance() {
       return CWindowClassEx::get().hInstance;
     }
 
@@ -96,7 +96,7 @@ public:
     ::DestroyWindow(MessageWindow_);
   }
 
-  HWND& hwnd() {
+  HWND hwnd() {
     return MessageWindow_;
   }
 

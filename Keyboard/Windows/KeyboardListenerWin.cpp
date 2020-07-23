@@ -101,7 +101,7 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   //emit KeyboardMessage(CRawKeyEvent("Message"));
 }
 
-HWND& CKeyboardListenerWinImpl::hwnd() {
+HWND CKeyboardListenerWinImpl::hwnd() {
   return KeyboardHook_.hwnd();
 }
 

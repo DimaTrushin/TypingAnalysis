@@ -51,7 +51,7 @@ private:
   using CWinRawInputHook = CRawInputHook<kWindowClassName_, WndProc>;
   using CWinContext = CWinRawInputHook::CWinContext;
 
-  HWND& hwnd();
+  HWND hwnd();
   CWinRawInputHook KeyboardHook_;
   CRawInputReader RawInputReader_;
   CKeyPositionWin KeyPosition_;
