@@ -14,64 +14,64 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
     CKeyPosition result;
     switch (MakeCode) {
     case 28:
-      result = CKeyPosition::KPEN;
+      result = CKeyPosEnum::KPEN;
       break;
     case 29:
-      result = CKeyPosition::RCTL;
+      result = CKeyPosEnum::RCTL;
       break;
     case 53:
-      result = CKeyPosition::KPDV;
+      result = CKeyPosEnum::KPDV;
       break;
     case 56:
-      result = CKeyPosition::RALT;
+      result = CKeyPosEnum::RALT;
       break;
     case 71:
-      result = CKeyPosition::HOME;
+      result = CKeyPosEnum::HOME;
       break;
     case 72:
-      result = CKeyPosition::UP;
+      result = CKeyPosEnum::UP;
       break;
     case 73:
-      result = CKeyPosition::PGUP;
+      result = CKeyPosEnum::PGUP;
       break;
     case 75:
-      result = CKeyPosition::LEFT;
+      result = CKeyPosEnum::LEFT;
       break;
     case 77:
-      result = CKeyPosition::RGHT;
+      result = CKeyPosEnum::RGHT;
       break;
     case 79:
-      result = CKeyPosition::END;
+      result = CKeyPosEnum::END;
       break;
     case 80:
-      result = CKeyPosition::DOWN;
+      result = CKeyPosEnum::DOWN;
       break;
     case 81:
-      result = CKeyPosition::PGDN;
+      result = CKeyPosEnum::PGDN;
       break;
     case 82:
-      result = CKeyPosition::INS;
+      result = CKeyPosEnum::INS;
       break;
     case 83:
-      result = CKeyPosition::DELE;
+      result = CKeyPosEnum::DELE;
       break;
     case 91:
-      result = CKeyPosition::LWIN;
+      result = CKeyPosEnum::LWIN;
       break;
     case 92:
-      result = CKeyPosition::RWIN;
+      result = CKeyPosEnum::RWIN;
       break;
     case 93:
-      result = CKeyPosition::MENU;
+      result = CKeyPosEnum::MENU;
       break;
     case 42:
-      result = CKeyPosition::IGNR;
+      result = CKeyPosEnum::IGNR;
       break;
     case 55:
-      result = CKeyPosition::PRSC;
+      result = CKeyPosEnum::PRSC;
       break;
     default:
-      result = CKeyPosition::UNKN;
+      result = CKeyPosEnum::UNKN;
       break;
     }
     update(MakeCode, Flag);
@@ -81,10 +81,10 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
     CKeyPosition result;
     switch (MakeCode) {
     case 29:
-      result = CKeyPosition::PAUS;
+      result = CKeyPosEnum::PAUS;
       break;
     default:
-      result = CKeyPosition::UNKN;
+      result = CKeyPosEnum::UNKN;
       break;
     }
     update(MakeCode, Flag);
@@ -93,262 +93,262 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
   CKeyPosition result;
   switch (MakeCode) {
   case 1:
-    result = CKeyPosition::ESC;
+    result = CKeyPosEnum::ESC;
     break;
   case 2:
-    result = CKeyPosition::AE01;
+    result = CKeyPosEnum::AE01;
     break;
   case 3:
-    result = CKeyPosition::AE02;
+    result = CKeyPosEnum::AE02;
     break;
   case 4:
-    result = CKeyPosition::AE03;
+    result = CKeyPosEnum::AE03;
     break;
   case 5:
-    result = CKeyPosition::AE04;
+    result = CKeyPosEnum::AE04;
     break;
   case 6:
-    result = CKeyPosition::AE05;
+    result = CKeyPosEnum::AE05;
     break;
   case 7:
-    result = CKeyPosition::AE06;
+    result = CKeyPosEnum::AE06;
     break;
   case 8:
-    result = CKeyPosition::AE07;
+    result = CKeyPosEnum::AE07;
     break;
   case 9:
-    result = CKeyPosition::AE08;
+    result = CKeyPosEnum::AE08;
     break;
   case 10:
-    result = CKeyPosition::AE09;
+    result = CKeyPosEnum::AE09;
     break;
   case 11:
-    result = CKeyPosition::AE10;
+    result = CKeyPosEnum::AE10;
     break;
   case 12:
-    result = CKeyPosition::AE11;
+    result = CKeyPosEnum::AE11;
     break;
   case 13:
-    result = CKeyPosition::AE12;
+    result = CKeyPosEnum::AE12;
     break;
   case 14:
-    result = CKeyPosition::BKSP;
+    result = CKeyPosEnum::BKSP;
     break;
   case 15:
-    result = CKeyPosition::TAB;
+    result = CKeyPosEnum::TAB;
     break;
   case 16:
-    result = CKeyPosition::AD01;
+    result = CKeyPosEnum::AD01;
     break;
   case 17:
-    result = CKeyPosition::AD02;
+    result = CKeyPosEnum::AD02;
     break;
   case 18:
-    result = CKeyPosition::AD03;
+    result = CKeyPosEnum::AD03;
     break;
   case 19:
-    result = CKeyPosition::AD04;
+    result = CKeyPosEnum::AD04;
     break;
   case 20:
-    result = CKeyPosition::AD05;
+    result = CKeyPosEnum::AD05;
     break;
   case 21:
-    result = CKeyPosition::AD06;
+    result = CKeyPosEnum::AD06;
     break;
   case 22:
-    result = CKeyPosition::AD07;
+    result = CKeyPosEnum::AD07;
     break;
   case 23:
-    result = CKeyPosition::AD08;
+    result = CKeyPosEnum::AD08;
     break;
   case 24:
-    result = CKeyPosition::AD09;
+    result = CKeyPosEnum::AD09;
     break;
   case 25:
-    result = CKeyPosition::AD10;
+    result = CKeyPosEnum::AD10;
     break;
   case 26:
-    result = CKeyPosition::AD11;
+    result = CKeyPosEnum::AD11;
     break;
   case 27:
-    result = CKeyPosition::AD12;
+    result = CKeyPosEnum::AD12;
     break;
   case 28:
-    result = CKeyPosition::RTRN;
+    result = CKeyPosEnum::RTRN;
     break;
   case 29:
-    result = CKeyPosition::LCTL;
+    result = CKeyPosEnum::LCTL;
     break;
   case 30:
-    result = CKeyPosition::AC01;
+    result = CKeyPosEnum::AC01;
     break;
   case 31:
-    result = CKeyPosition::AC02;
+    result = CKeyPosEnum::AC02;
     break;
   case 32:
-    result = CKeyPosition::AC03;
+    result = CKeyPosEnum::AC03;
     break;
   case 33:
-    result = CKeyPosition::AC04;
+    result = CKeyPosEnum::AC04;
     break;
   case 34:
-    result = CKeyPosition::AC05;
+    result = CKeyPosEnum::AC05;
     break;
   case 35:
-    result = CKeyPosition::AC06;
+    result = CKeyPosEnum::AC06;
     break;
   case 36:
-    result = CKeyPosition::AC07;
+    result = CKeyPosEnum::AC07;
     break;
   case 37:
-    result = CKeyPosition::AC08;
+    result = CKeyPosEnum::AC08;
     break;
   case 38:
-    result = CKeyPosition::AC09;
+    result = CKeyPosEnum::AC09;
     break;
   case 39:
-    result = CKeyPosition::AC10;
+    result = CKeyPosEnum::AC10;
     break;
   case 40:
-    result = CKeyPosition::AC11;
+    result = CKeyPosEnum::AC11;
     break;
   case 41:
-    result = CKeyPosition::TLDE;
+    result = CKeyPosEnum::TLDE;
     break;
   case 42:
-    result = CKeyPosition::LFSH;
+    result = CKeyPosEnum::LFSH;
     break;
   case 43:
-    result = CKeyPosition::BKSL;
+    result = CKeyPosEnum::BKSL;
     break;
   case 44:
-    result = CKeyPosition::AB01;
+    result = CKeyPosEnum::AB01;
     break;
   case 45:
-    result = CKeyPosition::AB02;
+    result = CKeyPosEnum::AB02;
     break;
   case 46:
-    result = CKeyPosition::AB03;
+    result = CKeyPosEnum::AB03;
     break;
   case 47:
-    result = CKeyPosition::AB04;
+    result = CKeyPosEnum::AB04;
     break;
   case 48:
-    result = CKeyPosition::AB05;
+    result = CKeyPosEnum::AB05;
     break;
   case 49:
-    result = CKeyPosition::AB06;
+    result = CKeyPosEnum::AB06;
     break;
   case 50:
-    result = CKeyPosition::AB07;
+    result = CKeyPosEnum::AB07;
     break;
   case 51:
-    result = CKeyPosition::AB08;
+    result = CKeyPosEnum::AB08;
     break;
   case 52:
-    result = CKeyPosition::AB09;
+    result = CKeyPosEnum::AB09;
     break;
   case 53:
-    result = CKeyPosition::AB10;
+    result = CKeyPosEnum::AB10;
     break;
   case 54:
-    result = CKeyPosition::RTSH;
+    result = CKeyPosEnum::RTSH;
     break;
   case 55:
-    result = CKeyPosition::KPMU;
+    result = CKeyPosEnum::KPMU;
     break;
   case 56:
-    result = CKeyPosition::LALT;
+    result = CKeyPosEnum::LALT;
     break;
   case 57:
-    result = CKeyPosition::SPCE;
+    result = CKeyPosEnum::SPCE;
     break;
   case 58:
-    result = CKeyPosition::CAPS;
+    result = CKeyPosEnum::CAPS;
     break;
   case 59:
-    result = CKeyPosition::FK01;
+    result = CKeyPosEnum::FK01;
     break;
   case 60:
-    result = CKeyPosition::FK02;
+    result = CKeyPosEnum::FK02;
     break;
   case 61:
-    result = CKeyPosition::FK03;
+    result = CKeyPosEnum::FK03;
     break;
   case 62:
-    result = CKeyPosition::FK04;
+    result = CKeyPosEnum::FK04;
     break;
   case 63:
-    result = CKeyPosition::FK05;
+    result = CKeyPosEnum::FK05;
     break;
   case 64:
-    result = CKeyPosition::FK06;
+    result = CKeyPosEnum::FK06;
     break;
   case 65:
-    result = CKeyPosition::FK07;
+    result = CKeyPosEnum::FK07;
     break;
   case 66:
-    result = CKeyPosition::FK08;
+    result = CKeyPosEnum::FK08;
     break;
   case 67:
-    result = CKeyPosition::FK09;
+    result = CKeyPosEnum::FK09;
     break;
   case 68:
-    result = CKeyPosition::FK10;
+    result = CKeyPosEnum::FK10;
     break;
   case 69:
     result = handle69(Flag);
     break;
   case 70:
-    result = CKeyPosition::SCLK;
+    result = CKeyPosEnum::SCLK;
     break;
   case 71:
-    result = CKeyPosition::KP7;
+    result = CKeyPosEnum::KP7;
     break;
   case 72:
-    result = CKeyPosition::KP8;
+    result = CKeyPosEnum::KP8;
     break;
   case 73:
-    result = CKeyPosition::KP9;
+    result = CKeyPosEnum::KP9;
     break;
   case 74:
-    result = CKeyPosition::KPSU;
+    result = CKeyPosEnum::KPSU;
     break;
   case 75:
-    result = CKeyPosition::KP4;
+    result = CKeyPosEnum::KP4;
     break;
   case 76:
-    result = CKeyPosition::KP5;
+    result = CKeyPosEnum::KP5;
     break;
   case 77:
-    result = CKeyPosition::KP6;
+    result = CKeyPosEnum::KP6;
     break;
   case 78:
-    result = CKeyPosition::KPAD;
+    result = CKeyPosEnum::KPAD;
     break;
   case 79:
-    result = CKeyPosition::KP1;
+    result = CKeyPosEnum::KP1;
     break;
   case 80:
-    result = CKeyPosition::KP2;
+    result = CKeyPosEnum::KP2;
     break;
   case 81:
-    result = CKeyPosition::KP3;
+    result = CKeyPosEnum::KP3;
     break;
   case 82:
-    result = CKeyPosition::kP0;
+    result = CKeyPosEnum::kP0;
     break;
   case 83:
-    result = CKeyPosition::kPDL;
+    result = CKeyPosEnum::kPDL;
     break;
   case 87:
-    result = CKeyPosition::FK11;
+    result = CKeyPosEnum::FK11;
     break;
   case 88:
-    result = CKeyPosition::FK12;
+    result = CKeyPosEnum::FK12;
     break;
   default:
-    result = CKeyPosition::UNKN;
+    result = CKeyPosEnum::UNKN;
     break;
   }
   update(MakeCode, Flag);
@@ -378,10 +378,10 @@ bool CKeyPositionWin::isReleasing(USHORT Flag) const {
 CKeyPosition CKeyPositionWin::handle69(USHORT Flag) const {
   assert(!hasPrefix(Flag));
   if (isPressing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 4)
-    return CKeyPosition::IGNR;
+    return CKeyPosEnum::IGNR;
   if (isReleasing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 5)
-    return CKeyPosition::IGNR;
-  return CKeyPosition::NMLK;
+    return CKeyPosEnum::IGNR;
+  return CKeyPosEnum::NMLK;
 }
 
 void CKeyPositionWin::update(USHORT MakeCode, USHORT Flag) {

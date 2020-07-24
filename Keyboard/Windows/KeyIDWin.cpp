@@ -10,215 +10,215 @@ CKeyID CKeyIDWin::make(UINT VKey, USHORT MakeCode, USHORT Flag) {
   // Replace numbers with Windows predefined labels
   switch (WinVK) {
   case 0x08:
-    return CKeyID::Backspace;
+    return CKeyIDEnum::Backspace;
   case 0x09:
-    return CKeyID::Tab;
+    return CKeyIDEnum::Tab;
   case 0x0d:
-    return CKeyID::Enter;
+    return CKeyIDEnum::Enter;
   case 0x13:
-    return CKeyID::Pause;
+    return CKeyIDEnum::Pause;
   case 0x14:
-    return CKeyID::Capslock;
+    return CKeyIDEnum::Capslock;
   case 0x1b:
-    return CKeyID::Esc;
+    return CKeyIDEnum::Esc;
   case 0x20:
-    return CKeyID::Spacebar;
+    return CKeyIDEnum::Spacebar;
   case 0x21:
-    return CKeyID::PageUp;
+    return CKeyIDEnum::PageUp;
   case 0x22:
-    return CKeyID::PageDown;
+    return CKeyIDEnum::PageDown;
   case 0x23:
-    return CKeyID::End;
+    return CKeyIDEnum::End;
   case 0x24:
-    return CKeyID::Home;
+    return CKeyIDEnum::Home;
   case 0x25:
-    return CKeyID::LeftArrow;
+    return CKeyIDEnum::LeftArrow;
   case 0x26:
-    return CKeyID::UpArrow;
+    return CKeyIDEnum::UpArrow;
   case 0x27:
-    return CKeyID::RightArrow;
+    return CKeyIDEnum::RightArrow;
   case 0x28:
-    return CKeyID::DownArrow;
+    return CKeyIDEnum::DownArrow;
   case 0x2c:
-    return CKeyID::PrintScreen;
+    return CKeyIDEnum::PrintScreen;
   case 0x2d:
-    return CKeyID::Insert;
+    return CKeyIDEnum::Insert;
   case 0x2e:
-    return CKeyID::Delete;
+    return CKeyIDEnum::Delete;
   case 0x30:
-    return CKeyID::VK_0;
+    return CKeyIDEnum::VK_0;
   case 0x31:
-    return CKeyID::VK_1;
+    return CKeyIDEnum::VK_1;
   case 0x32:
-    return CKeyID::VK_2;
+    return CKeyIDEnum::VK_2;
   case 0x33:
-    return CKeyID::VK_3;
+    return CKeyIDEnum::VK_3;
   case 0x34:
-    return CKeyID::VK_4;
+    return CKeyIDEnum::VK_4;
   case 0x35:
-    return CKeyID::VK_5;
+    return CKeyIDEnum::VK_5;
   case 0x36:
-    return CKeyID::VK_6;
+    return CKeyIDEnum::VK_6;
   case 0x37:
-    return CKeyID::VK_7;
+    return CKeyIDEnum::VK_7;
   case 0x38:
-    return CKeyID::VK_8;
+    return CKeyIDEnum::VK_8;
   case 0x39:
-    return CKeyID::VK_9;
+    return CKeyIDEnum::VK_9;
   case 0x41:
-    return CKeyID::A;
+    return CKeyIDEnum::A;
   case 0x42:
-    return CKeyID::B;
+    return CKeyIDEnum::B;
   case 0x43:
-    return CKeyID::C;
+    return CKeyIDEnum::C;
   case 0x44:
-    return CKeyID::D;
+    return CKeyIDEnum::D;
   case 0x45:
-    return CKeyID::E;
+    return CKeyIDEnum::E;
   case 0x46:
-    return CKeyID::F;
+    return CKeyIDEnum::F;
   case 0x47:
-    return CKeyID::G;
+    return CKeyIDEnum::G;
   case 0x48:
-    return CKeyID::H;
+    return CKeyIDEnum::H;
   case 0x49:
-    return CKeyID::I;
+    return CKeyIDEnum::I;
   case 0x4a:
-    return CKeyID::J;
+    return CKeyIDEnum::J;
   case 0x4b:
-    return CKeyID::K;
+    return CKeyIDEnum::K;
   case 0x4c:
-    return CKeyID::L;
+    return CKeyIDEnum::L;
   case 0x4d:
-    return CKeyID::M;
+    return CKeyIDEnum::M;
   case 0x4e:
-    return CKeyID::N;
+    return CKeyIDEnum::N;
   case 0x4f:
-    return CKeyID::O;
+    return CKeyIDEnum::O;
   case 0x50:
-    return CKeyID::P;
+    return CKeyIDEnum::P;
   case 0x51:
-    return CKeyID::Q;
+    return CKeyIDEnum::Q;
   case 0x52:
-    return CKeyID::R;
+    return CKeyIDEnum::R;
   case 0x53:
-    return CKeyID::S;
+    return CKeyIDEnum::S;
   case 0x54:
-    return CKeyID::T;
+    return CKeyIDEnum::T;
   case 0x55:
-    return CKeyID::U;
+    return CKeyIDEnum::U;
   case 0x56:
-    return CKeyID::V;
+    return CKeyIDEnum::V;
   case 0x57:
-    return CKeyID::W;
+    return CKeyIDEnum::W;
   case 0x58:
-    return CKeyID::X;
+    return CKeyIDEnum::X;
   case 0x59:
-    return CKeyID::Y;
+    return CKeyIDEnum::Y;
   case 0x5a:
-    return CKeyID::Z;
+    return CKeyIDEnum::Z;
   case 0x5b:
-    return CKeyID::LeftWin;
+    return CKeyIDEnum::LeftWin;
   case 0x5c:
-    return CKeyID::RightWin;
+    return CKeyIDEnum::RightWin;
   case 0x5d:
-    return CKeyID::Menu;
+    return CKeyIDEnum::Menu;
   case 0x60:
-    return CKeyID::Numpad_0;
+    return CKeyIDEnum::Numpad_0;
   case 0x61:
-    return CKeyID::Numpad_1;
+    return CKeyIDEnum::Numpad_1;
   case 0x62:
-    return CKeyID::Numpad_2;
+    return CKeyIDEnum::Numpad_2;
   case 0x63:
-    return CKeyID::Numpad_3;
+    return CKeyIDEnum::Numpad_3;
   case 0x64:
-    return CKeyID::Numpad_4;
+    return CKeyIDEnum::Numpad_4;
   case 0x65:
-    return CKeyID::Numpad_5;
+    return CKeyIDEnum::Numpad_5;
   case 0x66:
-    return CKeyID::Numpad_6;
+    return CKeyIDEnum::Numpad_6;
   case 0x67:
-    return CKeyID::Numpad_7;
+    return CKeyIDEnum::Numpad_7;
   case 0x68:
-    return CKeyID::Numpad_8;
+    return CKeyIDEnum::Numpad_8;
   case 0x69:
-    return CKeyID::Numpad_9;
+    return CKeyIDEnum::Numpad_9;
   case 0x6a:
-    return CKeyID::Multiply;
+    return CKeyIDEnum::Multiply;
   case 0x6b:
-    return CKeyID::Add;
+    return CKeyIDEnum::Add;
   case 0x6c:
-    return CKeyID::Separator;
+    return CKeyIDEnum::Separator;
   case 0x6d:
-    return CKeyID::Subtract;
+    return CKeyIDEnum::Subtract;
   case 0x6e:
-    return CKeyID::Decimal;
+    return CKeyIDEnum::Decimal;
   case 0x6f:
-    return CKeyID::Divide;
+    return CKeyIDEnum::Divide;
   case 0x70:
-    return CKeyID::F1;
+    return CKeyIDEnum::F1;
   case 0x71:
-    return CKeyID::F2;
+    return CKeyIDEnum::F2;
   case 0x72:
-    return CKeyID::F3;
+    return CKeyIDEnum::F3;
   case 0x73:
-    return CKeyID::F4;
+    return CKeyIDEnum::F4;
   case 0x74:
-    return CKeyID::F5;
+    return CKeyIDEnum::F5;
   case 0x75:
-    return CKeyID::F6;
+    return CKeyIDEnum::F6;
   case 0x76:
-    return CKeyID::F7;
+    return CKeyIDEnum::F7;
   case 0x77:
-    return CKeyID::F8;
+    return CKeyIDEnum::F8;
   case 0x78:
-    return CKeyID::F9;
+    return CKeyIDEnum::F9;
   case 0x79:
-    return CKeyID::F10;
+    return CKeyIDEnum::F10;
   case 0x7a:
-    return CKeyID::F11;
+    return CKeyIDEnum::F11;
   case 0x7b:
-    return CKeyID::F12;
+    return CKeyIDEnum::F12;
   case 0x90:
-    return CKeyID::Numlock;
+    return CKeyIDEnum::Numlock;
   case 0x91:
-    return CKeyID::Scrolllock;
+    return CKeyIDEnum::Scrolllock;
   case 0xa0:
-    return CKeyID::LeftShift;
+    return CKeyIDEnum::LeftShift;
   case 0xa1:
-    return CKeyID::RightShift;
+    return CKeyIDEnum::RightShift;
   case 0xa2:
-    return CKeyID::LeftCtrl;
+    return CKeyIDEnum::LeftCtrl;
   case 0xa3:
-    return CKeyID::RightCtrl;
+    return CKeyIDEnum::RightCtrl;
   case 0xa4:
-    return CKeyID::LeftAlt;
+    return CKeyIDEnum::LeftAlt;
   case 0xa5:
-    return CKeyID::RightAlt;
+    return CKeyIDEnum::RightAlt;
   case 0xba:
-    return CKeyID::Eng_Semicolon;
+    return CKeyIDEnum::Eng_Semicolon;
   case 0xbb:
-    return CKeyID::Eng_Plus;
+    return CKeyIDEnum::Eng_Plus;
   case 0xbc:
-    return CKeyID::Eng_Comma;
+    return CKeyIDEnum::Eng_Comma;
   case 0xbd:
-    return CKeyID::Eng_Minus;
+    return CKeyIDEnum::Eng_Minus;
   case 0xbe:
-    return CKeyID::Eng_Period;
+    return CKeyIDEnum::Eng_Period;
   case 0xbf:
-    return CKeyID::Eng_Slash_Question;
+    return CKeyIDEnum::Eng_Slash_Question;
   case 0xc0:
-    return CKeyID::Eng_Tilde;
+    return CKeyIDEnum::Eng_Tilde;
   case 0xdb:
-    return CKeyID::Eng_Left_Brace;
+    return CKeyIDEnum::Eng_Left_Brace;
   case 0xdc:
-    return CKeyID::Eng_Backslash;
+    return CKeyIDEnum::Eng_Backslash;
   case 0xdd:
-    return CKeyID::Eng_Right_Brace;
+    return CKeyIDEnum::Eng_Right_Brace;
   case 0xde:
-    return CKeyID::Eng_Quote;
+    return CKeyIDEnum::Eng_Quote;
   default:
-    return CKeyID::Unknown;
+    return CKeyIDEnum::Unknown;
   }
 }
 
