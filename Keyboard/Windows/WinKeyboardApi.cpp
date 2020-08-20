@@ -85,6 +85,13 @@ CKeyShifters CWinKeyboardApi::getShifters() {
   return Shifters;
 }
 
+HKL CWinKeyboardApi::getForegroundLayout() {
+  // This workaround is needed for background windows
+  return ::GetKeyboardLayout(
+           ::GetWindowThreadProcessId(
+             ::GetForegroundWindow(), nullptr));
+}
+
 CWinKeyboardApi::CWBuffer& CWinKeyboardApi::getBuffer() {
   static CWBuffer Buffer{};
   return Buffer;

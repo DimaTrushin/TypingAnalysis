@@ -33,6 +33,8 @@ public:
 
   static CKeyShifters getShifters();
 
+  static HKL getForegroundLayout();
+
 private:
   static CWBuffer& getBuffer();
   static CKeyboardBuffer& getKeyboardBuffer();

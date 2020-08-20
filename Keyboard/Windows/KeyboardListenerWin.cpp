@@ -3,6 +3,7 @@
 #include "Keyboard/KeyboardHandler.h"
 #include "Keyboard/RawKeyEvent.h"
 #include "KeyIDWin.h"
+#include "WinKeyboardApi.h"
 
 #include <QDebug>
 
@@ -89,15 +90,20 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   qDebug() << "Handle lParam";
   const RAWKEYBOARD& KeyboardData = RawInputReader_.getKeyboardData(lParam);
   // TO DO
-  // Translate the KeyboardData to CRawKeyEvent
-  // and send it to the required object
+  // Refactor this into a separate object creating Pressing and Releasing events
+  if ((KeyboardData.Flags & 1) == RI_KEY_MAKE)
+    qDebug() << "VKey =" << KeyboardData.VKey
+             << "MVKey =" << CKeyIDWin::make(
+               KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags)
+             << "Flags =" << KeyboardData.Flags
+             << "Make =" << KeyboardData.MakeCode
+             << "KeyPos =" << KeyPosition_.make(
+               KeyboardData.MakeCode, KeyboardData.Flags)
+             << "symb = " << KeyTextMaker_.get(
+               KeyboardData.VKey,
+               CWinKeyboardApi::getShifters(),
+               CWinKeyboardApi::getForegroundLayout());
 
-  qDebug() << "VKey =" << KeyboardData.VKey
-           << "MVKey =" << CKeyIDWin::make(KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags)
-           << "Flags =" << KeyboardData.Flags
-           << "Make =" << KeyboardData.MakeCode
-           << "KeyPos =" << KeyPosition_.make(
-             KeyboardData.MakeCode, KeyboardData.Flags);
   // TO DO
   //emit KeyboardMessage(CRawKeyEvent("Message"));
 }

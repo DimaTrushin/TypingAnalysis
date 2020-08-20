@@ -3,6 +3,7 @@
 
 #include "Keyboard/AnyKeyboardKiller.h"
 #include "KeyPositionWin.h"
+#include "KeyTextMaker.h"
 #include "RawInputHook.h"
 #include "RawInputReader.h"
 
@@ -55,6 +56,7 @@ private:
   CWinRawInputHook KeyboardHook_;
   CRawInputReader RawInputReader_;
   CKeyPositionWin KeyPosition_;
+  CKeyTextMaker KeyTextMaker_;
 };
 
 
