@@ -1,4 +1,5 @@
 #include "WinKeyboardApi.h"
+
 #include "VkCode.h"
 
 #include <stdexcept>

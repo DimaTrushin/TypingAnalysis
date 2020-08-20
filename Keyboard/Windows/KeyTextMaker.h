@@ -2,6 +2,9 @@
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYTEXTMAKER_H
 
 #include "KeyMapper.h"
+
+#include <QString>
+
 #include <optional>
 
 namespace NSApplication {

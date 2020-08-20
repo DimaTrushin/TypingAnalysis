@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H
 
+#include "KeyShifters.h"
+
 #include <array>
 #include <vector>
 #include <Windows.h>
-
-#include "KeyShifters.h"
 
 namespace NSApplication {
 namespace NSKeyboard {

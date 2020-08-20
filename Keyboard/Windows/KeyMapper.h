@@ -1,16 +1,15 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYMAPPER_H
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYMAPPER_H
 
-#include <Windows.h>
+#include "KeyShifters.h"
+#include "VkCode.h"
 
 #include <QChar>
 
 #include <array>
 #include <map>
 #include <optional>
-
-#include "KeyShifters.h"
-#include "VkCode.h"
+#include <Windows.h>
 
 namespace NSApplication {
 namespace NSKeyboard {
