@@ -74,6 +74,7 @@ win32 {
     Keyboard/Windows/KeyboardListenerWin.h \
     Keyboard/Windows/MessageWindow.h \
     Keyboard/Windows/KeyIDWin.h \
+    Keyboard/Windows/KeyMapper.h \
     Keyboard/Windows/KeyPositionWin.h \
     Keyboard/Windows/KeyShifters.h \
     Keyboard/Windows/RawInputHook.h \
@@ -84,6 +85,7 @@ win32 {
     SOURCES += \
     Keyboard/Windows/KeyboardListenerWin.cpp \
     Keyboard/Windows/KeyIDWin.cpp \
+    Keyboard/Windows/KeyMapper.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
     Keyboard/Windows/KeyShifters.cpp \
     Keyboard/Windows/RawInputReader.cpp \
