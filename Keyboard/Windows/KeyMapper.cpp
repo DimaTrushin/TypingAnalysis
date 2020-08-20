@@ -5,8 +5,6 @@
 
 #include "WinKeyboardApi.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
@@ -17,7 +15,6 @@ CSimpleKeyMapper::CSimpleKeyMapper(HKL hkl)
   : Layout_(hkl) {
   CWinKeyboardApi::clearOsKeyboardState(Layout_);
   setBaseCharacterTable();
-  qDebug() << "Mapper Table size = " << KeyTable_.size();
 }
 
 CSimpleKeyMapper::QCharOptional CSimpleKeyMapper::getSymbol(
@@ -108,7 +105,6 @@ bool CSimpleKeyMapper::isControl(CKeyShifters Shifters, QChar Char) {
 
 CKeySequenceMapper::CKeySequenceMapper(HKL Layout) : CBase(Layout) {
   setCompatiblePairs();
-  qDebug() << "Mapper PairTable size = " << KeyPairTable_.size();
 }
 
 CKeySequenceMapper::QCharOptional CKeySequenceMapper::getCombinedSymbol(
