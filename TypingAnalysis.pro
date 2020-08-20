@@ -77,6 +77,7 @@ win32 {
     Keyboard/Windows/KeyMapper.h \
     Keyboard/Windows/KeyPositionWin.h \
     Keyboard/Windows/KeyShifters.h \
+    Keyboard/Windows/KeyTextMaker.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h \
     Keyboard/Windows/VkCode.h \
@@ -88,6 +89,7 @@ win32 {
     Keyboard/Windows/KeyMapper.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
     Keyboard/Windows/KeyShifters.cpp \
+    Keyboard/Windows/KeyTextMaker.cpp \
     Keyboard/Windows/RawInputReader.cpp \
     Keyboard/Windows/VkCode.cpp \
     Keyboard/Windows/WinKeyboardApi.cpp
