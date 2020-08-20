@@ -78,7 +78,8 @@ win32 {
     Keyboard/Windows/KeyShifters.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h \
-    Keyboard/Windows/VkCode.h
+    Keyboard/Windows/VkCode.h \
+    Keyboard/Windows/WinKeyboardApi.h
 
     SOURCES += \
     Keyboard/Windows/KeyboardListenerWin.cpp \
@@ -86,7 +87,8 @@ win32 {
     Keyboard/Windows/KeyPositionWin.cpp \
     Keyboard/Windows/KeyShifters.cpp \
     Keyboard/Windows/RawInputReader.cpp \
-    Keyboard/Windows/VkCode.cpp
+    Keyboard/Windows/VkCode.cpp \
+    Keyboard/Windows/WinKeyboardApi.cpp
 }
 
 macx {
