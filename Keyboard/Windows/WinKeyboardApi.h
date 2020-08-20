@@ -21,7 +21,7 @@ public:
 
   static BYTE* KeyboardPtr();
   static wchar_t* WBufferPtr();
-  static size_t WBufferSize();
+  static int WBufferSize();
 
   static void clearWBuffer();
   static void setKeyboardBuffer(CKeyShifters Shifters);

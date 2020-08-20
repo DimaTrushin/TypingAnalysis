@@ -27,12 +27,12 @@ wchar_t* CWinKeyboardApi::WBufferPtr() {
   return getBuffer().data();
 }
 
-size_t CWinKeyboardApi::WBufferSize() {
-  return getBuffer().size();
+int CWinKeyboardApi::WBufferSize() {
+  return static_cast<int>(getBuffer().size());
 }
 
 void CWinKeyboardApi::clearWBuffer() {
-  std::fill(getBuffer().begin(), getBuffer().end(), 0);
+  std::fill(getBuffer().begin(), getBuffer().end(), wchar_t(0));
 }
 
 void CWinKeyboardApi::setKeyboardBuffer(CKeyShifters Shifters) {
@@ -64,7 +64,7 @@ std::vector<HKL> CWinKeyboardApi::getSystemLayouts() {
 
   std::vector<HKL> Layouts(NumberOfLayouts);
   int NumberOfWrittenLayouts =
-    ::GetKeyboardLayoutList(Layouts.size(), Layouts.data());
+    ::GetKeyboardLayoutList(static_cast<int>(Layouts.size()), Layouts.data());
 
   if (NumberOfWrittenLayouts != NumberOfLayouts)
     throw std::runtime_error("GetKeyboardLayoutList does not return correct number of Keyboard Layouts!");

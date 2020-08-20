@@ -62,7 +62,7 @@ long long CTime::toSecondsI() const {
 }
 
 double CTime::toMicroSecondsF() const {
-  return Microseconds_;
+  return static_cast<double>(Microseconds_);
 }
 
 double CTime::toMilliSecondsF() const {
