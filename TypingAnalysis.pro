@@ -75,6 +75,7 @@ win32 {
     Keyboard/Windows/MessageWindow.h \
     Keyboard/Windows/KeyIDWin.h \
     Keyboard/Windows/KeyPositionWin.h \
+    Keyboard/Windows/KeyShifters.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h \
     Keyboard/Windows/VkCode.h
@@ -83,6 +84,7 @@ win32 {
     Keyboard/Windows/KeyboardListenerWin.cpp \
     Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
+    Keyboard/Windows/KeyShifters.cpp \
     Keyboard/Windows/RawInputReader.cpp \
     Keyboard/Windows/VkCode.cpp
 }

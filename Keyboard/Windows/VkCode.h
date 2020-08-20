@@ -228,7 +228,6 @@ using CVKCode = CVK::CType;
 
 const char* getName(CVKCode Code);
 
-
 } // NSWindows
 } // NSKeyboard
 } // NSApplication
