@@ -53,8 +53,8 @@ void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {
   }
 }
 
-UINT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
-  return ::MapVirtualKeyEx(VK, MAPVK_VK_TO_VSC, Layout);
+USHORT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
+  return static_cast<USHORT>(::MapVirtualKeyEx(VK, MAPVK_VK_TO_VSC, Layout));
 }
 
 //UINT CWinKeyboardApi::makeScanCode(USHORT MakeCode, USHORT Flag) {
@@ -66,14 +66,14 @@ UINT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
 //}
 
 
-CVKCode CWinKeyboardApi::getVK(UINT SC, HKL Layout) {
-  return static_cast<CVKCode>(::MapVirtualKeyEx(SC, MAPVK_VSC_TO_VK, Layout));
+CVKCode CWinKeyboardApi::getVK(USHORT MakeCode, HKL Layout) {
+  return static_cast<CVKCode>(::MapVirtualKeyEx(MakeCode, MAPVK_VSC_TO_VK, Layout));
 }
 
-CVKCode CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
+CVKCode CWinKeyboardApi::getSymbolVK(USHORT MakeCode, USHORT Flags, HKL Layout) {
   if ((Flags & RI_KEY_E0) || (Flags & RI_KEY_E1))
-    return getVK(SC, Layout);
-  switch (SC) {
+    return getVK(MakeCode, Layout);
+  switch (MakeCode) {
   case 71:
     return CVK::Numpad_7;
   case 72:
@@ -97,7 +97,7 @@ CVKCode CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
   case 83:
     return CVK::Decimal;
   default:
-    return getVK(SC, Layout);
+    return getVK(MakeCode, Layout);
   }
 }
 
@@ -116,6 +116,26 @@ CVKCode CWinKeyboardApi::distinguishShifters(
   if (VKey == VK_MENU && (Flags & RI_KEY_E0) != 0)
     return VK_RMENU;
   return VKey;
+}
+
+bool CWinKeyboardApi::hasPrefixE0(USHORT Flags) {
+  return Flags & RI_KEY_E0;
+}
+
+bool CWinKeyboardApi::hasPrefixE1(USHORT Flags) {
+  return Flags & RI_KEY_E1;
+}
+
+bool CWinKeyboardApi::hasPrefix(USHORT Flags) {
+  return hasPrefixE0(Flags) || hasPrefixE1(Flags);
+}
+
+bool CWinKeyboardApi::isPressing(USHORT Flags) {
+  return (Flags & 1) == RI_KEY_MAKE;
+}
+
+bool CWinKeyboardApi::isReleasing(USHORT Flags) {
+  return (Flags & 1) == RI_KEY_BREAK;
 }
 
 std::vector<HKL> CWinKeyboardApi::getSystemLayouts() {

@@ -28,11 +28,17 @@ public:
   static void setKeyboardBuffer(CKeyShifters Shifters);
 
   static void clearOsKeyboardState(HKL Layout);
-  static UINT getScanCode(CVKCode VK, HKL Layout);
+  static USHORT getScanCode(CVKCode VK, HKL Layout);
   //static UINT makeScanCode(USHORT MakeCode, USHORT Flag);
-  static CVKCode getVK(UINT SC, HKL Layout);
-  static CVKCode getSymbolVK(UINT SC, USHORT Flags, HKL Layout);
+  static CVKCode getVK(USHORT MakeCode, HKL Layout);
+  static CVKCode getSymbolVK(USHORT MakeCode, USHORT Flags, HKL Layout);
   static CVKCode distinguishShifters(CVKCode VKey, USHORT MakeCode, USHORT Flag);
+
+  static bool hasPrefixE0(USHORT Flags);
+  static bool hasPrefixE1(USHORT Flags);
+  static bool hasPrefix(USHORT Flags);
+  static bool isPressing(USHORT Flags);
+  static bool isReleasing(USHORT Flags);
 
   static std::vector<HKL> getSystemLayouts();
 

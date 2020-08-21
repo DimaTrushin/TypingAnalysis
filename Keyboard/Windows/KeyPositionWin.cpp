@@ -1,4 +1,7 @@
 #include "KeyPositionWin.h"
+
+#include "WinKeyboardApi.h"
+
 #include <cassert>
 
 namespace NSApplication {
@@ -8,9 +11,9 @@ namespace NSWindows {
 CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
   // TO DO
   // Rewrite this in the form:
-  // 1) UINT ScanCode = getScanCode(MakeCode, Flag);
+  // 1) USHORT ScanCode = getScanCode(MakeCode, Flag);
   // 2) switch(ScanCode) {...}
-  if (hasPrefixE0(Flag)) {
+  if (CWinKeyboardApi::hasPrefixE0(Flag)) {
     CKeyPosition result;
     switch (MakeCode) {
     case 28:
@@ -77,7 +80,7 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
     update(MakeCode, Flag);
     return result;
   }
-  if (hasPrefixE1(Flag)) {
+  if (CWinKeyboardApi::hasPrefixE1(Flag)) {
     CKeyPosition result;
     switch (MakeCode) {
     case 29:
@@ -355,31 +358,11 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
   return result;
 }
 
-bool CKeyPositionWin::hasPrefixE0(USHORT Flag) const  {
-  return Flag & RI_KEY_E0;
-}
-
-bool CKeyPositionWin::hasPrefixE1(USHORT Flag) const {
-  return Flag & RI_KEY_E1;
-}
-
-bool CKeyPositionWin::hasPrefix(USHORT Flag) const {
-  return hasPrefixE0(Flag) || hasPrefixE1(Flag);
-}
-
-bool CKeyPositionWin::isPressing(USHORT Flag) const {
-  return (Flag & 1) == RI_KEY_MAKE;
-}
-
-bool CKeyPositionWin::isReleasing(USHORT Flag) const {
-  return (Flag & 1) == RI_KEY_BREAK;
-}
-
 CKeyPosition CKeyPositionWin::handle69(USHORT Flag) const {
-  assert(!hasPrefix(Flag));
-  if (isPressing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 4)
+  assert(!CWinKeyboardApi::hasPrefix(Flag));
+  if (CWinKeyboardApi::isPressing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 4)
     return CKeyPosEnum::IGNR;
-  if (isReleasing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 5)
+  if (CWinKeyboardApi::isReleasing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 5)
     return CKeyPosEnum::IGNR;
   return CKeyPosEnum::NMLK;
 }

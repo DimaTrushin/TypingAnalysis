@@ -114,11 +114,11 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
 }
 
 bool CKeyboardListenerWinImpl::isPressing(const RAWKEYBOARD& KeyData) const {
-  return (KeyData.Flags & 1) == RI_KEY_MAKE;
+  return CWinKeyboardApi::isPressing(KeyData.Flags);
 }
 
 bool CKeyboardListenerWinImpl::isReleasing(const RAWKEYBOARD& KeyData) const {
-  return (KeyData.Flags & 1) == RI_KEY_BREAK;
+  return CWinKeyboardApi::isReleasing(KeyData.Flags);
 }
 
 QString CKeyboardListenerWinImpl::getKeyText(const RAWKEYBOARD& KeyData) {
