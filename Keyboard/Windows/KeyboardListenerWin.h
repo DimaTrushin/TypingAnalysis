@@ -10,12 +10,13 @@
 #include <future>
 #include <QObject>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
+struct CKeyPressing;
+struct CKeyReleasing;
+
 class CKeyboardHandler;
-class CRawKeyEvent;
 
 namespace NSWindows {
 
@@ -30,7 +31,8 @@ public:
   ~CKeyboardListenerWinImpl();
 
 signals:
-  void KeyboardMessage(const CRawKeyEvent&);
+  void KeyPressing(const CKeyPressing&);
+  void KeyReleasing(const CKeyReleasing&);
 public:
   int exec();
 private:
@@ -43,6 +45,11 @@ private:
   static CKeyboardListenerWinImpl* getKeyboardListener(HWND);
   static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
   void HandleRawInput(LPARAM lParam);
+
+  bool isPressing(const RAWKEYBOARD& KeyData) const;
+  bool isReleasing(const RAWKEYBOARD& KeyData) const;
+  QString getKeyText(const RAWKEYBOARD& KeyData);
+  QChar getKeyLabel(const RAWKEYBOARD& KeyData);
 
   static constexpr CMessageStatus Error = -1;
   static constexpr CMessageStatus Quit = 0;

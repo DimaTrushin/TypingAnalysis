@@ -7,6 +7,7 @@ namespace NSApplication {
 
 class CTime {
 public:
+  CTime() = default;
   friend CTime operator+(const CTime& first, const CTime& second);
   friend CTime operator-(const CTime& first, const CTime& second);
   CTime& operator+=(const CTime& other);

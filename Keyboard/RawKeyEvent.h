@@ -1,26 +1,38 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 #define NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 
-#include <string>
+#include "Keyboard/KeyID.h"
+#include "Keyboard/KeyPosition.h"
+#include "Time.h"
+
 #include <QObject>
+#include <QChar>
+#include <QString>
+
+#include <string>
 
 
 namespace NSApplication {
 namespace NSKeyboard {
 
-// This is a dummy version of CRawKeyEvent
-// TO DO
-class CRawKeyEvent {
-public:
-  CRawKeyEvent() = default;
-  CRawKeyEvent(const char* text);
-  std::string Text;
+struct CKeyPressing {
+  CTime PressingTime;
+  CKeyPosition KeyPosition;
+  CKeyID KeyID;
+  QChar KeyLabel;
+  QString KeyText;
+};
+
+struct CKeyReleasing {
+  CTime ReleasingTime;
+  CKeyPosition KeyPosition;
+  CKeyID KeyID;
 };
 
 } // NSKeyboard
 } // NSApplication
 
 // This macro is required to use the CRawKeyEvent class in Qt message system
-Q_DECLARE_METATYPE(NSApplication::NSKeyboard::CRawKeyEvent);
-
+Q_DECLARE_METATYPE(NSApplication::NSKeyboard::CKeyPressing);
+Q_DECLARE_METATYPE(NSApplication::NSKeyboard::CKeyReleasing);
 #endif // NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H

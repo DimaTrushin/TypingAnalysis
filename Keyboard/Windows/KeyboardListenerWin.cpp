@@ -3,6 +3,7 @@
 #include "Keyboard/KeyboardHandler.h"
 #include "Keyboard/RawKeyEvent.h"
 #include "KeyIDWin.h"
+#include "TimerAccess.h"
 #include "WinKeyboardApi.h"
 
 #include <QDebug>
@@ -19,13 +20,17 @@ CKeyboardListenerWinImpl::CKeyboardListenerWinImpl(
   killerPromise.set_value(CKiller(hwnd()));
   // TO DO
   // Should I divide it into layers?
-  connect(this, &CKeyboardListenerWinImpl::KeyboardMessage,
-          KeyboardHandler, &CKeyboardHandler::onKeyboardMessage,
+  connect(this, &CKeyboardListenerWinImpl::KeyPressing,
+          KeyboardHandler, &CKeyboardHandler::onKeyPressing,
+          Qt::ConnectionType::QueuedConnection);
+  connect(this, &CKeyboardListenerWinImpl::KeyReleasing,
+          KeyboardHandler, &CKeyboardHandler::onKeyReleasing,
           Qt::ConnectionType::QueuedConnection);
 }
 
 CKeyboardListenerWinImpl::~CKeyboardListenerWinImpl() {
-  disconnect(this, &CKeyboardListenerWinImpl::KeyboardMessage, nullptr, nullptr);
+  disconnect(this, &CKeyboardListenerWinImpl::KeyPressing, nullptr, nullptr);
+  disconnect(this, &CKeyboardListenerWinImpl::KeyReleasing, nullptr, nullptr);
 }
 
 int CKeyboardListenerWinImpl::exec() {
@@ -87,28 +92,45 @@ LRESULT CKeyboardListenerWinImpl::WndProc(HWND hwnd, UINT message, WPARAM wparam
 }
 
 void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
-  qDebug() << "Handle lParam";
-  const RAWKEYBOARD& KeyboardData = RawInputReader_.getKeyboardData(lParam);
-  // TO DO
-  // Refactor this into a separate object creating Pressing and Releasing events
-  auto MVKey = CKeyIDWin::make(
-                 KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags);
-  if ((KeyboardData.Flags & 1) == RI_KEY_MAKE)
-    qDebug() << "VKey =" << KeyboardData.VKey
-             << "MVKey =" << MVKey
-             << "Flags =" << KeyboardData.Flags
-             << "Make =" << KeyboardData.MakeCode
-             << "KeyPos =" << KeyPosition_.make(
-               KeyboardData.MakeCode, KeyboardData.Flags)
-             << "symb = " << KeyTextMaker_.get(
-               KeyboardData.VKey,
-               CWinKeyboardApi::getShifters(),
-               CWinKeyboardApi::getForegroundLayout())
-             << "lbl1 =" << KeyTextMaker_.getLabel(
-               KeyboardData.MakeCode, KeyboardData.Flags, CWinKeyboardApi::getForegroundLayout());
+  CTimerAccess Timer;
+  auto Time = Timer->get();
 
-  // TO DO
-  //emit KeyboardMessage(CRawKeyEvent("Message"));
+  const RAWKEYBOARD& KeyData = RawInputReader_.getKeyboardData(lParam);
+
+  CKeyPosition KeyPosition = KeyPosition_.make(KeyData.MakeCode, KeyData.Flags);
+  if (KeyPosition == CKeyPosEnum::UNKN)
+    return;
+  CKeyID KeyID = CKeyIDWin::make(KeyData.VKey, KeyData.MakeCode, KeyData.Flags);
+  if (KeyID == CKeyIDEnum::Unknown || KeyID == CKeyIDEnum::Ignore)
+    return;
+
+  if (isPressing(KeyData))
+    // TO DO
+    // Add KeyLabel making
+    emit KeyPressing({Time, KeyPosition, KeyID, getKeyLabel(KeyData), getKeyText(KeyData)});
+  else
+    emit KeyReleasing({Time, KeyPosition, KeyID});
+}
+
+bool CKeyboardListenerWinImpl::isPressing(const RAWKEYBOARD& KeyData) const {
+  return (KeyData.Flags & 1) == RI_KEY_MAKE;
+}
+
+bool CKeyboardListenerWinImpl::isReleasing(const RAWKEYBOARD& KeyData) const {
+  return (KeyData.Flags & 1) == RI_KEY_BREAK;
+}
+
+QString CKeyboardListenerWinImpl::getKeyText(const RAWKEYBOARD& KeyData) {
+  return KeyTextMaker_.get(
+           KeyData.VKey,
+           CWinKeyboardApi::getShifters(),
+           CWinKeyboardApi::getForegroundLayout());
+}
+
+QChar CKeyboardListenerWinImpl::getKeyLabel(const RAWKEYBOARD& KeyData) {
+  return KeyTextMaker_.getLabel(KeyData.MakeCode,
+                                KeyData.Flags,
+                                CWinKeyboardApi::getForegroundLayout());
 }
 
 HWND CKeyboardListenerWinImpl::hwnd() const {
