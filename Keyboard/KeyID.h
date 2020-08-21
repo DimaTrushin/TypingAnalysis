@@ -10,6 +10,9 @@ struct CKeyIDEnum {
   enum : CType {
     Unknown = 0x0,
     Ignore = 0x1,
+    // TO DO
+    // Make continuous numeration
+    // Add OEM_102 Key
     Backspace = 0x08,
     Tab = 0x09,
     Enter = 0x0d,

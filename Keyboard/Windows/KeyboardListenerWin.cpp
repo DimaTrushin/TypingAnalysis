@@ -104,9 +104,10 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   if (KeyID == CKeyIDEnum::Unknown || KeyID == CKeyIDEnum::Ignore)
     return;
 
+  // TO DO
+  // Add low level key filter
+
   if (isPressing(KeyData))
-    // TO DO
-    // Add KeyLabel making
     emit KeyPressing({Time, KeyPosition, KeyID, getKeyLabel(KeyData), getKeyText(KeyData)});
   else
     emit KeyReleasing({Time, KeyPosition, KeyID});

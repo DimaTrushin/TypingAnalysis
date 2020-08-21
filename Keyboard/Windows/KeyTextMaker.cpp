@@ -59,6 +59,10 @@ QChar CKeyTextMaker::getLabel(UINT SC, UINT Flags, HKL Layout) {
     return QChar(0x2b7e);
   case CVK::Esc:
     return QChar(0x2bbe);
+  // TO DO
+  // Add the following keys:
+  // F1 -- F12, Insert, Delete, Home, End, PageUp, PageDown
+  // NumLock, LWinKey, RWinKey, MenuKey, Arrows, PrtScr, ScrollLock, Pause
   default:
     auto symbOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Base);
     if (!symbOpt.has_value())

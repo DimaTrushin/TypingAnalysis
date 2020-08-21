@@ -10,6 +10,9 @@ struct CKeyPosEnum {
   enum : CType {
     UNKN = 0,
     IGNR = 1,
+    // TO DO
+    // Make continuous numeration from 8
+    // Add OEM_102 Key
     ESC  = 9,
     AE01 = 10,
     AE02 = 11,
