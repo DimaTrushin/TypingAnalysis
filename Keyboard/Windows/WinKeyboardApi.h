@@ -28,6 +28,8 @@ public:
 
   static void clearOsKeyboardState(HKL Layout);
   static UINT getScanCode(UINT VK, HKL Layout);
+  static UINT getVK(UINT SC, HKL Layout);
+  static UINT getSymbolVK(UINT SC, USHORT Flags, HKL Layout);
 
   static std::vector<HKL> getSystemLayouts();
 

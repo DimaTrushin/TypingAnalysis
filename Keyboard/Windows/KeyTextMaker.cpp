@@ -1,6 +1,7 @@
 #include "KeyTextMaker.h"
 
 #include "WinKeyboardApi.h"
+#include "KeyIDWin.h"
 
 #include <cassert>
 
@@ -24,6 +25,50 @@ QString CKeyTextMaker::get(CVKCode VK, CKeyShifters Shifters, HKL Layout) {
   if (isLayoutChanged(Layout))
     switchLayout(Layout);
   return getSymbols(VK, Shifters);
+}
+
+QChar CKeyTextMaker::getLabel(UINT SC, UINT Flags, HKL Layout) {
+  CVKCode VK = CWinKeyboardApi::getSymbolVK(SC, Flags, Layout);
+  VK = CKeyIDWin::makeWinVK(VK, SC, Flags);
+  switch (VK) {
+  case CVK::Enter:
+    return QChar(0x2ba0);
+  case CVK::Ctrl:
+    return QChar(0x2353);
+  case CVK::LeftCtrl:
+    return QChar(0x2343);
+  case CVK::RightCtrl:
+    return QChar(0x2344);
+  case CVK::Alt:
+    return QChar(0x2338);
+  case CVK::LeftAlt:
+    return QChar(0x2347);
+  case CVK::RightAlt:
+    return QChar(0x2348);
+  case CVK::Shift:
+    return QChar(0x21E7);
+  case CVK::LeftShift:
+    return QChar(0x2B01);
+  case CVK::RightShift:
+    return QChar(0x2B00);
+  case CVK::Backspace:
+    return QChar(0x232B);
+  case CVK::Capslock:
+    return QChar(0x2B89);
+  case CVK::Tab:
+    return QChar(0x2b7e);
+  case CVK::Esc:
+    return QChar(0x2bbe);
+  default:
+    auto symbOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Base);
+    if (!symbOpt.has_value())
+      return QChar(0);
+    if (!symbOpt->isPrint())
+      return QChar(0);
+    if (symbOpt->isLetter())
+      return symbOpt->toUpper();
+    return *symbOpt;
+  }
 }
 
 bool CKeyTextMaker::isLayoutChanged(HKL Layout) const {
@@ -97,6 +142,10 @@ QChar CKeyTextMaker::getDeadKeySymbol() const {
 
 const CKeyMapper& CKeyTextMaker::CurrentMapper() const {
   return CurrentMapperIt_->second;
+}
+
+const CKeyMapper& CKeyTextMaker::Mapper(HKL Layout) {
+  return Mappers_.try_emplace(Layout, Layout).first->second;
 }
 
 HKL CKeyTextMaker::CurrentLayout() const {

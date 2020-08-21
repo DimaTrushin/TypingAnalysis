@@ -25,6 +25,8 @@ public:
   // I want standard layout data!
   // Need to think on the design.
   QString get(CVKCode VK, CKeyShifters Shifters, HKL Layout);
+
+  QChar getLabel(UINT SC, UINT Flags, HKL Layout);
 private:
   bool isLayoutChanged(HKL Layout) const;
   void switchLayout(HKL Layout);
@@ -36,6 +38,7 @@ private:
   QChar getDeadKeySymbol() const;
 
   const CKeyMapper& CurrentMapper() const;
+  const CKeyMapper& Mapper(HKL Layout);
   HKL CurrentLayout() const;
   const CKeyData& DeadKey() const;
   bool hasDeadKeyInBuffer() const;

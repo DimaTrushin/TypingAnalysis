@@ -91,10 +91,11 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   const RAWKEYBOARD& KeyboardData = RawInputReader_.getKeyboardData(lParam);
   // TO DO
   // Refactor this into a separate object creating Pressing and Releasing events
+  auto MVKey = CKeyIDWin::make(
+                 KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags);
   if ((KeyboardData.Flags & 1) == RI_KEY_MAKE)
     qDebug() << "VKey =" << KeyboardData.VKey
-             << "MVKey =" << CKeyIDWin::make(
-               KeyboardData.VKey, KeyboardData.MakeCode, KeyboardData.Flags)
+             << "MVKey =" << MVKey
              << "Flags =" << KeyboardData.Flags
              << "Make =" << KeyboardData.MakeCode
              << "KeyPos =" << KeyPosition_.make(
@@ -102,7 +103,9 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
              << "symb = " << KeyTextMaker_.get(
                KeyboardData.VKey,
                CWinKeyboardApi::getShifters(),
-               CWinKeyboardApi::getForegroundLayout());
+               CWinKeyboardApi::getForegroundLayout())
+             << "lbl1 =" << KeyTextMaker_.getLabel(
+               KeyboardData.MakeCode, KeyboardData.Flags, CWinKeyboardApi::getForegroundLayout());
 
   // TO DO
   //emit KeyboardMessage(CRawKeyEvent("Message"));

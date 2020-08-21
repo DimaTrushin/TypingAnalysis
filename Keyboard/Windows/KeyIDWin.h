@@ -11,7 +11,6 @@ namespace NSWindows {
 class CKeyIDWin {
 public:
   static CKeyID make(UINT VKey, USHORT MakeCode, USHORT Flag);
-private:
   static UINT makeWinVK(UINT VKey, USHORT MakeCode, USHORT Flag);
 //  static UINT makeScanCode(USHORT MakeCode, USHORT Flag);
 };

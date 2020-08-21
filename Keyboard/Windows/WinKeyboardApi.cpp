@@ -54,7 +54,42 @@ void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {
 }
 
 UINT CWinKeyboardApi::getScanCode(UINT VK, HKL Layout) {
-  return ::MapVirtualKeyEx(VK, 0, Layout);
+  return ::MapVirtualKeyEx(VK, MAPVK_VK_TO_VSC, Layout);
+}
+
+UINT CWinKeyboardApi::getVK(UINT SC, HKL Layout) {
+  return ::MapVirtualKeyEx(SC, MAPVK_VSC_TO_VK, Layout);
+}
+
+UINT CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
+  if ((Flags & RI_KEY_E0) || (Flags & RI_KEY_E1))
+    return getVK(SC, Layout);
+  switch (SC) {
+  case 71:
+    return CVK::Numpad_7;
+  case 72:
+    return CVK::Numpad_8;
+  case 73:
+    return CVK::Numpad_9;
+  case 75:
+    return CVK::Numpad_4;
+  case 76:
+    return CVK::Numpad_5;
+  case 77:
+    return CVK::Numpad_6;
+  case 79:
+    return CVK::Numpad_1;
+  case 80:
+    return CVK::Numpad_2;
+  case 81:
+    return CVK::Numpad_3;
+  case 82:
+    return CVK::Numpad_0;
+  case 83:
+    return CVK::Decimal;
+  default:
+    return getVK(SC, Layout);
+  }
 }
 
 std::vector<HKL> CWinKeyboardApi::getSystemLayouts() {
