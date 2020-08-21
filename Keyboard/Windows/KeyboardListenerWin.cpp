@@ -1,6 +1,7 @@
 #include "KeyboardListenerWin.h"
 
 #include "Keyboard/KeyboardHandler.h"
+#include "Keyboard/RawKeyEvent.h"
 #include "KeyIDWin.h"
 #include "TimerAccess.h"
 #include "WinKeyboardApi.h"

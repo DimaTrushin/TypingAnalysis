@@ -3,6 +3,7 @@
 #include "KeyboardListener.h"
 #include "ListenerExceptionHandler.h"
 #include "QtLoopException.h"
+#include "RawKeyEvent.h"
 
 #include <QDebug>
 
@@ -48,14 +49,14 @@ void CKeyboardHandler::deactivate() {
 //             << "addr = " << this;
 //}
 
-void CKeyboardHandler::onKeyPressing(CKeyPressing KeyPressing) {
+void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
   qDebug() << "KeyID =" << KeyPressing.KeyID
            << "KeyPos =" << KeyPressing.KeyPosition
            << "symb =" << KeyPressing.KeyText
            << "time =" << KeyPressing.PressingTime.toMilliSecondsF() << "ms";
 }
 
-void CKeyboardHandler::onKeyReleasing(CKeyReleasing KeyReleasing) {
+void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
   qDebug() << "KeyID =" << KeyReleasing.KeyID
            << "KeyPos =" << KeyReleasing.KeyPosition
            << "time =" << KeyReleasing.ReleasingTime.toMilliSecondsF() << "ms";

@@ -4,7 +4,6 @@
 #include "Library/StlExtension/ThreadDetachable.h"
 #include "Qt/QtLoopExceptionHandler.h"
 #include "AnyKeyboardKiller.h"
-#include "RawKeyEvent.h"
 
 #include <future>
 
@@ -12,6 +11,8 @@
 namespace NSApplication {
 namespace NSKeyboard {
 
+struct CKeyPressing;
+struct CKeyReleasing;
 // A system dependent keyboard listener lives in an independent thread
 // all exceptions of the listener are sent to corresponding slot
 // The listener dies on any exception or error
@@ -41,8 +42,8 @@ public:
 signals:
   void quit(const CQtException&);
 public slots:
-  void onKeyPressing(CKeyPressing);
-  void onKeyReleasing(CKeyReleasing);
+  void onKeyPressing(const CKeyPressing&);
+  void onKeyReleasing(const CKeyReleasing&);
   void onKeyboardException(const CQtException&);
 
 private:

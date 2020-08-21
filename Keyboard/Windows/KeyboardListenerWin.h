@@ -2,7 +2,6 @@
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 
 #include "Keyboard/AnyKeyboardKiller.h"
-#include "Keyboard/RawKeyEvent.h"
 #include "KeyPositionWin.h"
 #include "KeyTextMaker.h"
 #include "RawInputHook.h"
@@ -13,6 +12,9 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
+
+struct CKeyPressing;
+struct CKeyReleasing;
 
 class CKeyboardHandler;
 
@@ -29,8 +31,8 @@ public:
   ~CKeyboardListenerWinImpl();
 
 signals:
-  void KeyPressing(CKeyPressing);
-  void KeyReleasing(CKeyReleasing);
+  void KeyPressing(const CKeyPressing&);
+  void KeyReleasing(const CKeyReleasing&);
 public:
   int exec();
 private:
