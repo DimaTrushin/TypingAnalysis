@@ -8,7 +8,7 @@ namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
 
-int CWinKeyboardApi::ToUnicodeEx(UINT VK, HKL Layout) {
+int CWinKeyboardApi::ToUnicodeEx(CVKCode VK, HKL Layout) {
   clearWBuffer();
   return ::ToUnicodeEx(VK,
                        getScanCode(VK, Layout),
@@ -53,15 +53,24 @@ void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {
   }
 }
 
-UINT CWinKeyboardApi::getScanCode(UINT VK, HKL Layout) {
+UINT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
   return ::MapVirtualKeyEx(VK, MAPVK_VK_TO_VSC, Layout);
 }
 
-UINT CWinKeyboardApi::getVK(UINT SC, HKL Layout) {
-  return ::MapVirtualKeyEx(SC, MAPVK_VSC_TO_VK, Layout);
+//UINT CWinKeyboardApi::makeScanCode(USHORT MakeCode, USHORT Flag) {
+//  if (Flag & RI_KEY_E0)
+//    return 0xE000 + static_cast<UINT>(MakeCode);
+//  if (Flag & RI_KEY_E1)
+//    return 0xE100 + static_cast<UINT>(MakeCode);
+//  return static_cast<UINT>(MakeCode);
+//}
+
+
+CVKCode CWinKeyboardApi::getVK(UINT SC, HKL Layout) {
+  return static_cast<CVKCode>(::MapVirtualKeyEx(SC, MAPVK_VSC_TO_VK, Layout));
 }
 
-UINT CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
+CVKCode CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
   if ((Flags & RI_KEY_E0) || (Flags & RI_KEY_E1))
     return getVK(SC, Layout);
   switch (SC) {
@@ -90,6 +99,23 @@ UINT CWinKeyboardApi::getSymbolVK(UINT SC, USHORT Flags, HKL Layout) {
   default:
     return getVK(SC, Layout);
   }
+}
+
+CVKCode CWinKeyboardApi::distinguishShifters(
+  CVKCode VKey, USHORT MakeCode, USHORT Flags) {
+  if (VKey == VK_SHIFT && MakeCode == 0x2a)
+    return VK_LSHIFT;
+  if (VKey == VK_SHIFT && MakeCode == 0x36)
+    return VK_RSHIFT;
+  if (VKey == VK_CONTROL && (Flags & RI_KEY_E0) == 0)
+    return VK_LCONTROL;
+  if (VKey == VK_CONTROL && (Flags & RI_KEY_E0) != 0)
+    return VK_RCONTROL;
+  if (VKey == VK_MENU && (Flags & RI_KEY_E0) == 0)
+    return VK_LMENU;
+  if (VKey == VK_MENU && (Flags & RI_KEY_E0) != 0)
+    return VK_RMENU;
+  return VKey;
 }
 
 std::vector<HKL> CWinKeyboardApi::getSystemLayouts() {

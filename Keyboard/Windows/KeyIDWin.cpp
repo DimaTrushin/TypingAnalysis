@@ -1,11 +1,12 @@
 #include "KeyIDWin.h"
+#include "WinKeyboardApi.h"
 
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
 
-CKeyID CKeyIDWin::make(UINT VKey, USHORT MakeCode, USHORT Flag) {
-  UINT WinVK = makeWinVK(VKey, MakeCode, Flag);
+CKeyID CKeyIDWin::make(CVKCode VKey, USHORT MakeCode, USHORT Flag) {
+  CVKCode WinVK = CWinKeyboardApi::distinguishShifters(VKey, MakeCode, Flag);
   // TO DO
   // Replace numbers with Windows predefined labels
   switch (WinVK) {
@@ -221,31 +222,6 @@ CKeyID CKeyIDWin::make(UINT VKey, USHORT MakeCode, USHORT Flag) {
     return CKeyIDEnum::Unknown;
   }
 }
-
-UINT CKeyIDWin::makeWinVK(UINT VKey, USHORT MakeCode, USHORT Flag) {
-  if (VKey == VK_SHIFT && MakeCode == 0x2a)
-    return VK_LSHIFT;
-  if (VKey == VK_SHIFT && MakeCode == 0x36)
-    return VK_RSHIFT;
-  if (VKey == VK_CONTROL && (Flag & RI_KEY_E0) == 0)
-    return VK_LCONTROL;
-  if (VKey == VK_CONTROL && (Flag & RI_KEY_E0) != 0)
-    return VK_RCONTROL;
-  if (VKey == VK_MENU && (Flag & RI_KEY_E0) == 0)
-    return VK_LMENU;
-  if (VKey == VK_MENU && (Flag & RI_KEY_E0) != 0)
-    return VK_RMENU;
-  return VKey;
-}
-
-//UINT CKeyIDWin::makeScanCode(USHORT MakeCode, USHORT Flag) {
-//  if (Flag & RI_KEY_E0)
-//    return 0xE000 + static_cast<UINT>(MakeCode);
-//  if (Flag & RI_KEY_E1)
-//    return 0xE100 + static_cast<UINT>(MakeCode);
-//  return static_cast<UINT>(MakeCode);
-//}
-
 
 } // NSWindows
 } // NSKeyboard

@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H
 
 #include "KeyShifters.h"
+#include "VkCode.h"
 
 #include <array>
 #include <vector>
@@ -17,7 +18,7 @@ public:
   using CWBuffer = std::array<wchar_t, 10>;
   using CKeyboardBuffer = std::array<BYTE, 256>;
 
-  static int ToUnicodeEx(UINT VK, HKL Layout);
+  static int ToUnicodeEx(CVKCode VK, HKL Layout);
 
   static BYTE* KeyboardPtr();
   static wchar_t* WBufferPtr();
@@ -27,9 +28,11 @@ public:
   static void setKeyboardBuffer(CKeyShifters Shifters);
 
   static void clearOsKeyboardState(HKL Layout);
-  static UINT getScanCode(UINT VK, HKL Layout);
-  static UINT getVK(UINT SC, HKL Layout);
-  static UINT getSymbolVK(UINT SC, USHORT Flags, HKL Layout);
+  static UINT getScanCode(CVKCode VK, HKL Layout);
+  //static UINT makeScanCode(USHORT MakeCode, USHORT Flag);
+  static CVKCode getVK(UINT SC, HKL Layout);
+  static CVKCode getSymbolVK(UINT SC, USHORT Flags, HKL Layout);
+  static CVKCode distinguishShifters(CVKCode VKey, USHORT MakeCode, USHORT Flag);
 
   static std::vector<HKL> getSystemLayouts();
 

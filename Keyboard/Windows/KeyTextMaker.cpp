@@ -29,7 +29,7 @@ QString CKeyTextMaker::get(CVKCode VK, CKeyShifters Shifters, HKL Layout) {
 
 QChar CKeyTextMaker::getLabel(UINT SC, UINT Flags, HKL Layout) {
   CVKCode VK = CWinKeyboardApi::getSymbolVK(SC, Flags, Layout);
-  VK = CKeyIDWin::makeWinVK(VK, SC, Flags);
+  VK = CWinKeyboardApi::distinguishShifters(VK, SC, Flags);
   switch (VK) {
   case CVK::Enter:
     return QChar(0x2ba0);
