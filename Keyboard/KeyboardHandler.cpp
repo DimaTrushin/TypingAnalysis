@@ -3,7 +3,6 @@
 #include "KeyboardListener.h"
 #include "ListenerExceptionHandler.h"
 #include "QtLoopException.h"
-#include "RawKeyEvent.h"
 
 #include <QDebug>
 
@@ -13,7 +12,8 @@ namespace NSKeyboard {
 
 
 CQtMessagesRegistrator::CQtMessagesRegistrator() {
-  qRegisterMetaType<CRawKeyEvent>();
+  qRegisterMetaType<CKeyPressing>();
+  qRegisterMetaType<CKeyReleasing>();
 }
 
 
@@ -40,12 +40,25 @@ void CKeyboardHandler::deactivate() {
   isActive_ = false;
 }
 
-void CKeyboardHandler::onKeyboardMessage(const CRawKeyEvent& message) {
-  // TO DO
-  qDebug() << "slotOnKeyboardMessage";
-  if (isActive_)
-    qDebug() << "KeyboardMessage() = " << message.Text.c_str()
-             << "addr = " << this;
+//void CKeyboardHandler::onKeyboardMessage(const CRawKeyEvent& message) {
+//  // TO DO
+//  qDebug() << "slotOnKeyboardMessage";
+//  if (isActive_)
+//    qDebug() << "KeyboardMessage() = " << message.Text.c_str()
+//             << "addr = " << this;
+//}
+
+void CKeyboardHandler::onKeyPressing(CKeyPressing KeyPressing) {
+  qDebug() << "KeyID =" << KeyPressing.KeyID
+           << "KeyPos =" << KeyPressing.KeyPosition
+           << "symb =" << KeyPressing.KeyText
+           << "time =" << KeyPressing.PressingTime.toMilliSecondsF() << "ms";
+}
+
+void CKeyboardHandler::onKeyReleasing(CKeyReleasing KeyReleasing) {
+  qDebug() << "KeyID =" << KeyReleasing.KeyID
+           << "KeyPos =" << KeyReleasing.KeyPosition
+           << "time =" << KeyReleasing.ReleasingTime.toMilliSecondsF() << "ms";
 }
 
 void CKeyboardHandler::onKeyboardException(const CQtException& message) {

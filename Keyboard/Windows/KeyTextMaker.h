@@ -25,6 +25,8 @@ public:
   // I want standard layout data!
   // Need to think on the design.
   QString get(CVKCode VK, CKeyShifters Shifters, HKL Layout);
+  // TO DO
+  // QChar getLabel(CVKCode VK, HKL Layout) const;
 private:
   bool isLayoutChanged(HKL Layout) const;
   void switchLayout(HKL Layout);

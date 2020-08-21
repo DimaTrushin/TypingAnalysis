@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 
 #include "Keyboard/AnyKeyboardKiller.h"
+#include "Keyboard/RawKeyEvent.h"
 #include "KeyPositionWin.h"
 #include "KeyTextMaker.h"
 #include "RawInputHook.h"
@@ -10,12 +11,10 @@
 #include <future>
 #include <QObject>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
 class CKeyboardHandler;
-class CRawKeyEvent;
 
 namespace NSWindows {
 
@@ -30,7 +29,8 @@ public:
   ~CKeyboardListenerWinImpl();
 
 signals:
-  void KeyboardMessage(const CRawKeyEvent&);
+  void KeyPressing(CKeyPressing);
+  void KeyReleasing(CKeyReleasing);
 public:
   int exec();
 private:
@@ -43,6 +43,10 @@ private:
   static CKeyboardListenerWinImpl* getKeyboardListener(HWND);
   static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
   void HandleRawInput(LPARAM lParam);
+
+  bool isPressing(const RAWKEYBOARD& KeyData) const;
+  bool isReleasing(const RAWKEYBOARD& KeyData) const;
+  QString getKeyText(CVKCode);
 
   static constexpr CMessageStatus Error = -1;
   static constexpr CMessageStatus Quit = 0;
