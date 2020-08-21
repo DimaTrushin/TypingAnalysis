@@ -106,7 +106,7 @@ QString CKeyTextMaker::getSymbolsWithDeadKey(CVKCode VK, CKeyShifters Shifters) 
       return QString(symbDead).append(*symbOpt);
 
   }
-  if (VK == CVK::Enter)
+  if (VK == CVK::Enter || VK == CVK::Tab)
     return QString(symbDead).append(*symbOpt);
   return "";
 }
@@ -124,7 +124,7 @@ QString CKeyTextMaker::getSymbolsPlain(CVKCode VK, CKeyShifters Shifters) {
     }
     return *symbOpt;
   }
-  if (VK == CVK::Enter)
+  if (VK == CVK::Enter || VK == CVK::Tab)
     return *symbOpt;
   return "";
 }
