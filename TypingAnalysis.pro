@@ -46,6 +46,12 @@ HEADERS += \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
   Library/AnyObject/AnyMovable.h \
+  Library/Observer/Impl/Observable.h \
+  Library/Observer/Impl/ObservableImpl.h \
+  Library/Observer/Impl/Observer.h \
+  Library/Observer/Impl/Source.h \
+  Library/Observer/Impl/TypeHelper.h \
+  Library/Observer/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/AnyObject/AnyMovable.h \
