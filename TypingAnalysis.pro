@@ -21,6 +21,7 @@ win32-msvc*{
 }
 
 SOURCES += \
+  AppDebug/KeyboardHandlerOut.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
   main.cpp
 
 HEADERS += \
+  AppDebug/KeyboardHandlerOut.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
