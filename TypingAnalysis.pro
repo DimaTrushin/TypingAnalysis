@@ -4,6 +4,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17 rtti_off warn_on
 
+DEFINES += KEYBOARD_HANDLER_DEBUG
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -21,7 +23,6 @@ win32-msvc*{
 }
 
 SOURCES += \
-  AppDebug/KeyboardHandlerOut.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
@@ -39,7 +40,6 @@ SOURCES += \
   main.cpp
 
 HEADERS += \
-  AppDebug/KeyboardHandlerOut.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -113,6 +113,12 @@ linux {
     #SOURCES +=
 }
 
+contains(DEFINES,KEYBOARD_HANDLER_DEBUG) {
+    HEADERS += \
+    AppDebug/KeyboardHandlerOut.h
+    SOURCES += \
+    AppDebug/KeyboardHandlerOut.cpp
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

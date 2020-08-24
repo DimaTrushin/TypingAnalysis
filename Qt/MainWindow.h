@@ -4,7 +4,9 @@
 #include <memory>
 #include <QMainWindow>
 
+#ifdef KEYBOARD_HANDLER_DEBUG
 #include "AppDebug/KeyboardHandlerOut.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +24,9 @@ public:
   ~MainWindow();
 private:
   std::unique_ptr<Ui::MainWindow> ui_;
+#ifdef KEYBOARD_HANDLER_DEBUG
   std::unique_ptr<NSAppDebug::CKeyboardHandlerOut> KeyboardHandlerOut_;
+#endif
 };
 } // NSQt
 } // NSApplication
