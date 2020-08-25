@@ -13,6 +13,8 @@
 \maketitle
 \tableofcontents
 
+\newpage
+
 \section{General information}
 
 The application uses Qt environment as an ecosystem. It does not use RTTI but uses exceptions. All components of the program must be inside NSApplication namespace. Nested namespaces should be placed in a subfolder of the project.
@@ -30,6 +32,18 @@ Addressable objects must be created on heap via \verb"std::make_unique" or simil
 \subsection{Exceptions}
 
 The strategy is to catch exception, show a message, and die. Since Qt environment is not totally exception safe, it is not allowed to throw exceptions in an event loop. If a QObject requires to throw an exception and terminate the program it catches the exception by itself and then sends a signal to CQtLoopException object. CQtLoopException shows a message and stops the event loop. CQtLoopException is a singleton, it uses CAnyGlobalAccess template (see~\ref{section::Singleton}).
+
+\section{Application behavior}
+
+The global logic of the entry point is the following:
+\begin{enumerate}
+\item Application acquires all the required resources.
+\item Application starts the Qt event loop.
+\end{enumerate}
+
+When started the application intercepts keyboard events system-wide, translates them into OS independent form and shows the debug output via \verb"qDebug()". If debugging of the Keyboard Handler is enabled~\ref{section::Debugging}, it starts an additional window showing the debug information.
+
+(TO DO) The KeyboardHandler must notify the kernel of the application. The kernel compute the required information and notify the interface of the application. From the other hand the interface elements control the kernel. All elements of the kernel are connected using Observer pattern~\ref{section::Observer}. The interface and the kernel are connected using MVC pattern. The MVC pattern is based on the Observer pattern.
 
 \section{Application Structure}
 
@@ -298,7 +312,7 @@ Green arrows represent queued Qt signals and yellow arrows represent OS dependen
 \subsection{ApplicationImpl}
 
 
-\section{Debugging}
+\section{Debugging}\label{section::Debugging}
 
 In order to turn on debugging options, you need to define a macro in \verb"TypeingAnalysis.pro" file. Currently the following macros are available:
 \begin{enumerate}
