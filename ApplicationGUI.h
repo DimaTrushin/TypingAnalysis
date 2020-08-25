@@ -12,7 +12,7 @@ class CApplicationGUI {
 public:
   CApplicationGUI();
 private:
-  NSQt::MainWindow AppWindow_;
+  NSQt::CMainWindow AppWindow_;
 };
 
 } // NSApplication

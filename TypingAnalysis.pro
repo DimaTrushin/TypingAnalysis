@@ -113,11 +113,13 @@ linux {
     #SOURCES +=
 }
 
-contains(DEFINES,KEYBOARD_HANDLER_DEBUG) {
+contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     HEADERS += \
-    AppDebug/KeyboardHandlerOut.h
+    AppDebug/KeyboardHandlerDebugGUI.h \
+    AppDebug/KeyboardHandlerDebugOut.h
     SOURCES += \
-    AppDebug/KeyboardHandlerOut.cpp
+    AppDebug/KeyboardHandlerDebugGUI.cpp \
+    AppDebug/KeyboardHandlerDebugOut.cpp
 }
 
 # Default rules for deployment.

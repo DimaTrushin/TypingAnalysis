@@ -2,19 +2,27 @@
 
 #include "ui_MainWindow.h"
 
+#include <QCloseEvent>
+
+
 namespace NSApplication {
 namespace NSQt {
 
-MainWindow::MainWindow(QWidget* parent)
+CMainWindow::CMainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui_(std::make_unique<Ui::MainWindow>())
 #ifdef KEYBOARD_HANDLER_DEBUG
-  , KeyboardHandlerOut_(std::make_unique<NSAppDebug::CKeyboardHandlerOut>(this))
+  , KeyboardHandlerOut_(this)
 #endif
 {
   ui_->setupUi(this);
 }
 
-MainWindow::~MainWindow() = default;
+void CMainWindow::closeEvent(QCloseEvent* Event) {
+  emit closeMainWindow();
+  QMainWindow::closeEvent(Event);
+}
+
+CMainWindow::~CMainWindow() = default;
 } // NSQt
 } // NSApplication

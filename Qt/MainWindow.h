@@ -5,27 +5,34 @@
 #include <QMainWindow>
 
 #ifdef KEYBOARD_HANDLER_DEBUG
-#include "AppDebug/KeyboardHandlerOut.h"
+#include "AppDebug/KeyboardHandlerDebugOut.h"
 #endif
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
+class QCloseEvent;
 QT_END_NAMESPACE
 
 namespace NSApplication {
 namespace NSQt {
 
-class MainWindow : public QMainWindow {
+class CMainWindow : public QMainWindow {
   Q_OBJECT
 public:
-  MainWindow(QWidget* parent = nullptr);
-  ~MainWindow();
+  CMainWindow(QWidget* parent = nullptr);
+  ~CMainWindow();
+
+  void closeEvent(QCloseEvent* event);
+
+signals:
+  bool closeMainWindow();
 private:
   std::unique_ptr<Ui::MainWindow> ui_;
 #ifdef KEYBOARD_HANDLER_DEBUG
-  std::unique_ptr<NSAppDebug::CKeyboardHandlerOut> KeyboardHandlerOut_;
+  NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_;
 #endif
 };
 } // NSQt
