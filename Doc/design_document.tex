@@ -298,6 +298,19 @@ Green arrows represent queued Qt signals and yellow arrows represent OS dependen
 \subsection{ApplicationImpl}
 
 
+\section{Debugging}
+
+In order to turn on debugging options, you need to define a macro in \verb"TypeingAnalysis.pro" file. Currently the following macros are available:
+\begin{enumerate}
+\item \verb"KEYBOARD_HANDLER_DEBUG"
+\end{enumerate}
+
+When you comment or uncomment a macro in the pro file you will probably need to go through: clear, run qmake, and rebuild sequence.
+
+\paragraph{KEYBOARD\_HANDLER\_DEBUG}
+
+This macro activates an additional window showing the data received by the Keyboard Handler of the application. Currently it is connected to key pressing and releasing events of the handler and prints the messages information. The connection is done via Observer pattern~\ref{section::Observer}. The debug window closes automatically when the main window is closing.
+
 \section{Code}
 
 \section{Implementation}
@@ -443,6 +456,142 @@ Internally \verb"CAnyMovable" stores an \verb"std::unique_ptr" to interface \ver
 \includegraphics[scale = 0.5]{Figures/CAnyMovable.png}
 \end{center}
 The red rectangles are templates provided by the user. \verb"IEmpty" is an empty interface with virtual distructor. Its only purpose is to avoid user having to provide a virtual distructor in the \verb"TInterface" template. Then \verb"IObjectStored" adds some virtual methods to provide required functionality. \verb"CObjectKeeper" is a template storing an instance of an object you want to move into \verb"CAnyMovable". \verb"TImplementation" is a user defined template implementing all virtual methods from \verb"TInterface".
+
+\subsection{Observer}\label{section::Observer}
+
+\paragraph{Description} The library provides several primitives to use Observer pattern. The most basic primitives are:
+\begin{enumerate}
+\item \verb"CObservable<TData>"
+\item \verb"CObserver<TData>"
+\item \verb"CSource<TData>"
+\end{enumerate}
+
+All these objects are addressable. This means you must follow the rules for addressable objects. Usually this means you put this objects into unique pointer or inside other addressable object. Never store addressable objects in a vector or on the stack.
+
+\paragraph{Observable}
+\verb"CObservable<TData>" is an observable value of type \verb"TData". The Observable need not to contain the data. Instead, it has a method to get access to the data. You may provide such a method in the constructor. \verb"CObservable<TData>" provides the following methods:
+\begin{enumerate}
+\item \verb"subscribe(CObserver<TData>*)". This method subscribe an observer to the observable. The observable may have many subscribed observers. When you subscribe an observer that is already subscribed, the observer is unsubscribed first (even if this is the same observable). On subscription, every observable is put into the end of the list of subscribers. This is indeed an \verb"std::list<CObserver<TData>*>".
+
+\item \verb"notify()". This method notify all subscribed observers about the data change. The subscribers are notified in the order they are presented in the list of the subscribers.
+\end{enumerate}
+
+There are three types of notifications from \verb"CObservable<TData>"
+\begin{enumerate}
+\item Notification on subscribe.
+\item Notification on calling \verb"notify()".
+\item Notification on unsubscribe.
+\end{enumerate}
+An observer may and can react differently in all three cases.
+
+\paragraph{Source}
+
+The observer pattern allows you to pass undefined data via std::optional. Also arithmetic types are passed by value and all other types are passed by const reference. In order to deal with these variety of cases in a convenient way, the library provides \verb"CSource<TData>" class. This class is used internally inside a connection between an observer and an observable. An observer get data from observable through an object of type \verb"CSource<TData>". The source object does not store the data, instead it has an action that returns the data. You may provide the action in the constructor. If you do not provide the action, the source will return undefined data. All methods are safe. You do not need to worry about run-time errors. Undefined data is handled with \verb"std::optional" on a regular basis.
+
+\verb"CSource<TData>" has the following type aliases
+\begin{enumerate}
+\item \verb"CReturnValueType". If \verb"TData" is an arithmetic type, then \verb"CReturnValueType" is equal \verb"TData" otherwise it coincides with \verb"std::reference_wrapper<const TData>".
+
+\item \verb"CGetType". This is the type return by \verb"CSource<TData>" object. It is defined as \verb"std::optional<CReturnValueType>". This allows to handle the case of no data passing from the observable if the data is not defined at the moment.
+
+\item \verb"CGetSignature". This is the signature of the action returning a value from the source.
+
+\item \verb"CGetAction". This is the type of the action returning a value from the source.
+\end{enumerate}
+
+\verb"CSource<TData>" has the following methods:
+\begin{enumerate}
+\item \verb"hasGetter". This check if the source has a getter action returning a value.
+\item \verb"operator()" or \verb"get()". These methods are synonymous and return the value of \verb"CGetType" an observer. This actions are safe to call even if the getter is not defined. In the latter case the result of static \verb"getNothing" action is returned.
+\item \verb"set(CGetAction)". This method allows to change the source getter action.
+\item \verb"Getter()". This method return the getter action by value. It is safe to call this method even if the action is not defined. In this case the static \verb"getNothing" action is returned.
+\item \verb"hasValue()". This method checks if the source returns a well-defined value. It returns true only if the action is defined and the action returns a well-defiled value, that is, the optional indeed has a value.
+
+\item static \verb"getNothing()". This is a static default getter action returning undefined optional as a result.
+\end{enumerate}
+
+\paragraph{Observer}
+
+\verb"CObserver<TData>" is an observer of a value of type \verb"TData". The observer contains three actions to react to an observable notifications. You must provide them in the constructor of the observer. Each observer can be subscribed to at most one observable.
+
+\verb"CObserver<TData>" provides the following methods (all methods are safe to call in any state):
+\begin{enumerate}
+\item \verb"isSubscribed()". Checks if the observer is subscribed to an observable.
+\item \verb"hasValue()". Checks if the observer has a source returning a well-defined value, that is, the observer is subscribed to an observable and the observable provides a well-defined value (the optional result has a value).
+\item \verb"data()". Returns a value from the connection with observable. If not connected, the result is the undefined optional.
+\item \verb"Getter()". Returns the getter action of the connection with an observable. Returns \verb"getNothing" default action if not connected.
+\item \verb"unsubscribe()". Unsubscribe from the current observable if any.
+\item \verb"setSubscribe(CMethod)". This methods changes the action on subscription.
+\item \verb"setNotify(CMethod)". This method changes the action on notification.
+\item \verb"setUnsubscribe(CMethod)". This method chages the action on unsubscription.
+\end{enumerate}
+
+\paragraph{High level primitives} The library provides a higher level observable and observers. Currently the following are implemented:
+\begin{enumerate}
+\item \verb"CObservableData<TData>"
+\item \verb"CNotifier"
+\item \verb"CObserverStrict<TData>"
+\item \verb"CObserverHot<TData>"
+\item \verb"CObserverCold<TData>"
+\item \verb"CObserverHotStrict<TData>"
+\item \verb"CHotInput<TData>"
+\item \verb"CObserverColdStrict<TData>" or  \verb"CColdInput<TData>"
+\item \verb"CHotActiveInput<TData>"
+\item \verb"CColdActiveInput<TData>"
+\end{enumerate}
+
+\begin{itemize}
+\item \verb"CObservableData<TData>" contains data of type \verb"TData" (the type must be an appropriate type that can be stored in \verb"std::optional"). It has a method to change the data and notifies the observers immediately after the change.
+
+\item \verb"CNotifier" this is \verb"CObservable<void>". It is used when you need to send a dataless signal to an observer.
+
+\item \verb"CObserverStrict<TData>" this is an observer reacting to notifications only in case the data is well-defined, that is, when the optional value sent by an observable has a value.
+
+\item \verb"CObserverHot<TData>". This is an observer reacting on subscribe and notify events and doing nothing on unsubscribe event.
+
+\item \verb"CObserverCold<TData>". This is an observer reacting on notify event only and doing nothing otherwise.
+
+\item \verb"CObserverHotStrict<TData>". This observer behaves like the hot observer and reacts only on well-defined data.
+\item \verb"CHotInput<TData>". This \verb"CObserverHotStrict<TData>" with the same actions for subscription and notification events.
+
+\item \verb"CObserverColdStrict<TData>" or \verb"CColdInput<TData>". This is cold observer that reacts on well-defined data only.
+
+\item \verb"CHotActiveInput<TData>". This observer can be in two states: active or inactive. It has one action. When the observer is subscribed or notified, if the data from the observable is well-defined, it becomes active and reacts using the action it has. When the observer is unsubscribed it becomes inactive. It also has a method \verb"deactivate()" to make it inactive. You can check its status using \verb"isActive()" method.
+
+The use case. This input is useful when you want to treat the input as an instance of something. So, when you get a well-defined data the input becomes active, that means it "holds the data from the observable". When you read the data from the input, you set it to inactive state to simulate "the value is consumed" process.
+
+It is also useful when you need to subscribe different inputs to the same observable and react only once when both inputs get their values.
+
+\item \verb"CColdActiveInput<TData>". This observer can be in two states: active or inactive. It has one action. When the observer is subscribed it does nothing. When observer is notified, if the data from the observable is well-defined, it becomes active and reacts using the action it has. When the observer is unsubscribed it becomes inactive. It also has a method \verb"deactivate()" to make it inactive. You can check its status using \verb"isActive()" method.
+\end{itemize}
+
+The use case is similar to the one for the hot version. It allows you to ignore the subscription event in the similar scenarios.
+
+\paragraph{How to use}
+
+Here is an example of usage:
+\begin{verbatim}
+void print_sub(int x) {
+  std::cout << "sub value = " << x << std::endl;
+}
+void print_not(int x) {
+  std::cout << "not value = " << x << std::endl;
+}
+void print_unsub(int x) {
+  std::cout << "unsub value = " << x << std::endl;
+}
+CObservableData<int> value;
+CObserverStrict<int> printer(print_sub, print_not, print_unsub);
+value.subscribe(&printer);
+value.set(1);
+value.set(2);
+\end{verbatim}
+
+In this example all the objects are created on stack. However, you must not do that. If you need to create an observer or observable, either use \verb"std::unique_ptr" to hold them or create them inside another addressable object.
+
+\paragraph{Remarks}
+
+(TO DO) Need to implement value semantics wrappers for the primitives to avoid explicit using of \verb"std::unique_ptr" all the time. The wrapper will be a movable object.
 
 \end{document}
 
