@@ -26,6 +26,9 @@ public:
   void add(const CKeyPressing& KeyPressing);
   void add(const CKeyReleasing& KeyReleasing);
 
+  void setTimeLimit(CTime TimeLimit);
+  CTimeOptional getTimeLimit() const;
+
   // TO DO
   // add flushTo method or buffer access method
 private:

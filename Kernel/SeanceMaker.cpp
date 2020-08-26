@@ -35,6 +35,14 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
            .arg(PressedKeys_.size(), 4, 10);
 }
 
+void CSeanceMaker::setTimeLimit(CTime TimeLimit) {
+  TimeLimit_ = TimeLimit;
+}
+
+CSeanceMaker::CTimeOptional CSeanceMaker::getTimeLimit() const {
+  return TimeLimit_;
+}
+
 bool CSeanceMaker::needNewSession(const CKeyPressing& KeyPressing) const {
   if (!PressedKeys_.empty())
     return false;
@@ -56,6 +64,7 @@ CSeanceMaker::findKey(CKeyPosition KeyPosition) {
   return std::find_if(PressedKeys_.begin(),
                       PressedKeys_.end(),
   [KeyPosition](CKeyEvent* KeyEvent) {
+    assert(KeyEvent);
     return KeyEvent->getPosition() == KeyPosition;
   });
 }
