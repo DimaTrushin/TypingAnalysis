@@ -23,6 +23,7 @@ win32-msvc*{
 }
 
 SOURCES += \
+  Kernel/KeyEvent.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
   main.cpp
 
 HEADERS += \
+  Kernel/KeyEvent.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
