@@ -550,11 +550,17 @@ An observer may and can react differently in all three cases.
 
 \paragraph{Source}
 
-The observer pattern allows you to pass undefined data via std::optional. Also arithmetic types are passed by value and all other types are passed by const reference. In order to deal with these variety of cases in a convenient way, the library provides \verb"CSource<TData>" class. This class is used internally inside a connection between an observer and an observable. An observer get data from observable through an object of type \verb"CSource<TData>". The source object does not store the data, instead it has an action that returns the data. You may provide the action in the constructor. If you do not provide the action, the source will return undefined data. All methods are safe. You do not need to worry about run-time errors. Undefined data is handled with \verb"std::optional" on a regular basis.
+The observer pattern allows you to pass undefined data via std::optional. If TData is one of the following
+\begin{enumerate}
+\item arithmetic type
+\item pointer type
+\item enum type
+\end{enumerate}
+then it is passed by value and all other types are passed by const reference. In this case \verb"isPassedByValue" variable is set to true. In order to deal with these variety of cases in a convenient way, the library provides \verb"CSource<TData>" class. This class is used internally inside a connection between an observer and an observable. An observer get data from observable through an object of type \verb"CSource<TData>". The source object does not store the data, instead it has an action that returns the data. You may provide the action in the constructor. If you do not provide the action, the source will return undefined data. All methods are safe. You do not need to worry about run-time errors. Undefined data is handled with \verb"std::optional" on a regular basis.
 
 \verb"CSource<TData>" has the following type aliases
 \begin{enumerate}
-\item \verb"CReturnValueType". If \verb"TData" is an arithmetic type, then \verb"CReturnValueType" is equal \verb"TData" otherwise it coincides with \verb"std::reference_wrapper<const TData>".
+\item \verb"CReturnValueType". If \verb"TData" is passed by value, then \verb"CReturnValueType" is equal \verb"TData" otherwise it coincides with \verb"std::reference_wrapper<const TData>".
 
 \item \verb"CGetType". This is the type return by \verb"CSource<TData>" object. It is defined as \verb"std::optional<CReturnValueType>". This allows to handle the case of no data passing from the observable if the data is not defined at the moment.
 
