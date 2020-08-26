@@ -23,6 +23,7 @@ win32-msvc*{
 }
 
 SOURCES += \
+  AppStatusAccess.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
+  Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
   Qt/QtLoopExceptionHandler.cpp \
   Application.cpp \
@@ -46,6 +48,7 @@ SOURCES += \
   main.cpp
 
 HEADERS += \
+  AppStatusAccess.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
@@ -71,6 +74,7 @@ HEADERS += \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
+  Qt/AppStatus.h \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \
   Application.h \
