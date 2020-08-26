@@ -4,6 +4,7 @@
 #include "KeyEvent.h"
 
 #include <list>
+#include <optional>
 
 
 namespace NSApplication {
@@ -19,6 +20,8 @@ class CSeanceMaker {
   using CRawSeance = std::list<CRawSession>;
 
   using CPressedKeys = std::list<CKeyEvent*>;
+
+  using CTimeOptional = std::optional<CTime>;
 public:
   void add(const CKeyPressing& KeyPressing);
   void add(const CKeyReleasing& KeyReleasing);
@@ -35,6 +38,7 @@ private:
 
   CRawSeance RawSeance_{1};
   CPressedKeys PressedKeys_;
+  CTimeOptional TimeLimit_{Seconds(10)};
   CTime LastEvent_{};
 };
 

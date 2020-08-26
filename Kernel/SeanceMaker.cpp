@@ -1,5 +1,8 @@
 #include "SeanceMaker.h"
 
+#include <QDebug>
+
+
 namespace NSApplication {
 namespace NSKernel {
 
@@ -12,6 +15,10 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
   if (It == PressedKeys_.end())
     PressedKeys_.push_back(&CurrentSession().back());
   LastEvent_ = KeyPressing.Time;
+  qDebug() << QString("seances = %1 current size = %2 pressed = %3")
+           .arg(RawSeance_.size(), 4, 10)
+           .arg(CurrentSession().size(), 4, 10)
+           .arg(PressedKeys_.size(), 4, 10);
 }
 
 void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
@@ -22,15 +29,16 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
     PressedKeys_.erase(It);
     LastEvent_ = KeyReleasing.Time;
   }
+  qDebug() << QString("seances = %1 current size = %2 pressed = %3")
+           .arg(RawSeance_.size(), 4, 10)
+           .arg(CurrentSession().size(), 4, 10)
+           .arg(PressedKeys_.size(), 4, 10);
 }
 
 bool CSeanceMaker::needNewSession(const CKeyPressing& KeyPressing) const {
-  // TO DO
-  // This is a debug verion
-  // Need to add an action for this
   if (!PressedKeys_.empty())
     return false;
-  if (KeyPressing.Time < Seconds(10))
+  if (!TimeLimit_.has_value() || KeyPressing.Time - LastEvent_ < *TimeLimit_)
     return false;
   return true;
 }
