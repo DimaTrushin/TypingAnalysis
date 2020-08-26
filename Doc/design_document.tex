@@ -322,6 +322,13 @@ CKeyboardListener is OS dependent. Currently support for Windows, MacOS, and Lin
 Green arrows represent queued Qt signals and yellow arrows represent OS dependent signals.
 \end{center}
 
+\subsubsection{AppStatus}
+
+This object is a wrapper over the Qt application instance. It has observable values in terms of section~\ref{section::Observer}. It is currently used to react on switching between active and inactive states of the application. For example, I do not want to intercept keyboard, while the user interacts with the application GUI. Also, when user switch back to the application, we upload all intercepted sessions.
+
+
+This object is a singleton according to section~\ref{section::Singleton}. It has one output sending the application current status. There are two options: Active and inactive.
+
 \subsection{Kernel}
 
 
@@ -371,6 +378,14 @@ The manager has the following control options:
 \subsection{Qt Resources}
 
 \subsection{ApplicationImpl}
+
+There are currently the following control elements:
+\begin{enumerate}
+\item \verb"KeyboardShutter". This object listens to the application status. If application becomes active it shuts down the keyboard interception. When application becomes inactive it turns the keyboard interception on.
+
+\item \verb"SessionFlusher". This object listens to the application status. If application becomes active it flushes intercepted sessions currently stored in the buffer of \verb"SeanceManager".
+\end{enumerate}
+
 
 
 \section{Debugging}\label{section::Debugging}
@@ -540,6 +555,8 @@ The red rectangles are templates provided by the user. \verb"IEmpty" is an empty
 \item \verb"CObserver<TData>"
 \item \verb"CSource<TData>"
 \end{enumerate}
+
+All primitives are synchronous. Observable notify events return after all its observers perform their actions.
 
 All these objects are addressable. This means you must follow the rules for addressable objects. Usually this means you put this objects into unique pointer or inside other addressable object. Never store addressable objects in a vector or on the stack.
 
