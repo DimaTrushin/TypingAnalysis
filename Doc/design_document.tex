@@ -318,7 +318,7 @@ Green arrows represent queued Qt signals and yellow arrows represent OS dependen
 
 When the application runs it uses a continuous time scale. Each new run of the application has its one time scale starting from zero. All key events on the same time scale are grouped into a Seance. Each Seance can be separated into peaces called Sessions. The Session is considered as a peace of information to analyze. Each session is analyzed independently. When we load a file it contains key events on a different time scale. The notion of Seance allows us to separate current Seance intercepted while application is running and loaded from files information.
 
-The Seance is presented by \verb"CSeance" class (TO DO not implemented) and Session by \verb"CSession" class (TO DO not implemented).
+The Seance is presented by \verb"CSeance" class (TO DO partially implemented) and Session by \verb"CSession" class (TO DO partially implemented).
 
 
 \subsection{CSeanceManager}
@@ -334,7 +334,7 @@ The manager has the following components:
 \begin{enumerate}
 \item \verb"SeanceMaker". This object receives key pressing and releasing events and store them in a raw form. It also divides the stored events into \verb"CRawSession"s. The \verb"CRawSession"s use \verb"std::list" container to have low cost modification actions.
 
-\item \verb"CurrentSeance". (TO DO not implemented yet) Current seance stores all sessions.
+\item \verb"CurrentSeance". Current seance stores all sessions.
 
 \item \verb"LoadedSeances". (TO DO not implemented yet) This object manages all loaded seances, e.g., loaded from files.
 \end{enumerate}
@@ -352,7 +352,7 @@ The manager's responsibilities:
 
 The manager has the following control options:
 \begin{enumerate}
-\item \verb"makeSeances" (TO DO not implemented yet). This modifies RawSessions from SeanceMaker  to Sessions and put them into CurrentSeance.
+\item \verb"makeSessions". This transforms RawSessions from SeanceMaker to Sessions and put them into CurrentSeance.
 \item \verb"setCurrentSession" (TO DO not implemented yet). This allows GUI to change the current Session.
 \end{enumerate}
 
