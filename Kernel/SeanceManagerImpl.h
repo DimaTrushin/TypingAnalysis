@@ -3,7 +3,7 @@
 
 #include "Library/Observer/Observer.h"
 #include "SeanceMaker.h"
-
+#include "Seance.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -19,6 +19,8 @@ public:
   NSLibrary::CObserver<CKeyPressing>* pressingInput();
   NSLibrary::CObserver<CKeyReleasing>* releasingInput();
 
+  void makeSessions();
+
 private:
   void handle(const CKeyPressing& KeyPressing);
   void handle(const CKeyReleasing& KeyReleasing);
@@ -26,7 +28,7 @@ private:
   CKeyPressingInput KeyPressingInput_;
   CKeyReleasingInput KeyReleasingInput_;
   CSeanceMaker SeanceMaker_;
-
+  CSeance CurrentSeance_;
   // TO DO
   // Add CurrentSeance
   // Add flush method to move RawSessions from SeanceMaker to CurrentSeance

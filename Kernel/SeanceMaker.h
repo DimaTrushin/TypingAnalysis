@@ -10,6 +10,8 @@
 namespace NSApplication {
 namespace NSKernel {
 
+class CSeance;
+
 class CSeanceMaker {
   using CKeyPosition = NSKeyboard::CKeyPosition;
 
@@ -29,9 +31,10 @@ public:
   void setTimeLimit(CTime TimeLimit);
   CTimeOptional getTimeLimit() const;
 
-  // TO DO
-  // add flushTo method or buffer access method
+  void transferTo(CSeance* Seance);
+
 private:
+  void releaseAllKeysNow();
   bool needNewSession(const CKeyPressing& KeyPressing) const;
   void openNewSession();
 

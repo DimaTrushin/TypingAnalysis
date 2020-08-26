@@ -1,5 +1,8 @@
 #include "SeanceMaker.h"
 
+#include "Seance.h"
+#include "TimerAccess.h"
+
 #include <QDebug>
 
 
@@ -43,7 +46,31 @@ CSeanceMaker::CTimeOptional CSeanceMaker::getTimeLimit() const {
   return TimeLimit_;
 }
 
+void CSeanceMaker::transferTo(CSeance* Seance) {
+  assert(Seance);
+  if (!PressedKeys_.empty())
+    releaseAllKeysNow();
+  for (auto& RawSession : RawSeance_)
+    if (!RawSession.empty())
+      Seance->emplace_back(RawSession.begin(), RawSession.end());
+  RawSeance_.clear();
+  RawSeance_.emplace_back();
+  assert(PressedKeys_.empty());
+  assert(RawSeance_.size() == 1);
+  assert(CurrentSession().empty());
+}
+
+void CSeanceMaker::releaseAllKeysNow() {
+  CTimerAccess Timer;
+  CTime Time = Timer->get();
+  for (auto KeyEvent : PressedKeys_)
+    KeyEvent->setReleasingTime(Time);
+  PressedKeys_.clear();
+  assert(!RawSeance_.empty());
+}
+
 bool CSeanceMaker::needNewSession(const CKeyPressing& KeyPressing) const {
+  assert(!RawSeance_.empty());
   if (!PressedKeys_.empty())
     return false;
   if (CurrentSession().empty())

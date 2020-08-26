@@ -1,5 +1,7 @@
 #include "SeanceManagerImpl.h"
 
+#include <QDebug>
+
 
 namespace NSApplication {
 namespace NSKernel {
@@ -21,6 +23,11 @@ CSeanceManagerImpl::pressingInput() {
 NSLibrary::CObserver<CSeanceManagerImpl::CKeyReleasing>*
 CSeanceManagerImpl::releasingInput() {
   return &KeyReleasingInput_;
+}
+
+void CSeanceManagerImpl::makeSessions() {
+  SeanceMaker_.transferTo(&CurrentSeance_);
+  qDebug() << "CurrentSeance_.size() = " << CurrentSeance_.size();
 }
 
 void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {
