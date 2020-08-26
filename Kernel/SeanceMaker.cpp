@@ -38,6 +38,8 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
 bool CSeanceMaker::needNewSession(const CKeyPressing& KeyPressing) const {
   if (!PressedKeys_.empty())
     return false;
+  if (CurrentSession().empty())
+    return false;
   if (!TimeLimit_.has_value() || KeyPressing.Time - LastEvent_ < *TimeLimit_)
     return false;
   return true;
@@ -45,6 +47,7 @@ bool CSeanceMaker::needNewSession(const CKeyPressing& KeyPressing) const {
 
 void CSeanceMaker::openNewSession() {
   assert(PressedKeys_.empty());
+  assert(!CurrentSession().empty());
   RawSeance_.emplace_back();
 }
 
@@ -58,6 +61,11 @@ CSeanceMaker::findKey(CKeyPosition KeyPosition) {
 }
 
 CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() {
+  assert(!RawSeance_.empty());
+  return RawSeance_.back();
+}
+
+const CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() const {
   assert(!RawSeance_.empty());
   return RawSeance_.back();
 }

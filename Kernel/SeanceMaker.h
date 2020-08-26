@@ -35,6 +35,7 @@ private:
   CPressedKeys::iterator findKey(CKeyPosition KeyPosition);
 
   CRawSession& CurrentSession();
+  const CRawSession& CurrentSession() const;
 
   CRawSeance RawSeance_{1};
   CPressedKeys PressedKeys_;
