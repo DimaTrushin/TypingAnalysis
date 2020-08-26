@@ -24,6 +24,7 @@ win32-msvc*{
 
 SOURCES += \
   Kernel/KeyEvent.cpp \
+  Kernel/SeanceMaker.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
@@ -42,6 +43,7 @@ SOURCES += \
 
 HEADERS += \
   Kernel/KeyEvent.h \
+  Kernel/SeanceMaker.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \

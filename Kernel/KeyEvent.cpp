@@ -21,7 +21,7 @@ CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent)
               PressingEvent.KeyID,
               PressingEvent.KeyLabel,
               PressingEvent.KeyText,
-              PressingEvent.PressingTime) {
+              PressingEvent.Time) {
 }
 
 void CKeyEvent::setReleasingTime(CTime ReleasingTime) {

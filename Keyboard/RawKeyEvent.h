@@ -16,7 +16,7 @@ namespace NSApplication {
 namespace NSKeyboard {
 
 struct CKeyPressing {
-  CTime PressingTime;
+  CTime Time;
   CKeyPosition KeyPosition;
   CKeyID KeyID;
   QChar KeyLabel;
@@ -24,7 +24,7 @@ struct CKeyPressing {
 };
 
 struct CKeyReleasing {
-  CTime ReleasingTime;
+  CTime Time;
   CKeyPosition KeyPosition;
   CKeyID KeyID;
 };

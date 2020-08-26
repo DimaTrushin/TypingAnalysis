@@ -57,14 +57,14 @@ void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
            << "KeyPos =" << KeyPressing.KeyPosition
            << "symb =" << KeyPressing.KeyText
            << "lbl =" << KeyPressing.KeyLabel
-           << "time =" << KeyPressing.PressingTime.toMilliSecondsF() << "ms";
+           << "time =" << KeyPressing.Time.toMilliSecondsF() << "ms";
   KeyPressingOut_.set(KeyPressing);
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
   qDebug() << "KeyID =" << KeyReleasing.KeyID
            << "KeyPos =" << KeyReleasing.KeyPosition
-           << "time =" << KeyReleasing.ReleasingTime.toMilliSecondsF() << "ms";
+           << "time =" << KeyReleasing.Time.toMilliSecondsF() << "ms";
   KeyReleasingOut_.set(KeyReleasing);
 }
 
