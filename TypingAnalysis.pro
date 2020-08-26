@@ -24,6 +24,7 @@ win32-msvc*{
 
 SOURCES += \
   AppStatusAccess.cpp \
+  Interface/KeyboardShutter.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
 
 HEADERS += \
   AppStatusAccess.h \
+  Interface/KeyboardShutter.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \

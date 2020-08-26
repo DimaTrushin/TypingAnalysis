@@ -53,19 +53,23 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 }
 
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
-  qDebug() << "KeyID =" << KeyPressing.KeyID
-           << "KeyPos =" << KeyPressing.KeyPosition
-           << "symb =" << KeyPressing.KeyText
-           << "lbl =" << KeyPressing.KeyLabel
-           << "time =" << KeyPressing.Time.toMilliSecondsF() << "ms";
-  KeyPressingOut_.set(KeyPressing);
+  if (isActive_) {
+    qDebug() << "KeyID =" << KeyPressing.KeyID
+             << "KeyPos =" << KeyPressing.KeyPosition
+             << "symb =" << KeyPressing.KeyText
+             << "lbl =" << KeyPressing.KeyLabel
+             << "time =" << KeyPressing.Time.toMilliSecondsF() << "ms";
+    KeyPressingOut_.set(KeyPressing);
+  }
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
-  qDebug() << "KeyID =" << KeyReleasing.KeyID
-           << "KeyPos =" << KeyReleasing.KeyPosition
-           << "time =" << KeyReleasing.Time.toMilliSecondsF() << "ms";
-  KeyReleasingOut_.set(KeyReleasing);
+  if (isActive_) {
+    qDebug() << "KeyID =" << KeyReleasing.KeyID
+             << "KeyPos =" << KeyReleasing.KeyPosition
+             << "time =" << KeyReleasing.Time.toMilliSecondsF() << "ms";
+    KeyReleasingOut_.set(KeyReleasing);
+  }
 }
 
 void CKeyboardHandler::onKeyboardException(const CQtException& message) {
