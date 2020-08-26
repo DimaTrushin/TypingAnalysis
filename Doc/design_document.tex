@@ -61,11 +61,22 @@ The order of construction is ensured by the inheritance mechanism.
 \includegraphics[scale = 0.3]{Figures/CApplicationStructure.png}
 \end{center}
 
+\subsection{Application data flow}
+
+Currently the following modules are implemented.
+
+\begin{center}
+\includegraphics[scale = 0.4]{Figures/Modules.png}
+\end{center}
+
+Boxes are main application components. Read color means that the objects are global and blue color means that the objects are local. Yellow lines denote Observable/Observer relationship. Violet lines represent Control/Model relationship. The arrows denote the direction of the data flow.
+
+
 \subsection{Keyboard}
 
 Each key on a keyboard has its position identifier \verb"CKeyPosition" and a key identifier \verb"CKeyId". CKeyPosition points out a physical location on a keyboard (e.g. a row and a column where the key is located). CKeyId identify the key depending on the keyboard layout (qwerty, Dvorak, etc.) CKeyPosition is an enum with following identifiers (xkb identifiers):
 \begin{center}
-\includegraphics[scale = 0.5]{Figures/KeyPosition.png}
+\includegraphics[scale = 1]{Figures/KeyPosition.png}
 
 The picture is taken from \href{https://www.charvolant.org/doug/xkb/html/node5.html}{here}
 \end{center}
@@ -596,7 +607,7 @@ then it is passed by value and all other types are passed by const reference. In
 \item \verb"setUnsubscribe(CMethod)". This method chages the action on unsubscription.
 \end{enumerate}
 
-\paragraph{High level primitives} The library provides a higher level observable and observers. Currently the following are implemented:
+\paragraph{Higher level primitives} The library provides higher level observable and observers. Currently the following are implemented:
 \begin{enumerate}
 \item \verb"CObservableData<TData>"
 \item \verb"CNotifier"
