@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSQT_CAPPSTATUS_H
 
 #include "Library/Observer/Observer.h"
+#include "AppState.h"
 
 #include <QObject>
 
@@ -10,15 +11,9 @@ namespace NSQt {
 
 class CAppStatus : public QObject {
   Q_OBJECT
-public:
-  enum class EState : unsigned char {
-    Active = 1,
-    Inactive = 2,
-  };
 
-private:
-  using CObservalbeState = NSLibrary::CObservableData<EState>;
-  using CStateObserver = NSLibrary::CObserver<EState>;
+  using CObservalbeState = NSLibrary::CObservableData<EAppState>;
+  using CStateObserver = NSLibrary::CObserver<EAppState>;
 public:
   CAppStatus();
 

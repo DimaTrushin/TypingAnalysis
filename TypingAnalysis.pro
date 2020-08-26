@@ -34,6 +34,7 @@ SOURCES += \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
+  Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
   Qt/QtLoopExceptionHandler.cpp \
@@ -74,6 +75,7 @@ HEADERS += \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
+  Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
   Qt/QtLoopExceptionHandler.h \

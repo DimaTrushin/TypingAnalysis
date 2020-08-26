@@ -17,11 +17,11 @@ void CAppStatus::subscribeToAppState(CAppStatus::CStateObserver* Observer) {
 
 void CAppStatus::applicationStateChanged(Qt::ApplicationState State) {
   if (State == Qt::ApplicationActive) {
-    AppState_.set(EState::Active);
+    AppState_.set(EAppState::Active);
     return;
   }
   if (State == Qt::ApplicationInactive || State == Qt::ApplicationHidden) {
-    AppState_.set(EState::Inactive);
+    AppState_.set(EAppState::Inactive);
     return;
   }
 }
