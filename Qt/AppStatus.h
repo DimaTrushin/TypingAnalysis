@@ -6,6 +6,7 @@
 
 #include <QObject>
 
+
 namespace NSApplication {
 namespace NSQt {
 

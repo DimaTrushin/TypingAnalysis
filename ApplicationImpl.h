@@ -15,6 +15,7 @@ class CApplicationImpl
   using CSessionFlusher = NSInterface::CSessionFlusher;
 public:
   CApplicationImpl();
+
 private:
   CKeyboardShutter KeyboardShutter_;
   CSessionFlusher SessionFlusher_;

@@ -52,6 +52,9 @@ void CSeanceMaker::transferTo(CSeance* Seance) {
     releaseAllKeysNow();
   for (auto& RawSession : RawSeance_)
     if (!RawSession.empty())
+      // TO DO
+      // Add filter ignoring small sessions or sessions with no symbol keys
+      // or any other filtering method
       Seance->emplace_back(RawSession.begin(), RawSession.end());
   RawSeance_.clear();
   RawSeance_.emplace_back();

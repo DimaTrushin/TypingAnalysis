@@ -8,13 +8,11 @@
 
 
 namespace NSApplication {
-
 namespace NSKeyboard {
 class CKeyboardHandler;
 } // NSKeyboard
 
 namespace NSInterface {
-
 
 // TO DO
 // I am not sure that this is an appropriate place to define the class
