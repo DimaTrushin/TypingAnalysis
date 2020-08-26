@@ -11,7 +11,7 @@ class CApplicationKernel : protected CApplicationGlobals {
   using CSeanceManager = NSKernel::CSeanceManager;
 public:
   CApplicationKernel();
-private:
+protected:
   CSeanceManager SeanceManager_;
 };
 
