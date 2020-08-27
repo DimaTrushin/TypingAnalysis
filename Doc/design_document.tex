@@ -17,21 +17,21 @@
 
 \section{General information}
 
-The application uses Qt environment as an ecosystem. It does not use RTTI but uses exceptions. All components of the program must be inside NSApplication namespace. Nested namespaces should be placed in a subfolder of the project.
+The application uses Qt environment as an ecosystem. It does not use RTTI but uses exceptions. Application uses static linking and presents a single binary file as a result. All components of the program must be inside \verb"NSApplication" namespace. Nested namespaces should be placed in a subfolder of the project.
 
 \subsection{Addressable objects}
 
-I use term addressable object. It means an object that can be referenced by other objects. There are several types of addressable objects:
+I use a notion of an addressable object. It means an object that can be referenced by other objects. There are several types of addressable objects:
 \begin{enumerate}
-\item QObject
-\item CApplicationImpl
-\item Observer/Observable (TO DO)
+\item \verb"QObject".
+\item \verb"CApplicationImpl" or any other implementations located on the heap (PIMPL).
+\item Observer/Observable.
 \end{enumerate}
-Addressable objects must be created on heap via \verb"std::make_unique" or similar mechanism. An exception to this rule: you may create an addressable object inside another addressable object.
+Addressable objects must be created on the heap via \verb"std::make_unique" or similar mechanism. An exception to this rule: you may create an addressable object inside another addressable object.
 
 \subsection{Exceptions}
 
-The strategy is to catch exception, show a message, and die. Since Qt environment is not totally exception safe, it is not allowed to throw exceptions in an event loop. If a QObject requires to throw an exception and terminate the program it catches the exception by itself and then sends a signal to CQtLoopException object. CQtLoopException shows a message and stops the event loop. CQtLoopException is a singleton, it uses CAnyGlobalAccess template (see~\ref{section::Singleton}).
+The strategy is to catch an exception, show a message, and die. Since Qt environment is not totally exception safe, it is not allowed to throw exceptions in an event loop. If a \verb"QObject" requires to throw an exception and terminate the program it catches the exception by itself and then sends a signal to \verb"CQtLoopException" object. \verb"CQtLoopException" shows a message and stops the event loop. \verb"CQtLoopException" is a singleton, it uses \verb"CAnyGlobalAccess" template (see~\ref{section::Singleton}).
 
 \section{Application behavior}
 
@@ -43,18 +43,20 @@ The global logic of the entry point is the following:
 
 When started the application intercepts keyboard events system-wide, translates them into OS independent form and shows the debug output via \verb"qDebug()". If debugging of the Keyboard Handler is enabled~\ref{section::Debugging}, it starts an additional window showing the debug information.
 
-(TO DO) The KeyboardHandler must notify the kernel of the application. The kernel compute the required information and notify the interface of the application. From the other hand the interface elements control the kernel. All elements of the kernel are connected using Observer pattern~\ref{section::Observer}. The interface and the kernel are connected using MVC pattern. The MVC pattern is based on the Observer pattern.
+(TO DO) The KeyboardHandler must notify the kernel of the application. The kernel computes the required information and notifies the interface of the application. From the other hand the interface elements control the kernel. All elements of the kernel are connected using Observer pattern~\ref{section::Observer}. The interface and the kernel are connected using MVC pattern. The MVC pattern is based on the Observer pattern as written \href{https://stlab.cc/tips/about-mvc.html}{here} by Sean Parent.
 
 \section{Application Structure}
 
 \subsection{Overview}
 
-CApplication object initialize all required resources for the application including the ones to interact with Qt ecosystem. It may throw an exception while constructing. In order to minimize stack usage CApplication contains \verb"std::unique_ptr" to CApplicationImpl (it is addressable object). CApplicationImpl consists of four parts:
+\verb"CApplication" object initializes all required resources for the application including the ones to interact with Qt ecosystem. It may throw an exception while constructing. In order to minimize stack usage \verb"CApplication" contains \verb"std::unique_ptr" to \verb"CApplicationImpl" (it is an addressable object). \verb"CApplicationImpl" consists of four parts:
 \begin{enumerate}
-\item \textbf{CApplicationGlobals}. Its purpose is to initialize global resources, e.g., timers, loggers, thread pools, etc. Application initializes all global resources (basically singletons) at the start. This allows not to wast time on the first call. Also, it is inconvenient to initialize timers via the first call.
-\item \textbf{CApplicationKernel}. Its purpose is to initialize the kernel of the application. The kernel does not depend on the GUI and uses MVC via observer pattern to interact with GUI.
-\item \textbf{CApplicationGUI}. Its purpose is to provide View wrappers over Qt resources compatible with MVC pattern.
-\item \textbf{CApplicationImpl}. Its purpose is to connect the kernel and the GUI via MVC.
+\item \verb"CApplicationGlobals". Its purpose is to initialize global resources, e.g., timers, loggers, thread pools, etc. Application initializes all global resources (basically singletons) at the start. This allows not to wast time on the first call. Also, it is inconvenient to initialize timers via the first call.
+
+\item \verb"CApplicationKernel". Its purpose is to initialize the kernel of the application. The kernel does not depend on the GUI and uses MVC via observer pattern to interact with GUI.
+\item \verb"CApplicationGUI". Its purpose is to provide View wrappers over Qt resources compatible with MVC pattern.
+
+\item \verb"CApplicationImpl". Its purpose is to connect the kernel and the GUI via MVC.
 \end{enumerate}
 The order of construction is ensured by the inheritance mechanism.
 \begin{center}
@@ -69,47 +71,61 @@ Currently the following modules are implemented.
 \includegraphics[scale = 0.4]{Figures/Modules.png}
 \end{center}
 
-Boxes are main application components. Read color means that the objects are global and blue color means that the objects are local. Yellow lines denote Observable/Observer relationship. Violet lines represent Control/Model relationship. The arrows denote the direction of the data flow.
+The boxes are application components. Read color means that the objects are global and blue color means that the objects are local. Yellow lines denote Observable/Observer relationship. Violet lines represent Control/Model relationship. The arrows denote the direction of the data flow.
 
 
 \subsection{Keyboard}
 
-Each key on a keyboard has its position identifier \verb"CKeyPosition" and a key identifier \verb"CKeyId". CKeyPosition points out a physical location on a keyboard (e.g. a row and a column where the key is located). CKeyId identify the key depending on the keyboard layout (qwerty, Dvorak, etc.) CKeyPosition is an enum with following identifiers (xkb identifiers):
+Each key on a keyboard has its position identifier \verb"CKeyPosition" and a key identifier \verb"CKeyId". \verb"CKeyPosition" points out a physical location on a keyboard (e.g. a row and a column where the key is located). \verb"CKeyId" identifies the key depending on the keyboard layout (qwerty, Dvorak, etc.) \verb"CKeyPosition" is an enum with the following identifiers (xkb identifiers):
 \begin{center}
 \includegraphics[scale = 1]{Figures/KeyPosition.png}
 
 The picture is taken from \href{https://www.charvolant.org/doug/xkb/html/node5.html}{here}
 \end{center}
-It should be noted that the numeric values of the identifiers are slightly different from the one in xkb.
+It should be noted that the numeric values of the identifiers are slightly different from the ones in xkb.
 
 \subsection{Keyboard Interception}
 
-The application must intercept keyboard events system-wide even if application is on the background. Qt ecosystem does not allow doing this. Hence, we need to implement our own mechanism. System wide interception usually means raw keyboard data is being intercepted. Hence, we need to implement translation of the key events to generated text. The main problem here is dead keys and ligatures. Current implementation supports dead keys but not ligatures (but the design allows to extend implementation to ligatures). Since system-wide interception must be done on the level of current OS, we implement these mechanism separately for each supported OS. Currently list of the supported OS
+The application must intercept keyboard events system-wide even if application is on the background. Qt ecosystem does not allow doing this. Hence, we need to implement our own mechanism. System wide interception usually means that raw keyboard data is being intercepted. Hence, we need to implement translation of the key events to generated text. The main problem here is dead keys and ligatures (left directional and bidirectional text is not supported in any way, shape, or form). Current implementation supports dead keys but not ligatures (but the design allows to extend implementation to ligatures TO DO). Since system-wide interception must be done on the level of current OS, we implement this mechanism separately for each supported OS. Currently the list of the supported OS is the following
 \begin{enumerate}
 \item Windows 8 or higher.
-\item Linux with X11 (there is a working prototype, not implemented yet, need to specify all the details).
-\item macOS 10.14 (Mojave) or higher (there is a working prototype, not implemented yet, need to specify all the details).
+\item Linux with X11 (there is a working prototype, not implemented yet, need to specify all the details TO DO).
+\item macOS 10.14 (Mojave) or higher (there is a working prototype, not implemented yet, need to specify all the details TO DO).
 \end{enumerate}
 
 \paragraph{Current design}
 
-\verb"CKeyboardHandler" serves as an object receiving all key events in a system independent form. This is a singleton described in section~\ref{section::KeyboardHandler}.
+The design is based on ideas of \href{https://github.com/asokol123}{Alexey Sokolovsky}. He is also in charge of Linux and macOS implementations.
 
-Let us consider the following figure:
+The main object here is \verb"CKeyboardHandler". It serves as an object receiving all key events in a system independent form. This is a singleton described in section~\ref{section::KeyboardHandler}. Let us consider the following figure:
 \begin{center}
 \includegraphics[scale = 0.5]{Figures/KeyboardInterception.png}
 
 Green arrows represent queued Qt signals and yellow arrows represent OS dependent signals.
 \end{center}
 
-\verb"CKeyboardHandler" acts on the main GUI thread. It lives in Qt ecosystem and spawns an additional thread while construction. This additional thread lives in the ecosystem of OS. The main object acting on the additional thread is \verb"CKeyboardListener". Its roles are:
+\verb"CKeyboardHandler" acts on the main GUI thread. It lives in Qt ecosystem and spawns an additional thread while construction. This additional thread lives in the OS ecosystem. 
+
+\paragraph{CKeyboardListener}
+The main object acting on the additional thread is \verb"CKeyboardListener". Its roles are:
 \begin{enumerate}
-\item Intercept key events system-wise
-\item Extract all the information from OS key events and translate it to OS independent form.
+\item Intercept key events system-wide.
+
+\item Extract all the information from OS key events and translate them to OS independent form.
+
 \item Resend OS independent key events to \verb"CKeyboardHandler" via Qt event system.
-\item It receives only one message from \verb"CKeyboardHandler" via OS ecosystem message system. This is a ``stop'' message. Receiving the message it stops the additional thread.
+
+\item It receives only one message from \verb"CKeyboardHandler" via OS ecosystem message system. This is a ``stop'' message. Receiving the message, it stops the additional thread.
 \end{enumerate}
 
+There are two types of messages sent by \verb"CKeyboardListener":
+\begin{enumerate}
+\item Key pressing message.
+\item Key releasing message.
+\end{enumerate}
+Key pressing message contains more information.
+
+\paragraph{CListenerExceptionHandler}
 The second object acting on the additional thread is \verb"CListenerExceptionHandler". Its roles are:
 \begin{enumerate}
 \item Extract exception information.
@@ -117,17 +133,26 @@ The second object acting on the additional thread is \verb"CListenerExceptionHan
 \end{enumerate}
 If an exception happens the event loop on the additional thread stops. \verb"CKeyboardHandler" resend the message to \verb"CQtEventLoopExceptionHandler". The latter one shows the error message and terminates the program.
 
+
+When we need to shut down the keyboard interception temporary, we make \verb"CKeyboardHandler" to ignore the messages from \verb"CKeyboardListener". The latter object is always on and operational.
+
 \subsection{System independent Key event}
 
-The \verb"CKeyEvent" contains the following information (TO DO not implemented, subject to change):
+The \verb"CKeyEvent" contains the following information (TO DO not fully implemented yet, subject to change):
 \begin{enumerate}
 \item Pressing time.
+
 \item Releasing time.
-\item \verb"CKeyPosition" is an identifier of the Key position on the keyboard (independent on the layout this is a physical instance of a key).
-\item \verb"CKeyId" is an identifier of a Key depending on layout. It is based on Windows Virtual Key table.
-\item Key label. This is a symbol giving a human readable name for a key. For example, a letter or a number written on a keyboard, or a special symbol for system keys like shifts, backspace, enter, etc.
+
+\item \verb"CKeyPosition" is an identifier of the Key position on the keyboard (independent on the layout, this is a physical instance of a key). It identifies the key uniquely.
+
+\item \verb"CKeyId" is an identifier of the Key depending on the layout being used. It is based on the Windows Virtual Key table.
+
+\item Key label. This is a symbol giving a human readable name for the key. For example, a letter or a number written on a keyboard, or a special symbol for system keys like shifts, backspace, enter, etc.
+
 \item Key Text. This is a sequence of symbols appearing after pressing this key. It can be $0$, $1$, or $2$ symbols. The exact rules are explained below.
-\item Flags (subject to change). These flags are reserved and can be needed to pass some additional information.
+
+\item Flags (subject to change, currently are not implemented TO DO). These flags are reserved and can be needed to pass some additional information.
 \end{enumerate}
 
 \verb"CKeyboardHandler" receives the following structures from \verb"CKeyboardListener":
@@ -149,24 +174,24 @@ The structure \verb"CKeyReleasing" contains the following fields:
 \begin{enumerate}
 \item \verb"CTime" The releasing time of the key.
 \item \verb"CKeyPosition" The OS independent position of the key.
-\item \verb"CKeyID" The OS independent ID of the key. (subject to change, probably need to exclude this)
+\item \verb"CKeyID" The OS independent ID of the key. (subject to change, probably need to exclude it TO DO)
 \end{enumerate}
 
-When we need to pair the pressing and releasing events into one key, we identify the key by its position. It should be noted that the ID of the key can change. For example, if we press a number on the numpad (keep pressing), then press NumLock, and only then release the numpad number key, the numpad key will have different IDs while pressing and releasing. This happens because NumLock changes the mapping for physical keys to the corresponding IDs.
+When we need to pair the pressing and releasing events into one key, we identify the key by its position. It should be noted that the ID of the key can change. For example, if we press a number on the numpad (and keep pressing), then press NumLock, and only then release the numpad number key, the numpad key will have different IDs while pressing and releasing. This happens because NumLock changes the mapping for physical keys to the corresponding IDs.
 
 \subsection{Key mapping}
 
-This section is mostly influenced by a \href{http://archives.miloush.net/michkap/archive/2006/03/23/558658.html}{series} of blogs by Michael S. Kaplan. His posts explain all subtleties of the keyboard handling on Windows. However, the principals he explains are applicable to any keyboard handling on any OS.
+This section is mostly influenced by a \href{http://archives.miloush.net/michkap/archive/2006/03/23/558658.html}{series} of blogs by Michael S. Kaplan. His posts explain all subtleties of the keyboard handling on Windows. However, the principals he explains are applicable to any keyboard handling on any OS. I do not implement all the features (TO DO need a full list of implemented and non-implemented features).
 
-We separate keys to the following  categories:
+We split keys into the following categories:
 \begin{enumerate}
-\item Producing symbols keys (not necessarily printable symbols).
+\item Producing symbols keys (not necessarily printable symbols). These keys may produce symbols depending on the sate of the keyboard (not necessarily in all possible states).
 \item Shifters. These are: Shift (left, right), Ctrl (left, right), Alt (left, right), Capslock.
 \item Ignorable. All other keys.
 \end{enumerate}
-The key Capslock has a toggled state. Also NumLock and ScrollLock have toggled state but we ignore them.
+The key Capslock has a toggled state. Also NumLock and ScrollLock have toggled state but we ignore toggled states of these keys.
 
-The symbol appearing on the screen depends on the sequence of keys pressed and not just one key. There are several reasons for that: dead keys or chained dead keys. I am currently focused on the dead key handling but keep in mind chained dead keys and other possible features for the future implementation. In order to handle a key pressing we need to know:
+The symbol appearing on the screen depends on the sequence of keys pressed and not just one key. There are several reasons for that: dead keys or chained dead keys, some modifiers like Capslock or NumLock. I am currently focused on the dead key handling but keep in mind chained dead keys and other possible features for the future implementation. Modifiers behave as expected. In order to handle a key pressing, we need to know:
 \begin{enumerate}
 \item Key.
 \item Shifters.
@@ -175,26 +200,33 @@ The symbol appearing on the screen depends on the sequence of keys pressed and n
 
 These triples may be classified as follows:
 \begin{enumerate}
-\item Undefined. This combinations do not produce any symbols and are ignored by symbol producing system.
-\item Control. This combinations do not produce any symbols and are ignored by symbol producing system. However, this combinations may copy and past some text. We cannot handle these events and just ignore them. They are usually combinations of Ctrl or Ctrl+Shift with some other keys.
+\item Undefined. These combinations do not produce any symbols and are ignored by the symbol producing system.
 
-\item Printable Key. This keys usually produce a single symbol. There are cases when they produce a ligature, that is, a sequence of two UTF-16 characters combined into one symbol on print (ligatures currently are not supported but the support is possible).
-\item Printable Dead Key. This are special keys. They do not produce symbol on its own but can be combined with other keys if compatible. A symbol producing system has a special buffer to store a previous dead key. This dead key is flushed from the buffer if the symbol producing system accepts one of the next keys. Theoretically, it is possible to use chained dead keys, that is, to store a sequence of dead keys and then compose them with other characters. However, this feature is not considered and is not implemented.
+\item Control. These combinations do not produce any symbols and are ignored by the symbol producing system. However, this combinations may copy and past some text. We cannot handle these events and just ignore them. They are usually combinations of Ctrl or Ctrl+Shift with some other keys.
+
+\item Printable Key. These keys usually produce a single symbol. There are cases when they produce a ligature, that is, a sequence of two UTF-16 characters combined into one symbol on print (ligatures currently are not supported but the support is possible).
+
+\item Printable Dead Key. These are special keys. They do not produce a symbol on its own but can be combined with other keys if compatible. The symbol producing system has a special buffer to store a previous dead key. This dead key is flushed from the buffer if the symbol producing system accepts one of the next keys. Theoretically, it is possible to use chained dead keys, that is, to store a sequence of dead keys and then compose them with other characters. However, this feature is not considered and is not implemented.
+
 \item Non-printable Key. (On Windows they are: cancel, backspace, tab, enter, esc). These keys are a pain in the neck. They behave differently in different Text Editors.
 \end{enumerate}
 
 These triples behave as follows.
 \begin{enumerate}
-\item Undefined. This combinations do not produce any symbols and are ignored by symbol producing system.
-\item Control. This combinations do not produce any symbols and are ignored by symbol producing system.
+\item Undefined. These combinations do not produce any symbols and are ignored by the symbol producing system.
+
+\item Control. These combinations do not produce any symbols and are ignored by the symbol producing system.
+
 \item Printable Key. This key behaves as follows:
 \begin{enumerate}
-\item If there is no active dead key (the dead key was not pressed before this key or was flashed from the buffer of the symbol producing system). In this case Printable Key result in a single printable symbol. The dead key is flushed from the buffer.
-\item If there is an active dead key (the dead key was pressed and is in the buffer of the symbol producing system). If Printable Key is compatible with the dead key they result in a single composed character. In other case, they produce a pair of symbols: a symbol for the dead key and a symbol for the Printable Key. The dead key is flushed from the buffer.
+\item If there is no active dead key (the dead key was not pressed before this key or was flushed from the buffer of the symbol producing system). In this case Printable Key results in a single printable symbol.
+
+\item If there is an active dead key (the dead key was pressed and is in the buffer of the symbol producing system). If the Printable Key is compatible with the dead key they result in a single composed character. In other case, they produce a pair of symbols: a symbol for the dead key and a symbol for the Printable Key. The dead key is flushed from the buffer.
 \end{enumerate}
 \item Printable Dead Key. This key behaves as follows:
 \begin{enumerate}
-\item If there is no active dead key (the dead key was not pressed before this key or was flashed from the buffer of the symbol producing system). This dead key is stored in a buffer of the symbol producing system. No symbol is generated.
+\item If there is no active dead key (the dead key was not pressed before this key or was flushed from the buffer of the symbol producing system). This dead key is stored in the buffer of the symbol producing system. No symbol is generated.
+
 \item If there is an active dead key (the dead key was pressed and is in the buffer of the symbol producing system). The dead keys are never compatible. They produce two symbols: a symbol for the first dead key and a symbol for the second dead key. The dead key is flushed from the buffer.
 \end{enumerate}
 \item Non-printable Key. (On Windows they are: cancel, backspace, tab, enter, esc). This key behaves as follows:
@@ -208,16 +240,20 @@ These triples behave as follows.
 
 \verb"CKeyboardListenerWin" substitutes \verb"CKeyboardListener" on Windows. This object is addressable, hence it stores a unique pointer to its implementation. When created it does the following operations:
 \begin{enumerate}
-\item It register and create a background message Window.
+\item It registers and creates a background message Window.
+
 \item It provides a hook to RAW INPUT system with global keyboard interception.
-\item It sends a special Killer object to \verb"CKeyboardHandler" via \verb"std::promise" to receive ``stop'' messages.
+
+\item It sends a special Killer object to \verb"CKeyboardHandler" via \verb"std::promise" to receive the ``stop'' messages.
+
 \item It connects its Qt signals to the corresponding Qt slots of \verb"CKeyboardHandler" to send messages about key events.
 \end{enumerate}
 
-This object starts a Windows message loop on its thread and react to two messages:
+This object starts a Windows message loop on its thread and reacts to two messages:
 \begin{enumerate}
-\item \verb"WM_INPUT". It corresponds to RAW INPUT mechanism.
 \item \verb"WM_STOP_LISTENING". This is an application defined event for the ``stop'' message.
+
+\item \verb"WM_INPUT". It corresponds to RAW INPUT mechanism.
 \end{enumerate}
 
 In the event loop
@@ -226,7 +262,7 @@ In the event loop
 
 \item On \verb"WM_INPUT" message. It performs the following steps:
 \begin{enumerate}
-\item Get time of the message. There are two options: get current time from the global Timer or get OS provided time. I stick to the first option to have one consistent time line in the application. (TO DO currently not implemented).
+\item Get time of the message. There are two options: get current time from the global Timer or get OS provided time. I stick to the first option to have one consistent time line in the application.
 
 \item Extract \verb"RAWKEYBOARD" data from the OS key event.
 
@@ -247,8 +283,7 @@ In the event loop
 
 \paragraph{Structure of CKeyboardListenerWin}
 
-This section is subject to change.
-\verb"CKeyboardListenerWin" contains an \verb"std::unique_ptr" to \verb"CKeyboardListenerWinImpl". The latter object contains:
+The object \verb"CKeyboardListenerWin" contains an \verb"std::unique_ptr" to \verb"CKeyboardListenerWinImpl". The latter object contains (this is not a complete list but represents the key parts of the object):
 \begin{enumerate}
 \item static method \verb"WndProc".
 \item \verb"CWinRawInputHook KeyboardHook_".
@@ -257,19 +292,21 @@ This section is subject to change.
 \item \verb"CKeyTextMaker KeyTextMaker_".
 \end{enumerate}
 
-\verb"WndProc" is a windows procedure. It is used by message window to react to messages. This function calls an appropriate method of \verb"CKeyboardListenerWinImpl".
+\begin{itemize}
+\item \verb"WndProc" is a windows procedure. It is used by the message window created on the additional thread to react to OS messages. This function calls an appropriate method of \verb"CKeyboardListenerWinImpl".
 
-\verb"CWinRawInputHook" provides integration of \verb"CKeyboardListenerWinImpl" into Windows ecosystem. It registers and creates a message non-gui window and then register this window in RAW INPUT system to receive all keyboard messages system-wide.
+\item \verb"CWinRawInputHook" provides integration of \verb"CKeyboardListenerWinImpl" into Windows ecosystem. It registers and creates a non-gui message window and then register this window in RAW INPUT system to receive all keyboard messages system-wide.
 
-\verb"CRawInputReader" provides a convenient way of extraction \verb"RAWKEYBOARD" data from the key event.
+\item \verb"CRawInputReader" provides a convenient way of extraction \verb"RAWKEYBOARD" data from a key event.
 
-\verb"CKeyPositionWin" computes \verb"CKeyPosition" for a key.
+\item \verb"CKeyPositionWin" computes \verb"CKeyPosition" for a key.
 
-\verb"CKeyTextMaker" gets a text produced by the current key event and also produces labels for keys.
+\item \verb"CKeyTextMaker" gets a text produced by the current key event and also produces labels for keys.
+\end{itemize}
 
 \paragraph{Known issues}
 
-In order to get a symbol from a key event \verb"KeyTextMaker_" needs to know the current keyboard layout. It gets the layout of the current foreground window. However, certain windows do not receive broadcast messages, hence are unaware of the layout changes. For example, all console windows, calc.exe, etc. If you type while a console window has focus and switch the layout, the application will not notice this. This is a well known issue. This happens because a console application is not a window from the OS point of view. It has a parent window that does receive the broadcast messages, however it is a complicated task to find out the handle to the window. I am leaving this issue as it is for now.
+In order to get a symbol from a key event \verb"KeyTextMaker_" needs to know the current keyboard layout. It gets the layout of the current foreground window. However, certain windows do not receive broadcast messages, hence are unaware of the layout changes. For example, all console windows, calc.exe, etc. If you type while a console window has focus and switch the layout, the application will not notice this. This is a well known issue. This happens because a console application is not a window from the OS point of view. It has a parent window that does receive the broadcast messages, however it is a complicated task to find out the handle to the parent window. I am leaving this issue as it is for now. In order to solve the issue, we need to modify the \verb"getForegroundLayout()" method in \verb"CWinKeyboardApi" facade.
 
 \subsubsection{Keyboard Interception on Linux}
 
@@ -284,6 +321,8 @@ TO DO
 
 \subsubsection{Timer}
 
+This module was written by \href{https://github.com/kuskarov}{Tagir Kuskarov}. 
+
 Application uses one main timer. This is a singleton with respect to the template here~\ref{section::Singleton}. It starts in the constructor of CApplicationGlobal. Timer return CTime object. It does not depend on particular units but you may convert it to any units you want. Internally \verb"std::chrono" is used.
 
 
@@ -293,28 +332,30 @@ Application uses one main timer. This is a singleton with respect to the templat
 
 \subsubsection{KeyboardHandler}\label{section::KeyboardHandler}
 
-Application uses CKeyboardHandler object to intercept keyboard system-wise, that is, it intercepts the keyboard even if application is not in the focus. Qt does not support such functionality. Thus the corresponding mechanism is implemented.
+Application uses \verb"CKeyboardHandler" object to intercept keyboard system-wide, that is, it intercepts the keyboard even if application has no focus. Qt does not support such functionality. Thus the corresponding mechanism is implemented.
 
-CKeyboardHandler is wrapper into a singleton according to Section~\ref{section::Singleton}. It is initialized in CApplicationGlobal. From the user point of view CKeyboardHandler able to send the following information to the application objects:
+\verb"CKeyboardHandler" is wrapped into a singleton according to Section~\ref{section::Singleton}. It is initialized in \verb"CApplicationGlobal". From the user point of view \verb"CKeyboardHandler" is able to send the following information to the application objects:
 \begin{enumerate}
-\item \textbf{CRawKeyEvent}. This is a system independent representation of a keyboard event (TO DO currently not implemented). This event is sent via Observer pattern (TO DO currently not implemented).
+\item \verb"CKeyPressing" event. This is a system independent representation of a key pressing event. This event is sent via Observer pattern.
 
-\item \textbf{CQtException}. This is a message with information about an exception encountered. CKeyboardHandler sends a Qt signal to CQtLoopExceptionHandler with the corresponding CQtException object. The application terminates on any exception.
+\item \verb"CKeyReleasing" event. This is a system independent representation of a key releasing event. This event is sent via Observer pattern.
+
+\item \verb"CQtException". This is a message with information about an exception encountered. \verb"CKeyboardHandler" sends a Qt signal to \verb"CQtLoopExceptionHandler" with the corresponding \verb"CQtException" object. The application terminates on any exception.
 \end{enumerate}
 
-Interception of the keyboard is implemented as follows. CKeyboardHandler spans a worker thread with OS dependent message loop. There are two objects operate on the worker thread:
+Interception of the keyboard is implemented as follows. \verb"CKeyboardHandler" spans a worker thread with OS dependent message loop. There are two objects operating on the worker thread:
 \begin{enumerate}
-\item \textbf{CKeyboardListener}. This object starts an OS dependent event loop with exec() function. It listen to two type of messages:
+\item \verb"CKeyboardListener". This object starts an OS dependent event loop with \verb"exec()" function. It listens to two type of messages:
 \begin{enumerate}
 \item OS key events.
-\item CKeyboardHandler stop event.
+\item \verb"CKeyboardHandler" ``stop'' event.
 \end{enumerate}
-CKeyboardListener intercepts any key events in OS, transform system dependent key events into CRawKeyEvent-s (TO DO currently not implemented), and sends the events to CKeyboardHandler. If stop event is encountered the event loop on the worker thread is terminated and the thread stops.
+\verb"CKeyboardListener" intercepts any key events in OS, transforms system dependent key events into \verb"CKeyPressing" and \verb"CKeyReleasing" events, and sends the events to \verb"CKeyboardHandler". If the ``stop'' event is encountered the event loop on the worker thread is terminated and the thread stops.
 
-\item \textbf{CListenerExceptionHandler}. This object intercepts any exceptions on the working thread, transforms the excetions to CQtException-s, and sends them to CKeyboardHandler. If an exception is encountered the event loop is terminated and the worker thread stops.
+\item \verb"CListenerExceptionHandler". This object intercepts any exceptions on the working thread, transforms the exceptions to \verb"CQtException"-s, and sends them to \verb"CKeyboardHandler". If an exception is encountered the event loop is terminated and the worker thread stops.
 \end{enumerate}
 
-CKeyboardListener is OS dependent. Currently support for Windows, MacOS, and Linux is provided (TO DO only Windows listener is implemented). In order to send the Stop signal in and OS independent fashion the application uses CAnyKeyboardKiller object. It is based on CAnyMoveable object as described in~\ref{section::AnyMovable}.
+\verb"CKeyboardListener" is OS dependent. Currently support for Windows, macOS, and Linux is provided (TO DO only Windows listener is implemented). In order to send the ``stop'' signal in and OS independent fashion the application uses \verb"CAnyKeyboardKiller" object. It is based on \verb"CAnyMoveable" object as described in~\ref{section::AnyMovable}.
 
 \begin{center}
 \includegraphics[scale = 0.5]{Figures/KeyboardInterception.png}
@@ -327,16 +368,16 @@ Green arrows represent queued Qt signals and yellow arrows represent OS dependen
 This object is a wrapper over the Qt application instance. It has observable values in terms of section~\ref{section::Observer}. It is currently used to react on switching between active and inactive states of the application. For example, I do not want to intercept keyboard, while the user interacts with the application GUI. Also, when user switch back to the application, we upload all intercepted sessions.
 
 
-This object is a singleton according to section~\ref{section::Singleton}. It has one output sending the application current status. There are two options: Active and inactive.
+This object is a singleton according to section~\ref{section::Singleton}. It has one output sending the application current status. There are two options: active and inactive.
 
 \subsection{Kernel}
 
 
 \subsection{Sessions and Seances}
 
-When the application runs it uses a continuous time scale. Each new run of the application has its one time scale starting from zero. All key events on the same time scale are grouped into a Seance. Each Seance can be separated into peaces called Sessions. The Session is considered as a peace of information to analyze. Each session is analyzed independently. When we load a file it contains key events on a different time scale. The notion of Seance allows us to separate current Seance intercepted while application is running and loaded from files information.
+When the application runs it uses a continuous time scale. Each new run of the application has its one time scale starting from zero. All key events on the same time line are grouped into a Seance. Each Seance can be separated into peaces called Sessions. The Session is considered as a peace of information to analyze. Each session is analyzed independently. When we load a file it contains key events on a different time scale. The notion of Seance allows us to separate current Seance intercepted while application is running and other Seances that are loaded from files.
 
-The Seance is presented by \verb"CSeance" class (TO DO partially implemented) and Session by \verb"CSession" class (TO DO partially implemented).
+The Seance is presented by \verb"CSeance" class. Currently this is an extension of \verb"std::list" of \verb"CSession"-s (TO DO partially implemented). Session is presented by \verb"CSession" class. Currently this is an extension of \verb"std::vector" of \verb"CKeyEvent"-s. (TO DO partially implemented).
 
 
 \subsection{CSeanceManager}
@@ -345,21 +386,21 @@ To understand \verb"CSeanceManater" and its responsibilities let us look on the 
 \begin{center}
 \includegraphics[scale = 0.4]{Figures/SeanceManager.png}
 
-Green boxes represent objects. Yellow boxes are input/outputs according to observer pattern. Violet arrows are methods to control the manager via MVC. Red arrow represent the data flow.
+Green boxes represent objects. Yellow boxes are input/outputs according to the observer pattern. Violet arrows are methods to control the manager via MVC. Red arrows represent the data flow.
 \end{center}
 
 The manager has the following components:
 \begin{enumerate}
 \item \verb"SeanceMaker". This object receives key pressing and releasing events and store them in a raw form. It also divides the stored events into \verb"CRawSession"s. The \verb"CRawSession"s use \verb"std::list" container to have low cost modification actions.
 
-\item \verb"CurrentSeance". Current seance stores all sessions.
+\item \verb"CurrentSeance". Current seance stores all sessions intercepted by the application.
 
 \item \verb"LoadedSeances". (TO DO not implemented yet) This object manages all loaded seances, e.g., loaded from files.
 \end{enumerate}
 
 The manager's responsibilities:
 \begin{enumerate}
-\item It receives KeyPressing and KeyReleasing events from \verb"CKeyboardHandler" via observer pattern.
+\item It receives Key Pressing and Key Releasing events from \verb"CKeyboardHandler" via observer pattern.
 
 \item It receives new seances from a file loader (TO DO not implemented yet) via observer pattern.
 
@@ -370,7 +411,7 @@ The manager's responsibilities:
 
 The manager has the following control options:
 \begin{enumerate}
-\item \verb"makeSessions". This transforms RawSessions from SeanceMaker to Sessions and put them into CurrentSeance.
+\item \verb"makeSessions". This transforms Raw Sessions from \verb"SeanceMaker" to Sessions and puts them into \verb"CurrentSeance".
 \item \verb"setCurrentSession" (TO DO not implemented yet). This allows GUI to change the current Session.
 \end{enumerate}
 
