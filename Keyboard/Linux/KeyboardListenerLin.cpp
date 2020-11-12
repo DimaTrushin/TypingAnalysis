@@ -14,8 +14,8 @@ CKeyboardListenerLinImpl::CKeyboardListenerLinImpl(
   // Set the Listener
 
   // TO DO
-  // Set killerPromise
-  //killerPromise.set_value(CKiller(...));
+  // Set killerPromise to a non-trivial one
+  killerPromise.set_value(CKiller());
 
   connect(this, &CKeyboardListenerLinImpl::KeyPressing,
           KeyboardHandler, &CKeyboardHandler::onKeyPressing,
