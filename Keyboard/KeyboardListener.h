@@ -14,14 +14,14 @@ using CKeyboardListener = NSWindows::CKeyboardListenerWin;
 } // NSApplication
 #endif // Q_OS_WIN
 
-//#ifdef Q_OS_MACOS
-//#include "KeyboardListenerMac.h"
-//using CKeyboardListener = CKeyboardListenerMac;
-//#endif // Q_OS_MACOS
+#ifdef Q_OS_MACOS
+#include "KeyboardListenerMac.h"
+using CKeyboardListener = NSMacos::CKeyboardListenerMac;
+#endif // Q_OS_MACOS
 
-//#ifdef Q_OS_LINUX
-//#include "KeyboardListenerLinux.h"
-//using CKeyboardListener = CKeyboardListenerLinux;
-//#endif // Q_OS_LINUX
+#ifdef Q_OS_LINUX
+#include "KeyboardListenerLinux.h"
+using CKeyboardListener = NSLinux::CKeyboardListenerLin;
+#endif // Q_OS_LINUX
 
 #endif // KEYBOARDLISTENER_H
