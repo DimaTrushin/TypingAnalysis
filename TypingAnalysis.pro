@@ -109,8 +109,10 @@ macx {
 }
 
 linux {
-    #HEADERS +=
-    #SOURCES +=
+    HEADERS += \
+    Keyboard/Linux/KeyboardListenerLin.h
+    SOURCES += \
+    Keyboard/Linux/KeyboardListenerLin.cpp
 }
 
 contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
