@@ -104,13 +104,17 @@ win32 {
 }
 
 macx {
-    #HEADERS +=
-    #SOURCES +=
+    HEADERS += \
+    Keyboard/Macos/KeyboardListenerMac.h
+
+    SOURCES += \
+    Keyboard/Macos/KeyboardListenerMac.cpp
 }
 
 linux {
     HEADERS += \
     Keyboard/Linux/KeyboardListenerLin.h
+
     SOURCES += \
     Keyboard/Linux/KeyboardListenerLin.cpp
 }
