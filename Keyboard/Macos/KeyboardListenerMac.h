@@ -35,21 +35,6 @@ private:
 };
 
 
-class CKeyboardListenerMac {
-  using CKeyboardUPtr = std::unique_ptr<CKeyboardListenerMacImpl>;
-public:
-  using CAnyKillerPromise = typename CKeyboardListenerMacImpl::CAnyKillerPromise;
-
-  CKeyboardListenerMac(CAnyKillerPromise, CKeyboardHandler*);
-  int exec();
-  bool isDefined() const;
-
-private:
-  CKeyboardUPtr getKeyboardUPtr(CAnyKillerPromise, CKeyboardHandler*);
-  CKeyboardUPtr KeyboardListener_;
-};
-
-
 // The object provides a way to shut down the listener
 class CKiller {
 public:

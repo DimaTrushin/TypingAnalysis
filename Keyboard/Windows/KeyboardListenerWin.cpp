@@ -139,29 +139,6 @@ HWND CKeyboardListenerWinImpl::hwnd() const {
 }
 
 
-CKeyboardListenerWin::CKeyboardListenerWin(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler)
-  : KeyboardListener_(getKeyboardUPtr(std::move(killerPromise), KeyboardHandler)) {
-}
-
-int CKeyboardListenerWin::exec() {
-  if (isDefined())
-    return KeyboardListener_->exec();
-  return 0;
-}
-
-bool CKeyboardListenerWin::isDefined() const {
-  return static_cast<bool>(KeyboardListener_);
-}
-
-CKeyboardListenerWin::CKeyboardUPtr CKeyboardListenerWin::getKeyboardUPtr(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler) {
-  return std::make_unique<CKeyboardListenerWinImpl>(std::move(killerPromise), KeyboardHandler);
-}
-
-
 CKiller::CKiller(HWND MessageWindow)
   :  MessageWindow_(MessageWindow) {
   assert(MessageWindow_ != NULL);

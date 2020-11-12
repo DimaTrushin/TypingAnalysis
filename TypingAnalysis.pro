@@ -25,6 +25,7 @@ win32-msvc*{
 SOURCES += \
   Keyboard/KeyID.cpp \
   Keyboard/KeyboardHandler.cpp \
+  Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
   Qt/MainWindow.cpp \

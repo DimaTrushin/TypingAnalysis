@@ -35,21 +35,6 @@ private:
 };
 
 
-class CKeyboardListenerLin {
-  using CKeyboardUPtr = std::unique_ptr<CKeyboardListenerLinImpl>;
-public:
-  using CAnyKillerPromise = typename CKeyboardListenerLinImpl::CAnyKillerPromise;
-
-  CKeyboardListenerLin(CAnyKillerPromise, CKeyboardHandler*);
-  int exec();
-  bool isDefined() const;
-
-private:
-  CKeyboardUPtr getKeyboardUPtr(CAnyKillerPromise, CKeyboardHandler*);
-  CKeyboardUPtr KeyboardListener_;
-};
-
-
 // The object provides a way to shut down the listener
 class CKiller {
 public:

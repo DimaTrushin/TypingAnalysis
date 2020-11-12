@@ -36,29 +36,6 @@ int CKeyboardListenerLinImpl::exec() {
 }
 
 
-CKeyboardListenerLin::CKeyboardListenerLin(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler)
-  : KeyboardListener_(getKeyboardUPtr(std::move(killerPromise), KeyboardHandler)) {
-}
-
-int CKeyboardListenerLin::exec() {
-  if (isDefined())
-    return KeyboardListener_->exec();
-  return 0;
-}
-
-bool CKeyboardListenerLin::isDefined() const {
-  return static_cast<bool>(KeyboardListener_);
-}
-
-CKeyboardListenerLin::CKeyboardUPtr CKeyboardListenerLin::getKeyboardUPtr(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler) {
-  return std::make_unique<CKeyboardListenerLinImpl>(std::move(killerPromise), KeyboardHandler);
-}
-
-
 // TO DO
 // a specific ctor of CKiller
 //CKiller::CKiller(...) {

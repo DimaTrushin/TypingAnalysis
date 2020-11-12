@@ -36,29 +36,6 @@ int CKeyboardListenerMacImpl::exec() {
 }
 
 
-CKeyboardListenerMac::CKeyboardListenerMac(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler)
-  : KeyboardListener_(getKeyboardUPtr(std::move(killerPromise), KeyboardHandler)) {
-}
-
-int CKeyboardListenerMac::exec() {
-  if (isDefined())
-    return KeyboardListener_->exec();
-  return 0;
-}
-
-bool CKeyboardListenerMac::isDefined() const {
-  return static_cast<bool>(KeyboardListener_);
-}
-
-CKeyboardListenerMac::CKeyboardUPtr CKeyboardListenerMac::getKeyboardUPtr(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler) {
-  return std::make_unique<CKeyboardListenerMacImpl>(std::move(killerPromise), KeyboardHandler);
-}
-
-
 // TO DO
 // a specific ctor of CKiller
 //CKiller::CKiller(...) {
