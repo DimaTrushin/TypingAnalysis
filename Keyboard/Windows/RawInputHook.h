@@ -20,7 +20,7 @@ public:
     LowLevelKeyboard.usUsagePage = 0x01;
     LowLevelKeyboard.usUsage = 0x06;
     LowLevelKeyboard.dwFlags = RIDEV_INPUTSINK;
-    LowLevelKeyboard.hwndTarget = hwnd();
+    LowLevelKeyboard.hwndTarget = CBase::hwnd();
     if (RegisterRawInputDevices(&LowLevelKeyboard,
                                 1,
                                 sizeof(LowLevelKeyboard))
