@@ -33,6 +33,7 @@ CKeyboardListenerMacImpl::~CKeyboardListenerMacImpl() {
 int CKeyboardListenerMacImpl::exec() {
   // TO DO
   // Message loop
+  return 0;
 }
 
 

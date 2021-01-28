@@ -17,7 +17,7 @@ using CKeyboardListenerImpl = NSWindows::CKeyboardListenerWinImpl;
 #endif // Q_OS_WIN
 
 #ifdef Q_OS_MACOS
-#include "KeyboardListenerMac.h"
+#include "Macos/KeyboardListenerMac.h"
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -30,7 +30,7 @@ using CKeyboardListenerImpl = NSMacos::CKeyboardListenerMacImpl;
 #endif // Q_OS_MACOS
 
 #ifdef Q_OS_LINUX
-#include "KeyboardListenerLinux.h"
+#include "Linux/KeyboardListenerLin.h"
 
 namespace NSApplication {
 namespace NSKeyboard {

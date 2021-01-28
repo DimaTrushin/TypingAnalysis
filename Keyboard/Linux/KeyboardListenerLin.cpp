@@ -33,6 +33,7 @@ CKeyboardListenerLinImpl::~CKeyboardListenerLinImpl() {
 int CKeyboardListenerLinImpl::exec() {
   // TO DO
   // Message loop
+  return 0;
 }
 
 
