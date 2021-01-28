@@ -17,38 +17,34 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-win32-msvc*{
-  # Make warning level to be W4
-  QMAKE_CXXFLAGS_WARN_ON ~= s/-W./-W4
+win32 {
+  win32-msvc*{
+    QMAKE_CXXFLAGS_WARN_ON ~= s/-W./-W4
+    QMAKE_CXXFLAGS += /MP /permissive-
+  }
+
+  win32-g++*{
+  }
+
+  win32-clang*{
+  }
 }
 
-SOURCES += \
-  AppStatusAccess.cpp \
-  Interface/KeyboardShutter.cpp \
-  Interface/SessionFlusher.cpp \
-  Kernel/KeyEvent.cpp \
-  Kernel/Seance.cpp \
-  Kernel/SeanceMaker.cpp \
-  Kernel/SeanceManager.cpp \
-  Kernel/SeanceManagerImpl.cpp \
-  Kernel/Session.cpp \
-  Keyboard/KeyID.cpp \
-  Keyboard/KeyboardHandler.cpp \
-  Keyboard/ListenerExceptionHandler.cpp \
-  Keyboard/RawKeyEvent.cpp \
-  Qt/AppState.cpp \
-  Qt/AppStatus.cpp \
-  Qt/MainWindow.cpp \
-  Qt/QtLoopExceptionHandler.cpp \
-  Application.cpp \
-  ApplicationGUI.cpp \
-  ApplicationGlobals.cpp \
-  ApplicationImpl.cpp \
-  ApplicationKernel.cpp \
-  ExceptionHandler.cpp \
-  Time.cpp \
-  Timer.cpp \
-  main.cpp
+linux {
+  linux-g++*{
+  }
+
+  linux-clang*{
+  }
+}
+
+macx {
+  macx-g++*{
+  }
+
+ macx-clang*{
+ }
+}
 
 HEADERS += \
   AppStatusAccess.h \
@@ -95,6 +91,35 @@ HEADERS += \
   Timer.h \
   TimerAccess.h
 
+SOURCES += \
+  AppStatusAccess.cpp \
+  Interface/KeyboardShutter.cpp \
+  Interface/SessionFlusher.cpp \
+  Kernel/KeyEvent.cpp \
+  Kernel/Seance.cpp \
+  Kernel/SeanceMaker.cpp \
+  Kernel/SeanceManager.cpp \
+  Kernel/SeanceManagerImpl.cpp \
+  Kernel/Session.cpp \
+  Keyboard/KeyID.cpp \
+  Keyboard/KeyboardHandler.cpp \
+  Keyboard/KeyboardListener.cpp \
+  Keyboard/ListenerExceptionHandler.cpp \
+  Keyboard/RawKeyEvent.cpp \
+  Qt/AppState.cpp \
+  Qt/AppStatus.cpp \
+  Qt/MainWindow.cpp \
+  Qt/QtLoopExceptionHandler.cpp \
+  Application.cpp \
+  ApplicationGUI.cpp \
+  ApplicationGlobals.cpp \
+  ApplicationImpl.cpp \
+  ApplicationKernel.cpp \
+  ExceptionHandler.cpp \
+  Time.cpp \
+  Timer.cpp \
+  main.cpp
+
 FORMS += \
   Qt/MainWindow.ui
 
@@ -126,13 +151,19 @@ win32 {
 }
 
 macx {
-    #HEADERS +=
-    #SOURCES +=
+    HEADERS += \
+    Keyboard/Macos/KeyboardListenerMac.h
+
+    SOURCES += \
+    Keyboard/Macos/KeyboardListenerMac.cpp
 }
 
 linux {
-    #HEADERS +=
-    #SOURCES +=
+    HEADERS += \
+    Keyboard/Linux/KeyboardListenerLin.h
+
+    SOURCES += \
+    Keyboard/Linux/KeyboardListenerLin.cpp
 }
 
 contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
