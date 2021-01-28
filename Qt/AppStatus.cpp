@@ -2,6 +2,8 @@
 
 #include <QApplication>
 
+#include <stdexcept>
+
 
 namespace NSApplication {
 namespace NSQt {
@@ -31,7 +33,7 @@ void CAppStatus::connectToAppState() {
                         &QApplication::applicationStateChanged,
                         this,
                         &CAppStatus::applicationStateChanged))
-    throw std::exception("Cannot connect CAppStatus to Application Status!\n");
+    throw std::runtime_error("Cannot connect CAppStatus to Application Status!\n");
 
 }
 
