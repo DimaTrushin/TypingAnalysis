@@ -79,10 +79,10 @@ class CMessageWindow {
 public:
   using CWinContext = CRegisteredWindowClassEx<TClassName, TWndProc>;
   CMessageWindow()
-    : MessageWindow_(::CreateWindowEx(NULL,
+    : MessageWindow_(::CreateWindowEx(0,
                                       CWinContext::className(),
                                       TEXT(""),
-                                      NULL,
+                                      0,
                                       0, 0, 0, 0,
                                       HWND_MESSAGE,
                                       NULL,
