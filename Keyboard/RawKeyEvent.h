@@ -3,7 +3,7 @@
 
 #include "Keyboard/KeyID.h"
 #include "Keyboard/KeyPosition.h"
-#include "Time.h"
+#include "TimeApp.h"
 
 #include <QObject>
 #include <QChar>

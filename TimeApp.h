@@ -1,5 +1,5 @@
-#ifndef NSAPPLICATION_CTIME_H
-#define NSAPPLICATION_CTIME_H
+#ifndef NSAPPLICATION_CTIMEAPP_H
+#define NSAPPLICATION_CTIMEAPP_H
 
 
 namespace NSApplication {
@@ -55,4 +55,4 @@ public:
 
 } // NSApplication
 
-#endif // NSAPPLICATION_CTIME_H
+#endif // NSAPPLICATION_CTIMEAPP_H

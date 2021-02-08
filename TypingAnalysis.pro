@@ -21,6 +21,8 @@ win32 {
   win32-msvc*{
     QMAKE_CXXFLAGS_WARN_ON ~= s/-W./-W4
     QMAKE_CXXFLAGS += /MP /permissive-
+
+    LIBS += -luser32
   }
 
   win32-g++*{
@@ -76,7 +78,7 @@ HEADERS += \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   QtLoopException.h \
-  Time.h \
+  TimeApp.h \
   Timer.h \
   TimerAccess.h
 
@@ -94,7 +96,7 @@ SOURCES += \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
   ExceptionHandler.cpp \
-  Time.cpp \
+  TimeApp.cpp \
   Timer.cpp \
   main.cpp
 
