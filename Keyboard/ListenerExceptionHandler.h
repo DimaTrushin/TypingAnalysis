@@ -5,7 +5,6 @@
 
 #include <QObject>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
@@ -23,7 +22,6 @@ signals:
   void KeyboardException(const CQtException&);
 };
 
-
 class CListenerExceptionHandler : public CExceptionConnector {
   Q_OBJECT
 public:
@@ -33,7 +31,7 @@ private:
   static constexpr const char* kUnknownExceptionMsg_ = "Unknown Exception!";
 };
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CLISTENEREXCEPTIONHANDLER_H

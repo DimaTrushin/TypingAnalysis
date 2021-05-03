@@ -6,16 +6,13 @@
 
 #include <QDebug>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
-
 
 CQtMessagesRegistrator::CQtMessagesRegistrator() {
   qRegisterMetaType<CKeyPressing>();
   qRegisterMetaType<CKeyReleasing>();
 }
-
 
 CKeyboardHandler::CKeyboardHandler() {
   CQtLoopException QtExceptions;
@@ -41,13 +38,13 @@ void CKeyboardHandler::deactivate() {
 }
 
 void CKeyboardHandler::subscribeToKeyPressing(
-  CKeyboardHandler::CKeyPressingObserver* Observer) {
+    CKeyboardHandler::CKeyPressingObserver* Observer) {
   assert(Observer);
   KeyPressingOut_.subscribe(Observer);
 }
 
 void CKeyboardHandler::subscribeToKeyReleasing(
-  CKeyboardHandler::CKeyReleasingObserver* Observer) {
+    CKeyboardHandler::CKeyReleasingObserver* Observer) {
   assert(Observer);
   KeyReleasingOut_.subscribe(Observer);
 }
@@ -55,8 +52,7 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
   qDebug() << "KeyID =" << KeyPressing.KeyID
            << "KeyPos =" << KeyPressing.KeyPosition
-           << "symb =" << KeyPressing.KeyText
-           << "lbl =" << KeyPressing.KeyLabel
+           << "symb =" << KeyPressing.KeyText << "lbl =" << KeyPressing.KeyLabel
            << "time =" << KeyPressing.PressingTime.toMilliSecondsF() << "ms";
   KeyPressingOut_.set(KeyPressing);
 }
@@ -77,7 +73,6 @@ void CKeyboardHandler::stopListener() const noexcept {
   KeyboardKiller_->stopListener();
 }
 
-
 // This code is executed on the worker thread
 void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
                            CKeyboardHandler* KeyboardHandler) {
@@ -90,5 +85,5 @@ void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
   }
 }
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication

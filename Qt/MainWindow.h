@@ -1,13 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <memory>
 #include <QMainWindow>
+#include <memory>
 
 #ifdef KEYBOARD_HANDLER_DEBUG
 #include "AppDebug/KeyboardHandlerDebugOut.h"
 #endif
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,13 +28,14 @@ public:
 
 signals:
   bool closeMainWindow();
+
 private:
   std::unique_ptr<Ui::MainWindow> ui_;
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_;
 #endif
 };
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication
 
 #endif // MAINWINDOW_H

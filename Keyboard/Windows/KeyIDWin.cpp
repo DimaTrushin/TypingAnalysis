@@ -223,6 +223,6 @@ CKeyID CKeyIDWin::make(CVKCode VKey, USHORT MakeCode, USHORT Flag) {
   }
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

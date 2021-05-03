@@ -5,7 +5,6 @@
 
 #include <QApplication>
 
-
 int main(int argc, char* argv[]) {
   namespace NSApp = NSApplication;
   QApplication QAppLoop(argc, argv);

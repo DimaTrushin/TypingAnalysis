@@ -14,6 +14,6 @@ bool CKeyShiftersEnum::isCtrlOrShiftCtrl(CKeyShiftersEnum::CType Shifters) {
          (Shifters & ShiftCtrlAlt) == ShiftCtrl;
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

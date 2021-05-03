@@ -3,7 +3,6 @@
 #include "KeyboardHandlerAccess.h"
 #include "TimerAccess.h"
 
-
 namespace NSApplication {
 
 CApplicationGlobals::CApplicationGlobals() {
@@ -11,4 +10,4 @@ CApplicationGlobals::CApplicationGlobals() {
   CKeyboardHandlerInit MainKeyboardHandler;
 }
 
-} // NSApplication
+} // namespace NSApplication

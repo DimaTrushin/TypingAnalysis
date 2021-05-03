@@ -1,9 +1,7 @@
 #ifndef NSAPPLICATION_CTIMEAPP_H
 #define NSAPPLICATION_CTIMEAPP_H
 
-
 namespace NSApplication {
-
 
 class CTime {
 public:
@@ -53,6 +51,6 @@ public:
   Seconds(long long seconds);
 };
 
-} // NSApplication
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_CTIMEAPP_H

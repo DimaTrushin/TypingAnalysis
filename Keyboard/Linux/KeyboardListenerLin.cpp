@@ -2,14 +2,12 @@
 
 #include "Keyboard/KeyboardHandler.h"
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSLinux {
 
 CKeyboardListenerLinImpl::CKeyboardListenerLinImpl(
-  CAnyKillerPromise killerPromise,
-  CKeyboardHandler* KeyboardHandler) {
+    CAnyKillerPromise killerPromise, CKeyboardHandler* KeyboardHandler) {
   // TO DO
   // Set the Listener
 
@@ -17,11 +15,11 @@ CKeyboardListenerLinImpl::CKeyboardListenerLinImpl(
   // Set killerPromise to a non-trivial one
   killerPromise.set_value(CKiller());
 
-  connect(this, &CKeyboardListenerLinImpl::KeyPressing,
-          KeyboardHandler, &CKeyboardHandler::onKeyPressing,
+  connect(this, &CKeyboardListenerLinImpl::KeyPressing, KeyboardHandler,
+          &CKeyboardHandler::onKeyPressing,
           Qt::ConnectionType::QueuedConnection);
-  connect(this, &CKeyboardListenerLinImpl::KeyReleasing,
-          KeyboardHandler, &CKeyboardHandler::onKeyReleasing,
+  connect(this, &CKeyboardListenerLinImpl::KeyReleasing, KeyboardHandler,
+          &CKeyboardHandler::onKeyReleasing,
           Qt::ConnectionType::QueuedConnection);
 }
 
@@ -36,10 +34,9 @@ int CKeyboardListenerLinImpl::exec() {
   return 0;
 }
 
-
 // TO DO
 // a specific ctor of CKiller
-//CKiller::CKiller(...) {
+// CKiller::CKiller(...) {
 //
 //}
 
@@ -49,6 +46,6 @@ void CKiller::stopListener() const {
   // Send message to CKeyboardListenerLinImpl to stop listening
 }
 
-} // NSLinux
-} // NSKeyboard
-} // NSApplication
+} // namespace NSLinux
+} // namespace NSKeyboard
+} // namespace NSApplication

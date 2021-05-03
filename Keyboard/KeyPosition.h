@@ -1,7 +1,6 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CKEYPOSITION_H
 #define NSAPPLICATION_NSKEYBOARD_CKEYPOSITION_H
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
@@ -13,7 +12,7 @@ struct CKeyPosEnum {
     // TO DO
     // Make continuous numeration from 8
     // Add OEM_102 Key
-    ESC  = 9,
+    ESC = 9,
     AE01 = 10,
     AE02 = 11,
     AE03 = 12,
@@ -28,7 +27,7 @@ struct CKeyPosEnum {
     AE12 = 21,
     BKSP = 22,
     AE13 = BKSP,
-    TAB  = 23,
+    TAB = 23,
     AD00 = TAB,
     AD01 = 24,
     AD02 = 25,
@@ -91,18 +90,18 @@ struct CKeyPosEnum {
     FK10 = 76,
     NMLK = 77,
     SCLK = 78,
-    KP7  = 79,
-    KP8  = 80,
-    KP9  = 81,
+    KP7 = 79,
+    KP8 = 80,
+    KP9 = 81,
     KPSU = 82,
-    KP4  = 83,
-    KP5  = 84,
-    KP6  = 85,
+    KP4 = 83,
+    KP5 = 84,
+    KP6 = 85,
     KPAD = 86,
-    KP1  = 87,
-    KP2  = 88,
-    KP3  = 89,
-    kP0  = 90,
+    KP1 = 87,
+    KP2 = 88,
+    KP3 = 89,
+    kP0 = 90,
     kPDL = 91,
     FK11 = 95,
     FK12 = 96,
@@ -112,14 +111,14 @@ struct CKeyPosEnum {
     PRSC = 107,
     RALT = 108,
     HOME = 110,
-    UP   = 111,
+    UP = 111,
     PGUP = 112,
     LEFT = 113,
     RGHT = 114,
-    END  = 115,
+    END = 115,
     DOWN = 116,
     PGDN = 117,
-    INS  = 118,
+    INS = 118,
     DELE = 119,
     PAUS = 127,
     LWIN = 133,
@@ -130,7 +129,7 @@ struct CKeyPosEnum {
 
 using CKeyPosition = CKeyPosEnum::CType;
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CKEYPOSITION_H

@@ -6,10 +6,10 @@
 
 #include <QChar>
 
+#include <Windows.h>
 #include <array>
 #include <map>
 #include <optional>
-#include <Windows.h>
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -51,8 +51,7 @@ public:
 protected:
   void setBaseCharacterTable();
   void handleKey(CVKCode VK);
-  void handleKeyWithShifters(CVKCode VK,
-                             CKeyShifters Shifters);
+  void handleKeyWithShifters(CVKCode VK, CKeyShifters Shifters);
 
   bool isSynthetic(CVKCode VK) const;
 
@@ -66,31 +65,28 @@ protected:
 
 class CKeySequenceMapper : public CSimpleKeyMapper {
   using CBase = CSimpleKeyMapper;
+
 public:
   CKeySequenceMapper(HKL Layout);
-  QCharOptional getCombinedSymbol(CVKCode DeadVK,
-                                  CKeyShifters DeadShifters,
-                                  CVKCode VK,
-                                  CKeyShifters Shifters) const;
-  bool areCompatible(CVKCode DeadVK,
-                     CKeyShifters DeadShifters,
-                     CVKCode VK,
+  QCharOptional getCombinedSymbol(CVKCode DeadVK, CKeyShifters DeadShifters,
+                                  CVKCode VK, CKeyShifters Shifters) const;
+  bool areCompatible(CVKCode DeadVK, CKeyShifters DeadShifters, CVKCode VK,
                      CKeyShifters Shifters) const;
+
 private:
   void setCompatiblePairs();
   void fillCompatiblePairsForKey(const CKeyData& DeadKey);
-  void addIfCompatible(const CKeyData& DeadKey,
-                       const CKeyData& NextKey,
+  void addIfCompatible(const CKeyData& DeadKey, const CKeyData& NextKey,
                        QChar NextChar);
 
   std::map<std::pair<CKeyData, CKeyData>, QChar> KeyPairTable_;
 };
-} // NSKeyMapperDetail
+} // namespace NSKeyMapperDetail
 
 using CKeyMapper = NSKeyMapperDetail::CKeySequenceMapper;
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYMAPPER_H

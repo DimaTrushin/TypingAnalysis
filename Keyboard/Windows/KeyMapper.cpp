@@ -11,14 +11,13 @@ namespace NSWindows {
 
 namespace NSKeyMapperDetail {
 
-CSimpleKeyMapper::CSimpleKeyMapper(HKL hkl)
-  : Layout_(hkl) {
+CSimpleKeyMapper::CSimpleKeyMapper(HKL hkl) : Layout_(hkl) {
   CWinKeyboardApi::clearOsKeyboardState(Layout_);
   setBaseCharacterTable();
 }
 
-CSimpleKeyMapper::QCharOptional CSimpleKeyMapper::getSymbol(
-  CVKCode VK, CKeyShifters Shifters) const {
+CSimpleKeyMapper::QCharOptional
+CSimpleKeyMapper::getSymbol(CVKCode VK, CKeyShifters Shifters) const {
   auto iter = KeyTable_.find({VK, Shifters});
   if (iter != KeyTable_.cend())
     return iter->second.Character;
@@ -56,9 +55,9 @@ HKL CSimpleKeyMapper::getLayout() const {
 }
 
 bool CSimpleKeyMapper::isControlChar(QChar Char) {
-  return (QChar(0x0000) <= Char && Char <= QChar(0x001f))
-         || Char == QChar(0x007f)
-         || (QChar(0x0080) <= Char && Char <= QChar(0x009f));
+  return (QChar(0x0000) <= Char && Char <= QChar(0x001f)) ||
+         Char == QChar(0x007f) ||
+         (QChar(0x0080) <= Char && Char <= QChar(0x009f));
   // TO DO
   // Do I need to add this to the list of control chars?
   // \U00A0, \U00AD
@@ -76,7 +75,8 @@ void CSimpleKeyMapper::handleKey(CVKCode VK) {
       handleKeyWithShifters(VK, Shifters);
 }
 
-void CSimpleKeyMapper::handleKeyWithShifters(CVKCode VK, CKeyShifters Shifters) {
+void CSimpleKeyMapper::handleKeyWithShifters(CVKCode VK,
+                                             CKeyShifters Shifters) {
   CWinKeyboardApi::setKeyboardBuffer(Shifters);
   int rc = CWinKeyboardApi::ToUnicodeEx(VK, Layout_);
 
@@ -84,12 +84,12 @@ void CSimpleKeyMapper::handleKeyWithShifters(CVKCode VK, CKeyShifters Shifters) 
     // ignore
   } else if (rc == 1) {
     // one symbol
-    KeyTable_[ {VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], false};
+    KeyTable_[{VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], false};
   } else if (rc > 1) {
     // several symbols, ignore
   } else if (rc < 0) {
     // dead key
-    KeyTable_[ {VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], true};
+    KeyTable_[{VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], true};
   }
   CWinKeyboardApi::clearOsKeyboardState(Layout_);
 }
@@ -97,7 +97,6 @@ void CSimpleKeyMapper::handleKeyWithShifters(CVKCode VK, CKeyShifters Shifters) 
 bool CSimpleKeyMapper::isSynthetic(CVKCode VK) const {
   return CWinKeyboardApi::getScanCode(VK, Layout_) == 0;
 }
-
 
 bool CSimpleKeyMapper::isControl(CKeyShifters Shifters, QChar Char) {
   return CKeyShiftersEnum::isCtrlOrShiftCtrl(Shifters) && isControlChar(Char);
@@ -107,11 +106,9 @@ CKeySequenceMapper::CKeySequenceMapper(HKL Layout) : CBase(Layout) {
   setCompatiblePairs();
 }
 
-CKeySequenceMapper::QCharOptional CKeySequenceMapper::getCombinedSymbol(
-  CVKCode DeadVK,
-  CKeyShifters DeadShifters,
-  CVKCode VK,
-  CKeyShifters Shifters) const {
+CKeySequenceMapper::QCharOptional
+CKeySequenceMapper::getCombinedSymbol(CVKCode DeadVK, CKeyShifters DeadShifters,
+                                      CVKCode VK, CKeyShifters Shifters) const {
   auto iter = KeyPairTable_.find({{DeadVK, DeadShifters}, {VK, Shifters}});
   if (iter != KeyPairTable_.cend())
     return iter->second;
@@ -119,8 +116,7 @@ CKeySequenceMapper::QCharOptional CKeySequenceMapper::getCombinedSymbol(
 }
 
 bool CKeySequenceMapper::areCompatible(CVKCode DeadVK,
-                                       CKeyShifters DeadShifters,
-                                       CVKCode VK,
+                                       CKeyShifters DeadShifters, CVKCode VK,
                                        CKeyShifters Shifters) const {
   auto symbOpt = getCombinedSymbol(DeadVK, DeadShifters, VK, Shifters);
   return symbOpt.has_value();
@@ -136,16 +132,13 @@ void CKeySequenceMapper::setCompatiblePairs() {
 void CKeySequenceMapper::fillCompatiblePairsForKey(const CKeyData& DeadKey) {
   for (auto& KeyPair : KeyTable_) {
     if (!KeyPair.second.isDeadKey)
-      addIfCompatible(DeadKey,
-                      KeyPair.first,
-                      KeyPair.second.Character);
+      addIfCompatible(DeadKey, KeyPair.first, KeyPair.second.Character);
   }
 }
 
-void CKeySequenceMapper::addIfCompatible(
-  const CKeyData& DeadKey,
-  const CKeyData& NextKey,
-  QChar NextChar) {
+void CKeySequenceMapper::addIfCompatible(const CKeyData& DeadKey,
+                                         const CKeyData& NextKey,
+                                         QChar NextChar) {
 
   assert(isDeadKey(DeadKey.VK, DeadKey.Shifters));
   assert(!CKeyShiftersEnum::isAltOrShiftAlt(DeadKey.Shifters));
@@ -154,7 +147,8 @@ void CKeySequenceMapper::addIfCompatible(
   int rc1 = CWinKeyboardApi::ToUnicodeEx(DeadKey.VK, Layout_);
 
   if (rc1 >= 0)
-    throw std::runtime_error("Windows API does not treat a dead key correctly!");
+    throw std::runtime_error(
+        "Windows API does not treat a dead key correctly!");
 
   assert(!CKeyShiftersEnum::isAltOrShiftAlt(NextKey.Shifters));
 
@@ -172,7 +166,7 @@ void CKeySequenceMapper::addIfCompatible(
   CWinKeyboardApi::clearOsKeyboardState(Layout_);
 }
 
-} // NSKeyMapperDetail
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyMapperDetail
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

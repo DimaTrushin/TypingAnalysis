@@ -1,6 +1,5 @@
 #include "ApplicationGUI.h"
 
-
 namespace NSApplication {
 
 CApplicationGUI::CApplicationGUI() {
@@ -9,4 +8,4 @@ CApplicationGUI::CApplicationGUI() {
   AppWindow_.show();
 }
 
-} // NSApplication
+} // namespace NSApplication

@@ -3,7 +3,6 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 
 class CApplicationImpl;
@@ -12,10 +11,11 @@ class CApplication {
 public:
   CApplication();
   ~CApplication();
+
 private:
   std::unique_ptr<CApplicationImpl> AppImpl_;
 };
 
-} // NSApplication
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_CAPPLICATION_H

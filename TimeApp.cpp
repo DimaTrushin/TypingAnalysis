@@ -1,6 +1,5 @@
 #include "TimeApp.h"
 
-
 namespace NSApplication {
 
 CTime operator+(const CTime& first, const CTime& second) {
@@ -73,13 +72,17 @@ double CTime::toSecondsF() const {
   return Microseconds_ / static_cast<double>(kMicrosecondsInSeconds);
 }
 
-CTime::CTime(long long microseconds) : Microseconds_(microseconds) {}
+CTime::CTime(long long microseconds) : Microseconds_(microseconds) {
+}
 
+MicroSeconds::MicroSeconds(long long microseconds) : CTime(microseconds) {
+}
 
-MicroSeconds::MicroSeconds(long long microseconds) : CTime(microseconds) {}
+MilliSeconds::MilliSeconds(long long milliseconds)
+    : CTime(kMicrosecondsInMilliseconds * milliseconds) {
+}
 
-MilliSeconds::MilliSeconds(long long milliseconds) : CTime(kMicrosecondsInMilliseconds * milliseconds) {}
+Seconds::Seconds(long long seconds) : CTime(kMicrosecondsInSeconds * seconds) {
+}
 
-Seconds::Seconds(long long seconds) : CTime(kMicrosecondsInSeconds * seconds) {}
-
-} // NSApplication
+} // namespace NSApplication

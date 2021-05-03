@@ -1,14 +1,13 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CKEYBOARDHANDLER_H
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDHANDLER_H
 
+#include "AnyKeyboardKiller.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/ThreadDetachable.h"
 #include "Qt/QtLoopExceptionHandler.h"
-#include "AnyKeyboardKiller.h"
 #include "RawKeyEvent.h"
 
 #include <future>
-
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -21,10 +20,10 @@ class CQtMessagesRegistrator : public QObject {
   Q_OBJECT
 public:
   CQtMessagesRegistrator();
+
 protected:
   ~CQtMessagesRegistrator() = default;
 };
-
 
 class CKeyboardHandler : public CQtMessagesRegistrator {
   Q_OBJECT
@@ -37,6 +36,7 @@ class CKeyboardHandler : public CQtMessagesRegistrator {
   using CKeyReleasingOut = NSLibrary::CObservableData<CKeyReleasing>;
   using CKeyPressingObserver = NSLibrary::CObserver<CKeyPressing>;
   using CKeyReleasingObserver = NSLibrary::CObserver<CKeyReleasing>;
+
 public:
   CKeyboardHandler();
   ~CKeyboardHandler();
@@ -65,7 +65,7 @@ private:
   bool isActive_ = true;
 };
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CKEYBOARDHANDLER_H

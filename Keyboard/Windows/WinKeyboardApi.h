@@ -4,9 +4,9 @@
 #include "KeyShifters.h"
 #include "VkCode.h"
 
+#include <Windows.h>
 #include <array>
 #include <vector>
-#include <Windows.h>
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -29,10 +29,11 @@ public:
 
   static void clearOsKeyboardState(HKL Layout);
   static USHORT getScanCode(CVKCode VK, HKL Layout);
-  //static UINT makeScanCode(USHORT MakeCode, USHORT Flag);
+  // static UINT makeScanCode(USHORT MakeCode, USHORT Flag);
   static CVKCode getVK(USHORT MakeCode, HKL Layout);
   static CVKCode getSymbolVK(USHORT MakeCode, USHORT Flags, HKL Layout);
-  static CVKCode distinguishShifters(CVKCode VKey, USHORT MakeCode, USHORT Flag);
+  static CVKCode distinguishShifters(CVKCode VKey, USHORT MakeCode,
+                                     USHORT Flag);
 
   static bool hasPrefixE0(USHORT Flags);
   static bool hasPrefixE1(USHORT Flags);
@@ -51,8 +52,8 @@ private:
   static CKeyboardBuffer& getKeyboardBuffer();
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H

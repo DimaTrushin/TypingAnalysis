@@ -5,12 +5,11 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 namespace NSQt {
 class CMainWindow;
 }
-}
+} // namespace NSApplication
 
 QT_BEGIN_NAMESPACE
 class QMainWindow;
@@ -23,10 +22,12 @@ namespace NSAppDebug {
 
 class CKeyboardHandlerDebugGUI {
   using CMainWindow = NSApplication::NSQt::CMainWindow;
+
 public:
   CKeyboardHandlerDebugGUI(CMainWindow* MainWindow);
   ~CKeyboardHandlerDebugGUI();
   QTextEdit* Text();
+
 private:
   void setupUI();
 
@@ -36,6 +37,6 @@ private:
   QTextEdit* TextEdit_;
 };
 
-} // NSAppDebug
+} // namespace NSAppDebug
 
 #endif // NSAPPDEBUG_CKEYBOARDHANDLERDEBUGGUI_H

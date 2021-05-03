@@ -360,9 +360,11 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
 
 CKeyPosition CKeyPositionWin::handle69(USHORT Flag) const {
   assert(!CWinKeyboardApi::hasPrefix(Flag));
-  if (CWinKeyboardApi::isPressing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 4)
+  if (CWinKeyboardApi::isPressing(Flag) && MakeCodePrevious_ == 29 &&
+      FlagPrevious_ == 4)
     return CKeyPosEnum::IGNR;
-  if (CWinKeyboardApi::isReleasing(Flag) && MakeCodePrevious_ == 29 && FlagPrevious_ == 5)
+  if (CWinKeyboardApi::isReleasing(Flag) && MakeCodePrevious_ == 29 &&
+      FlagPrevious_ == 5)
     return CKeyPosEnum::IGNR;
   return CKeyPosEnum::NMLK;
 }
@@ -372,6 +374,6 @@ void CKeyPositionWin::update(USHORT MakeCode, USHORT Flag) {
   FlagPrevious_ = Flag;
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

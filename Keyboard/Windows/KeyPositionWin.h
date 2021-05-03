@@ -4,7 +4,6 @@
 #include "Keyboard/KeyPosition.h"
 #include <Windows.h>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
@@ -22,9 +21,8 @@ private:
   USHORT FlagPrevious_ = 0;
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
-
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYPOSITIONWIN_H

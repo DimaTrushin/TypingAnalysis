@@ -1,9 +1,8 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CRAWINPUTREADER_H
 #define NSAPPLICATION_NSKEYBOARD_CRAWINPUTREADER_H
 
-#include <vector>
 #include <Windows.h>
-
+#include <vector>
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -31,7 +30,6 @@ private:
   unsigned int size_ = 0;
 };
 
-
 class CRawInputReader {
 public:
   const RAWKEYBOARD& getKeyboardData(LPARAM lParam);
@@ -44,8 +42,8 @@ private:
   CSafeRawBuffer Buffer_;
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CRAWINPUTREADER_H

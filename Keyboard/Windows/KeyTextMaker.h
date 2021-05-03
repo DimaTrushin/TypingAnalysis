@@ -11,10 +11,10 @@ namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
 
-
 class CKeyTextMaker {
   using CKeyData = NSKeyMapperDetail::CKeyData;
   using QCharOptional = CKeyMapper::QCharOptional;
+
 public:
   CKeyTextMaker();
 
@@ -26,6 +26,7 @@ public:
   // Need to think on the design.
   QString get(CVKCode VK, CKeyShifters Shifters, HKL Layout);
   QChar getLabel(USHORT MakeCode, USHORT Flags, HKL Layout);
+
 private:
   bool isLayoutChanged(HKL Layout) const;
   void switchLayout(HKL Layout);
@@ -43,14 +44,13 @@ private:
   bool hasDeadKeyInBuffer() const;
   bool isDeadKey(CVKCode VK, CKeyShifters Shifters) const;
 
-
   std::map<HKL, CKeyMapper> Mappers_;
   std::map<HKL, CKeyMapper>::iterator CurrentMapperIt_;
   std::optional<CKeyData> PreviousDeadKey_;
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYTEXTMAKER_H

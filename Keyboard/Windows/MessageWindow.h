@@ -1,14 +1,12 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CMESSAGEWINDOW_H
 #define NSAPPLICATION_NSKEYBOARD_CMESSAGEWINDOW_H
 
-#include <stdexcept>
 #include <Windows.h>
-
+#include <stdexcept>
 
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
-
 
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CWindowClassEx {
@@ -30,10 +28,10 @@ private:
   }
 };
 
-
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CRegisteredWindowClassEx {
   using CWindowClassEx = CWindowClassEx<TClassName, TWndProc>;
+
 public:
   static const WNDCLASSEX& get() {
     static CRegister Now;
@@ -69,25 +67,19 @@ private:
       return CWindowClassEx::get().hInstance;
     }
 
-    static constexpr const char* kRegisterErrorMessage_ = "Cannot register Window Class";
+    static constexpr const char* kRegisterErrorMessage_ =
+        "Cannot register Window Class";
   };
 };
-
 
 template<LPCWSTR TClassName, WNDPROC TWndProc>
 class CMessageWindow {
 public:
   using CWinContext = CRegisteredWindowClassEx<TClassName, TWndProc>;
   CMessageWindow()
-    : MessageWindow_(::CreateWindowEx(0,
-                                      CWinContext::className(),
-                                      TEXT(""),
-                                      0,
-                                      0, 0, 0, 0,
-                                      HWND_MESSAGE,
-                                      NULL,
-                                      CWinContext::hInstance(),
-                                      NULL)) {
+      : MessageWindow_(::CreateWindowEx(0, CWinContext::className(), TEXT(""),
+                                        0, 0, 0, 0, 0, HWND_MESSAGE, NULL,
+                                        CWinContext::hInstance(), NULL)) {
     if (!MessageWindow_)
       throw std::runtime_error(kCreationErrorMessage_);
   }
@@ -101,12 +93,13 @@ public:
   }
 
 private:
-  static constexpr const char* kCreationErrorMessage_ = "Cannot create Window Class";
+  static constexpr const char* kCreationErrorMessage_ =
+      "Cannot create Window Class";
   HWND MessageWindow_;
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CMESSAGEWINDOW_H

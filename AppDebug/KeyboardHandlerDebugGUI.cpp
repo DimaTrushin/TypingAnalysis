@@ -3,20 +3,17 @@
 #include "Qt/MainWindow.h"
 
 #include <QMainWindow>
-#include <QVBoxLayout>
 #include <QTextEdit>
-
+#include <QVBoxLayout>
 
 namespace NSAppDebug {
 
 CKeyboardHandlerDebugGUI::CKeyboardHandlerDebugGUI(CMainWindow* MainWindow)
-  : Window_(std::make_unique<QMainWindow>()),
-    CentralWidget_(new QWidget(Window_.get())),
-    Layout_(new QVBoxLayout(CentralWidget_)),
-    TextEdit_(new QTextEdit(CentralWidget_)) {
-  QObject::connect(MainWindow,
-                   &CMainWindow::closeMainWindow,
-                   Window_.get(),
+    : Window_(std::make_unique<QMainWindow>()),
+      CentralWidget_(new QWidget(Window_.get())),
+      Layout_(new QVBoxLayout(CentralWidget_)),
+      TextEdit_(new QTextEdit(CentralWidget_)) {
+  QObject::connect(MainWindow, &CMainWindow::closeMainWindow, Window_.get(),
                    &QMainWindow::close);
 
   setupUI();
@@ -38,4 +35,4 @@ void CKeyboardHandlerDebugGUI::setupUI() {
   Window_->setCentralWidget(CentralWidget_);
 }
 
-} // NSAppDebug
+} // namespace NSAppDebug

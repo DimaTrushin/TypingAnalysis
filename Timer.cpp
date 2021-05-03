@@ -1,6 +1,5 @@
 #include "Timer.h"
 
-
 namespace NSApplication {
 
 CTimer::CTimer() {
@@ -13,4 +12,4 @@ CTime CTimer::get() const {
   return CTime(MicroSeconds(elapsed.count()));
 }
 
-} // NSApplication
+} // namespace NSApplication

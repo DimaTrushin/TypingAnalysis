@@ -11,9 +11,9 @@ namespace NSKeyboard {
 namespace NSKeyboardListenerDetail {
 using CKeyboardListenerImpl = NSWindows::CKeyboardListenerWinImpl;
 
-} // NSKeyboardListenerDetail
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboardListenerDetail
+} // namespace NSKeyboard
+} // namespace NSApplication
 #endif // Q_OS_WIN
 
 #ifdef Q_OS_MACOS
@@ -24,9 +24,9 @@ namespace NSKeyboard {
 namespace NSKeyboardListenerDetail {
 using CKeyboardListenerImpl = NSMacos::CKeyboardListenerMacImpl;
 
-} // NSKeyboardListenerDetail
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboardListenerDetail
+} // namespace NSKeyboard
+} // namespace NSApplication
 #endif // Q_OS_MACOS
 
 #ifdef Q_OS_LINUX
@@ -37,11 +37,10 @@ namespace NSKeyboard {
 namespace NSKeyboardListenerDetail {
 using CKeyboardListenerImpl = NSLinux::CKeyboardListenerLinImpl;
 
-} // NSKeyboardListenerDetail
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboardListenerDetail
+} // namespace NSKeyboard
+} // namespace NSApplication
 #endif // Q_OS_LINUX
-
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -54,6 +53,7 @@ class CKeyboardHandler;
 class CKeyboardListener {
   using CKeyboardListenerImpl = NSKeyboardListenerDetail::CKeyboardListenerImpl;
   using CKeyboardUPtr = std::unique_ptr<CKeyboardListenerImpl>;
+
 public:
   using CAnyKillerPromise = typename CKeyboardListenerImpl::CAnyKillerPromise;
 
@@ -66,7 +66,7 @@ private:
   CKeyboardUPtr KeyboardListener_;
 };
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENER_H

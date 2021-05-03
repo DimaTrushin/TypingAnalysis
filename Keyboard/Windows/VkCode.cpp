@@ -410,6 +410,6 @@ const char* getName(CVKCode Code) {
   }
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
