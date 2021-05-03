@@ -5,16 +5,16 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 
 class CApplicationGUI {
 public:
   CApplicationGUI();
+
 private:
   NSQt::CMainWindow AppWindow_;
 };
 
-} // NSApplication
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_CAPPLICATIONGUI_H

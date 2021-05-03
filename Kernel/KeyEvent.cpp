@@ -1,28 +1,19 @@
 #include "KeyEvent.h"
 
-
 namespace NSApplication {
 namespace NSKernel {
 
-CKeyEvent::CKeyEvent(CKeyPosition KeyPosition,
-                     CKeyID KeyID,
-                     QChar KeyLabel,
-                     QString KeyText,
-                     CTime PressingTime)
-  : KeyPosition_(KeyPosition),
-    KeyID_(KeyID),
-    KeyLabel_(KeyLabel),
-    KeyText_(KeyText),
-    PressingTime_(PressingTime),
-    ReleasingTime_(PressingTime_) {
+CKeyEvent::CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
+                     QString KeyText, CTime PressingTime)
+    : KeyPosition_(KeyPosition), KeyID_(KeyID), KeyLabel_(KeyLabel),
+      KeyText_(KeyText), PressingTime_(PressingTime),
+      ReleasingTime_(PressingTime_) {
 }
 
 CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent)
-  : CKeyEvent(PressingEvent.KeyPosition,
-              PressingEvent.KeyID,
-              PressingEvent.KeyLabel,
-              PressingEvent.KeyText,
-              PressingEvent.Time) {
+    : CKeyEvent(PressingEvent.KeyPosition, PressingEvent.KeyID,
+                PressingEvent.KeyLabel, PressingEvent.KeyText,
+                PressingEvent.Time) {
 }
 
 void CKeyEvent::setReleasingTime(CTime ReleasingTime) {
@@ -61,5 +52,5 @@ CTime CKeyEvent::getDuration() const {
   return ReleasingTime_ - PressingTime_;
 }
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication

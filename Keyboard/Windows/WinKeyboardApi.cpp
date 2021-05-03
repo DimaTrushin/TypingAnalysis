@@ -10,13 +10,8 @@ namespace NSWindows {
 
 int CWinKeyboardApi::ToUnicodeEx(CVKCode VK, HKL Layout) {
   clearWBuffer();
-  return ::ToUnicodeEx(VK,
-                       getScanCode(VK, Layout),
-                       KeyboardPtr(),
-                       WBufferPtr(),
-                       WBufferSize(),
-                       0,
-                       Layout);
+  return ::ToUnicodeEx(VK, getScanCode(VK, Layout), KeyboardPtr(), WBufferPtr(),
+                       WBufferSize(), 0, Layout);
 }
 
 BYTE* CWinKeyboardApi::KeyboardPtr() {
@@ -36,11 +31,14 @@ void CWinKeyboardApi::clearWBuffer() {
 }
 
 void CWinKeyboardApi::setKeyboardBuffer(CKeyShifters Shifters) {
-  getKeyboardBuffer()[CVK::Shift] = (((Shifters & CKeyShiftersEnum::Shift) != 0) ? 0x80 : 0x00);
-  getKeyboardBuffer()[CVK::Ctrl]  = (((Shifters & CKeyShiftersEnum::Ctrl) != 0) ? 0x80 : 0x00);
-  getKeyboardBuffer()[CVK::Alt]   = (((Shifters & CKeyShiftersEnum::Alt) != 0) ? 0x80 : 0x00);
-  getKeyboardBuffer()[CVK::Capslock] = (Shifters & CKeyShiftersEnum::Caps ? 0x01 : 0x00);
-
+  getKeyboardBuffer()[CVK::Shift] =
+      (((Shifters & CKeyShiftersEnum::Shift) != 0) ? 0x80 : 0x00);
+  getKeyboardBuffer()[CVK::Ctrl] =
+      (((Shifters & CKeyShiftersEnum::Ctrl) != 0) ? 0x80 : 0x00);
+  getKeyboardBuffer()[CVK::Alt] =
+      (((Shifters & CKeyShiftersEnum::Alt) != 0) ? 0x80 : 0x00);
+  getKeyboardBuffer()[CVK::Capslock] =
+      (Shifters & CKeyShiftersEnum::Caps ? 0x01 : 0x00);
 }
 
 void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {
@@ -49,7 +47,8 @@ void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {
   int rc = 0;
   constexpr CVKCode VK = CVK::Decimal;
   while (rc != 1) {
-    rc = ::ToUnicodeEx(VK, getScanCode(VK, Layout), Keyboard.data(), sb, 2, 0, Layout);
+    rc = ::ToUnicodeEx(VK, getScanCode(VK, Layout), Keyboard.data(), sb, 2, 0,
+                       Layout);
   }
 }
 
@@ -57,7 +56,7 @@ USHORT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
   return static_cast<USHORT>(::MapVirtualKeyEx(VK, MAPVK_VK_TO_VSC, Layout));
 }
 
-//UINT CWinKeyboardApi::makeScanCode(USHORT MakeCode, USHORT Flag) {
+// UINT CWinKeyboardApi::makeScanCode(USHORT MakeCode, USHORT Flag) {
 //  if (Flag & RI_KEY_E0)
 //    return 0xE000 + static_cast<UINT>(MakeCode);
 //  if (Flag & RI_KEY_E1)
@@ -65,12 +64,13 @@ USHORT CWinKeyboardApi::getScanCode(CVKCode VK, HKL Layout) {
 //  return static_cast<UINT>(MakeCode);
 //}
 
-
 CVKCode CWinKeyboardApi::getVK(USHORT MakeCode, HKL Layout) {
-  return static_cast<CVKCode>(::MapVirtualKeyEx(MakeCode, MAPVK_VSC_TO_VK, Layout));
+  return static_cast<CVKCode>(
+      ::MapVirtualKeyEx(MakeCode, MAPVK_VSC_TO_VK, Layout));
 }
 
-CVKCode CWinKeyboardApi::getSymbolVK(USHORT MakeCode, USHORT Flags, HKL Layout) {
+CVKCode CWinKeyboardApi::getSymbolVK(USHORT MakeCode, USHORT Flags,
+                                     HKL Layout) {
   if ((Flags & RI_KEY_E0) || (Flags & RI_KEY_E1))
     return getVK(MakeCode, Layout);
   switch (MakeCode) {
@@ -101,8 +101,8 @@ CVKCode CWinKeyboardApi::getSymbolVK(USHORT MakeCode, USHORT Flags, HKL Layout) 
   }
 }
 
-CVKCode CWinKeyboardApi::distinguishShifters(
-  CVKCode VKey, USHORT MakeCode, USHORT Flags) {
+CVKCode CWinKeyboardApi::distinguishShifters(CVKCode VKey, USHORT MakeCode,
+                                             USHORT Flags) {
   if (VKey == VK_SHIFT && MakeCode == 0x2a)
     return VK_LSHIFT;
   if (VKey == VK_SHIFT && MakeCode == 0x36)
@@ -145,10 +145,11 @@ std::vector<HKL> CWinKeyboardApi::getSystemLayouts() {
 
   std::vector<HKL> Layouts(NumberOfLayouts);
   int NumberOfWrittenLayouts =
-    ::GetKeyboardLayoutList(static_cast<int>(Layouts.size()), Layouts.data());
+      ::GetKeyboardLayoutList(static_cast<int>(Layouts.size()), Layouts.data());
 
   if (NumberOfWrittenLayouts != NumberOfLayouts)
-    throw std::runtime_error("GetKeyboardLayoutList does not return correct number of Keyboard Layouts!");
+    throw std::runtime_error("GetKeyboardLayoutList does not return correct "
+                             "number of Keyboard Layouts!");
   return Layouts;
 }
 
@@ -170,8 +171,7 @@ CKeyShifters CWinKeyboardApi::getShifters() {
 HKL CWinKeyboardApi::getForegroundLayout() {
   // This workaround is needed for background windows
   return ::GetKeyboardLayout(
-           ::GetWindowThreadProcessId(
-             ::GetForegroundWindow(), nullptr));
+      ::GetWindowThreadProcessId(::GetForegroundWindow(), nullptr));
 }
 
 CWinKeyboardApi::CWBuffer& CWinKeyboardApi::getBuffer() {
@@ -184,6 +184,6 @@ CWinKeyboardApi::CKeyboardBuffer& CWinKeyboardApi::getKeyboardBuffer() {
   return KbBuffer;
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

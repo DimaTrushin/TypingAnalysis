@@ -1,14 +1,14 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 
-#include "Keyboard/AnyKeyboardKiller.h"
 #include "KeyPositionWin.h"
 #include "KeyTextMaker.h"
+#include "Keyboard/AnyKeyboardKiller.h"
 #include "RawInputHook.h"
 #include "RawInputReader.h"
 
-#include <future>
 #include <QObject>
+#include <future>
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -25,6 +25,7 @@ class CKeyboardListenerWinImpl : public QObject {
 
   friend class CKiller;
   using CMessageStatus = BOOL;
+
 public:
   using CAnyKillerPromise = std::promise<CAnyKeyboardKiller>;
   CKeyboardListenerWinImpl(CAnyKillerPromise, CKeyboardHandler*);
@@ -33,8 +34,10 @@ public:
 signals:
   void KeyPressing(const CKeyPressing&);
   void KeyReleasing(const CKeyReleasing&);
+
 public:
   int exec();
+
 private:
   CMessageStatus getMessage(MSG* CurrentMessage);
   void dispatchMessage(MSG* CurrentMessage);
@@ -54,7 +57,8 @@ private:
   static constexpr CMessageStatus Error = -1;
   static constexpr CMessageStatus Quit = 0;
   static constexpr UINT WM_STOP_LISTENING = WM_APP;
-  static constexpr const wchar_t kWindowClassName_[] = L"KeyboardListenerWndClass";
+  static constexpr const wchar_t kWindowClassName_[] =
+      L"KeyboardListenerWndClass";
 
   using CWinRawInputHook = CRawInputHook<kWindowClassName_, WndProc>;
   using CWinContext = CWinRawInputHook::CWinContext;
@@ -66,7 +70,6 @@ private:
   CKeyTextMaker KeyTextMaker_;
 };
 
-
 // The object provides a way to shut down the listener
 class CKiller {
 public:
@@ -75,12 +78,13 @@ public:
   void stopListener() const;
 
 private:
-  static constexpr UINT WM_STOP_LISTENING = CKeyboardListenerWinImpl::WM_STOP_LISTENING;
+  static constexpr UINT WM_STOP_LISTENING =
+      CKeyboardListenerWinImpl::WM_STOP_LISTENING;
   HWND MessageWindow_;
 };
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H

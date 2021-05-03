@@ -5,12 +5,11 @@
 #include "Keyboard/KeyPosition.h"
 #include "TimeApp.h"
 
-#include <QObject>
 #include <QChar>
+#include <QObject>
 #include <QString>
 
 #include <string>
-
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -29,8 +28,8 @@ struct CKeyReleasing {
   CKeyID KeyID;
 };
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 // This macro is required to use the CRawKeyEvent class in Qt message system
 Q_DECLARE_METATYPE(NSApplication::NSKeyboard::CKeyPressing);

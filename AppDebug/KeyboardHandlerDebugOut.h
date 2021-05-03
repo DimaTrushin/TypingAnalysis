@@ -6,7 +6,6 @@
 
 #include <memory>
 
-
 QT_BEGIN_NAMESPACE
 class QTextEdit;
 class QVBoxLayout;
@@ -17,7 +16,7 @@ namespace NSApplication {
 namespace NSQt {
 class CMainWindow;
 }
-}
+} // namespace NSApplication
 
 namespace NSAppDebug {
 
@@ -32,6 +31,7 @@ class CKeyboardHandlerDebugOutImpl {
   using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
 
   using CMainWindow = NSApplication::NSQt::CMainWindow;
+
 public:
   CKeyboardHandlerDebugOutImpl(CMainWindow* MainWindow);
   ~CKeyboardHandlerDebugOutImpl();
@@ -46,17 +46,20 @@ private:
   CKeyPressingInput KeyPressingInput_;
   CKeyReleasingInput KeyReleasingInput_;
 };
-} // NSKeyboardHandlerOutDetail
+} // namespace NSKeyboardHandlerOutDetail
 
 class CKeyboardHandlerDebugOut {
   using CMainWindow = NSApplication::NSQt::CMainWindow;
-  using CKeyboardHandlerOutImpl = NSKeyboardHandlerOutDetail::CKeyboardHandlerDebugOutImpl;
+  using CKeyboardHandlerOutImpl =
+      NSKeyboardHandlerOutDetail::CKeyboardHandlerDebugOutImpl;
+
 public:
   CKeyboardHandlerDebugOut(CMainWindow* MainWindow);
+
 private:
   std::unique_ptr<CKeyboardHandlerOutImpl> Impl_;
 };
 
-} // NSAppDebug
+} // namespace NSAppDebug
 
 #endif // NSAPPDEBUG_CKEYBOARDHANDLERDEBUGOUT_H

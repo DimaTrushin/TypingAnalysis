@@ -1,14 +1,13 @@
 #include "KeyTextMaker.h"
 
-#include "WinKeyboardApi.h"
 #include "KeyIDWin.h"
+#include "WinKeyboardApi.h"
 
 #include <cassert>
 
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
-
 
 CKeyTextMaker::CKeyTextMaker() {
   std::vector<HKL> Layouts = CWinKeyboardApi::getSystemLayouts();
@@ -90,7 +89,8 @@ QString CKeyTextMaker::getSymbols(CVKCode VK, CKeyShifters Shifters) {
   return getSymbolsPlain(VK, Shifters);
 }
 
-QString CKeyTextMaker::getSymbolsWithDeadKey(CVKCode VK, CKeyShifters Shifters) {
+QString CKeyTextMaker::getSymbolsWithDeadKey(CVKCode VK,
+                                             CKeyShifters Shifters) {
   auto symbOpt = getPlainSymbol(VK, Shifters);
   if (!symbOpt.has_value())
     return "";
@@ -104,7 +104,6 @@ QString CKeyTextMaker::getSymbolsWithDeadKey(CVKCode VK, CKeyShifters Shifters) 
       return *symbCombOpt;
     else
       return QString(symbDead).append(*symbOpt);
-
   }
   if (VK == CVK::Enter || VK == CVK::Tab)
     return QString(symbDead).append(*symbOpt);
@@ -129,14 +128,16 @@ QString CKeyTextMaker::getSymbolsPlain(CVKCode VK, CKeyShifters Shifters) {
   return "";
 }
 
-CKeyTextMaker::QCharOptional CKeyTextMaker::getPlainSymbol(CVKCode VK, CKeyShifters Shifters) const {
+CKeyTextMaker::QCharOptional
+CKeyTextMaker::getPlainSymbol(CVKCode VK, CKeyShifters Shifters) const {
   return CurrentMapper().getSymbol(VK, Shifters);
 }
 
-CKeyTextMaker::QCharOptional CKeyTextMaker::getCombinedSymbol(CVKCode VK, CKeyShifters Shifters) const {
+CKeyTextMaker::QCharOptional
+CKeyTextMaker::getCombinedSymbol(CVKCode VK, CKeyShifters Shifters) const {
   assert(hasDeadKeyInBuffer());
-  return CurrentMapper().getCombinedSymbol(
-           DeadKey().VK, DeadKey().Shifters, VK, Shifters);
+  return CurrentMapper().getCombinedSymbol(DeadKey().VK, DeadKey().Shifters, VK,
+                                           Shifters);
 }
 
 QChar CKeyTextMaker::getDeadKeySymbol() const {
@@ -169,6 +170,6 @@ bool CKeyTextMaker::isDeadKey(CVKCode VK, CKeyShifters Shifters) const {
   return CurrentMapper().isDeadKey(VK, Shifters);
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

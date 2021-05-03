@@ -5,7 +5,6 @@
 
 #include <QDebug>
 
-
 namespace NSApplication {
 namespace NSKernel {
 
@@ -19,9 +18,9 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
     PressedKeys_.push_back(&CurrentSession().back());
   LastEvent_ = KeyPressing.Time;
   qDebug() << QString("seances = %1 current size = %2 pressed = %3")
-           .arg(RawSeance_.size(), 4, 10)
-           .arg(CurrentSession().size(), 4, 10)
-           .arg(PressedKeys_.size(), 4, 10);
+                  .arg(RawSeance_.size(), 4, 10)
+                  .arg(CurrentSession().size(), 4, 10)
+                  .arg(PressedKeys_.size(), 4, 10);
 }
 
 void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
@@ -33,9 +32,9 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
     LastEvent_ = KeyReleasing.Time;
   }
   qDebug() << QString("seances = %1 current size = %2 pressed = %3")
-           .arg(RawSeance_.size(), 4, 10)
-           .arg(CurrentSession().size(), 4, 10)
-           .arg(PressedKeys_.size(), 4, 10);
+                  .arg(RawSeance_.size(), 4, 10)
+                  .arg(CurrentSession().size(), 4, 10)
+                  .arg(PressedKeys_.size(), 4, 10);
 }
 
 void CSeanceMaker::setTimeLimit(CTime TimeLimit) {
@@ -91,12 +90,11 @@ void CSeanceMaker::openNewSession() {
 
 CSeanceMaker::CPressedKeys::iterator
 CSeanceMaker::findKey(CKeyPosition KeyPosition) {
-  return std::find_if(PressedKeys_.begin(),
-                      PressedKeys_.end(),
-  [KeyPosition](CKeyEvent* KeyEvent) {
-    assert(KeyEvent);
-    return KeyEvent->getPosition() == KeyPosition;
-  });
+  return std::find_if(PressedKeys_.begin(), PressedKeys_.end(),
+                      [KeyPosition](CKeyEvent* KeyEvent) {
+                        assert(KeyEvent);
+                        return KeyEvent->getPosition() == KeyPosition;
+                      });
 }
 
 CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() {
@@ -109,5 +107,5 @@ const CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() const {
   return RawSeance_.back();
 }
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication

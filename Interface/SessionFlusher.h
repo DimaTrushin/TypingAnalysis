@@ -6,11 +6,10 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 namespace NSKernel {
 class CSeanceManagerImpl;
-} // NSKernel
+} // namespace NSKernel
 
 namespace NSInterface {
 
@@ -21,10 +20,12 @@ class CSessionFlusher {
   using CStateObserverInput = NSLibrary::CHotInput<EAppState>;
   using CStateObserver = NSLibrary::CObserver<EAppState>;
   using CSeanceManagerImpl = NSKernel::CSeanceManagerImpl;
+
 public:
   CSessionFlusher(CSeanceManagerImpl*);
 
   CStateObserver* input();
+
 private:
   void makeSessions(EAppState);
 
@@ -32,7 +33,7 @@ private:
   std::unique_ptr<CStateObserverInput> StateObserver_;
 };
 
-} // NSInterface
-} // NSApplication
+} // namespace NSInterface
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSINTERFACE_CSESSIONFLUSHER_H

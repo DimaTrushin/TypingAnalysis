@@ -1,7 +1,6 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CKEYID_H
 #define NSAPPLICATION_NSKEYBOARD_CKEYID_H
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
@@ -106,23 +105,23 @@ struct CKeyIDEnum {
     RightCtrl = 0xa3,
     LeftAlt = 0xa4,
     RightAlt = 0xa5,
-    Eng_Semicolon = 0xba, // ;:
-    Eng_Plus = 0xbb, // =+
-    Eng_Comma = 0xbc, // ,<
-    Eng_Minus = 0xbd, // -_
-    Eng_Period = 0xbe, // .>
+    Eng_Semicolon = 0xba,      // ;:
+    Eng_Plus = 0xbb,           // =+
+    Eng_Comma = 0xbc,          // ,<
+    Eng_Minus = 0xbd,          // -_
+    Eng_Period = 0xbe,         // .>
     Eng_Slash_Question = 0xbf, // /?
-    Eng_Tilde = 0xc0, // `~
-    Eng_Left_Brace = 0xdb, // [{
-    Eng_Backslash = 0xdc, // \|
-    Eng_Right_Brace = 0xdd, // ]}
-    Eng_Quote = 0xde, // '"
+    Eng_Tilde = 0xc0,          // `~
+    Eng_Left_Brace = 0xdb,     // [{
+    Eng_Backslash = 0xdc,      // \|
+    Eng_Right_Brace = 0xdd,    // ]}
+    Eng_Quote = 0xde,          // '"
   };
 };
 
-using CKeyID  = CKeyIDEnum::CType;
+using CKeyID = CKeyIDEnum::CType;
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_CKEYID_H

@@ -1,8 +1,5 @@
 #include "AppState.h"
 
-
 namespace NSApplication {
-namespace NSQt {
-
-} // NSQt
-} // NSApplication
+namespace NSQt {} // namespace NSQt
+} // namespace NSApplication

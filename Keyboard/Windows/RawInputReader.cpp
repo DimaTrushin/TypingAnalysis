@@ -24,8 +24,8 @@ unsigned int CSafeRawBuffer::size() const {
 }
 
 void CSafeRawBuffer::resize(unsigned int newSize) {
-  unsigned int bufferSize = newSize / CAlgnBlock::size +
-                            (newSize % CAlgnBlock::size ? 1 : 0);
+  unsigned int bufferSize =
+      newSize / CAlgnBlock::size + (newSize % CAlgnBlock::size ? 1 : 0);
   Buffer_.resize(bufferSize);
   size_ = newSize;
 }
@@ -37,7 +37,6 @@ bool CSafeRawBuffer::isKeyboard() const {
 const RAWKEYBOARD& CSafeRawBuffer::getKeyboard() const {
   return getPRawInput()->data.keyboard;
 }
-
 
 const RAWKEYBOARD& CRawInputReader::getKeyboardData(LPARAM lParam) {
   adjustBuffer(lParam);
@@ -52,24 +51,19 @@ void CRawInputReader::adjustBuffer(LPARAM lParam) {
 
 void CRawInputReader::readRawInputToBuffer(LPARAM lParam) {
   unsigned int bufferSize = Buffer_.size();
-  if (::GetRawInputData(HRAWINPUT(lParam),
-                        RID_INPUT,
-                        Buffer_.data(),
-                        &bufferSize,
-                        sizeof(RAWINPUTHEADER)) != bufferSize)
-    throw std::runtime_error("GetRawInputData does not return correct size !\n");
+  if (::GetRawInputData(HRAWINPUT(lParam), RID_INPUT, Buffer_.data(),
+                        &bufferSize, sizeof(RAWINPUTHEADER)) != bufferSize)
+    throw std::runtime_error(
+        "GetRawInputData does not return correct size !\n");
 }
 
 unsigned int CRawInputReader::getRawDataSize(LPARAM lParam) {
   unsigned int dwSize;
-  ::GetRawInputData(HRAWINPUT(lParam),
-                    RID_INPUT,
-                    nullptr,
-                    &dwSize,
+  ::GetRawInputData(HRAWINPUT(lParam), RID_INPUT, nullptr, &dwSize,
                     sizeof(RAWINPUTHEADER));
   return dwSize;
 }
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication

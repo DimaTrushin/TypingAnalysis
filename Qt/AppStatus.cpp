@@ -4,7 +4,6 @@
 
 #include <stdexcept>
 
-
 namespace NSApplication {
 namespace NSQt {
 
@@ -29,13 +28,11 @@ void CAppStatus::applicationStateChanged(Qt::ApplicationState State) {
 }
 
 void CAppStatus::connectToAppState() {
-  if (!QObject::connect(qApp,
-                        &QApplication::applicationStateChanged,
-                        this,
+  if (!QObject::connect(qApp, &QApplication::applicationStateChanged, this,
                         &CAppStatus::applicationStateChanged))
-    throw std::runtime_error("Cannot connect CAppStatus to Application Status!\n");
-
+    throw std::runtime_error(
+        "Cannot connect CAppStatus to Application Status!\n");
 }
 
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication

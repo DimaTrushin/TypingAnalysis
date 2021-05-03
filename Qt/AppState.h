@@ -1,7 +1,6 @@
 #ifndef NSAPPLICATION_NSQT_EAPPSTATE_H
 #define NSAPPLICATION_NSQT_EAPPSTATE_H
 
-
 namespace NSApplication {
 namespace NSQt {
 
@@ -10,7 +9,7 @@ enum class EAppState : unsigned char {
   Inactive = 2,
 };
 
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSQT_EAPPSTATE_H

@@ -1,11 +1,9 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CVKCODE_H
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CVKCODE_H
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
-
 
 class CVK {
 public:
@@ -228,8 +226,8 @@ using CVKCode = CVK::CType;
 
 const char* getName(CVKCode Code);
 
-} // NSWindows
-} // NSKeyboard
-} // NSApplication
+} // namespace NSWindows
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CVKCODE_H

@@ -2,14 +2,12 @@
 
 #include "KeyboardHandler.h"
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 
-
 CExceptionConnector::CExceptionConnector(CKeyboardHandler* KeyboardHandler) {
-  connect(this, &CExceptionConnector::KeyboardException,
-          KeyboardHandler, &CKeyboardHandler::onKeyboardException,
+  connect(this, &CExceptionConnector::KeyboardException, KeyboardHandler,
+          &CKeyboardHandler::onKeyboardException,
           Qt::ConnectionType::QueuedConnection);
 }
 
@@ -17,10 +15,9 @@ CExceptionConnector::~CExceptionConnector() {
   disconnect(this, &CExceptionConnector::KeyboardException, nullptr, nullptr);
 }
 
-
 CListenerExceptionHandler::CListenerExceptionHandler(
-  CKeyboardHandler* KeyboardHandler)
-  : CExceptionConnector(KeyboardHandler) {
+    CKeyboardHandler* KeyboardHandler)
+    : CExceptionConnector(KeyboardHandler) {
   try {
     throw;
   } catch (std::exception& Exception) {
@@ -30,5 +27,5 @@ CListenerExceptionHandler::CListenerExceptionHandler(
   }
 }
 
-} // NSKeyboard
-} // NSApplication
+} // namespace NSKeyboard
+} // namespace NSApplication

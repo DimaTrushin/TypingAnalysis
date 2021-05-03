@@ -3,12 +3,10 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 namespace NSKernel {
 
 class CSeanceManagerImpl;
-
 
 class CSeanceManager {
 
@@ -17,11 +15,12 @@ public:
   ~CSeanceManager();
 
   CSeanceManagerImpl* operator->() const;
+
 private:
   std::unique_ptr<CSeanceManagerImpl> Impl_;
 };
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKERNEL_CSEANCEMANAGER_H

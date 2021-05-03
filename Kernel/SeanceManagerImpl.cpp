@@ -2,17 +2,14 @@
 
 #include <QDebug>
 
-
 namespace NSApplication {
 namespace NSKernel {
 
 CSeanceManagerImpl::CSeanceManagerImpl()
-  : KeyPressingInput_([this](const CKeyPressing& KeyPressing) {
-  handle(KeyPressing);
-}),
-KeyReleasingInput_([this](const CKeyReleasing& KeyReleasing) {
-  handle(KeyReleasing);
-}) {
+    : KeyPressingInput_(
+          [this](const CKeyPressing& KeyPressing) { handle(KeyPressing); }),
+      KeyReleasingInput_(
+          [this](const CKeyReleasing& KeyReleasing) { handle(KeyReleasing); }) {
 }
 
 NSLibrary::CObserver<CSeanceManagerImpl::CKeyPressing>*
@@ -38,5 +35,5 @@ void CSeanceManagerImpl::handle(const CKeyReleasing& KeyReleasing) {
   SeanceMaker_.add(KeyReleasing);
 }
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication

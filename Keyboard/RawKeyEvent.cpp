@@ -1,8 +1,5 @@
 #include "RawKeyEvent.h"
 
-
 namespace NSApplication {
-namespace NSKeyboard {
-
-} // NSKeyboard
-} // NSApplication
+namespace NSKeyboard {} // namespace NSKeyboard
+} // namespace NSApplication

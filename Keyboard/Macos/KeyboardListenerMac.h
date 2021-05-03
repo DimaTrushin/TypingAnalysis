@@ -3,8 +3,8 @@
 
 #include "Keyboard/AnyKeyboardKiller.h"
 
-#include <future>
 #include <QObject>
+#include <future>
 
 namespace NSApplication {
 namespace NSKeyboard {
@@ -20,6 +20,7 @@ class CKeyboardListenerMacImpl : public QObject {
   Q_OBJECT
 
   friend class CKiller;
+
 public:
   using CAnyKillerPromise = std::promise<CAnyKeyboardKiller>;
   CKeyboardListenerMacImpl(CAnyKillerPromise, CKeyboardHandler*);
@@ -28,12 +29,13 @@ public:
 signals:
   void KeyPressing(const CKeyPressing&);
   void KeyReleasing(const CKeyReleasing&);
+
 public:
   int exec();
+
 private:
   // Implementation details
 };
-
 
 // The object provides a way to shut down the listener
 class CKiller {
@@ -46,8 +48,8 @@ private:
   // Implementation details
 };
 
-} // NSMacos
-} // NSKeyboard
-} // NSApplication
+} // namespace NSMacos
+} // namespace NSKeyboard
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKEYBOARD_NSMACOS_CKEYBOARDLISTENERMAC_H

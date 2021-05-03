@@ -6,7 +6,6 @@
 #include <list>
 #include <optional>
 
-
 namespace NSApplication {
 namespace NSKernel {
 
@@ -24,6 +23,7 @@ class CSeanceMaker {
   using CPressedKeys = std::list<CKeyEvent*>;
 
   using CTimeOptional = std::optional<CTime>;
+
 public:
   void add(const CKeyPressing& KeyPressing);
   void add(const CKeyReleasing& KeyReleasing);
@@ -49,7 +49,7 @@ private:
   CTime LastEvent_{};
 };
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKERNEL_CSEANCEMAKER_H

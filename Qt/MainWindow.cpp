@@ -4,15 +4,14 @@
 
 #include <QCloseEvent>
 
-
 namespace NSApplication {
 namespace NSQt {
 
 CMainWindow::CMainWindow(QWidget* parent)
-  : QMainWindow(parent)
-  , ui_(std::make_unique<Ui::MainWindow>())
+    : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>())
 #ifdef KEYBOARD_HANDLER_DEBUG
-  , KeyboardHandlerOut_(this)
+      ,
+      KeyboardHandlerOut_(this)
 #endif
 {
   ui_->setupUi(this);
@@ -24,5 +23,5 @@ void CMainWindow::closeEvent(QCloseEvent* Event) {
 }
 
 CMainWindow::~CMainWindow() = default;
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication

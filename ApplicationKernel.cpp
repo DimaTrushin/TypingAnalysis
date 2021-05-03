@@ -3,7 +3,6 @@
 #include "Kernel/SeanceManagerImpl.h"
 #include "KeyboardHandlerAccess.h"
 
-
 namespace NSApplication {
 
 CApplicationKernel::CApplicationKernel() {
@@ -12,4 +11,4 @@ CApplicationKernel::CApplicationKernel() {
   KeyboardHandler->subscribeToKeyReleasing(SeanceManager_->releasingInput());
 }
 
-} // NSApplication
+} // namespace NSApplication

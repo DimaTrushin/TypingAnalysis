@@ -3,14 +3,12 @@
 
 #include <QApplication>
 
-
 namespace NSApplication {
 namespace NSQt {
 
 CQtLoopExceptionHandler::CQtLoopExceptionHandler() {
   qRegisterMetaType<CQtException>();
-  connect(this, &CQtLoopExceptionHandler::quit,
-          qApp, &QApplication::quit,
+  connect(this, &CQtLoopExceptionHandler::quit, qApp, &QApplication::quit,
           Qt::ConnectionType::QueuedConnection);
 }
 
@@ -23,5 +21,5 @@ void CQtLoopExceptionHandler::handleException(const CQtException& Exception) {
   emit quit();
 }
 
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication

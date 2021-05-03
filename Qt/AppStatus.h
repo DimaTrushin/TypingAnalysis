@@ -1,11 +1,10 @@
 #ifndef NSAPPLICATION_NSQT_CAPPSTATUS_H
 #define NSAPPLICATION_NSQT_CAPPSTATUS_H
 
-#include "Library/Observer/Observer.h"
 #include "AppState.h"
+#include "Library/Observer/Observer.h"
 
 #include <QObject>
-
 
 namespace NSApplication {
 namespace NSQt {
@@ -15,6 +14,7 @@ class CAppStatus : public QObject {
 
   using CObservalbeState = NSLibrary::CObservableData<EAppState>;
   using CStateObserver = NSLibrary::CObserver<EAppState>;
+
 public:
   CAppStatus();
 
@@ -29,7 +29,7 @@ private:
   CObservalbeState AppState_;
 };
 
-} // NSQt
-} // NSApplication
+} // namespace NSQt
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSQT_CAPPSTATUS_H

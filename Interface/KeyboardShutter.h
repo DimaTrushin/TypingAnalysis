@@ -6,11 +6,10 @@
 
 #include <memory>
 
-
 namespace NSApplication {
 namespace NSKeyboard {
 class CKeyboardHandler;
-} // NSKeyboard
+} // namespace NSKeyboard
 
 namespace NSInterface {
 
@@ -21,10 +20,12 @@ class CKeyboardShutter {
   using CStateObserverInput = NSLibrary::CHotInput<EAppState>;
   using CStateObserver = NSLibrary::CObserver<EAppState>;
   using CKeyboardHandler = NSKeyboard::CKeyboardHandler;
+
 public:
   CKeyboardShutter(CKeyboardHandler*);
 
   CStateObserver* input();
+
 private:
   void switchKeyboardHandler(EAppState);
 
@@ -32,7 +33,7 @@ private:
   std::unique_ptr<CStateObserverInput> StateObserver_;
 };
 
-} // NSInterface
-} // NSApplication
+} // namespace NSInterface
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSINTERFACE_CKEYBOARDSHUTTER_H

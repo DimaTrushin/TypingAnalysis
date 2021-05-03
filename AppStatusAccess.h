@@ -4,7 +4,6 @@
 #include "Library/Singleton/AnyGlobalAccess.h"
 #include "Qt/AppStatus.h"
 
-
 namespace NSApplication {
 namespace NSAppStatusAccessDetaul {
 
@@ -14,20 +13,21 @@ namespace nq = NSQt;
 class CAppStatusMain;
 
 class CAppStatusInit
-  : nl::CAnyGlobalInitializer<nq::CAppStatus, CAppStatusMain> {
+    : nl::CAnyGlobalInitializer<nq::CAppStatus, CAppStatusMain> {
   using CBase = nl::CAnyGlobalInitializer<nq::CAppStatus, CAppStatusMain>;
+
 public:
   using CBase::CBase;
 };
 
 class CAppStatusAccess
-  : public nl::CAnyGlobalAccess<nq::CAppStatus, CAppStatusMain> {};
+    : public nl::CAnyGlobalAccess<nq::CAppStatus, CAppStatusMain> {};
 
-} // NSAppStatusAccessDetaul
+} // namespace NSAppStatusAccessDetaul
 
 using CAppStatusInit = NSAppStatusAccessDetaul::CAppStatusInit;
 using CAppStatusAccess = NSAppStatusAccessDetaul::CAppStatusAccess;
 
-} // NSApplication
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_CAPPSTATUSACCESS_H

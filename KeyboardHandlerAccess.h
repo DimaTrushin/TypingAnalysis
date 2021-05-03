@@ -4,7 +4,6 @@
 #include "Keyboard/KeyboardHandler.h"
 #include "Library/Singleton/AnyGlobalAccess.h"
 
-
 namespace NSApplication {
 namespace NSKeyboardHandlerDetail {
 
@@ -14,20 +13,23 @@ namespace nk = NSKeyboard;
 class CMainKeyboardHandler;
 
 class CKeyboardHandlerInitializer
-  : nl::CAnyGlobalInitializer<nk::CKeyboardHandler, CMainKeyboardHandler> {
+    : nl::CAnyGlobalInitializer<nk::CKeyboardHandler, CMainKeyboardHandler> {
   using CBase =
-    nl::CAnyGlobalInitializer<nk::CKeyboardHandler, CMainKeyboardHandler>;
+      nl::CAnyGlobalInitializer<nk::CKeyboardHandler, CMainKeyboardHandler>;
+
 public:
   using CBase::CBase;
 };
 
 class CKeyboardHandlerAccess
-  : public nl::CAnyGlobalAccess<nk::CKeyboardHandler, CMainKeyboardHandler> {};
-} // NSKeyboardHandlerDetail
+    : public nl::CAnyGlobalAccess<nk::CKeyboardHandler, CMainKeyboardHandler> {
+};
+} // namespace NSKeyboardHandlerDetail
 
-using CKeyboardHandlerInit = NSKeyboardHandlerDetail::CKeyboardHandlerInitializer;
+using CKeyboardHandlerInit =
+    NSKeyboardHandlerDetail::CKeyboardHandlerInitializer;
 using CKeyboardHandlerAccess = NSKeyboardHandlerDetail::CKeyboardHandlerAccess;
 
-} // NSApplication
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_CKEYBOARDHANDLERACCESS_H

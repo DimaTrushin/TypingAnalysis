@@ -2,8 +2,8 @@
 #define NSAPPLICATION_NSKERNEL_CSEANCEMANAGERIMPL_H
 
 #include "Library/Observer/Observer.h"
-#include "SeanceMaker.h"
 #include "Seance.h"
+#include "SeanceMaker.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -13,6 +13,7 @@ class CSeanceManagerImpl {
   using CKeyReleasing = NSKeyboard::CKeyReleasing;
   using CKeyPressingInput = NSLibrary::CHotInput<CKeyPressing>;
   using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
+
 public:
   CSeanceManagerImpl();
 
@@ -39,7 +40,7 @@ private:
   // Add Set Current Session Control, for GUI
 };
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKERNEL_CSEANCEMANAGERIMPL_H

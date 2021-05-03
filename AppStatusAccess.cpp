@@ -1,5 +1,3 @@
 #include "AppStatusAccess.h"
 
-namespace NSApplication {
-
-} // NSApplication
+namespace NSApplication {} // namespace NSApplication

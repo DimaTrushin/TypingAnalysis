@@ -4,7 +4,6 @@
 #include "KeyboardHandlerAccess.h"
 #include "TimerAccess.h"
 
-
 namespace NSApplication {
 
 CApplicationGlobals::CApplicationGlobals() {
@@ -13,4 +12,4 @@ CApplicationGlobals::CApplicationGlobals() {
   CAppStatusInit MainAppStatusAccessorInit;
 }
 
-} // NSApplication
+} // namespace NSApplication

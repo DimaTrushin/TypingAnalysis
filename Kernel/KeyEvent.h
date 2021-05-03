@@ -3,7 +3,6 @@
 
 #include "Keyboard/RawKeyEvent.h"
 
-
 namespace NSApplication {
 namespace NSKernel {
 
@@ -11,12 +10,10 @@ class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyID = NSKeyboard::CKeyID;
   using CKeyPressing = NSKeyboard::CKeyPressing;
+
 public:
-  CKeyEvent(CKeyPosition KeyPosition,
-            CKeyID KeyID,
-            QChar KeyLabel,
-            QString KeyText,
-            CTime PressingTime);
+  CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
+            QString KeyText, CTime PressingTime);
   CKeyEvent(const CKeyPressing& PressingEvent);
 
   void setReleasingTime(CTime ReleasingTime);
@@ -35,13 +32,13 @@ private:
   CKeyPosition KeyPosition_;
   CKeyID KeyID_;
   QChar KeyLabel_;
-  //unsigned int Flags_;
+  // unsigned int Flags_;
   QString KeyText_;
   CTime PressingTime_;
   CTime ReleasingTime_;
 };
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication
 
 #endif // NSAPPLICATION_NSKERNEL_CKEYEVENT_H

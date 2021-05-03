@@ -2,17 +2,13 @@
 
 #include "Keyboard/KeyboardHandler.h"
 
-
 namespace NSApplication {
 namespace NSInterface {
 
 CKeyboardShutter::CKeyboardShutter(CKeyboardHandler* KeyboardHandler)
-  : KeyboardHandler_(KeyboardHandler),
-    StateObserver_(
-      std::make_unique<CStateObserverInput>(
-        [this](EAppState State) {
-  switchKeyboardHandler(State);
-})) {
+    : KeyboardHandler_(KeyboardHandler),
+      StateObserver_(std::make_unique<CStateObserverInput>(
+          [this](EAppState State) { switchKeyboardHandler(State); })) {
 }
 
 CKeyboardShutter::CStateObserver* CKeyboardShutter::input() {
@@ -26,5 +22,5 @@ void CKeyboardShutter::switchKeyboardHandler(EAppState State) {
     KeyboardHandler_->activate();
 }
 
-} // NSInterface
-} // NSApplication
+} // namespace NSInterface
+} // namespace NSApplication

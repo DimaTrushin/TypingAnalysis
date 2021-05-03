@@ -1,0 +1,11 @@
+Language: Cpp
+BasedOnStyle: LLVM
+AllowShortFunctionsOnASingleLine : None
+AlwaysBreakTemplateDeclarations: Yes
+BraceWrapping:
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false
+SpacesInContainerLiterals: false

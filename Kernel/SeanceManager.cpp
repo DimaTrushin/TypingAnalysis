@@ -2,12 +2,11 @@
 
 #include "SeanceManagerImpl.h"
 
-
 namespace NSApplication {
 namespace NSKernel {
 
 CSeanceManager::CSeanceManager()
-  : Impl_(std::make_unique<CSeanceManagerImpl>()) {
+    : Impl_(std::make_unique<CSeanceManagerImpl>()) {
 }
 
 CSeanceManagerImpl* CSeanceManager::operator->() const {
@@ -16,5 +15,5 @@ CSeanceManagerImpl* CSeanceManager::operator->() const {
 
 CSeanceManager::~CSeanceManager() = default;
 
-} // NSKernel
-} // NSApplication
+} // namespace NSKernel
+} // namespace NSApplication

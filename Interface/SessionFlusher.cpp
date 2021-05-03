@@ -2,18 +2,13 @@
 
 #include "Kernel/SeanceManagerImpl.h"
 
-
 namespace NSApplication {
 namespace NSInterface {
 
 CSessionFlusher::CSessionFlusher(CSeanceManagerImpl* SeanceManager)
-  : SeanceManager_(SeanceManager),
-    StateObserver_(
-      std::make_unique<CStateObserverInput>(
-        [this](EAppState State) {
-  makeSessions(State);
-})) {
-
+    : SeanceManager_(SeanceManager),
+      StateObserver_(std::make_unique<CStateObserverInput>(
+          [this](EAppState State) { makeSessions(State); })) {
 }
 
 CSessionFlusher::CStateObserver* CSessionFlusher::input() {
@@ -25,5 +20,5 @@ void CSessionFlusher::makeSessions(EAppState State) {
     SeanceManager_->makeSessions();
 }
 
-} // NSInterface
-} // NSApplication
+} // namespace NSInterface
+} // namespace NSApplication
