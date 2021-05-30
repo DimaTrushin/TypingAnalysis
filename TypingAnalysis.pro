@@ -158,6 +158,12 @@ macx {
 
     SOURCES += \
     Keyboard/Macos/KeyboardListenerMac.cpp
+
+    QMAKE_CXXFLAGS += -std=c++11
+
+    _JSON_PATH = /usr/local/Cellar/nlohmann-json/3.9.1_1
+    INCLUDEPATH += "$${_JSON_PATH}/include/"
+    LIBS += -L$${_JSON_PATH}/lib
 }
 
 linux {
