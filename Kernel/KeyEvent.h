@@ -15,6 +15,7 @@ public:
   CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
             QString KeyText, CTime PressingTime);
   CKeyEvent(const CKeyPressing& PressingEvent);
+  CKeyEvent();
 
   void setReleasingTime(CTime ReleasingTime);
 

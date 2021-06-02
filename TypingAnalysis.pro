@@ -89,6 +89,8 @@ HEADERS += \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   QtLoopException.h \
+  SerializationLibrary/UnitJsonReader.h \
+  SerializationLibrary/UnitJsonWriter.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
@@ -118,6 +120,9 @@ SOURCES += \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
   ExceptionHandler.cpp \
+  SerializationLibrary/JsonExtention.cpp \
+  SerializationLibrary/UnitJsonReader.cpp \
+  SerializationLibrary/UnitJsonWriter.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp

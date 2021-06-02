@@ -16,6 +16,16 @@ CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent)
                 PressingEvent.Time) {
 }
 
+CKeyEvent::CKeyEvent() {
+    NSApplication::NSKeyboard::CKeyPosition KeyPosition = NSApplication::NSKeyboard::CKeyPosEnum::ESC;
+    NSApplication::NSKeyboard::CKeyID KeyID = NSApplication::NSKeyboard::CKeyIDEnum::Esc;
+    QChar KeyLabel = 'a';
+    QString KeyText = "a";
+    NSApplication::CTime PressingTime = NSApplication::CTime();
+    NSApplication::NSKernel::CKeyEvent kevt =
+            NSApplication::NSKernel::CKeyEvent(KeyPosition, KeyID, KeyLabel,KeyText, PressingTime);
+}
+
 void CKeyEvent::setReleasingTime(CTime ReleasingTime) {
   ReleasingTime_ = ReleasingTime;
 }
