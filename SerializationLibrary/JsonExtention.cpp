@@ -1,7 +1,11 @@
+#ifndef JSON_EXTENTION
+#define JSON_EXTENTION
+
 #include "Kernel/Seance.h"
 #include <iostream>
 // https://github.com/nlohmann/json
 #include <nlohmann/json.hpp>
+
 
 namespace NSApplication {
     namespace NSKernel {
@@ -38,5 +42,10 @@ namespace NSApplication {
                     );
             C.setReleasingTime(MicroSeconds(j["ReleasingTime"].template get<long long>()));
         }
-    }
-}
+
+    } // namespace NSKernel
+
+} // namespace NSApplication
+
+
+#endif // JSON_EXTENTION
