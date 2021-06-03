@@ -3,6 +3,8 @@
 //---------------------------------------------------------------------------
 
 #include "UnitFileWriter.h"
+#include <iostream>
+#include <algorithm>
 //---------------------------------------------------------------------------
 
 namespace NSApplication {
@@ -13,7 +15,8 @@ namespace NSLibrary {
 
 CFileWriterBase::CFileWriterBase(const std::wstring& FileName)
   : File_(FileName, std::fstream::binary | std::fstream::trunc) {
-  buffer_ = std::vector<uint8_t>();
+  buffer_ = std::vector<uint8_t>(maxBufferSize);
+  curSize_ = 0;
   if (!File_.is_open())
     throw std::runtime_error ("Cannot open ofstream\n");
 }
@@ -21,12 +24,15 @@ CFileWriterBase::CFileWriterBase(const std::wstring& FileName)
 
 void CFileWriterBase::open(const std::wstring& FileName) {
   File_.open(FileName, std::fstream::binary | std::fstream::trunc);
+  buffer_ = std::vector<uint8_t>(maxBufferSize);
+  curSize_ = 0;
   if (!File_.is_open())
     throw std::runtime_error ("Cannot open ofstream\n");
 }
 //---------------------------------------------------------------------------
 
 void CFileWriterBase::close() {
+  fflush();
   File_.close();
 }
 //---------------------------------------------------------------------------
@@ -40,35 +46,45 @@ ssize_t CFileWriterBase::getCurSize() const {
 }
 
 void CFileWriterBase::fflush() {
-      std::streamsize BlockSize = curSize_;
-      File_.write(reinterpret_cast<const char*>(&buffer_), BlockSize);
+      if (getCurSize() == 0) {
+          return;
+      }
+      std::streamsize BlockSize = getCurSize();
+      const char *ptr = (char*)buffer_.data();
+      File_.write(ptr, BlockSize);
       curSize_ = 0;
-      //return curSize_;
+}
+
+
+void CFileWriterBase::addSize(ssize_t dif) {
+    curSize_ = curSize_ + dif;
 }
 
 void CFileWriterBase::writeBytes(std::vector<uint8_t> &object) {
     ssize_t sz = object.size();
-    if (curSize_ + sz <= maxBufferSize) {
-        std::copy(object.begin(), object.end(), buffer_.begin() + curSize_);
-        curSize_ += sz;
+    if (getCurSize() + sz <= maxBufferSize) {
+        std::copy(object.begin(), object.end(), buffer_.begin() + getCurSize());
+        addSize(sz);
     } else {
         ssize_t written = maxBufferSize - curSize_;
         std::copy(object.begin(), object.begin() + written, buffer_.begin() + curSize_);
+        addSize(written);
         fflush();
         while ((sz - written) / maxBufferSize > 0) {
             auto begin = object.begin() + written;
             auto end = object.begin() + written + maxBufferSize;
             std::copy(begin, end, buffer_.begin() + curSize_);
+            addSize(maxBufferSize);
             fflush();
             written += maxBufferSize;
         }
         std::copy(object.begin() + written, object.end(), buffer_.begin() + curSize_);
-        curSize_ += sz - written;
+        addSize(sz - written);
     }
 }
 
 CFileWriterBase::~CFileWriterBase() {
-    fflush();
+    close();
 }
 
 //---------------------------------------------------------------------------
