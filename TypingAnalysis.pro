@@ -89,8 +89,8 @@ HEADERS += \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   QtLoopException.h \
-  SerializationLibrary/UnitJsonReader.h \
-  SerializationLibrary/UnitJsonWriter.h \
+  SerializationLibrary/UnitFileReader.h \
+  SerializationLibrary/UnitFileWriter.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
@@ -122,8 +122,8 @@ SOURCES += \
   ExceptionHandler.cpp \
   SerializationLibrary/JsonExtention.cpp \
   SerializationLibrary/JsonTests.cpp \
-  SerializationLibrary/UnitJsonReader.cpp \
-  SerializationLibrary/UnitJsonWriter.cpp \
+  SerializationLibrary/UnitFileReader.cpp \
+  SerializationLibrary/UnitFileWriter.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp
@@ -166,6 +166,11 @@ macx {
     Keyboard/Macos/KeyboardListenerMac.cpp
 
     QMAKE_CXXFLAGS += -std=c++11
+
+    _BOOST_PATH = /usr/local/Cellar/boost/1.76.0
+    INCLUDEPATH += "$${_BOOST_PATH}/include/"
+    LIBS += -L$${_BOOST_PATH}/lib
+    LIBS += -lboost_chrono-mt -lboost_system
 
     _JSON_PATH = /usr/local/Cellar/nlohmann-json/3.9.1_1
     INCLUDEPATH += "$${_JSON_PATH}/include/"
