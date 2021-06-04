@@ -121,7 +121,7 @@ SOURCES += \
   ApplicationKernel.cpp \
   ExceptionHandler.cpp \
   SerializationLibrary/JsonExtention.cpp \
-  SerializationLibrary/JsonTests.cpp \
+  SerializationLibrary/Tests.cpp \
   SerializationLibrary/UnitFileReader.cpp \
   SerializationLibrary/UnitFileWriter.cpp \
   TimeApp.cpp \

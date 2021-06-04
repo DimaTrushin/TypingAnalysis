@@ -131,7 +131,16 @@ void WCharTest() {
     nlohmann::json j = nlohmann::json(testWchar);
     testWchar2 = j.template get<wchar_t>();
 
-    assert(testWchar2 == testWchar);
+    assert(testWchar == testWchar2);
+}
+
+void BytesConvertionTest() {
+    uint32_t number = 234234234;
+
+    std::vector<uint8_t> bytes = NSApplication::NSKernel::toBytes(number);
+    uint32_t number2 = NSApplication::NSKernel::toSize(bytes);
+
+    assert(number == number2);
 }
 
 #endif // JSON_TESTS
