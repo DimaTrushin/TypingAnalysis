@@ -6,9 +6,8 @@
 // Include
 //---------------------------------------------------------------------------
 
-//#include <fstream>
 #include <string>
-//#include <vector>
+#include <vector>
 #include <deque>
 #include <list>
 #include <array>

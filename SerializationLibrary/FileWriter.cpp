@@ -87,6 +87,24 @@ CFileWriterBase::~CFileWriterBase() {
     close();
 }
 
+uint32_t CFileWriterBase::toSize(std::vector<uint8_t>& bytes) {
+    uint32_t size = 0;
+    for (int i = 4 - 1; i >= 0; --i) {
+        size = size << 8;
+        size += bytes[i];
+    }
+    return size;
+}
+
+std::vector<uint8_t> CFileWriterBase::toBytes(uint32_t size) {
+    std::vector<uint8_t> res = {0, 0, 0, 0};
+    for (int i = 0; i < 4; ++i) {
+        int shift = i * 8;
+        res[i] = (size >> shift);
+    }
+    return res;
+}
+
 //---------------------------------------------------------------------------
 } // NSLibrary
 //---------------------------------------------------------------------------

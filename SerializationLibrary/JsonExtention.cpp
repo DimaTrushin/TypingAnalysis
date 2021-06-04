@@ -1,5 +1,7 @@
+//---------------------------------------------------------------------------
 #ifndef JSON_EXTENTION
 #define JSON_EXTENTION
+//---------------------------------------------------------------------------
 
 #include "Kernel/Seance.h"
 #include <iostream>
@@ -41,24 +43,6 @@ namespace NSApplication {
                           MicroSeconds(j["PressingTime"].template get<long long>())
                     );
             C.setReleasingTime(MicroSeconds(j["ReleasingTime"].template get<long long>()));
-        }
-
-        uint32_t toSize(std::vector<uint8_t>& bytes) {
-            uint32_t size = 0;
-            for (int i = 4 - 1; i >= 0; --i) {
-                size = size << 8;
-                size += bytes[i];
-            }
-            return size;
-        }
-
-        std::vector<uint8_t> toBytes(uint32_t size) {
-            std::vector<uint8_t> res = {0, 0, 0, 0};
-            for (int i = 0; i < 4; ++i) {
-                int shift = i * 8;
-                res[i] = (size >> shift);
-            }
-            return res;
         }
 
     } // namespace NSKernel

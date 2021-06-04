@@ -16,6 +16,8 @@
 // from https://github.com/nlohmann/json
 #include <nlohmann/json.hpp>
 #include <boost/filesystem/fstream.hpp>
+
+#include "JsonExtention.cpp"
 //---------------------------------------------------------------------------
 
 namespace NSApplication {
@@ -36,7 +38,8 @@ public:
   void fflush();
   void writeBytes(std::vector<unsigned char> &object);
   void addSize(ssize_t dif);
-
+  static std::vector<uint8_t> toBytes(uint32_t size);
+  static uint32_t toSize(std::vector<uint8_t>& bytes);
   static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
 
 protected:
@@ -90,6 +93,21 @@ public:
 //                                              TCompare>& PriorityQueue);
 
 };
+//---------------------------------------------------------------------------
+// Definition of CFileWriter
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(bool value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
 
 
 

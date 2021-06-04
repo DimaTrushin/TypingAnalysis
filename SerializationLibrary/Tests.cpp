@@ -1,7 +1,8 @@
 #ifndef JSON_TESTS
 #define JSON_TESTS
 
-#include "SerializationLibrary/JsonExtention.cpp"
+#include "JsonExtention.cpp"
+#include "FileWriter.h"
 
 void CKeyEventTest() {
     NSApplication::NSKernel::CKeyEvent testKeyEvent;
@@ -137,8 +138,8 @@ void WCharTest() {
 void BytesConvertionTest() {
     uint32_t number = 234234234;
 
-    std::vector<uint8_t> bytes = NSApplication::NSKernel::toBytes(number);
-    uint32_t number2 = NSApplication::NSKernel::toSize(bytes);
+    std::vector<uint8_t> bytes = NSApplication::NSLibrary::CFileWriter::toBytes(number);
+    uint32_t number2 = NSApplication::NSLibrary::CFileWriter::toSize(bytes);
 
     assert(number == number2);
 }
