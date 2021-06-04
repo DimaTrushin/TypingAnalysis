@@ -89,8 +89,8 @@ HEADERS += \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   QtLoopException.h \
-  SerializationLibrary/UnitFileReader.h \
-  SerializationLibrary/UnitFileWriter.h \
+  SerializationLibrary/FileReader.h \
+  SerializationLibrary/FileWriter.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
@@ -120,10 +120,10 @@ SOURCES += \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
   ExceptionHandler.cpp \
+  SerializationLibrary/FileReader.cpp \
+  SerializationLibrary/FileWriter.cpp \
   SerializationLibrary/JsonExtention.cpp \
   SerializationLibrary/Tests.cpp \
-  SerializationLibrary/UnitFileReader.cpp \
-  SerializationLibrary/UnitFileWriter.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp
