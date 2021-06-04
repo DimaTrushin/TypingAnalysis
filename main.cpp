@@ -5,23 +5,23 @@
 
 int main()
 {
-       CKeyEventTest();
-       BoolTest();
-       CharTest();
-       UnsignedCharTest();
-       ShortTest();
-       UnsignedShortTest();
-       IntTest();
-       UnsignedIntTest();
-       LongTest();
-       UnsignedLongTest();
-       LongLongTest();
-       UnsignedLongLongTest();
-       WCharTest();
-       BytesConvertionTest();
-        ReadWriteTest();
+    CKeyEventTest();
+    BoolTest();
+    CharTest();
+    UnsignedCharTest();
+    ShortTest();
+    UnsignedShortTest();
+    IntTest();
+    UnsignedIntTest();
+    LongTest();
+    UnsignedLongTest();
+    LongLongTest();
+    UnsignedLongLongTest();
+    WCharTest();
+    BytesConvertionTest();
+    ReadWriteTest();
 
 
-       std::cout << "Done!\n";
-       return 0;
+    std::cout << "Done!\n";
+    return 0;
 }

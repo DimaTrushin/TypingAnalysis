@@ -29,23 +29,23 @@ namespace NSLibrary {
 
 class CFileWriterBase {
 public:
-  CFileWriterBase() = default;
-  CFileWriterBase(const std::wstring& FileName);
-  void open(const std::wstring& FileName);
-  void close();
-  bool isOpen() const;
-  ssize_t getCurSize() const;
-  void fflush();
-  void writeBytes(std::vector<uint8_t> &object);
-  void addSize(ssize_t dif);
-  static std::vector<uint8_t> toBytes(uint32_t size);
-  static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
+    CFileWriterBase() = default;
+    CFileWriterBase(const std::wstring& FileName);
+    void open(const std::wstring& FileName);
+    void close();
+    bool isOpen() const;
+    ssize_t getCurSize() const;
+    void fflush();
+    void writeBytes(std::vector<uint8_t> &object);
+    void addSize(ssize_t dif);
+    static std::vector<uint8_t> toBytes(uint32_t size);
+    static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
 
 protected:
-  ~CFileWriterBase();
-  ssize_t curSize_;
-  boost::filesystem::ofstream File_;
-  std::vector<uint8_t> buffer_;
+    ~CFileWriterBase();
+    ssize_t curSize_;
+    boost::filesystem::ofstream File_;
+    std::vector<uint8_t> buffer_;
 };
 
 class CFileWriter : public CFileWriterBase {
@@ -69,27 +69,27 @@ public:
     inline CFileWriter& operator<<(wchar_t value);
 
 
-//    inline CFileWriter& operator<<(const std::string& String);
-//    inline CFileWriter& operator<<(const std::wstring& String);
-//    template<class TType1, class TType2>
-//    inline CFileWriter& operator<<(const std::pair<TType1, TType2>& Pair);
-//    template<class TType>
-//    inline CFileWriter& operator<<(const std::vector<TType>& Vector);
-//    template<class TType>
-//    inline CFileWriter& operator<<(const std::deque<TType>& Deque);
-//    template<class TType>
-//    inline CFileWriter& operator<<(const std::list<TType>& List);
-//    template<class TType, size_t TSize>
-//    inline CFileWriter& operator<<(const std::array<TType, TSize>& Array);
-//    template<class TKey, class TType, class TCompare>
-//    inline CFileWriter& operator<<(const std::map<TKey, TType, TCompare>& Map);
-//    template<class TType, class TContainer>
-//    inline CFileWriter& operator<<(const std::queue<TType, TContainer>& Queue);
-//    template<class TType, class TContainer, class TCompare>
-//    inline CFileWriter& operator<<(
-//                    const std::priority_queue<TType,
-//                                              TContainer,
-//                                              TCompare>& PriorityQueue);
+    //    inline CFileWriter& operator<<(const std::string& String);
+    //    inline CFileWriter& operator<<(const std::wstring& String);
+    //    template<class TType1, class TType2>
+    //    inline CFileWriter& operator<<(const std::pair<TType1, TType2>& Pair);
+    //    template<class TType>
+    //    inline CFileWriter& operator<<(const std::vector<TType>& Vector);
+    //    template<class TType>
+    //    inline CFileWriter& operator<<(const std::deque<TType>& Deque);
+    //    template<class TType>
+    //    inline CFileWriter& operator<<(const std::list<TType>& List);
+    //    template<class TType, size_t TSize>
+    //    inline CFileWriter& operator<<(const std::array<TType, TSize>& Array);
+    //    template<class TKey, class TType, class TCompare>
+    //    inline CFileWriter& operator<<(const std::map<TKey, TType, TCompare>& Map);
+    //    template<class TType, class TContainer>
+    //    inline CFileWriter& operator<<(const std::queue<TType, TContainer>& Queue);
+    //    template<class TType, class TContainer, class TCompare>
+    //    inline CFileWriter& operator<<(
+    //                    const std::priority_queue<TType,
+    //                                              TContainer,
+    //                                              TCompare>& PriorityQueue);
 
 };
 //---------------------------------------------------------------------------

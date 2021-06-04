@@ -145,4 +145,24 @@ void BytesConvertionTest() {
     assert(number == number2);
 }
 
+void ReadWriteTest() {
+    const std::wstring file = L"abs.txt";
+    intmax_t size = 4500000;
+    std::vector<uint8_t> a(size, 3);
+    std::vector<uint8_t> b;
+
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f.writeBytes(a);
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf.readBytes(b, size);
+    rf.close();
+
+    assert(a == b);
+}
+
 #endif // JSON_TESTS

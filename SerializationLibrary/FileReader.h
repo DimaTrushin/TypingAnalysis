@@ -30,25 +30,25 @@ namespace NSLibrary {
 
 class CFileReaderBase {
 public:
-  CFileReaderBase() = default;
-  CFileReaderBase(const std::wstring& FileName);
-  void open(const std::wstring& FileName);
-  void close();
-  bool isOpen() const;
-  ssize_t getCurPos() const;
+    CFileReaderBase() = default;
+    CFileReaderBase(const std::wstring& FileName);
+    void open(const std::wstring& FileName);
+    void close();
+    bool isOpen() const;
+    ssize_t getCurPos() const;
 
-  void readBytes(std::vector<uint8_t> &object, intmax_t size);
-  static uint32_t toSize(std::vector<uint8_t>& bytes);
-  static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
+    void readBytes(std::vector<uint8_t> &object, intmax_t size);
+    static uint32_t toSize(std::vector<uint8_t>& bytes);
+    static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
 
 protected:
-  void load();
-  ~CFileReaderBase();
-  boost::filesystem::ifstream File_;
-  std::vector<uint8_t> buffer_;
-  ssize_t curPos_;
-  intmax_t filePos_;
-  intmax_t fileSize_;
+    void load();
+    ~CFileReaderBase();
+    boost::filesystem::ifstream File_;
+    std::vector<uint8_t> buffer_;
+    ssize_t curPos_;
+    intmax_t filePos_;
+    intmax_t fileSize_;
 };
 
 //---------------------------------------------------------------------------
@@ -56,48 +56,48 @@ protected:
 //---------------------------------------------------------------------------
 
 class CFileReader : public CFileReaderBase {
-  using CBase = CFileReaderBase;
+    using CBase = CFileReaderBase;
 public:
-  using CBase::CBase;
+    using CBase::CBase;
 
-  inline CFileReader& operator>>(bool& value);
-  inline CFileReader& operator>>(short& value);
-  inline CFileReader& operator>>(unsigned short& value);
-  inline CFileReader& operator>>(int& value);
-  inline CFileReader& operator>>(unsigned int& value);
-  inline CFileReader& operator>>(long& value);
-  inline CFileReader& operator>>(unsigned long& value);
-  inline CFileReader& operator>>(long long& value);
-  inline CFileReader& operator>>(unsigned long long& value);
-  inline CFileReader& operator>>(float& value);
-  inline CFileReader& operator>>(double& value);
-  inline CFileReader& operator>>(long double& value);
-  inline CFileReader& operator>>(char& value);
-  inline CFileReader& operator>>(unsigned char& value);
-  inline CFileReader& operator>>(wchar_t& value);
-  //inline CFileReader& operator>>(void*& value);
+    inline CFileReader& operator>>(bool& value);
+    inline CFileReader& operator>>(short& value);
+    inline CFileReader& operator>>(unsigned short& value);
+    inline CFileReader& operator>>(int& value);
+    inline CFileReader& operator>>(unsigned int& value);
+    inline CFileReader& operator>>(long& value);
+    inline CFileReader& operator>>(unsigned long& value);
+    inline CFileReader& operator>>(long long& value);
+    inline CFileReader& operator>>(unsigned long long& value);
+    inline CFileReader& operator>>(float& value);
+    inline CFileReader& operator>>(double& value);
+    inline CFileReader& operator>>(long double& value);
+    inline CFileReader& operator>>(char& value);
+    inline CFileReader& operator>>(unsigned char& value);
+    inline CFileReader& operator>>(wchar_t& value);
+    //inline CFileReader& operator>>(void*& value);
 
-//  inline CFileReader& operator>>(std::string& String);
-//  inline CFileReader& operator>>(std::wstring& String);
-//  template<class TType1, class TType2>
-//  inline CFileReader& operator>>(std::pair<TType1, TType2>& Pair);
-//  template<class TType>
-//  inline CFileReader& operator>>(std::vector<TType>& Vector);
-//  template<class TType>
-//  inline CFileReader& operator>>(std::deque<TType>& Deque);
-//  template<class TType>
-//  inline CFileReader& operator>>(std::list<TType>& List);
-//  template<class TType, size_t TSize>
-//  inline CFileReader& operator>>(std::array<TType, TSize>& Array);
-//  template<class TKey, class TType, class TCompare>
-//  inline CFileReader& operator>>(std::map<TKey, TType, TCompare>& Map);
-//  template<class TType, class TContainer>
-//  inline CFileReader& operator>>(std::queue<TType, TContainer>& Queue);
-//  template<class TType, class TContainer, class TCompare>
-//  inline CFileReader& operator>>(
-//                        std::priority_queue<TType,
-//                                            TContainer,
-//                                            TCompare>& PriorityQueue);
+    //  inline CFileReader& operator>>(std::string& String);
+    //  inline CFileReader& operator>>(std::wstring& String);
+    //  template<class TType1, class TType2>
+    //  inline CFileReader& operator>>(std::pair<TType1, TType2>& Pair);
+    //  template<class TType>
+    //  inline CFileReader& operator>>(std::vector<TType>& Vector);
+    //  template<class TType>
+    //  inline CFileReader& operator>>(std::deque<TType>& Deque);
+    //  template<class TType>
+    //  inline CFileReader& operator>>(std::list<TType>& List);
+    //  template<class TType, size_t TSize>
+    //  inline CFileReader& operator>>(std::array<TType, TSize>& Array);
+    //  template<class TKey, class TType, class TCompare>
+    //  inline CFileReader& operator>>(std::map<TKey, TType, TCompare>& Map);
+    //  template<class TType, class TContainer>
+    //  inline CFileReader& operator>>(std::queue<TType, TContainer>& Queue);
+    //  template<class TType, class TContainer, class TCompare>
+    //  inline CFileReader& operator>>(
+    //                        std::priority_queue<TType,
+    //                                            TContainer,
+    //                                            TCompare>& PriorityQueue);
 
 
 };

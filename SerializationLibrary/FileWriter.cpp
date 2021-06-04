@@ -14,31 +14,31 @@ namespace NSLibrary {
 //---------------------------------------------------------------------------
 
 CFileWriterBase::CFileWriterBase(const std::wstring& FileName)
-  : File_(FileName, std::fstream::binary | std::fstream::trunc) {
-  buffer_ = std::vector<uint8_t>(maxBufferSize);
-  curSize_ = 0;
-  if (!File_.is_open())
-    throw std::runtime_error ("Cannot open ofstream\n");
+    : File_(FileName, std::fstream::binary | std::fstream::trunc) {
+    buffer_ = std::vector<uint8_t>(maxBufferSize);
+    curSize_ = 0;
+    if (!File_.is_open())
+        throw std::runtime_error ("Cannot open ofstream\n");
 }
 //---------------------------------------------------------------------------
 
 void CFileWriterBase::open(const std::wstring& FileName) {
-  File_.open(FileName, std::fstream::binary | std::fstream::trunc);
-  buffer_ = std::vector<uint8_t>(maxBufferSize);
-  curSize_ = 0;
-  if (!File_.is_open())
-    throw std::runtime_error ("Cannot open ofstream\n");
+    File_.open(FileName, std::fstream::binary | std::fstream::trunc);
+    buffer_ = std::vector<uint8_t>(maxBufferSize);
+    curSize_ = 0;
+    if (!File_.is_open())
+        throw std::runtime_error ("Cannot open ofstream\n");
 }
 //---------------------------------------------------------------------------
 
 void CFileWriterBase::close() {
-  fflush();
-  File_.close();
+    fflush();
+    File_.close();
 }
 //---------------------------------------------------------------------------
 
 bool CFileWriterBase::isOpen() const {
-  return File_.is_open();
+    return File_.is_open();
 }
 
 ssize_t CFileWriterBase::getCurSize() const {
@@ -46,13 +46,13 @@ ssize_t CFileWriterBase::getCurSize() const {
 }
 
 void CFileWriterBase::fflush() {
-      if (getCurSize() == 0) {
-          return;
-      }
-      std::streamsize BlockSize = getCurSize();
-      const char *ptr = (char*)buffer_.data();
-      File_.write(ptr, BlockSize);
-      curSize_ = 0;
+    if (getCurSize() == 0) {
+        return;
+    }
+    std::streamsize BlockSize = getCurSize();
+    const char *ptr = (char*)buffer_.data();
+    File_.write(ptr, BlockSize);
+    curSize_ = 0;
 }
 
 
