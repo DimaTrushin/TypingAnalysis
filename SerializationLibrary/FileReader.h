@@ -17,6 +17,9 @@
 // from https://github.com/nlohmann/json
 #include <nlohmann/json.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem.hpp>
+#include <algorithm>
+#include <iostream>
 //---------------------------------------------------------------------------
 
 namespace NSApplication {
@@ -32,11 +35,20 @@ public:
   void open(const std::wstring& FileName);
   void close();
   bool isOpen() const;
+  ssize_t getCurPos() const;
+
+  void readBytes(std::vector<uint8_t> &object, intmax_t size);
+  static uint32_t toSize(std::vector<uint8_t>& bytes);
+  static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
+
 protected:
-  ~CFileReaderBase() = default;
+  void load();
+  ~CFileReaderBase();
   boost::filesystem::ifstream File_;
-  //std::ifstream File_;
-  std::vector<char> buffer_;
+  std::vector<uint8_t> buffer_;
+  ssize_t curPos_;
+  intmax_t filePos_;
+  intmax_t fileSize_;
 };
 
 //---------------------------------------------------------------------------
@@ -65,27 +77,27 @@ public:
   inline CFileReader& operator>>(wchar_t& value);
   //inline CFileReader& operator>>(void*& value);
 
-  inline CFileReader& operator>>(std::string& String);
-  inline CFileReader& operator>>(std::wstring& String);
-  template<class TType1, class TType2>
-  inline CFileReader& operator>>(std::pair<TType1, TType2>& Pair);
-  template<class TType>
-  inline CFileReader& operator>>(std::vector<TType>& Vector);
-  template<class TType>
-  inline CFileReader& operator>>(std::deque<TType>& Deque);
-  template<class TType>
-  inline CFileReader& operator>>(std::list<TType>& List);
-  template<class TType, size_t TSize>
-  inline CFileReader& operator>>(std::array<TType, TSize>& Array);
-  template<class TKey, class TType, class TCompare>
-  inline CFileReader& operator>>(std::map<TKey, TType, TCompare>& Map);
-  template<class TType, class TContainer>
-  inline CFileReader& operator>>(std::queue<TType, TContainer>& Queue);
-  template<class TType, class TContainer, class TCompare>
-  inline CFileReader& operator>>(
-                        std::priority_queue<TType,
-                                            TContainer,
-                                            TCompare>& PriorityQueue);
+//  inline CFileReader& operator>>(std::string& String);
+//  inline CFileReader& operator>>(std::wstring& String);
+//  template<class TType1, class TType2>
+//  inline CFileReader& operator>>(std::pair<TType1, TType2>& Pair);
+//  template<class TType>
+//  inline CFileReader& operator>>(std::vector<TType>& Vector);
+//  template<class TType>
+//  inline CFileReader& operator>>(std::deque<TType>& Deque);
+//  template<class TType>
+//  inline CFileReader& operator>>(std::list<TType>& List);
+//  template<class TType, size_t TSize>
+//  inline CFileReader& operator>>(std::array<TType, TSize>& Array);
+//  template<class TKey, class TType, class TCompare>
+//  inline CFileReader& operator>>(std::map<TKey, TType, TCompare>& Map);
+//  template<class TType, class TContainer>
+//  inline CFileReader& operator>>(std::queue<TType, TContainer>& Queue);
+//  template<class TType, class TContainer, class TCompare>
+//  inline CFileReader& operator>>(
+//                        std::priority_queue<TType,
+//                                            TContainer,
+//                                            TCompare>& PriorityQueue);
 
 
 };

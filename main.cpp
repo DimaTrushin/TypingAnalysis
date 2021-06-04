@@ -19,15 +19,8 @@ int main()
        UnsignedLongLongTest();
        WCharTest();
        BytesConvertionTest();
+        ReadWriteTest();
 
-
-       const std::wstring file = L"abs.txt";
-       NSApplication::NSLibrary::CFileWriter f;
-       f.open(file);
-
-       bool test = true;
-       f << test;
-       f.close();
 
        std::cout << "Done!\n";
        return 0;

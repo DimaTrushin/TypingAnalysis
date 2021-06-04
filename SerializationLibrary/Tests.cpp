@@ -3,6 +3,7 @@
 
 #include "JsonExtention.cpp"
 #include "FileWriter.h"
+#include "FileReader.h"
 
 void CKeyEventTest() {
     NSApplication::NSKernel::CKeyEvent testKeyEvent;
@@ -139,7 +140,7 @@ void BytesConvertionTest() {
     uint32_t number = 234234234;
 
     std::vector<uint8_t> bytes = NSApplication::NSLibrary::CFileWriter::toBytes(number);
-    uint32_t number2 = NSApplication::NSLibrary::CFileWriter::toSize(bytes);
+    uint32_t number2 = NSApplication::NSLibrary::CFileReader::toSize(bytes);
 
     assert(number == number2);
 }

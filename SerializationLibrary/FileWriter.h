@@ -36,17 +36,16 @@ public:
   bool isOpen() const;
   ssize_t getCurSize() const;
   void fflush();
-  void writeBytes(std::vector<unsigned char> &object);
+  void writeBytes(std::vector<uint8_t> &object);
   void addSize(ssize_t dif);
   static std::vector<uint8_t> toBytes(uint32_t size);
-  static uint32_t toSize(std::vector<uint8_t>& bytes);
   static constexpr ssize_t maxBufferSize = 1000000; // 1e6;
 
 protected:
   ~CFileWriterBase();
   ssize_t curSize_;
   boost::filesystem::ofstream File_;
-  std::vector<unsigned char> buffer_;
+  std::vector<uint8_t> buffer_;
 };
 
 class CFileWriter : public CFileWriterBase {
