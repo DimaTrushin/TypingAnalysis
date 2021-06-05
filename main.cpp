@@ -1,11 +1,11 @@
-#include "SerializationLibrary/JsonExtention.cpp"
 #include "SerializationLibrary/Tests.cpp"
 #include "SerializationLibrary/FileWriter.h"
 
 
 int main()
 {
-    CKeyEventTest();
+//    CKeyEventTest();
+    ReadWriteKeyEventTest();
     BoolTest();
     CharTest();
     UnsignedCharTest();

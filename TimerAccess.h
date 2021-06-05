@@ -11,14 +11,14 @@ namespace nl = NSLibrary;
 
 class CMainTimer;
 
-class CMainTimerInitializer : nl::CAnyGlobalInitializer<CTimer, CMainTimer> {
-  using CBase = nl::CAnyGlobalInitializer<CTimer, CMainTimer>;
+class CMainTimerInitializer : ::NSLibrary::CAnyGlobalInitializer<CTimer, CMainTimer> {
+  using CBase = ::NSLibrary::CAnyGlobalInitializer<CTimer, CMainTimer>;
 
 public:
   using CBase::CBase;
 };
 
-class CMainTimerAccess : public nl::CAnyGlobalAccess<CTimer, CMainTimer> {};
+class CMainTimerAccess : public ::NSLibrary::CAnyGlobalAccess<CTimer, CMainTimer> {};
 } // namespace NSTimerDetail
 
 using CTimerInit = NSTimerDetail::CMainTimerInitializer;

@@ -13,11 +13,11 @@
 #include <array>
 #include <map>
 #include <queue>
+#include <QChar>
 // from https://github.com/nlohmann/json
 #include <nlohmann/json.hpp>
 #include <boost/filesystem/fstream.hpp>
 
-#include "JsonExtention.cpp"
 //---------------------------------------------------------------------------
 
 namespace NSApplication {

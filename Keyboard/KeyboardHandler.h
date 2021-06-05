@@ -30,12 +30,12 @@ class CKeyboardHandler : public CQtMessagesRegistrator {
 
   using CAnyKillerPromise = std::promise<CAnyKeyboardKiller>;
   using CAnyKillerFuture = std::future<CAnyKeyboardKiller>;
-  using CWorkerThread = NSLibrary::CThreadDetachable;
+  using CWorkerThread = ::NSLibrary::CThreadDetachable;
   using CQtException = NSQt::CQtException;
-  using CKeyPressingOut = NSLibrary::CObservableData<CKeyPressing>;
-  using CKeyReleasingOut = NSLibrary::CObservableData<CKeyReleasing>;
-  using CKeyPressingObserver = NSLibrary::CObserver<CKeyPressing>;
-  using CKeyReleasingObserver = NSLibrary::CObserver<CKeyReleasing>;
+  using CKeyPressingOut = ::NSLibrary::CObservableData<CKeyPressing>;
+  using CKeyReleasingOut = ::NSLibrary::CObservableData<CKeyReleasing>;
+  using CKeyPressingObserver = ::NSLibrary::CObserver<CKeyPressing>;
+  using CKeyReleasingObserver = ::NSLibrary::CObserver<CKeyReleasing>;
 
 public:
   CKeyboardHandler();

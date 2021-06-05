@@ -122,7 +122,6 @@ SOURCES += \
   ExceptionHandler.cpp \
   SerializationLibrary/FileReader.cpp \
   SerializationLibrary/FileWriter.cpp \
-  SerializationLibrary/JsonExtention.cpp \
   SerializationLibrary/Tests.cpp \
   TimeApp.cpp \
   Timer.cpp \

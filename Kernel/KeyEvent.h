@@ -2,8 +2,9 @@
 #define NSAPPLICATION_NSKERNEL_CKEYEVENT_H
 
 #include "Keyboard/RawKeyEvent.h"
-//#include "SerializationLibrary/FileReader.h"
-//#include "SerializationLibrary/FileWriter.h"
+#include "SerializationLibrary/FileReader.h"
+#include "SerializationLibrary/FileWriter.h"
+
 
 namespace NSApplication {
 namespace NSKernel {
@@ -12,6 +13,8 @@ class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyID = NSKeyboard::CKeyID;
   using CKeyPressing = NSKeyboard::CKeyPressing;
+  using CFileReader = NSApplication::NSLibrary::CFileReader;
+  using CFileWriter = NSApplication::NSLibrary::CFileWriter;
 
 public:
   CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
@@ -39,6 +42,9 @@ private:
   QString KeyText_;
   CTime PressingTime_;
   CTime ReleasingTime_;
+
+  friend CFileReader& operator>>(CFileReader& FileReader, CKeyEvent& KeyEvent);
+  friend CFileWriter& operator<<(CFileWriter& FileReader, const CKeyEvent& KeyEvent);
 };
 
 

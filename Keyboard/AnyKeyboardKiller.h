@@ -30,7 +30,7 @@ public:
 };
 
 using CAnyKeyboardKiller =
-    nl::CAnyMovable<IAnyKeyboardKiller, CAnyKeyboardKillerImpl>;
+    ::NSLibrary::CAnyMovable<IAnyKeyboardKiller, CAnyKeyboardKillerImpl>;
 } // namespace NSKeyboardKillerDetail
 
 class CAnyKeyboardKiller : public NSKeyboardKillerDetail::CAnyKeyboardKiller {

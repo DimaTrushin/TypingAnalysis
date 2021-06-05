@@ -12,12 +12,12 @@ CSeanceManagerImpl::CSeanceManagerImpl()
           [this](const CKeyReleasing& KeyReleasing) { handle(KeyReleasing); }) {
 }
 
-NSLibrary::CObserver<CSeanceManagerImpl::CKeyPressing>*
+::NSLibrary::CObserver<CSeanceManagerImpl::CKeyPressing>*
 CSeanceManagerImpl::pressingInput() {
   return &KeyPressingInput_;
 }
 
-NSLibrary::CObserver<CSeanceManagerImpl::CKeyReleasing>*
+::NSLibrary::CObserver<CSeanceManagerImpl::CKeyReleasing>*
 CSeanceManagerImpl::releasingInput() {
   return &KeyReleasingInput_;
 }

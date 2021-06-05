@@ -11,14 +11,14 @@ namespace NSKernel {
 class CSeanceManagerImpl {
   using CKeyPressing = NSKeyboard::CKeyPressing;
   using CKeyReleasing = NSKeyboard::CKeyReleasing;
-  using CKeyPressingInput = NSLibrary::CHotInput<CKeyPressing>;
-  using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
+  using CKeyPressingInput = ::NSLibrary::CHotInput<CKeyPressing>;
+  using CKeyReleasingInput = ::NSLibrary::CHotInput<CKeyReleasing>;
 
 public:
   CSeanceManagerImpl();
 
-  NSLibrary::CObserver<CKeyPressing>* pressingInput();
-  NSLibrary::CObserver<CKeyReleasing>* releasingInput();
+  ::NSLibrary::CObserver<CKeyPressing>* pressingInput();
+  ::NSLibrary::CObserver<CKeyReleasing>* releasingInput();
 
   void makeSessions();
 

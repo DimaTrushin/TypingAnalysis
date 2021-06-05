@@ -1,19 +1,19 @@
 #ifndef JSON_TESTS
 #define JSON_TESTS
 
-#include "JsonExtention.cpp"
 #include "FileWriter.h"
 #include "FileReader.h"
+#include "Kernel/KeyEvent.h"
 
-void CKeyEventTest() {
-    NSApplication::NSKernel::CKeyEvent testKeyEvent;
-    NSApplication::NSKernel::CKeyEvent testKeyEvent2;
+//void CKeyEventTest() {
+//    NSApplication::NSKernel::CKeyEvent testKeyEvent;
+//    NSApplication::NSKernel::CKeyEvent testKeyEvent2;
 
-    nlohmann::json j = nlohmann::json(testKeyEvent);
-    testKeyEvent2 = j.template get<NSApplication::NSKernel::CKeyEvent>();
+//    nlohmann::json j = nlohmann::json(testKeyEvent);
+//    testKeyEvent2 = j.template get<NSApplication::NSKernel::CKeyEvent>();
 
-    assert(testKeyEvent.isSameKey(testKeyEvent2) == 1);
-}
+//    assert(testKeyEvent.isSameKey(testKeyEvent2) == 1);
+//}
 
 void BoolTest() {
     bool testBool = true;
@@ -466,6 +466,24 @@ void ReadWriteWCharTest() {
     rf.close();
 
     assert(test == test2);
+}
+
+void ReadWriteKeyEventTest() {
+    const std::wstring file = L"тест";
+    NSApplication::NSKernel::CKeyEvent test;
+    NSApplication::NSKernel::CKeyEvent test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test.isSameKey(test2));
 }
 
 #endif // JSON_TESTS
