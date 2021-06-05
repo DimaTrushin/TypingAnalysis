@@ -62,5 +62,6 @@ CTime CKeyEvent::getDuration() const {
   return ReleasingTime_ - PressingTime_;
 }
 
+
 } // namespace NSKernel
 } // namespace NSApplication

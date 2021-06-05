@@ -2,6 +2,8 @@
 #define NSAPPLICATION_NSKERNEL_CKEYEVENT_H
 
 #include "Keyboard/RawKeyEvent.h"
+//#include "SerializationLibrary/FileReader.h"
+//#include "SerializationLibrary/FileWriter.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -38,6 +40,7 @@ private:
   CTime PressingTime_;
   CTime ReleasingTime_;
 };
+
 
 } // namespace NSKernel
 } // namespace NSApplication

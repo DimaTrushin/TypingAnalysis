@@ -91,164 +91,113 @@ public:
     //                    const std::priority_queue<TType,
     //                                              TContainer,
     //                                              TCompare>& PriorityQueue);
+protected:
+    template<class TPODType>
+    inline void writePOD(const TPODType& Data);
 
 };
 //---------------------------------------------------------------------------
 // Definition of CFileWriter
 //---------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------
-
-CFileWriter& CFileWriter::operator<<(bool value) {
-    nlohmann::json j = nlohmann::json(value);
+template<class TPODType>
+void CFileWriter::writePOD(const TPODType& Data) {
+    nlohmann::json j = nlohmann::json(Data);
     std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
     std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
     this->writeBytes(sizeBytes);
     this->writeBytes(v_ubson);
+}
+
+
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(bool value) {
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(short value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
-
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(unsigned short value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
-
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(int value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(unsigned int value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(long value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(unsigned long value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(long long value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(unsigned long long value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(float value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(double value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(long double value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(char value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(unsigned char value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
 
 CFileWriter& CFileWriter::operator<<(wchar_t value) {
-    nlohmann::json j = nlohmann::json(value);
-    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
-    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
-    this->writeBytes(sizeBytes);
-    this->writeBytes(v_ubson);
+    CFileWriter::writePOD(value);
     return *this;
 }
 //---------------------------------------------------------------------------
