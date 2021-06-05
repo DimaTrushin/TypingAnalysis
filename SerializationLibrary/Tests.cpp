@@ -145,12 +145,11 @@ void BytesConvertionTest() {
     assert(number == number2);
 }
 
-void ReadWriteTest() {
+void ReadWriteBytesTest() {
     const std::wstring file = L"abs.txt";
     intmax_t size = 4500000;
     std::vector<uint8_t> a(size, 3);
     std::vector<uint8_t> b;
-
 
     NSApplication::NSLibrary::CFileWriter f;
     f.open(file);
@@ -163,6 +162,310 @@ void ReadWriteTest() {
     rf.close();
 
     assert(a == b);
+}
+
+void ReadWriteBoolTest() {
+    const std::wstring file = L"abs.txt";
+
+    bool test = true;
+    bool test2 = true;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteShortTest() {
+    const std::wstring file = L"abs.txt";
+
+    short test = SHRT_MAX;
+    short test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteUnsignedShortTest() {
+    const std::wstring file = L"abs.txt";
+
+    unsigned short test = USHRT_MAX;
+    unsigned short test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteIntTest() {
+    const std::wstring file = L"abs.txt";
+
+    int test = INT_MAX;
+    int test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteUnsignedIntTest() {
+    const std::wstring file = L"abs.txt";
+
+    unsigned int test = UINT_MAX;
+    unsigned int test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteLongTest() {
+    const std::wstring file = L"abs.txt";
+
+    long test = LONG_MAX;
+    long test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteUnsignedLongTest() {
+    const std::wstring file = L"abs.txt";
+
+    unsigned long test = ULONG_MAX;
+    unsigned long test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteLongLongTest() {
+    const std::wstring file = L"abs.txt";
+
+    long long test = LLONG_MAX;
+    long long test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteUnsignedLongLongTest() {
+    const std::wstring file = L"abs.txt";
+
+    unsigned long long test = ULLONG_MAX;
+    unsigned long long test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteFloatTest() {
+    const std::wstring file = L"abs.txt";
+
+    float test = 0.5;
+    float test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteDoubleTest() {
+    const std::wstring file = L"abs.txt";
+
+    double test = 0.5;
+    double test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteLongDoubleTest() {
+    const std::wstring file = L"abs.txt";
+
+    long double test = 0.5;
+    long double test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteCharTest() {
+    const std::wstring file = L"abs.txt";
+
+    char test = CHAR_MAX;
+    char test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteUnsignedCharTest() {
+    const std::wstring file = L"тест";
+
+    unsigned char test = UCHAR_MAX;
+    unsigned char test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteQCharTest() {
+    const std::wstring file = L"тест";
+
+    QChar test = 'a';
+    QChar test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
+}
+
+void ReadWriteWCharTest() {
+    const std::wstring file = L"тест";
+
+    wchar_t test = L"ሰ"[0];
+    wchar_t test2 = test;
+
+    NSApplication::NSLibrary::CFileWriter f;
+    f.open(file);
+    f << test;
+    f.close();
+
+    NSApplication::NSLibrary::CFileReader rf;
+    rf.open(file);
+    rf >> test;
+    rf.close();
+
+    assert(test == test2);
 }
 
 #endif // JSON_TESTS

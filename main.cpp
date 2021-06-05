@@ -18,8 +18,23 @@ int main()
     LongLongTest();
     UnsignedLongLongTest();
     WCharTest();
-    BytesConvertionTest();
-    ReadWriteTest();
+    ReadWriteBytesTest();
+    ReadWriteBoolTest();
+    ReadWriteShortTest();
+    ReadWriteUnsignedShortTest();
+    ReadWriteIntTest();
+    ReadWriteUnsignedIntTest();
+    ReadWriteLongTest();
+    ReadWriteUnsignedLongTest();
+    ReadWriteLongLongTest();
+    ReadWriteUnsignedLongLongTest();
+    ReadWriteFloatTest();
+    ReadWriteDoubleTest();
+    ReadWriteLongDoubleTest();
+    ReadWriteCharTest();
+    ReadWriteUnsignedCharTest();
+    ReadWriteQCharTest();
+    ReadWriteWCharTest();
 
 
     std::cout << "Done!\n";

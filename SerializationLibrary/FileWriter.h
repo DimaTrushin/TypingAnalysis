@@ -67,6 +67,7 @@ public:
     inline CFileWriter& operator<<(char value);
     inline CFileWriter& operator<<(unsigned char value);
     inline CFileWriter& operator<<(wchar_t value);
+    inline CFileWriter& operator<<(QChar value);
 
 
     //    inline CFileWriter& operator<<(const std::string& String);
@@ -108,7 +109,154 @@ CFileWriter& CFileWriter::operator<<(bool value) {
 }
 //---------------------------------------------------------------------------
 
+CFileWriter& CFileWriter::operator<<(short value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
 
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(unsigned short value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(int value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(unsigned int value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(long value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(unsigned long value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(long long value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(unsigned long long value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(float value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(double value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(long double value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(char value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(unsigned char value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(wchar_t value) {
+    nlohmann::json j = nlohmann::json(value);
+    std::vector<uint8_t> v_ubson =  nlohmann::json::to_ubjson(j);
+    std::vector<uint8_t> sizeBytes = toBytes(v_ubson.size());
+    this->writeBytes(sizeBytes);
+    this->writeBytes(v_ubson);
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileWriter& CFileWriter::operator<<(QChar value) {
+    *this << value.unicode();
+    return *this;
+}
 
 //---------------------------------------------------------------------------
 } // NSLibrary

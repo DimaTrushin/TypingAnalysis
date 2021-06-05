@@ -20,6 +20,7 @@
 #include <boost/filesystem.hpp>
 #include <algorithm>
 #include <iostream>
+#include <QChar>
 //---------------------------------------------------------------------------
 
 namespace NSApplication {
@@ -75,7 +76,7 @@ public:
     inline CFileReader& operator>>(char& value);
     inline CFileReader& operator>>(unsigned char& value);
     inline CFileReader& operator>>(wchar_t& value);
-    //inline CFileReader& operator>>(void*& value);
+    inline CFileReader& operator>>(QChar& value);
 
     //  inline CFileReader& operator>>(std::string& String);
     //  inline CFileReader& operator>>(std::wstring& String);
@@ -101,6 +102,215 @@ public:
 
 
 };
+
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(bool& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<bool>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(short& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<short>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(unsigned short& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<unsigned short>();
+
+    return *this;
+}
+
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(int& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<int>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(unsigned int& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<unsigned int>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(long& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<long>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(unsigned long& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<unsigned long>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(long long& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<long long>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(unsigned long long& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<unsigned long long>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(float& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<float>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(double& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<double>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(long double& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<long double>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(char& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<char>();
+    return *this;
+}
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(unsigned char& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<unsigned char>();
+    return *this;
+}
+
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(wchar_t& value) {
+    std::vector<uint8_t> sizeBytes;
+    readBytes(sizeBytes, 4);
+    uint32_t size = toSize(sizeBytes);
+    std::vector<uint8_t> v_ubson;
+    readBytes(v_ubson, size);
+
+    nlohmann::json j_from_ubson = nlohmann::json::from_ubjson(v_ubson);
+    value = j_from_ubson.template get<wchar_t>();
+    return *this;
+}
+
+//---------------------------------------------------------------------------
+
+CFileReader& CFileReader::operator>>(QChar& value) {
+    unsigned short x;
+    *this >> x;
+    value = QChar(x);
+    return *this;
+}
+
 //---------------------------------------------------------------------------
 } // NSLibrary
 //---------------------------------------------------------------------------

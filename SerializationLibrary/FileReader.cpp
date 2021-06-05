@@ -73,6 +73,7 @@ void  CFileReaderBase::load() {
     char *ptr = ((char*)buffer_.data() + curPos_);
     std::streamsize BlockSize = toRead;
     File_.read(ptr, BlockSize);
+
 }
 
 void CFileReaderBase::readBytes(std::vector<uint8_t> &object, intmax_t size) {
@@ -96,9 +97,10 @@ void CFileReaderBase::readBytes(std::vector<uint8_t> &object, intmax_t size) {
             load();
             read += maxBufferSize;
         }
+
         intmax_t left = size - read;
         auto objectIt = object.begin() + read;
-        std::copy(buffer_.begin(), buffer_.begin() + left, objectIt);
+        std::copy(buffer_.begin() + curPos_, buffer_.begin() + curPos_ + left, objectIt);
         curPos_ += left;
     }
 }
