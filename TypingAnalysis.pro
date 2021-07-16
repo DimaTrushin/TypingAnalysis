@@ -4,7 +4,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17 rtti_off warn_on
 
-DEFINES += KEYBOARD_HANDLER_DEBUG
+DEFINES += KEYBOARD_HANDLER_DEBUG \
+           SEANCE_MANAGER_DEBUG
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -176,6 +177,16 @@ contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     AppDebug/KeyboardHandlerDebugGUI.cpp \
     AppDebug/KeyboardHandlerDebugOut.cpp
 }
+
+contains(DEFINES, SEANCE_MANAGER_DEBUG) {
+    HEADERS += \
+      AppDebug/SeanceManagerDebugGUI.h \
+      AppDebug/SeanceManagerDebugOut.h
+    SOURCES += \
+      AppDebug/SeanceManagerDebugGUI.cpp \
+      AppDebug/SeanceManagerDebugOut.cpp
+}
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

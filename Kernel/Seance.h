@@ -13,6 +13,11 @@ public:
   using CBase::CBase;
   using CBase::emplace_back;
   using CBase::size;
+
+  using CBase::begin;
+  using CBase::cbegin;
+  using CBase::cend;
+  using CBase::end;
 };
 
 } // namespace NSKernel

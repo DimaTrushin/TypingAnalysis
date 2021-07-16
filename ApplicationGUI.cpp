@@ -8,4 +8,8 @@ CApplicationGUI::CApplicationGUI() {
   AppWindow_.show();
 }
 
+NSQt::CMainWindow* CApplicationGUI::mainWindow() {
+  return &AppWindow_;
+}
+
 } // namespace NSApplication

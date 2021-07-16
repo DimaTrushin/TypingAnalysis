@@ -14,11 +14,17 @@ class CSeanceManagerImpl {
   using CKeyPressingInput = NSLibrary::CHotInput<CKeyPressing>;
   using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
 
+  using CSeanceObservable = NSLibrary::CObservable<CSeance>;
+  using CSeanceGetType = typename NSLibrary::CSource<CSeance>::CGetType;
+  using CSeanceObserver = NSLibrary::CObserver<CSeance>;
+
 public:
   CSeanceManagerImpl();
 
   NSLibrary::CObserver<CKeyPressing>* pressingInput();
   NSLibrary::CObserver<CKeyReleasing>* releasingInput();
+
+  void subscribeToCurrentSeance(CSeanceObserver*);
 
   void makeSessions();
 
@@ -28,6 +34,7 @@ private:
 
   CKeyPressingInput KeyPressingInput_;
   CKeyReleasingInput KeyReleasingInput_;
+  CSeanceObservable CurrentSeanceOutput_;
   CSeanceMaker SeanceMaker_;
   CSeance CurrentSeance_;
   // TO DO

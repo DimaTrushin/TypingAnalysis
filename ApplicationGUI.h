@@ -11,6 +11,9 @@ class CApplicationGUI {
 public:
   CApplicationGUI();
 
+protected:
+  NSQt::CMainWindow* mainWindow();
+
 private:
   NSQt::CMainWindow AppWindow_;
 };

@@ -30,7 +30,7 @@ void CKeyboardHandlerDebugOutImpl::subscribeToKeyboardHandler() {
 
 void CKeyboardHandlerDebugOutImpl::outputKeyPressing(
     const CKeyboardHandlerDebugOutImpl::CKeyPressing& KeyEvent) {
-  QString Text = QString("Press \tKeID = 0x%1\tKeyPos = 0x%2\ttime = %3 "
+  QString Text = QString("Press \tKeID = 0x%1\t KeyPos = 0x%2\ttime = %3 "
                          "ms\tsymb = %4\tlbl = %5")
                      .arg(KeyEvent.KeyID, 2, 16, QChar('0'))
                      .arg(KeyEvent.KeyPosition, 2, 16, QChar('0'))
@@ -42,7 +42,7 @@ void CKeyboardHandlerDebugOutImpl::outputKeyPressing(
 
 void CKeyboardHandlerDebugOutImpl::outputKeyReleasing(
     const CKeyboardHandlerDebugOutImpl::CKeyReleasing& KeyEvent) {
-  QString Text = QString("Release\tKeID = 0x%1\tKeyPos = 0x%2\ttime = %3 ms")
+  QString Text = QString("Release\tKeID = 0x%1\t KeyPos = 0x%2\ttime = %3 ms")
                      .arg(KeyEvent.KeyID, 2, 16, QChar('0'))
                      .arg(KeyEvent.KeyPosition, 2, 16, QChar('0'))
                      .arg(KeyEvent.Time.toMilliSecondsF(), 10);

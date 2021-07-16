@@ -13,6 +13,13 @@ class CSession : protected std::vector<CKeyEvent> {
 
 public:
   using CBase::CBase;
+
+  using CBase::size;
+
+  using CBase::begin;
+  using CBase::cbegin;
+  using CBase::cend;
+  using CBase::end;
 };
 
 } // namespace NSKernel

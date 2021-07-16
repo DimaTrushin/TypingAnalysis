@@ -37,6 +37,7 @@ public:
   ~CKeyboardHandlerDebugOutImpl();
 
 private:
+  // need to refactor
   void subscribeToKeyboardHandler();
 
   void outputKeyPressing(const CKeyPressing&);
