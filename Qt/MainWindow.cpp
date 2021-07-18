@@ -8,12 +8,7 @@ namespace NSApplication {
 namespace NSQt {
 
 CMainWindow::CMainWindow(QWidget* parent)
-    : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>())
-#ifdef KEYBOARD_HANDLER_DEBUG
-      ,
-      KeyboardHandlerOut_(this)
-#endif
-{
+    : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
 }
 

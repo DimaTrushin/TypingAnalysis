@@ -8,15 +8,21 @@ namespace NSApplication {
 
 CApplicationImpl::CApplicationImpl()
     : KeyboardShutter_(CKeyboardHandlerAccess().operator->()),
-      SessionFlusher_(SeanceManager_.operator->())
-#ifdef SEANCE_MANAGER_DEBUG
-      ,
-      SeanceManagerOut_(mainWindow())
-#endif
-{
+      SessionFlusher_(SeanceManager_.operator->()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_.input());
   AppStatus->subscribeToAppState(SessionFlusher_.input());
+
+#ifdef KEYBOARD_HANDLER_DEBUG
+  {
+    CKeyboardHandlerAccess KeyboardHandler;
+    KeyboardHandler->subscribeToKeyPressing(
+        KeyboardHandlerOut_->keyPressingInput());
+    KeyboardHandler->subscribeToKeyReleasing(
+        KeyboardHandlerOut_->keyReleasingInput());
+  }
+#endif
+
 #ifdef SEANCE_MANAGER_DEBUG
   SeanceManager_->subscribeToCurrentSeance(
       SeanceManagerOut_->currentSeanceInput());

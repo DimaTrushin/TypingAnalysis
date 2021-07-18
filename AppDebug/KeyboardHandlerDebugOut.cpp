@@ -1,7 +1,7 @@
 #include "KeyboardHandlerDebugOut.h"
 
 #include "AppDebug/KeyboardHandlerDebugGUI.h"
-#include "KeyboardHandlerAccess.h"
+//#include "KeyboardHandlerAccess.h"
 
 #include <QTextEdit>
 #include <QVBoxLayout>
@@ -17,16 +17,26 @@ CKeyboardHandlerDebugOutImpl::CKeyboardHandlerDebugOutImpl(
       KeyReleasingInput_([this](const CKeyReleasing& KeyEvent) {
         outputKeyReleasing(KeyEvent);
       }) {
-  subscribeToKeyboardHandler();
+  //  subscribeToKeyboardHandler();
 }
 
 CKeyboardHandlerDebugOutImpl::~CKeyboardHandlerDebugOutImpl() = default;
 
-void CKeyboardHandlerDebugOutImpl::subscribeToKeyboardHandler() {
-  NSApplication::CKeyboardHandlerAccess KeyboardHandler;
-  KeyboardHandler->subscribeToKeyPressing(&KeyPressingInput_);
-  KeyboardHandler->subscribeToKeyReleasing(&KeyReleasingInput_);
+CKeyboardHandlerDebugOutImpl::CKeyPressingObserver*
+CKeyboardHandlerDebugOutImpl::keyPressingInput() {
+  return &KeyPressingInput_;
 }
+
+CKeyboardHandlerDebugOutImpl::CKeyReleasingObserver*
+CKeyboardHandlerDebugOutImpl::keyReleasingInput() {
+  return &KeyReleasingInput_;
+}
+
+// void CKeyboardHandlerDebugOutImpl::subscribeToKeyboardHandler() {
+//  NSApplication::CKeyboardHandlerAccess KeyboardHandler;
+//  KeyboardHandler->subscribeToKeyPressing(&KeyPressingInput_);
+//  KeyboardHandler->subscribeToKeyReleasing(&KeyReleasingInput_);
+//}
 
 void CKeyboardHandlerDebugOutImpl::outputKeyPressing(
     const CKeyboardHandlerDebugOutImpl::CKeyPressing& KeyEvent) {
@@ -52,6 +62,11 @@ void CKeyboardHandlerDebugOutImpl::outputKeyReleasing(
 
 CKeyboardHandlerDebugOut::CKeyboardHandlerDebugOut(CMainWindow* MainWindow)
     : Impl_(std::make_unique<CKeyboardHandlerOutImpl>(MainWindow)) {
+}
+
+CKeyboardHandlerDebugOut::CKeyboardHandlerOutImpl*
+CKeyboardHandlerDebugOut::operator->() {
+  return Impl_.get();
 }
 
 } // namespace NSAppDebug

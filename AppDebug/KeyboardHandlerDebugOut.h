@@ -30,15 +30,21 @@ class CKeyboardHandlerDebugOutImpl {
   using CKeyPressingInput = NSLibrary::CHotInput<CKeyPressing>;
   using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
 
+  using CKeyPressingObserver = NSLibrary::CObserver<CKeyPressing>;
+  using CKeyReleasingObserver = NSLibrary::CObserver<CKeyReleasing>;
+
   using CMainWindow = NSApplication::NSQt::CMainWindow;
 
 public:
   CKeyboardHandlerDebugOutImpl(CMainWindow* MainWindow);
   ~CKeyboardHandlerDebugOutImpl();
 
+  CKeyPressingObserver* keyPressingInput();
+  CKeyReleasingObserver* keyReleasingInput();
+
 private:
   // need to refactor
-  void subscribeToKeyboardHandler();
+  //  void subscribeToKeyboardHandler();
 
   void outputKeyPressing(const CKeyPressing&);
   void outputKeyReleasing(const CKeyReleasing&);
@@ -56,6 +62,8 @@ class CKeyboardHandlerDebugOut {
 
 public:
   CKeyboardHandlerDebugOut(CMainWindow* MainWindow);
+
+  CKeyboardHandlerOutImpl* operator->();
 
 private:
   std::unique_ptr<CKeyboardHandlerOutImpl> Impl_;
