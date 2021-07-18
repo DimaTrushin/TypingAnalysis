@@ -10,10 +10,12 @@ class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyID = NSKeyboard::CKeyID;
   using CKeyPressing = NSKeyboard::CKeyPressing;
+  using CLabelData = NSKeyboard::CLabelData;
+  using CKeyTextData = NSKeyboard::CKeyTextData;
 
 public:
-  CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
-            QString KeyText, CTime PressingTime);
+  CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, CLabelData KeyLabel,
+            CKeyTextData KeyText, CTime PressingTime);
   CKeyEvent(const CKeyPressing& PressingEvent);
 
   void setReleasingTime(CTime ReleasingTime);
@@ -22,8 +24,8 @@ public:
 
   CKeyPosition getPosition() const;
   CKeyID getID() const;
-  QChar getLabel() const;
-  QString getText() const;
+  CLabelData getLabel() const;
+  CKeyTextData getText() const;
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
   CTime getDuration() const;
@@ -31,9 +33,9 @@ public:
 private:
   CKeyPosition KeyPosition_;
   CKeyID KeyID_;
-  QChar KeyLabel_;
-  // unsigned int Flags_;
-  QString KeyText_;
+  CLabelData KeyLabel_;
+  CKeyTextData KeyText_;
+  // unsigned short Flags_;
   CTime PressingTime_;
   CTime ReleasingTime_;
 };

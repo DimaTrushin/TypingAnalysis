@@ -2,8 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYTEXTMAKER_H
 
 #include "KeyMapper.h"
-
-#include <QString>
+#include "Keyboard/KeyTextData.h"
 
 #include <optional>
 
@@ -20,19 +19,15 @@ public:
 
   size_t numberOfMappers() const;
 
-  // TO DO
-  // I am not sure that QString is the best thing to return here.
-  // I want standard layout data!
-  // Need to think on the design.
-  QString get(CVKCode VK, CKeyShifters Shifters, HKL Layout);
-  QChar getLabel(USHORT MakeCode, USHORT Flags, HKL Layout);
+  CKeyTextData getText(CVKCode VK, CKeyShifters Shifters, HKL Layout);
+  CLabelData getLabel(USHORT MakeCode, USHORT Flags, HKL Layout);
 
 private:
   bool isLayoutChanged(HKL Layout) const;
   void switchLayout(HKL Layout);
-  QString getSymbols(CVKCode VK, CKeyShifters Shifters);
-  QString getSymbolsWithDeadKey(CVKCode VK, CKeyShifters Shifters);
-  QString getSymbolsPlain(CVKCode VK, CKeyShifters Shifters);
+  CKeyTextData getKeyTextData(CVKCode VK, CKeyShifters Shifters);
+  CKeyTextData getKeyTextDataWithDeadKey(CVKCode VK, CKeyShifters Shifters);
+  CKeyTextData getKeyTextDataNoDeadKey(CVKCode VK, CKeyShifters Shifters);
   QCharOptional getPlainSymbol(CVKCode VK, CKeyShifters Shifters) const;
   QCharOptional getCombinedSymbol(CVKCode VK, CKeyShifters Shifters) const;
   QChar getDeadKeySymbol() const;

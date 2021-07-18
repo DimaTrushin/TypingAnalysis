@@ -62,6 +62,7 @@ HEADERS += \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
+  Keyboard/KeyTextData.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
   Keyboard/ListenerExceptionHandler.h \
@@ -105,6 +106,7 @@ SOURCES += \
   Kernel/SeanceManagerImpl.cpp \
   Kernel/Session.cpp \
   Keyboard/KeyID.cpp \
+  Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \

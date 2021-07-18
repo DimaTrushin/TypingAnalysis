@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 #define NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 
+#include "KeyTextData.h"
 #include "Keyboard/KeyID.h"
 #include "Keyboard/KeyPosition.h"
 #include "TimeApp.h"
@@ -18,8 +19,8 @@ struct CKeyPressing {
   CTime Time;
   CKeyPosition KeyPosition;
   CKeyID KeyID;
-  QChar KeyLabel;
-  QString KeyText;
+  CLabelData KeyLabel;
+  CKeyTextData KeyText;
 };
 
 struct CKeyReleasing {

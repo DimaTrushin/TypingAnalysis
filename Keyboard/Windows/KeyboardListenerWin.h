@@ -51,8 +51,9 @@ private:
 
   bool isPressing(const RAWKEYBOARD& KeyData) const;
   bool isReleasing(const RAWKEYBOARD& KeyData) const;
-  QString getKeyText(const RAWKEYBOARD& KeyData);
-  QChar getKeyLabel(const RAWKEYBOARD& KeyData);
+
+  CKeyTextData getKeyText(const RAWKEYBOARD& KeyData);
+  CLabelData getKeyLabel(const RAWKEYBOARD& KeyData);
 
   static constexpr CMessageStatus Error = -1;
   static constexpr CMessageStatus Quit = 0;
