@@ -124,13 +124,13 @@ bool CKeyboardListenerWinImpl::isReleasing(const RAWKEYBOARD& KeyData) const {
 }
 
 CKeyTextData CKeyboardListenerWinImpl::getKeyText(const RAWKEYBOARD& KeyData) {
-  return KeyTextMaker_.get_ext(KeyData.VKey, CWinKeyboardApi::getShifters(),
+  return KeyTextMaker_.getText(KeyData.VKey, CWinKeyboardApi::getShifters(),
                                CWinKeyboardApi::getForegroundLayout());
 }
 
 CLabelData CKeyboardListenerWinImpl::getKeyLabel(const RAWKEYBOARD& KeyData) {
-  return KeyTextMaker_.getLabel_ext(KeyData.MakeCode, KeyData.Flags,
-                                    CWinKeyboardApi::getForegroundLayout());
+  return KeyTextMaker_.getLabel(KeyData.MakeCode, KeyData.Flags,
+                                CWinKeyboardApi::getForegroundLayout());
 }
 
 HWND CKeyboardListenerWinImpl::hwnd() const {
