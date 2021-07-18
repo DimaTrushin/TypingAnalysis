@@ -1,7 +1,6 @@
 #include "KeyboardHandlerDebugOut.h"
 
 #include "AppDebug/KeyboardHandlerDebugGUI.h"
-//#include "KeyboardHandlerAccess.h"
 
 #include <QTextEdit>
 #include <QVBoxLayout>
@@ -17,7 +16,6 @@ CKeyboardHandlerDebugOutImpl::CKeyboardHandlerDebugOutImpl(
       KeyReleasingInput_([this](const CKeyReleasing& KeyEvent) {
         outputKeyReleasing(KeyEvent);
       }) {
-  //  subscribeToKeyboardHandler();
 }
 
 CKeyboardHandlerDebugOutImpl::~CKeyboardHandlerDebugOutImpl() = default;
@@ -31,12 +29,6 @@ CKeyboardHandlerDebugOutImpl::CKeyReleasingObserver*
 CKeyboardHandlerDebugOutImpl::keyReleasingInput() {
   return &KeyReleasingInput_;
 }
-
-// void CKeyboardHandlerDebugOutImpl::subscribeToKeyboardHandler() {
-//  NSApplication::CKeyboardHandlerAccess KeyboardHandler;
-//  KeyboardHandler->subscribeToKeyPressing(&KeyPressingInput_);
-//  KeyboardHandler->subscribeToKeyReleasing(&KeyReleasingInput_);
-//}
 
 void CKeyboardHandlerDebugOutImpl::outputKeyPressing(
     const CKeyboardHandlerDebugOutImpl::CKeyPressing& KeyEvent) {

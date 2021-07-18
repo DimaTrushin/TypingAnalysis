@@ -43,9 +43,6 @@ public:
   CKeyReleasingObserver* keyReleasingInput();
 
 private:
-  // need to refactor
-  //  void subscribeToKeyboardHandler();
-
   void outputKeyPressing(const CKeyPressing&);
   void outputKeyReleasing(const CKeyReleasing&);
 
