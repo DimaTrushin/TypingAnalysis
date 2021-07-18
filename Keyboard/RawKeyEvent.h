@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 #define NSAPPLICATION_NSKEYBOARD_CRAWKEYEVENT_H
 
+#include "KeyTextData.h"
 #include "Keyboard/KeyID.h"
 #include "Keyboard/KeyPosition.h"
 #include "TimeApp.h"
