@@ -3,8 +3,9 @@
 namespace NSApplication {
 namespace NSKernel {
 
-CKeyEvent::CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, QChar KeyLabel,
-                     QString KeyText, CTime PressingTime)
+CKeyEvent::CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID,
+                     CLabelData KeyLabel, CKeyTextData KeyText,
+                     CTime PressingTime)
     : KeyPosition_(KeyPosition), KeyID_(KeyID), KeyLabel_(KeyLabel),
       KeyText_(KeyText), PressingTime_(PressingTime),
       ReleasingTime_(PressingTime_) {
@@ -32,11 +33,11 @@ CKeyEvent::CKeyID CKeyEvent::getID() const {
   return KeyID_;
 }
 
-QChar CKeyEvent::getLabel() const {
+CKeyEvent::CLabelData CKeyEvent::getLabel() const {
   return KeyLabel_;
 }
 
-QString CKeyEvent::getText() const {
+CKeyEvent::CKeyTextData CKeyEvent::getText() const {
   return KeyText_;
 }
 

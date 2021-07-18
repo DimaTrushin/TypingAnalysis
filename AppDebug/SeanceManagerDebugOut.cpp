@@ -35,8 +35,10 @@ void CSeanceManagerDebugOutImpl::outputCurrentSeance(
 QString CSeanceManagerDebugOutImpl::getSessionText(const CSession& Session) {
   QString Text;
   for (const auto& element : Session) {
-    Text.append(element.getText() != QString() ? element.getText()
-                                               : element.getLabel());
+    Text.append(QString(element.getText().Symbol, element.getText().Size) !=
+                        QString()
+                    ? QString(element.getText().Symbol, element.getText().Size)
+                    : element.getLabel().LowSymbol);
   }
   return Text;
 }

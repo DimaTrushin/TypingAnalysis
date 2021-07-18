@@ -40,13 +40,16 @@ CKeyboardHandlerDebugOutImpl::keyReleasingInput() {
 
 void CKeyboardHandlerDebugOutImpl::outputKeyPressing(
     const CKeyboardHandlerDebugOutImpl::CKeyPressing& KeyEvent) {
-  QString Text = QString("Press \tKeID = 0x%1\t KeyPos = 0x%2\ttime = %3 "
-                         "ms\tsymb = %4\tlbl = %5")
-                     .arg(KeyEvent.KeyID, 2, 16, QChar('0'))
-                     .arg(KeyEvent.KeyPosition, 2, 16, QChar('0'))
-                     .arg(KeyEvent.Time.toMilliSecondsF(), 10)
-                     .arg(KeyEvent.KeyText, 2)
-                     .arg(KeyEvent.KeyLabel);
+  QString Text =
+      QString("Press \tKeID = 0x%1\t KeyPos = 0x%2\ttime = %3 "
+              "ms\tsymb = %4\tlbl = %5")
+          .arg(KeyEvent.KeyID, 2, 16, QChar('0'))
+          .arg(KeyEvent.KeyPosition, 2, 16, QChar('0'))
+          .arg(KeyEvent.Time.toMilliSecondsF(), 10)
+          .arg(QString(KeyEvent.KeyText.Symbol, KeyEvent.KeyText.Size), 2)
+          .arg(QString(KeyEvent.KeyLabel.LowSymbol) + QChar('/') +
+               KeyEvent.KeyLabel.HighSymbol) +
+      QChar('/') + QString::number(KeyEvent.KeyLabel.Size);
   ui_->Text()->append(Text);
 }
 

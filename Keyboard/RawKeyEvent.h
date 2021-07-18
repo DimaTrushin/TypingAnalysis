@@ -19,8 +19,10 @@ struct CKeyPressing {
   CTime Time;
   CKeyPosition KeyPosition;
   CKeyID KeyID;
-  QChar KeyLabel;
-  QString KeyText;
+  // QChar KeyLabel;
+  CLabelData KeyLabel;
+  // QString KeyText;
+  CKeyTextData KeyText;
 };
 
 struct CKeyReleasing {
