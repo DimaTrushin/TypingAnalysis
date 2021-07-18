@@ -41,7 +41,7 @@ The global logic of the entry point is the following:
 \item Application starts the Qt event loop.
 \end{enumerate}
 
-When started the application intercepts keyboard events system-wide, translates them into OS independent form and shows the debug output via \verb"qDebug()". If debugging of the Keyboard Handler is enabled~\ref{section::Debugging}, it starts an additional window showing the debug information.
+When started the application intercepts keyboard events system-wide, translates them into OS independent form and shows the debug output via \verb"qDebug()". If debugging macros are enabled~\ref{section::Debugging}, additional debugging windows are shown to output debug information.
 
 (TO DO) The KeyboardHandler must notify the kernel of the application. The kernel computes the required information and notifies the interface of the application. From the other hand the interface elements control the kernel. All elements of the kernel are connected using Observer pattern~\ref{section::Observer}. The interface and the kernel are connected using MVC pattern. The MVC pattern is based on the Observer pattern as written \href{https://stlab.cc/tips/about-mvc.html}{here} by Sean Parent.
 
@@ -434,6 +434,7 @@ There are currently the following control elements:
 In order to turn on debugging options, you need to define a macro in \verb"TypeingAnalysis.pro" file. Currently the following macros are available:
 \begin{enumerate}
 \item \verb"KEYBOARD_HANDLER_DEBUG"
+\item \verb"SEANCE_MANAGER_DEBUG"
 \end{enumerate}
 
 When you comment or uncomment a macro in the pro file you will probably need to go through: clear, run qmake, and rebuild sequence.
@@ -441,6 +442,10 @@ When you comment or uncomment a macro in the pro file you will probably need to 
 \paragraph{KEYBOARD\_HANDLER\_DEBUG}
 
 This macro activates an additional window showing the data received by the Keyboard Handler of the application. Currently it is connected to key pressing and releasing events of the handler and prints the messages information. The connection is done via Observer pattern~\ref{section::Observer}. The debug window closes automatically when the main window is closing.
+
+\paragraph{SEANCE\_MANAGER\_DEBUG}
+
+This macro activates an additional window showing the structure of the current Seance of the application. Currently it is connected to the current seance output of the seance manager and prints some information about the seance. The connection is done via Observer pattern~\ref{section::Observer}. The debug window closes automatically when the main window is closing.
 
 \section{Code}
 
