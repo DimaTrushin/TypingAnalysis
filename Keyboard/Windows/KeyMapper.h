@@ -31,7 +31,7 @@ struct CKeyData {
 };
 
 struct CKeyInfo {
-  QChar Character = QChar(0);
+  QChar Character = QChar();
   bool isDeadKey = false;
 };
 
@@ -57,7 +57,7 @@ protected:
 
   static bool isControl(CKeyShifters Shifters, QChar Char);
 
-  static constexpr const QChar UndefinedQChar_ = QChar(0);
+  static constexpr const QChar UndefinedQChar_ = QChar();
 
   const HKL Layout_;
   std::map<CKeyData, CKeyInfo> KeyTable_;
