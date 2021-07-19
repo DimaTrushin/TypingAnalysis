@@ -27,6 +27,6 @@ CApplicationImpl::CApplicationImpl()
   SeanceManager_->subscribeToCurrentSeance(
       SeanceManagerOut_->currentSeanceInput());
 #endif
-} // namespace NSApplication
+}
 
 } // namespace NSApplication
