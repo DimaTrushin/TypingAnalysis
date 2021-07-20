@@ -3,11 +3,13 @@
 
 #include "Session.h"
 
+#include <deque>
+
 namespace NSApplication {
 namespace NSKernel {
 
-class CSeance : protected std::list<CSession> {
-  using CBase = std::list<CSession>;
+class CSeance : protected std::deque<CSession> {
+  using CBase = std::deque<CSession>;
 
 public:
   using CBase::CBase;

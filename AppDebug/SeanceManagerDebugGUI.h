@@ -14,8 +14,9 @@ class CMainWindow;
 QT_BEGIN_NAMESPACE
 class QMainWindow;
 class QTextEdit;
-class QVBoxLayout;
+class QHBoxLayout;
 class QWidget;
+class QTreeView;
 QT_END_NAMESPACE
 
 namespace NSAppDebug {
@@ -28,14 +29,16 @@ public:
   ~CSeanceManagerDebugGUI();
 
   QTextEdit* Text();
+  QTreeView* TreeView();
 
 private:
   void setupUI();
 
   std::unique_ptr<QMainWindow> Window_;
   QWidget* CentralWidget_;
-  QVBoxLayout* Layout_;
+  QHBoxLayout* Layout_;
   QTextEdit* TextEdit_;
+  QTreeView* TreeView_;
 };
 
 } // namespace NSAppDebug

@@ -52,6 +52,8 @@ macx {
 HEADERS += \
   AppStatusAccess.h \
   Interface/KeyboardShutter.h \
+  Interface/SeanceDescriptionModel.h \
+  Interface/SeanceView.h \
   Interface/SessionFlusher.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
@@ -98,6 +100,8 @@ HEADERS += \
 SOURCES += \
   AppStatusAccess.cpp \
   Interface/KeyboardShutter.cpp \
+  Interface/SeanceDescriptionModel.cpp \
+  Interface/SeanceView.cpp \
   Interface/SessionFlusher.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \

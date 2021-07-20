@@ -15,6 +15,7 @@ public:
   using CBase::CBase;
 
   using CBase::size;
+  using CBase::operator[];
 
   using CBase::begin;
   using CBase::cbegin;

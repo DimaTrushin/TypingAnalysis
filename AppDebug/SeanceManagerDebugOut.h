@@ -1,6 +1,7 @@
 #ifndef NSAPPDEBUG_CSEANCEMANAGERDEBUGOUT_H
 #define NSAPPDEBUG_CSEANCEMANAGERDEBUGOUT_H
 
+#include "Interface/SeanceView.h"
 #include "Kernel/Seance.h"
 #include "Library/Observer/Observer.h"
 
@@ -25,6 +26,8 @@ class CSeanceManagerDebugOutImpl {
   using CSeanceInput = NSLibrary::CHotInput<CSeance>;
   using CSeanceObserver = NSLibrary::CObserver<CSeance>;
 
+  using CSeanceView = NSApplication::NSInterface::CSeanceView;
+
   using CMainWindow = NSApplication::NSQt::CMainWindow;
 
 public:
@@ -32,12 +35,14 @@ public:
   ~CSeanceManagerDebugOutImpl();
 
   CSeanceObserver* currentSeanceInput();
+  CSeanceObserver* currentSeanceTreeInput();
 
 private:
   void outputCurrentSeance(const CSeance& Seance);
   QString getSessionText(const CSession& Session);
 
   std::unique_ptr<CSeanceManagerDebugGUI> ui_;
+  CSeanceView CurrentSeanceTreeView_;
   CSeanceInput CurrentSeanceInput_;
 };
 
