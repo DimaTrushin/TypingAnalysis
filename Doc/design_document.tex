@@ -428,7 +428,15 @@ The manager's responsibilities:
 
 The manager has the following control options:
 \begin{enumerate}
-\item \verb"makeSessions". This transforms Raw Sessions from \verb"SeanceMaker" to Sessions and puts them into \verb"CurrentSeance".
+\item \verb"makeSessions". This method transforms \verb"CRawSession"s from \verb"SeanceMaker" to \verb"CSession"s, appends them to \verb"CurrentSeance", and clears the internal buffer, that is, \verb"CRawSeance".
+\end{enumerate}
+
+\paragraph{SeanceMaker}
+This object eats \verb"CKeyPressing" and \verb"CKeyReleasing" events. It tries to pair pressing and releasing events to form \verb"CKeyEvent". Internally, \verb"SeanceMaker" contains \verb"RawSeance" that is \verb"std::list<CRawSession>" and \verb"CRawSession" is \verb"std::list<CKeyEvent>". There are several things you should be aware off:
+\begin{enumerate}
+\item If you press a key and hold it for some time, the key may generate artificial key pressing events in specific time intervals. The artificial key pressing events are marked by \verb"AutoRepeat" flag and do not have releasing time (releasing time is set to be zero). \verb"SeanceMaker" distinguishes the keys with autorepeat support and without. Currently autorepeat is not allowed for the shifters (left and right shift, alt, and ctrl and capslock).
+
+\item The logic for division of \verb"CRawSeance" into \verb"CRawSession"s is the following. \verb"SeanceMaker" keep track the time of the last event and the keys that are being pressed currently. If the current \verb"CRawSession" is not empty, there are no pressed keys, and the time since the last event exceeds the time limit (if it is set) the new \verb"CRawSession" is opened. Currently, the time limit is set to be 10 seconds. (TO DO) In the future, there will be an option to set the time limit via application settings.
 \end{enumerate}
 
 
