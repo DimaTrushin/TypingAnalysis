@@ -5,16 +5,17 @@ namespace NSKernel {
 
 CKeyEvent::CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID,
                      CLabelData KeyLabel, CKeyTextData KeyText,
-                     CTime PressingTime)
+                     CTime PressingTime, EKeyFlags Flags)
     : KeyPosition_(KeyPosition), KeyID_(KeyID), KeyLabel_(KeyLabel),
-      KeyText_(KeyText), PressingTime_(PressingTime),
+      KeyText_(KeyText), Flags_(Flags), PressingTime_(PressingTime),
       ReleasingTime_(PressingTime_) {
 }
 
-CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent)
+CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent,
+                     EKeyFlags Flags)
     : CKeyEvent(PressingEvent.KeyPosition, PressingEvent.KeyID,
                 PressingEvent.KeyLabel, PressingEvent.KeyText,
-                PressingEvent.Time) {
+                PressingEvent.Time, Flags) {
 }
 
 void CKeyEvent::setReleasingTime(CTime ReleasingTime) {
@@ -23,6 +24,10 @@ void CKeyEvent::setReleasingTime(CTime ReleasingTime) {
 
 bool CKeyEvent::isSameKey(const CKeyEvent& KeyEvent) const {
   return KeyPosition_ == KeyEvent.KeyPosition_;
+}
+
+bool CKeyEvent::isAutoRepeat() const {
+  return Flags_ & AutoRepeat;
 }
 
 CKeyEvent::CKeyPosition CKeyEvent::getPosition() const {

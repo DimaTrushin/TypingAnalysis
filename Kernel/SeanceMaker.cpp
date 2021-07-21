@@ -8,14 +8,28 @@
 namespace NSApplication {
 namespace NSKernel {
 
+namespace NSSeanceMakerDetail {
+
+CPressedKeys::iterator CPressedKeys::findKey(CKeyPosition KeyPosition) {
+  return std::find_if(begin(), end(), [KeyPosition](CKeyEvent* KeyEvent) {
+    assert(KeyEvent);
+    return KeyEvent->getPosition() == KeyPosition;
+  });
+}
+
+} // namespace NSSeanceMakerDetail
+
 void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
   assert(LastEvent_ <= KeyPressing.Time);
   if (needNewSession(KeyPressing))
     openNewSession();
-  CurrentSession().emplace_back(KeyPressing);
-  auto It = findKey(KeyPressing.KeyPosition);
-  if (It == PressedKeys_.end())
+  auto It = PressedKeys_.findKey(KeyPressing.KeyPosition);
+  if (It == PressedKeys_.end()) {
+    CurrentSession().emplace_back(KeyPressing);
     PressedKeys_.push_back(&CurrentSession().back());
+  } else if (isAutoRepeatAllowed(KeyPressing.KeyID)) {
+    CurrentSession().emplace_back(KeyPressing, CKeyEvent::AutoRepeat);
+  }
   LastEvent_ = KeyPressing.Time;
   qDebug() << QString("seances = %1 current size = %2 pressed = %3")
                   .arg(RawSeance_.size(), 4, 10)
@@ -25,7 +39,7 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
 
 void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
   assert(LastEvent_ <= KeyReleasing.Time);
-  auto It = findKey(KeyReleasing.KeyPosition);
+  auto It = PressedKeys_.findKey(KeyReleasing.KeyPosition);
   if (It != PressedKeys_.end()) {
     (*It)->setReleasingTime(KeyReleasing.Time);
     PressedKeys_.erase(It);
@@ -37,7 +51,12 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
                   .arg(PressedKeys_.size(), 4, 10);
 }
 
+void CSeanceMaker::resetTimeLimit() {
+  TimeLimit_.reset();
+}
+
 void CSeanceMaker::setTimeLimit(CTime TimeLimit) {
+  assert(TimeLimit >= CTime());
   TimeLimit_ = TimeLimit;
 }
 
@@ -88,13 +107,20 @@ void CSeanceMaker::openNewSession() {
   RawSeance_.emplace_back();
 }
 
-CSeanceMaker::CPressedKeys::iterator
-CSeanceMaker::findKey(CKeyPosition KeyPosition) {
-  return std::find_if(PressedKeys_.begin(), PressedKeys_.end(),
-                      [KeyPosition](CKeyEvent* KeyEvent) {
-                        assert(KeyEvent);
-                        return KeyEvent->getPosition() == KeyPosition;
-                      });
+bool CSeanceMaker::isAutoRepeatAllowed(CKeyID KeyID) const {
+  using CKeyIDEnum = NSKeyboard::CKeyIDEnum;
+  switch (KeyID) {
+  case CKeyIDEnum::LeftShift:
+  case CKeyIDEnum::RightShift:
+  case CKeyIDEnum::LeftAlt:
+  case CKeyIDEnum::RightAlt:
+  case CKeyIDEnum::LeftCtrl:
+  case CKeyIDEnum::RightCtrl:
+  case CKeyIDEnum::Capslock:
+    return false;
+  default:
+    return true;
+  }
 }
 
 CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() {

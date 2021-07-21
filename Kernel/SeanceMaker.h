@@ -11,8 +11,32 @@ namespace NSKernel {
 
 class CSeance;
 
+namespace NSSeanceMakerDetail {
+
+class CPressedKeys : protected std::list<CKeyEvent*> {
+  using CBase = std::list<CKeyEvent*>;
+  using CKeyPosition = NSKeyboard::CKeyPosition;
+
+public:
+  using CBase::CBase;
+
+  using CBase::begin;
+  using CBase::clear;
+  using CBase::empty;
+  using CBase::end;
+  using CBase::erase;
+  using CBase::iterator;
+  using CBase::push_back;
+  using CBase::size;
+
+  CBase::iterator findKey(CKeyPosition KeyPosition);
+};
+
+} // namespace NSSeanceMakerDetail
+
 class CSeanceMaker {
   using CKeyPosition = NSKeyboard::CKeyPosition;
+  using CKeyID = NSKeyboard::CKeyID;
 
   using CKeyPressing = NSKeyboard::CKeyPressing;
   using CKeyReleasing = NSKeyboard::CKeyReleasing;
@@ -20,7 +44,7 @@ class CSeanceMaker {
   using CRawSession = std::list<CKeyEvent>;
   using CRawSeance = std::list<CRawSession>;
 
-  using CPressedKeys = std::list<CKeyEvent*>;
+  using CPressedKeys = NSSeanceMakerDetail::CPressedKeys;
 
   using CTimeOptional = std::optional<CTime>;
 
@@ -28,6 +52,7 @@ public:
   void add(const CKeyPressing& KeyPressing);
   void add(const CKeyReleasing& KeyReleasing);
 
+  void resetTimeLimit();
   void setTimeLimit(CTime TimeLimit);
   CTimeOptional getTimeLimit() const;
 
@@ -37,8 +62,7 @@ private:
   void releaseAllKeysNow();
   bool needNewSession(const CKeyPressing& KeyPressing) const;
   void openNewSession();
-
-  CPressedKeys::iterator findKey(CKeyPosition KeyPosition);
+  bool isAutoRepeatAllowed(CKeyID KeyID) const;
 
   CRawSession& CurrentSession();
   const CRawSession& CurrentSession() const;
