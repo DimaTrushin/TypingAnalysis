@@ -16,6 +16,7 @@ public:
 
   using CBase::size;
   using CBase::operator[];
+  using CBase::emplace_back;
 
   using CBase::begin;
   using CBase::cbegin;

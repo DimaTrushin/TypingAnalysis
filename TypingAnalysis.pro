@@ -61,6 +61,13 @@ HEADERS += \
   Kernel/SeanceManager.h \
   Kernel/SeanceManagerImpl.h \
   Kernel/Session.h \
+  Kernel/SessionSelector/SessionSelector.h \
+  Kernel/SessionSelector/SessionSelectorGUI.h \
+  Kernel/SessionSelector/SessionSelectorOut.h \
+  Kernel/TextModule/SessionScanner.h \
+  Kernel/TextModule/TextModule.h \
+  Kernel/TextModule/TextModuleGUI.h \
+  Kernel/TextModule/TextModuleOut.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -109,6 +116,13 @@ SOURCES += \
   Kernel/SeanceManager.cpp \
   Kernel/SeanceManagerImpl.cpp \
   Kernel/Session.cpp \
+  Kernel/SessionSelector/SessionSelector.cpp \
+  Kernel/SessionSelector/SessionSelectorGUI.cpp \
+  Kernel/SessionSelector/SessionSelectorOut.cpp \
+  Kernel/TextModule/SessionScanner.cpp \
+  Kernel/TextModule/TextModule.cpp \
+  Kernel/TextModule/TextModuleGUI.cpp \
+  Kernel/TextModule/TextModuleOut.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \

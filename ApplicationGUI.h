@@ -13,6 +13,9 @@
 #include "AppDebug/SeanceManagerDebugOut.h"
 #endif
 
+#include "Kernel/SessionSelector/SessionSelectorOut.h"
+#include "Kernel/TextModule/TextModuleOut.h"
+
 namespace NSApplication {
 
 class CApplicationGUI {
@@ -33,6 +36,10 @@ protected:
 #ifdef SEANCE_MANAGER_DEBUG
   NSAppDebug::CSeanceManagerDebugOut SeanceManagerOut_ = mainWindow();
 #endif
+
+  NSInterface::NSSessionSelectorOut::CSessionSelectorOut SessionSelectorOut_ =
+      mainWindow();
+  NSInterface::NSTextModuleOut::CTextModuleOut TextModuleOut_ = mainWindow();
 };
 
 } // namespace NSApplication

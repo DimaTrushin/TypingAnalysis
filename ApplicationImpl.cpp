@@ -29,6 +29,16 @@ CApplicationImpl::CApplicationImpl()
   SeanceManager_->subscribeToCurrentSeance(
       SeanceManagerOut_->currentSeanceTreeInput());
 #endif
+
+  SeanceManager_->subscribeToCurrentSeance(
+      SessionSelectorOut_->currentSeanceInput());
+  SeanceManager_->subscribeToCurrentSeance(
+      SessionSelector_->currentSeanceInput());
+  SessionSelectorOut_->subscribeToSessionIndex(
+      SessionSelector_->sessionIndexInput());
+  SessionSelector_->subscribeToSelectedSession(TextModule_->sessionInput());
+  TextModuleOut_->subscribeToTextMode(TextModule_->textModeInput());
+  TextModule_->subscribeToText(TextModuleOut_->textInput());
 }
 
 } // namespace NSApplication
