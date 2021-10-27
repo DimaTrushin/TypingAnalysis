@@ -26,6 +26,18 @@ signals:
   bool closeMainWindow();
 
 private:
+  void adjustStaticInterface();
+  void adjustSplitters();
+  void adjustSplitter();
+  void adjustSplitter2();
+  void adjustSplitter3();
+  void adjustSplitter5();
+  void adjustSplitter6();
+  void adjustButtonGroups();
+  void adjustButtonGroup();
+  void adjustButtonGroup2();
+  void adjustButtonGroup3();
+
   std::unique_ptr<Ui::MainWindow> ui_;
 };
 } // namespace NSQt
