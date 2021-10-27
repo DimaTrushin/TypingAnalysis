@@ -20,6 +20,8 @@ public:
   using CBase::cbegin;
   using CBase::cend;
   using CBase::end;
+
+  using CBase::operator[];
 };
 
 } // namespace NSKernel

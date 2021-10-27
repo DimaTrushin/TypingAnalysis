@@ -60,7 +60,9 @@ HEADERS += \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
   Kernel/SeanceManagerImpl.h \
+  Kernel/SeanceViewData.h \
   Kernel/Session.h \
+  Kernel/SessionSelector.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -108,7 +110,9 @@ SOURCES += \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \
   Kernel/SeanceManagerImpl.cpp \
+  Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
+  Kernel/SessionSelector.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \

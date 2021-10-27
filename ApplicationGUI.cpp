@@ -2,7 +2,8 @@
 
 namespace NSApplication {
 
-CApplicationGUI::CApplicationGUI() {
+CApplicationGUI::CApplicationGUI()
+    : MainSeanceView_(AppWindow_.getSeanceView()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

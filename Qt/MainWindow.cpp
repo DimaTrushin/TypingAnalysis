@@ -20,6 +20,10 @@ void CMainWindow::closeEvent(QCloseEvent* Event) {
   QMainWindow::closeEvent(Event);
 }
 
+QTreeView* CMainWindow::getSeanceView() const {
+  return ui_->treeView;
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();

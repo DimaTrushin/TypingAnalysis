@@ -13,6 +13,9 @@ CApplicationImpl::CApplicationImpl()
   AppStatus->subscribeToAppState(KeyboardShutter_.input());
   AppStatus->subscribeToAppState(SessionFlusher_.input());
 
+  CurrentSession_->subscribeToSeanceViewData(
+      MainSeanceView_->currentSeanceViewDataInput());
+
 #ifdef KEYBOARD_HANDLER_DEBUG
   {
     CKeyboardHandlerAccess KeyboardHandler;

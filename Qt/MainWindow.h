@@ -9,6 +9,7 @@ namespace Ui {
 class MainWindow;
 }
 class QCloseEvent;
+class QTreeView;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -21,6 +22,8 @@ public:
   ~CMainWindow();
 
   void closeEvent(QCloseEvent* event);
+
+  QTreeView* getSeanceView() const;
 
 signals:
   bool closeMainWindow();

@@ -26,7 +26,7 @@ class CSeanceManagerDebugOutImpl {
   using CSeanceInput = NSLibrary::CHotInput<CSeance>;
   using CSeanceObserver = NSLibrary::CObserver<CSeance>;
 
-  using CSeanceView = NSApplication::NSInterface::CSeanceView;
+  using CSeanceView = NSApplication::NSInterface::CSimpleSeanceView;
 
   using CMainWindow = NSApplication::NSQt::CMainWindow;
 
