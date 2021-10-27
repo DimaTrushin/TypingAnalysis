@@ -5,6 +5,10 @@
 namespace NSApplication {
 namespace NSInterface {
 
+QModelIndex CSeanceDescriptionModel::IndexOfItem(int row) const {
+  return index(row, 0, index(0, 0));
+}
+
 QModelIndex CSeanceDescriptionModel::index(int row, int column,
                                            const QModelIndex& parent) const {
   if (!hasIndex(row, column, parent))

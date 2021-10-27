@@ -24,6 +24,8 @@ public:
     size_t Size;
   };
 
+  QModelIndex IndexOfItem(int row) const;
+
   QModelIndex index(int row, int column,
                     const QModelIndex& parent = QModelIndex()) const override;
   QModelIndex parent(const QModelIndex& child) const override;

@@ -55,10 +55,16 @@ class CSeanceViewImpl : public QObject {
   using CSeanceViewDataObserver = NSLibrary::CObserver<CSeanceViewData>;
   //  using CSeanceViewDataGetType = CSeanceViewDataObserver::CGetType;
 
+  using Index = NSKernel::CSeanceViewData::Index;
+  using CIndexObserver = NSLibrary::CObserver<Index>;
+  using CIndexObservable = NSLibrary::CObservableData<Index>;
+  using CIndexGetType = CIndexObserver::CGetType;
+
 public:
   CSeanceViewImpl(QTreeView*);
 
   CSeanceViewDataObserver* currentSeanceViewDataInput();
+  void subscribeToSessionIndex(CIndexObserver* obs);
 
 public slots:
   void onSelectionChanged(int level, int index);
@@ -67,9 +73,27 @@ private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
 
+  bool isRowSelected(int) const;
+  void selectRow(int);
+  void reselect(int);
+  void clearSelection();
+
+  class CSupressor {
+  public:
+    bool isLocked() const;
+    void lock();
+    void unlock();
+
+  private:
+    bool locked_ = false;
+  };
+
+  CSupressor FromModel_;
+  CSupressor MySignal_;
   QTreeView* TreeView_;
   CSeanceDescriptionModel SeanceModel_;
   CSeanceViewDataInput CurrentSeanceViewData_;
+  CIndexObservable IndexOutput_;
 };
 
 } // namespace NSSeanceViewDetail

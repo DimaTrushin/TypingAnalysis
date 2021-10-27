@@ -32,8 +32,17 @@ public:
   void subscribeToCurrentSession(CSessionObserver* obs);
   void subscribeToSeanceViewData(CSeanceViewDataObserver* obs);
 
+  void setCurrentSession(Index);
+
 private:
+  void resetCurrentSession();
+
   void handleSeance(const CSeance& Seance);
+  void notifySeanceViewData(const CSeance& Seance);
+
+  bool hasCurrentSession() const;
+  void handleCurrentSession();
+
   CSessionGetType getCurrentSession() const;
   CSessionGetType getCurrentSessionFromSeance(const CSeance&) const;
 
@@ -46,12 +55,12 @@ private:
 } // namespace NSSessionSelectorDetail
 
 class CSessionSelector {
-  using CSessionSelectorImpl = NSSessionSelectorDetail::CSessionSelectorImpl;
-
 public:
+  using CSessionSelectorImpl = NSSessionSelectorDetail::CSessionSelectorImpl;
   CSessionSelector();
 
   CSessionSelectorImpl* operator->() const;
+  CSessionSelectorImpl* model() const;
 
 private:
   std::unique_ptr<CSessionSelectorImpl> Impl_;

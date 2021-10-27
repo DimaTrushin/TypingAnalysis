@@ -9,8 +9,8 @@ namespace NSApplication {
 namespace NSKernel {
 
 struct CSeanceViewData {
-  using Index = int64_t;
-  static constexpr const Index kNotSelected = -1ll;
+  using Index = int;
+  static constexpr const Index kNotSelected = -1;
 
   std::reference_wrapper<const CSeance> Seance;
   Index CurrentSession;

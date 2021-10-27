@@ -54,6 +54,7 @@ HEADERS += \
   Interface/KeyboardShutter.h \
   Interface/SeanceDescriptionModel.h \
   Interface/SeanceView.h \
+  Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
@@ -104,6 +105,7 @@ SOURCES += \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceDescriptionModel.cpp \
   Interface/SeanceView.cpp \
+  Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \

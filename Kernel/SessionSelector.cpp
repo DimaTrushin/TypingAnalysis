@@ -26,16 +26,49 @@ void CSessionSelectorImpl::subscribeToSeanceViewData(
   SeanceViewData_.subscribe(obs);
 }
 
+void CSessionSelectorImpl::setCurrentSession(Index CurrentSession) {
+  if (!Seance_.hasValue())
+    return;
+  if (CurrentSession < 0) {
+    resetCurrentSession();
+    return;
+  }
+  assert(size_t(CurrentSession) < Seance_.data()->get().size());
+  if (CurrentSession_ == CurrentSession)
+    return;
+  CurrentSession_ = CurrentSession;
+  notifySeanceViewData(*Seance_.data());
+  handleCurrentSession();
+}
+
+void CSessionSelectorImpl::resetCurrentSession() {
+}
+
 void CSessionSelectorImpl::handleSeance(const CSeance& Seance) {
-  // TO DO
-  // This is just a preliminary version
-  SeanceViewData_.set(CSeanceViewData{std::cref(Seance), CurrentSession_});
   qDebug() << "handleSeance";
+  notifySeanceViewData(Seance);
+  // TO DO
+  // Do I need this in the future?
+  //  if (hasCurrentSession())
+  //    handleCurrentSession();
+}
+
+void CSessionSelectorImpl::notifySeanceViewData(const CSeance& Seance) {
+  SeanceViewData_.set(CSeanceViewData{std::cref(Seance), CurrentSession_});
+}
+
+bool CSessionSelectorImpl::hasCurrentSession() const {
+  return !(CurrentSession_ < 0 || !Seance_.hasValue());
+}
+
+void CSessionSelectorImpl::handleCurrentSession() {
+  qDebug() << "handleCurrentSession";
+  Session_.notify();
 }
 
 CSessionSelectorImpl::CSessionGetType
 CSessionSelectorImpl::getCurrentSession() const {
-  if (CurrentSession_ < 0 || !Seance_.hasValue())
+  if (!hasCurrentSession())
     return CSessionGetType();
   return getCurrentSessionFromSeance(*Seance_.data());
 }
@@ -51,6 +84,10 @@ CSessionSelector::CSessionSelector()
 }
 
 CSessionSelector::CSessionSelectorImpl* CSessionSelector::operator->() const {
+  return Impl_.get();
+}
+
+CSessionSelector::CSessionSelectorImpl* CSessionSelector::model() const {
   return Impl_.get();
 }
 
