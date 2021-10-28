@@ -6,7 +6,8 @@ CApplicationGUI::CApplicationGUI()
     : MainSeanceView_(AppWindow_.getSeanceView()),
       TextModeView_(
           AppWindow_.getTextButtonGroup(), AppWindow_.getShiftButtonGroup(),
-          AppWindow_.getCtrlButtonGroup(), AppWindow_.getAltButtonGroup()) {
+          AppWindow_.getCtrlButtonGroup(), AppWindow_.getAltButtonGroup()),
+      MainTextPrinter_(AppWindow_.getMainTextEdit()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

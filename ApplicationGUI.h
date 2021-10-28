@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_CAPPLICATIONGUI_H
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
+#include "Interface/CTextPrinter.h"
 #include "Interface/SeanceView.h"
 #include "Interface/TextModeView.h"
 #include "Qt/MainWindow.h"
@@ -30,6 +31,7 @@ private:
 protected:
   NSInterface::CSeanceView MainSeanceView_;
   NSInterface::CTextModeView TextModeView_;
+  NSInterface::CTextPrinter MainTextPrinter_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

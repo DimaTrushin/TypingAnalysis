@@ -51,6 +51,7 @@ macx {
 
 HEADERS += \
   AppStatusAccess.h \
+  Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
@@ -108,6 +109,7 @@ HEADERS += \
 
 SOURCES += \
   AppStatusAccess.cpp \
+  Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \

@@ -46,15 +46,5 @@ void CSeanceManagerImpl::handle(const CKeyReleasing& KeyReleasing) {
 }
 } // namespace NSSeanceManagerDetail
 
-// CSeanceManager::CSeanceManager()
-//    : Impl_(std::make_unique<CSeanceManagerImpl>()) {
-//}
-
-// CSeanceManager::CSeanceManagerImpl* CSeanceManager::operator->() const {
-//  return Impl_.get();
-//}
-
-// CSeanceManager::~CSeanceManager() = default;
-
 } // namespace NSKernel
 } // namespace NSApplication

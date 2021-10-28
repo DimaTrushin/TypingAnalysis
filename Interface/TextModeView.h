@@ -51,9 +51,6 @@ public slots:
   void toggleAltButton(int id);
 
   void toggleAllButtons(CTextMode);
-  //  void ShiftButtonClicked(int);
-  //  void CtrlButtonClicked(int);
-  //  void AltButtonClicked(int);
 
 private:
   static ETextMode getTextMode(int);

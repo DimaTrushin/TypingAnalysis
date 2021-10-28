@@ -32,6 +32,7 @@ public:
   void setCurrentTextMode(CTextMode);
 
   CSessionObserver* currentSessionInput();
+  void subscribeToTextData(CTextDataObserver* obs);
 
 private:
   void handleCurrentSession(const CSession& Seance);

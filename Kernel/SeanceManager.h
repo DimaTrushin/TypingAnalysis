@@ -56,19 +56,6 @@ private:
 using CSeanceManager =
     NSLibrary::CModelWrapper<NSSeanceManagerDetail::CSeanceManagerImpl>;
 
-// class CSeanceManager {
-
-// public:
-//  using CSeanceManagerImpl = NSSeanceManagerDetail::CSeanceManagerImpl;
-//  CSeanceManager();
-//  ~CSeanceManager();
-
-//  CSeanceManagerImpl* operator->() const;
-
-// private:
-//  std::unique_ptr<CSeanceManagerImpl> Impl_;
-//};
-
 } // namespace NSKernel
 } // namespace NSApplication
 

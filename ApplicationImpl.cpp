@@ -23,6 +23,8 @@ CApplicationImpl::CApplicationImpl()
   TextModule_->subscribeToCurrentTextMode(TextModeView_->textModeInput());
   TextModeView_->subscribeToTextMode(TextModeController_->textModeInput());
 
+  TextModule_->subscribeToTextData(MainTextPrinter_->textDataInput());
+
 #ifdef KEYBOARD_HANDLER_DEBUG
   {
     CKeyboardHandlerAccess KeyboardHandler;

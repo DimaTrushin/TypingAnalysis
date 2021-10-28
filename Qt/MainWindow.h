@@ -11,6 +11,7 @@ class MainWindow;
 class QCloseEvent;
 class QTreeView;
 class QButtonGroup;
+class QTextEdit;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -29,6 +30,7 @@ public:
   QButtonGroup* getShiftButtonGroup() const;
   QButtonGroup* getCtrlButtonGroup() const;
   QButtonGroup* getAltButtonGroup() const;
+  QTextEdit* getMainTextEdit() const;
 
 signals:
   bool closeMainWindow();

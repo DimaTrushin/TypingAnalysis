@@ -32,6 +32,11 @@ CTextModuleImpl::CSessionObserver* CTextModuleImpl::currentSessionInput() {
   return &CurrentSession_;
 }
 
+void CTextModuleImpl::subscribeToTextData(CTextDataObserver* obs) {
+  assert(obs);
+  TextDataOutput_.subscribe(obs);
+}
+
 void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
   qDebug() << "CTextModule::handleCurrentSession";
   // TO DO
