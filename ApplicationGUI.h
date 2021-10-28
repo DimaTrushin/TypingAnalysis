@@ -2,6 +2,7 @@
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
 #include "Interface/SeanceView.h"
+#include "Interface/TextModeView.h"
 #include "Qt/MainWindow.h"
 
 #include <memory>
@@ -28,6 +29,7 @@ private:
 
 protected:
   NSInterface::CSeanceView MainSeanceView_;
+  NSInterface::CTextModeView TextModeView_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

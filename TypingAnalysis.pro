@@ -56,6 +56,7 @@ HEADERS += \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
+  Interface/TextModeView.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
@@ -64,6 +65,8 @@ HEADERS += \
   Kernel/SeanceViewData.h \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
+  Kernel/TextMode.h \
+  Kernel/TextModule.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -108,6 +111,7 @@ SOURCES += \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
+  Interface/TextModeView.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
@@ -116,6 +120,8 @@ SOURCES += \
   Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
+  Kernel/TextMode.cpp \
+  Kernel/TextModule.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \

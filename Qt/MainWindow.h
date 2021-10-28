@@ -10,6 +10,7 @@ class MainWindow;
 }
 class QCloseEvent;
 class QTreeView;
+class QButtonGroup;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -24,6 +25,10 @@ public:
   void closeEvent(QCloseEvent* event);
 
   QTreeView* getSeanceView() const;
+  QButtonGroup* getTextButtonGroup() const;
+  QButtonGroup* getShiftButtonGroup() const;
+  QButtonGroup* getCtrlButtonGroup() const;
+  QButtonGroup* getAltButtonGroup() const;
 
 signals:
   bool closeMainWindow();
@@ -40,6 +45,7 @@ private:
   void adjustButtonGroup();
   void adjustButtonGroup2();
   void adjustButtonGroup3();
+  void adjustButtonGroup4();
 
   std::unique_ptr<Ui::MainWindow> ui_;
 };
