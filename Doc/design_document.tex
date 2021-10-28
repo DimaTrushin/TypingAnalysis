@@ -394,7 +394,7 @@ This object is a singleton according to section~\ref{section::Singleton}. It has
 
 When the application runs it uses a continuous time scale. Each new run of the application has its one time scale starting from zero. All key events on the same time line are grouped into a Seance. Each Seance can be separated into peaces called Sessions. The Session is considered as a peace of information to analyze. Each session is analyzed independently. When we load a file it contains key events on a different time scale. The notion of Seance allows us to separate current Seance intercepted while application is running and other Seances that are loaded from files.
 
-The Seance is presented by \verb"CSeance" class. Currently this is an extension of \verb"std::list" of \verb"CSession"-s (TO DO partially implemented). Session is presented by \verb"CSession" class. Currently this is an extension of \verb"std::vector" of \verb"CKeyEvent"-s. (TO DO partially implemented).
+The Seance is presented by \verb"CSeance" class. Currently this is an extension of \verb"std::deque" of \verb"CSession"-s (TO DO partially implemented). Session is presented by \verb"CSession" class. Currently this is an extension of \verb"std::vector" of \verb"CKeyEvent"-s. (TO DO partially implemented).
 
 
 \subsection{CSeanceManager}
