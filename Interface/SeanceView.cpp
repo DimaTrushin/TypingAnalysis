@@ -131,18 +131,6 @@ void CSeanceViewImpl::clearSelection() {
   TreeView_->selectionModel()->clearSelection();
 }
 
-bool CSeanceViewImpl::CSupressor::isLocked() const {
-  return locked_;
-}
-
-void CSeanceViewImpl::CSupressor::lock() {
-  locked_ = true;
-}
-
-void CSeanceViewImpl::CSupressor::unlock() {
-  locked_ = false;
-}
-
 } // namespace NSSeanceViewDetail
 
 CSimpleSeanceView::CSimpleSeanceView(QTreeView* TreeView)

@@ -7,6 +7,7 @@
 
 #include "Kernel/SeanceViewData.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/Supressor.h"
 #include "SeanceDescriptionModel.h"
 
 QT_BEGIN_NAMESPACE
@@ -60,6 +61,8 @@ class CSeanceViewImpl : public QObject {
   using CIndexObservable = NSLibrary::CObservableData<Index>;
   using CIndexGetType = CIndexObserver::CGetType;
 
+  using CSupressor = NSLibrary::CSupressor;
+
 public:
   CSeanceViewImpl(QTreeView*);
 
@@ -77,16 +80,6 @@ private:
   void selectRow(int);
   void reselect(int);
   void clearSelection();
-
-  class CSupressor {
-  public:
-    bool isLocked() const;
-    void lock();
-    void unlock();
-
-  private:
-    bool locked_ = false;
-  };
 
   CSupressor FromModel_;
   CSupressor MySignal_;

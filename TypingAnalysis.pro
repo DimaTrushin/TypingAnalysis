@@ -80,6 +80,7 @@ HEADERS += \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
+  Library/StlExtension/Supressor.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
