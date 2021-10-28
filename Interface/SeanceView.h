@@ -9,7 +9,7 @@
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
-#include "SeanceDescriptionModel.h"
+#include "Qt/SeanceDescriptionModel.h"
 
 QT_BEGIN_NAMESPACE
 class QTreeView;
@@ -21,6 +21,7 @@ namespace NSInterface {
 namespace NSSeanceViewDetail {
 class CSimpleSeanceViewImpl : public QObject {
   Q_OBJECT
+  using CSeanceDescriptionModel = NSQt::CSeanceDescriptionModel;
 
   using CSeance = NSKernel::CSeance;
   using CSeanceInput = NSLibrary::CObserverHot<CSeance>;
@@ -46,6 +47,7 @@ private:
 
 class CSeanceViewImpl : public QObject {
   Q_OBJECT
+  using CSeanceDescriptionModel = NSQt::CSeanceDescriptionModel;
 
   using CSeance = NSKernel::CSeance;
   using CSeanceInput = NSLibrary::CObserverHot<CSeance>;

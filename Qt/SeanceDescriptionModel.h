@@ -1,5 +1,5 @@
-#ifndef NSAPPLICATION_NSINTERFACE_CSEANCEDESCRIPTIONMODEL_H
-#define NSAPPLICATION_NSINTERFACE_CSEANCEDESCRIPTIONMODEL_H
+#ifndef NSAPPLICATION_NSQT_CSEANCEDESCRIPTIONMODEL_H
+#define NSAPPLICATION_NSQT_CSEANCEDESCRIPTIONMODEL_H
 
 #include <QAbstractItemModel>
 #include <QItemSelection>
@@ -11,7 +11,7 @@ class CSeance;
 class CSession;
 } // namespace NSKernel
 
-namespace NSInterface {
+namespace NSQt {
 
 class CSeanceDescriptionModel : public QAbstractItemModel {
   Q_OBJECT
@@ -66,7 +66,7 @@ private:
   std::deque<CDescription> Data_;
 };
 
-} // namespace NSInterface
+} // namespace NSQt
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSINTERFACE_CSEANCEDESCRIPTIONMODEL_H
+#endif // NSAPPLICATION_NSQT_CSEANCEDESCRIPTIONMODEL_H

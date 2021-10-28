@@ -52,7 +52,6 @@ macx {
 HEADERS += \
   AppStatusAccess.h \
   Interface/KeyboardShutter.h \
-  Interface/SeanceDescriptionModel.h \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
@@ -101,6 +100,7 @@ HEADERS += \
   ApplicationKernel.h \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
+  Qt/SeanceDescriptionModel.h \
   QtLoopException.h \
   TimeApp.h \
   Timer.h \
@@ -109,7 +109,6 @@ HEADERS += \
 SOURCES += \
   AppStatusAccess.cpp \
   Interface/KeyboardShutter.cpp \
-  Interface/SeanceDescriptionModel.cpp \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
@@ -141,6 +140,7 @@ SOURCES += \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
   ExceptionHandler.cpp \
+  Qt/SeanceDescriptionModel.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp

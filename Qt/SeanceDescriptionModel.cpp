@@ -3,7 +3,7 @@
 #include "Kernel/Seance.h"
 
 namespace NSApplication {
-namespace NSInterface {
+namespace NSQt {
 
 QModelIndex CSeanceDescriptionModel::IndexOfItem(int row) const {
   return index(row, 0, index(0, 0));
@@ -192,5 +192,5 @@ CSeanceDescriptionModel::getSessionDescription(const CSession& Session) const {
   return Description;
 }
 
-} // namespace NSInterface
+} // namespace NSQt
 } // namespace NSApplication
