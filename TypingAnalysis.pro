@@ -56,6 +56,7 @@ HEADERS += \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
+  Interface/TextModeController.h \
   Interface/TextModeView.h \
   Kernel/KeyEvent.h \
   Kernel/Seance.h \
@@ -111,6 +112,7 @@ SOURCES += \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
+  Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/Seance.cpp \

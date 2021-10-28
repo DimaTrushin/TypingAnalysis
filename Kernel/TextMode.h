@@ -21,6 +21,13 @@ struct CTextMode {
   friend bool operator!=(const CTextMode& lhs, const CTextMode& rhs) {
     return !(lhs == rhs);
   }
+
+  bool isWellDefined() const {
+    return TextMode != ETextMode::NotDefined &&
+           ShiftMode != EModifierMode::NotDefined &&
+           CtrlMode != EModifierMode::NotDefined &&
+           AltMode != EModifierMode::NotDefined;
+  }
 };
 
 } // namespace NSKernel

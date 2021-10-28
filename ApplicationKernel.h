@@ -4,12 +4,14 @@
 #include "ApplicationGlobals.h"
 #include "Kernel/SeanceManager.h"
 #include "Kernel/SessionSelector.h"
+#include "Kernel/TextModule.h"
 
 namespace NSApplication {
 
 class CApplicationKernel : protected CApplicationGlobals {
   using CSeanceManager = NSKernel::CSeanceManager;
   using CSessionSelector = NSKernel::CSessionSelector;
+  using CTextModule = NSKernel::CTextModule;
 
 public:
   CApplicationKernel();
@@ -17,6 +19,7 @@ public:
 protected:
   CSeanceManager SeanceManager_;
   CSessionSelector CurrentSession_;
+  CTextModule TextModule_;
 };
 
 } // namespace NSApplication

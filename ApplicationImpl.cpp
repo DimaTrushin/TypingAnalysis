@@ -9,7 +9,8 @@ namespace NSApplication {
 CApplicationImpl::CApplicationImpl()
     : KeyboardShutter_(CKeyboardHandlerAccess().operator->()),
       SessionFlusher_(SeanceManager_.operator->()),
-      SeanceViewController_(CurrentSession_.model()) {
+      SeanceViewController_(CurrentSession_.model()),
+      TextModeController_(TextModule_.model()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_.input());
   AppStatus->subscribeToAppState(SessionFlusher_.input());
@@ -17,6 +18,9 @@ CApplicationImpl::CApplicationImpl()
   CurrentSession_->subscribeToSeanceViewData(
       MainSeanceView_->currentSeanceViewDataInput());
   MainSeanceView_->subscribeToSessionIndex(SeanceViewController_->indexInput());
+
+  TextModule_->subscribeToCurrentTextMode(TextModeView_->textModeInput());
+  TextModeView_->subscribeToTextMode(TextModeController_->textModeInput());
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   {

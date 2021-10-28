@@ -28,12 +28,13 @@ private:
 } // namespace NSTextModuleDetail
 
 class CTextModule {
+public:
   using CTextModuleImpl = NSTextModuleDetail::CTextModuleImpl;
 
-public:
   CTextModule();
 
   CTextModuleImpl* operator->() const;
+  CTextModuleImpl* model() const;
 
 private:
   std::unique_ptr<CTextModuleImpl> Impl_;

@@ -29,5 +29,9 @@ CTextModule::CTextModuleImpl* CTextModule::operator->() const {
   return Impl_.get();
 }
 
+CTextModule::CTextModuleImpl* CTextModule::model() const {
+  return Impl_.get();
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

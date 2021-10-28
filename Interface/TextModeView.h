@@ -33,6 +33,10 @@ class CTextModeViewImpl : public QObject {
 
 public:
   CTextModeViewImpl(QButtonGroup*, QButtonGroup*, QButtonGroup*, QButtonGroup*);
+
+  CTextModeObserver* textModeInput();
+  void subscribeToTextMode(CTextModeObserver*);
+
 public slots:
   void TextButtonToggled(int id, bool checked);
   void ShiftButtonToggled(int id, bool checked);
