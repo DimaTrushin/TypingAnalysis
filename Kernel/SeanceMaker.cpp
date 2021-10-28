@@ -64,21 +64,25 @@ CSeanceMaker::CTimeOptional CSeanceMaker::getTimeLimit() const {
   return TimeLimit_;
 }
 
-void CSeanceMaker::transferTo(CSeance* Seance) {
+bool CSeanceMaker::transferTo(CSeance* Seance) {
   assert(Seance);
+  bool hasNewData = false;
   if (!PressedKeys_.empty())
     releaseAllKeysNow();
   for (auto& RawSession : RawSeance_)
-    if (!RawSession.empty())
+    if (!RawSession.empty()) {
       // TO DO
       // Add filter ignoring small sessions or sessions with no symbol keys
       // or any other filtering method
+      hasNewData = true;
       Seance->emplace_back(RawSession.begin(), RawSession.end());
+    }
   RawSeance_.clear();
   RawSeance_.emplace_back();
   assert(PressedKeys_.empty());
   assert(RawSeance_.size() == 1);
   assert(CurrentSession().empty());
+  return hasNewData;
 }
 
 void CSeanceMaker::releaseAllKeysNow() {

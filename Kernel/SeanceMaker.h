@@ -56,7 +56,7 @@ public:
   void setTimeLimit(CTime TimeLimit);
   CTimeOptional getTimeLimit() const;
 
-  void transferTo(CSeance* Seance);
+  bool transferTo(CSeance* Seance);
 
 private:
   void releaseAllKeysNow();
