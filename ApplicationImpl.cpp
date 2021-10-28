@@ -1,19 +1,18 @@
 #include "ApplicationImpl.h"
 
 #include "AppStatusAccess.h"
-#include "Kernel/SeanceManagerImpl.h"
 #include "KeyboardHandlerAccess.h"
 
 namespace NSApplication {
 
 CApplicationImpl::CApplicationImpl()
     : KeyboardShutter_(CKeyboardHandlerAccess().operator->()),
-      SessionFlusher_(SeanceManager_.operator->()),
+      SessionFlusher_(SeanceManager_.model()),
       SeanceViewController_(SessionSelector_.model()),
       TextModeController_(TextModule_.model()) {
   CAppStatusAccess AppStatus;
-  AppStatus->subscribeToAppState(KeyboardShutter_.input());
-  AppStatus->subscribeToAppState(SessionFlusher_.input());
+  AppStatus->subscribeToAppState(KeyboardShutter_->input());
+  AppStatus->subscribeToAppState(SessionFlusher_->input());
 
   SessionSelector_->subscribeToSeanceViewData(
       MainSeanceView_->currentSeanceViewDataInput());

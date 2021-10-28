@@ -183,18 +183,5 @@ CTextModeViewImpl::CTextMode CTextModeViewImpl::getCurrentTextMode() const {
           getModifierMod(AltButtonGroup_->checkedId())};
 }
 } // namespace NSTextModeViewDetail
-
-CTextModeView::CTextModeView(QButtonGroup* TextButtonGroup,
-                             QButtonGroup* ShiftButtonGroup,
-                             QButtonGroup* CtrlButtonGroup,
-                             QButtonGroup* AltButtonGroup)
-    : Impl_(std::make_unique<CTextModeViewImpl>(
-          TextButtonGroup, ShiftButtonGroup, CtrlButtonGroup, AltButtonGroup)) {
-}
-
-CTextModeView::CTextModeViewImpl* CTextModeView::operator->() const {
-  return Impl_.get();
-}
-
 } // namespace NSInterface
 } // namespace NSApplication

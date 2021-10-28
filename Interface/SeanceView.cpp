@@ -142,14 +142,6 @@ CSimpleSeanceView::operator->() const {
   return Impl_.get();
 }
 
-CSeanceView::CSeanceView(QTreeView* TreeView)
-    : Impl_(std::make_unique<CSeanceViewImpl>(TreeView)) {
-}
-
-CSeanceView::CSeanceViewImpl* CSeanceView::operator->() const {
-  return Impl_.get();
-}
-
 // namespace NSSeanceViewDetail
 
 } // namespace NSInterface

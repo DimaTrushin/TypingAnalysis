@@ -5,22 +5,26 @@
 namespace NSApplication {
 namespace NSInterface {
 
-CKeyboardShutter::CKeyboardShutter(CKeyboardHandler* KeyboardHandler)
+namespace NSCKeyboardShutterDetail {
+
+CKeyboardShutterImpl::CKeyboardShutterImpl(CKeyboardHandler* KeyboardHandler)
     : KeyboardHandler_(KeyboardHandler),
-      StateObserver_(std::make_unique<CStateObserverInput>(
-          [this](EAppState State) { switchKeyboardHandler(State); })) {
+      StateObserver_(
+          [this](EAppState State) { switchKeyboardHandler(State); }) {
 }
 
-CKeyboardShutter::CStateObserver* CKeyboardShutter::input() {
-  return StateObserver_.get();
+CKeyboardShutterImpl::CStateObserver* CKeyboardShutterImpl::input() {
+  return &StateObserver_;
 }
 
-void CKeyboardShutter::switchKeyboardHandler(EAppState State) {
+void CKeyboardShutterImpl::switchKeyboardHandler(EAppState State) {
   if (State == EAppState::Active)
     KeyboardHandler_->deactivate();
   if (State == EAppState::Inactive)
     KeyboardHandler_->activate();
 }
+
+} // namespace NSCKeyboardShutterDetail
 
 } // namespace NSInterface
 } // namespace NSApplication

@@ -1,28 +1,26 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CSESSIONFLUSHER_H
 #define NSAPPLICATION_NSINTERFACE_CSESSIONFLUSHER_H
 
+#include "Kernel/SeanceManager.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 #include "Qt/AppState.h"
 
 #include <memory>
 
 namespace NSApplication {
-namespace NSKernel {
-class CSeanceManagerImpl;
-} // namespace NSKernel
-
 namespace NSInterface {
 
-// TO DO
-// I am not sure that this is an appropriate place to define the class
-class CSessionFlusher {
+namespace NSSessionFlusherDetailImpl {
+class CSessionFlusherImpl {
+  using CSeanceManager = NSKernel::CSeanceManager;
   using EAppState = NSQt::EAppState;
   using CStateObserverInput = NSLibrary::CHotInput<EAppState>;
   using CStateObserver = NSLibrary::CObserver<EAppState>;
-  using CSeanceManagerImpl = NSKernel::CSeanceManagerImpl;
+  using CSeanceManagerImpl = CSeanceManager::CImplementation;
 
 public:
-  CSessionFlusher(CSeanceManagerImpl*);
+  CSessionFlusherImpl(CSeanceManagerImpl*);
 
   CStateObserver* input();
 
@@ -30,8 +28,12 @@ private:
   void makeSessions(EAppState);
 
   CSeanceManagerImpl* SeanceManager_;
-  std::unique_ptr<CStateObserverInput> StateObserver_;
+  CStateObserverInput StateObserver_;
 };
+} // namespace NSSessionFlusherDetailImpl
+
+using CSessionFlusher = NSLibrary::CControllerWrapper<
+    NSSessionFlusherDetailImpl::CSessionFlusherImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication

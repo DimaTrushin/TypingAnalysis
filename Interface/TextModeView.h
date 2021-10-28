@@ -7,6 +7,7 @@
 
 #include "Kernel/TextMode.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 
 QT_BEGIN_NAMESPACE
@@ -76,17 +77,8 @@ private:
 };
 } // namespace NSTextModeViewDetail
 
-class CTextModeView {
-  using CTextModeViewImpl = NSTextModeViewDetail::CTextModeViewImpl;
-
-public:
-  CTextModeView(QButtonGroup*, QButtonGroup*, QButtonGroup*, QButtonGroup*);
-  CTextModeViewImpl* operator->() const;
-
-private:
-  std::unique_ptr<CTextModeViewImpl> Impl_;
-};
-
+using CTextModeView =
+    NSLibrary::CViewWrapper<NSTextModeViewDetail::CTextModeViewImpl>;
 } // namespace NSInterface
 } // namespace NSApplication
 

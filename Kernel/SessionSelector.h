@@ -6,6 +6,7 @@
 #include "Kernel/Seance.h"
 #include "Kernel/SeanceViewData.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -51,17 +52,8 @@ private:
 
 } // namespace NSSessionSelectorDetail
 
-class CSessionSelector {
-public:
-  using CSessionSelectorImpl = NSSessionSelectorDetail::CSessionSelectorImpl;
-  CSessionSelector();
-
-  CSessionSelectorImpl* operator->() const;
-  CSessionSelectorImpl* model() const;
-
-private:
-  std::unique_ptr<CSessionSelectorImpl> Impl_;
-};
+using CSessionSelector =
+    NSLibrary::CModelWrapper<NSSessionSelectorDetail::CSessionSelectorImpl>;
 
 } // namespace NSKernel
 } // namespace NSApplication

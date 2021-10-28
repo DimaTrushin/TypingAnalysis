@@ -7,6 +7,7 @@
 
 #include "Kernel/SeanceViewData.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "SeanceDescriptionModel.h"
 
@@ -103,17 +104,8 @@ private:
   std::unique_ptr<CSimpleSeanceViewImpl> Impl_;
 };
 
-class CSeanceView {
-  using CSeanceViewImpl = NSSeanceViewDetail::CSeanceViewImpl;
-
-public:
-  CSeanceView(QTreeView*);
-
-  CSeanceViewImpl* operator->() const;
-
-private:
-  std::unique_ptr<CSeanceViewImpl> Impl_;
-};
+using CSeanceView =
+    NSLibrary::CViewWrapper<NSSeanceViewDetail::CSeanceViewImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication

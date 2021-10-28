@@ -65,17 +65,5 @@ CSessionSelectorImpl::getCurrentSessionFromSeance(const CSeance& Seance) const {
 }
 } // namespace NSSessionSelectorDetail
 
-CSessionSelector::CSessionSelector()
-    : Impl_(std::make_unique<CSessionSelectorImpl>()) {
-}
-
-CSessionSelector::CSessionSelectorImpl* CSessionSelector::operator->() const {
-  return Impl_.get();
-}
-
-CSessionSelector::CSessionSelectorImpl* CSessionSelector::model() const {
-  return Impl_.get();
-}
-
 } // namespace NSKernel
 } // namespace NSApplication

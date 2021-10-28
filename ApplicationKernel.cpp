@@ -1,6 +1,5 @@
 #include "ApplicationKernel.h"
 
-#include "Kernel/SeanceManagerImpl.h"
 #include "KeyboardHandlerAccess.h"
 
 namespace NSApplication {

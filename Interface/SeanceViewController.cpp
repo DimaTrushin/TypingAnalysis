@@ -18,15 +18,6 @@ CSeanceViewControllerImpl::indexInput() {
 
 } // namespace NSSeanceViewControllerDetail
 
-CSeanceViewController::CSeanceViewController(CSessionSelectorImpl* Model)
-    : Impl_(std::make_unique<CSeanceViewControllerImpl>(Model)) {
-}
-
-CSeanceViewController::CSeanceViewControllerImpl*
-CSeanceViewController::operator->() const {
-  return Impl_.get();
-}
-
 // namespace NSSeanceViewControllerDetail
 } // namespace NSInterface
 } // namespace NSApplication

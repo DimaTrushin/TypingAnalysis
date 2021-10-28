@@ -3,6 +3,7 @@
 
 #include "Kernel/SessionSelector.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {
 namespace NSInterface {
@@ -15,7 +16,7 @@ class CSeanceViewControllerImpl {
   using CIndexObserver = NSLibrary::CObserver<Index>;
 
 public:
-  using CSessionSelectorImpl = NSKernel::CSessionSelector::CSessionSelectorImpl;
+  using CSessionSelectorImpl = NSKernel::CSessionSelector::CImplementation;
 
   CSeanceViewControllerImpl(CSessionSelectorImpl* Model);
 
@@ -27,19 +28,8 @@ private:
 };
 } // namespace NSSeanceViewControllerDetail
 
-class CSeanceViewController {
-  using CSeanceViewControllerImpl =
-      NSSeanceViewControllerDetail::CSeanceViewControllerImpl;
-  using CSessionSelectorImpl = CSeanceViewControllerImpl::CSessionSelectorImpl;
-
-public:
-  CSeanceViewController(CSessionSelectorImpl*);
-
-  CSeanceViewControllerImpl* operator->() const;
-
-private:
-  std::unique_ptr<CSeanceViewControllerImpl> Impl_;
-};
+using CSeanceViewController = NSLibrary::CControllerWrapper<
+    NSSeanceViewControllerDetail::CSeanceViewControllerImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication

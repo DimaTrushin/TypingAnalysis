@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSINTERFACE_CKEYBOARDSHUTTER_H
 
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 #include "Qt/AppState.h"
 
 #include <memory>
@@ -12,17 +13,15 @@ class CKeyboardHandler;
 } // namespace NSKeyboard
 
 namespace NSInterface {
-
-// TO DO
-// I am not sure that this is an appropriate place to define the class
-class CKeyboardShutter {
+namespace NSCKeyboardShutterDetail {
+class CKeyboardShutterImpl {
   using EAppState = NSQt::EAppState;
   using CStateObserverInput = NSLibrary::CHotInput<EAppState>;
   using CStateObserver = NSLibrary::CObserver<EAppState>;
   using CKeyboardHandler = NSKeyboard::CKeyboardHandler;
 
 public:
-  CKeyboardShutter(CKeyboardHandler*);
+  CKeyboardShutterImpl(CKeyboardHandler*);
 
   CStateObserver* input();
 
@@ -30,8 +29,13 @@ private:
   void switchKeyboardHandler(EAppState);
 
   CKeyboardHandler* KeyboardHandler_;
-  std::unique_ptr<CStateObserverInput> StateObserver_;
+  CStateObserverInput StateObserver_;
 };
+
+} // namespace NSCKeyboardShutterDetail
+
+using CKeyboardShutter = NSLibrary::CControllerWrapper<
+    NSCKeyboardShutterDetail::CKeyboardShutterImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication

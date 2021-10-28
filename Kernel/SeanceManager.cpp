@@ -1,19 +1,60 @@
 #include "SeanceManager.h"
 
-#include "SeanceManagerImpl.h"
+#include <QDebug>
 
 namespace NSApplication {
 namespace NSKernel {
 
-CSeanceManager::CSeanceManager()
-    : Impl_(std::make_unique<CSeanceManagerImpl>()) {
+namespace NSSeanceManagerDetail {
+
+CSeanceManagerImpl::CSeanceManagerImpl()
+    : KeyPressingInput_(
+          [this](const CKeyPressing& KeyPressing) { handle(KeyPressing); }),
+      KeyReleasingInput_(
+          [this](const CKeyReleasing& KeyReleasing) { handle(KeyReleasing); }),
+      CurrentSeanceOutput_(
+          [this]() -> CSeanceGetType { return CurrentSeance_; }) {
 }
 
-CSeanceManagerImpl* CSeanceManager::operator->() const {
-  return Impl_.get();
+NSLibrary::CObserver<CSeanceManagerImpl::CKeyPressing>*
+CSeanceManagerImpl::pressingInput() {
+  return &KeyPressingInput_;
 }
 
-CSeanceManager::~CSeanceManager() = default;
+NSLibrary::CObserver<CSeanceManagerImpl::CKeyReleasing>*
+CSeanceManagerImpl::releasingInput() {
+  return &KeyReleasingInput_;
+}
+
+void CSeanceManagerImpl::subscribeToCurrentSeance(CSeanceObserver* observer) {
+  CurrentSeanceOutput_.subscribe(observer);
+}
+
+void CSeanceManagerImpl::makeSessions() {
+  if (SeanceMaker_.transferTo(&CurrentSeance_)) {
+    qDebug() << "CurrentSeance_.size() = " << CurrentSeance_.size();
+    CurrentSeanceOutput_.notify();
+  }
+}
+
+void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {
+  SeanceMaker_.add(KeyPressing);
+}
+
+void CSeanceManagerImpl::handle(const CKeyReleasing& KeyReleasing) {
+  SeanceMaker_.add(KeyReleasing);
+}
+} // namespace NSSeanceManagerDetail
+
+// CSeanceManager::CSeanceManager()
+//    : Impl_(std::make_unique<CSeanceManagerImpl>()) {
+//}
+
+// CSeanceManager::CSeanceManagerImpl* CSeanceManager::operator->() const {
+//  return Impl_.get();
+//}
+
+// CSeanceManager::~CSeanceManager() = default;
 
 } // namespace NSKernel
 } // namespace NSApplication

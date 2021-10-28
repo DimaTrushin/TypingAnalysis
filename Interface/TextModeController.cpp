@@ -20,15 +20,5 @@ void NSTextModeControllerDetail::CTextModeControllerImpl::handleTextMode(
   if (Mode.isWellDefined())
     TextModule_->setCurrentTextMode(Mode);
 }
-
-CTextModeController::CTextModeController(CTextModuleImpl* TextModule)
-    : Impl_(std::make_unique<CTextModeControllerImpl>(TextModule)) {
-}
-
-CTextModeController::CTextModeControllerImpl*
-CTextModeController::operator->() const {
-  return Impl_.get();
-}
-
 } // namespace NSInterface
 } // namespace NSApplication

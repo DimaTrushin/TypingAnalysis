@@ -40,17 +40,5 @@ void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
   TextDataOutput_.set(CTextData{std::cref(Session)});
 }
 } // namespace NSTextModuleDetail
-
-CTextModule::CTextModule() : Impl_(std::make_unique<CTextModuleImpl>()) {
-}
-
-CTextModule::CTextModuleImpl* CTextModule::operator->() const {
-  return Impl_.get();
-}
-
-CTextModule::CTextModuleImpl* CTextModule::model() const {
-  return Impl_.get();
-}
-
 } // namespace NSKernel
 } // namespace NSApplication

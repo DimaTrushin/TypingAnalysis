@@ -5,13 +5,14 @@
 
 #include "Kernel/TextModule.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {
 namespace NSInterface {
 
 namespace NSTextModeControllerDetail {
 class CTextModeControllerImpl {
-  using CTextModuleImpl = NSKernel::CTextModule::CTextModuleImpl;
+  using CTextModuleImpl = NSKernel::CTextModule::CImplementation;
   using CTextMode = NSKernel::CTextMode;
 
   using CTextModeObserver = NSLibrary::CObserver<CTextMode>;
@@ -31,20 +32,8 @@ private:
 
 } // namespace NSTextModeControllerDetail
 
-class CTextModeController {
-  using CTextModeControllerImpl =
-      NSTextModeControllerDetail::CTextModeControllerImpl;
-  using CTextModuleImpl = NSKernel::CTextModule::CTextModuleImpl;
-
-public:
-  CTextModeController(CTextModuleImpl*);
-
-  CTextModeControllerImpl* operator->() const;
-
-private:
-  std::unique_ptr<CTextModeControllerImpl> Impl_;
-};
-
+using CTextModeController = NSLibrary::CControllerWrapper<
+    NSTextModeControllerDetail::CTextModeControllerImpl>;
 } // namespace NSInterface
 } // namespace NSApplication
 

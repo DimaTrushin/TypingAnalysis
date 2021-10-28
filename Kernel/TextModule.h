@@ -5,6 +5,7 @@
 #include "Kernel/TextData.h"
 #include "Kernel/TextMode.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 
 #include <memory>
 
@@ -43,19 +44,8 @@ private:
 
 } // namespace NSTextModuleDetail
 
-class CTextModule {
-public:
-  using CTextModuleImpl = NSTextModuleDetail::CTextModuleImpl;
-
-  CTextModule();
-
-  CTextModuleImpl* operator->() const;
-  CTextModuleImpl* model() const;
-
-private:
-  std::unique_ptr<CTextModuleImpl> Impl_;
-};
-
+using CTextModule =
+    NSLibrary::CModelWrapper<NSTextModuleDetail::CTextModuleImpl>;
 } // namespace NSKernel
 } // namespace NSApplication
 

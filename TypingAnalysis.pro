@@ -62,7 +62,6 @@ HEADERS += \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
-  Kernel/SeanceManagerImpl.h \
   Kernel/SeanceViewData.h \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
@@ -85,6 +84,7 @@ HEADERS += \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
+  Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/AnyObject/AnyMovable.h \
@@ -119,7 +119,6 @@ SOURCES += \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \
-  Kernel/SeanceManagerImpl.cpp \
   Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
