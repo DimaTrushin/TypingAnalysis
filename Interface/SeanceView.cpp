@@ -133,15 +133,6 @@ void CSeanceViewImpl::clearSelection() {
 
 } // namespace NSSeanceViewDetail
 
-CSimpleSeanceView::CSimpleSeanceView(QTreeView* TreeView)
-    : Impl_(std::make_unique<CSimpleSeanceViewImpl>(TreeView)) {
-}
-
-CSimpleSeanceView::CSimpleSeanceViewImpl*
-CSimpleSeanceView::operator->() const {
-  return Impl_.get();
-}
-
 // namespace NSSeanceViewDetail
 
 } // namespace NSInterface

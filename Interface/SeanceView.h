@@ -94,17 +94,8 @@ private:
 
 } // namespace NSSeanceViewDetail
 
-class CSimpleSeanceView {
-  using CSimpleSeanceViewImpl = NSSeanceViewDetail::CSimpleSeanceViewImpl;
-
-public:
-  CSimpleSeanceView(QTreeView*);
-
-  CSimpleSeanceViewImpl* operator->() const;
-
-private:
-  std::unique_ptr<CSimpleSeanceViewImpl> Impl_;
-};
+using CSimpleSeanceView =
+    NSLibrary::CViewWrapper<NSSeanceViewDetail::CSimpleSeanceViewImpl>;
 
 using CSeanceView =
     NSLibrary::CViewWrapper<NSSeanceViewDetail::CSeanceViewImpl>;
