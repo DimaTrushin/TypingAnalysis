@@ -9,15 +9,17 @@ namespace NSApplication {
 CApplicationImpl::CApplicationImpl()
     : KeyboardShutter_(CKeyboardHandlerAccess().operator->()),
       SessionFlusher_(SeanceManager_.operator->()),
-      SeanceViewController_(CurrentSession_.model()),
+      SeanceViewController_(SessionSelector_.model()),
       TextModeController_(TextModule_.model()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_.input());
   AppStatus->subscribeToAppState(SessionFlusher_.input());
 
-  CurrentSession_->subscribeToSeanceViewData(
+  SessionSelector_->subscribeToSeanceViewData(
       MainSeanceView_->currentSeanceViewDataInput());
   MainSeanceView_->subscribeToSessionIndex(SeanceViewController_->indexInput());
+  SessionSelector_->subscribeToCurrentSession(
+      TextModule_->currentSessionInput());
 
   TextModule_->subscribeToCurrentTextMode(TextModeView_->textModeInput());
   TextModeView_->subscribeToTextMode(TextModeController_->textModeInput());

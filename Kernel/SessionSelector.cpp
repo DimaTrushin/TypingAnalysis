@@ -26,22 +26,13 @@ void CSessionSelectorImpl::subscribeToSeanceViewData(
   SeanceViewData_.subscribe(obs);
 }
 
-void CSessionSelectorImpl::setCurrentSession(Index CurrentSession) {
-  if (!Seance_.hasValue())
+void CSessionSelectorImpl::setCurrentSession(Index SessionIndex) {
+  assert(SessionIndex < 0 ||
+         size_t(SessionIndex) < Seance_.data()->get().size());
+  if (SessionIndex_ == SessionIndex)
     return;
-  if (CurrentSession < 0) {
-    resetCurrentSession();
-    return;
-  }
-  assert(size_t(CurrentSession) < Seance_.data()->get().size());
-  if (CurrentSession_ == CurrentSession)
-    return;
-  CurrentSession_ = CurrentSession;
-  notifySeanceViewData(*Seance_.data());
-  handleCurrentSession();
-}
-
-void CSessionSelectorImpl::resetCurrentSession() {
+  SessionIndex_ = SessionIndex;
+  Session_.notify();
 }
 
 void CSessionSelectorImpl::handleSeance(const CSeance& Seance) {
@@ -54,16 +45,11 @@ void CSessionSelectorImpl::handleSeance(const CSeance& Seance) {
 }
 
 void CSessionSelectorImpl::notifySeanceViewData(const CSeance& Seance) {
-  SeanceViewData_.set(CSeanceViewData{std::cref(Seance), CurrentSession_});
+  SeanceViewData_.set(CSeanceViewData{std::cref(Seance), SessionIndex_});
 }
 
 bool CSessionSelectorImpl::hasCurrentSession() const {
-  return !(CurrentSession_ < 0 || !Seance_.hasValue());
-}
-
-void CSessionSelectorImpl::handleCurrentSession() {
-  qDebug() << "handleCurrentSession";
-  Session_.notify();
+  return !(SessionIndex_ < 0 || !Seance_.hasValue());
 }
 
 CSessionSelectorImpl::CSessionGetType
@@ -75,7 +61,7 @@ CSessionSelectorImpl::getCurrentSession() const {
 
 CSessionSelectorImpl::CSessionGetType
 CSessionSelectorImpl::getCurrentSessionFromSeance(const CSeance& Seance) const {
-  return Seance[CurrentSession_];
+  return Seance[SessionIndex_];
 }
 } // namespace NSSessionSelectorDetail
 

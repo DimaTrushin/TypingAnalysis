@@ -77,9 +77,9 @@ void CSeanceViewImpl::onSelectionChanged(int level, int index) {
   assert(index >= -1);
   if (FromModel_.isLocked())
     return;
+  qDebug() << "level =" << level << "index =" << index;
   std::lock_guard<CSupressor> guard(MySignal_);
   IndexOutput_.set(index);
-  qDebug() << "level =" << level << "index =" << index;
 }
 
 void CSeanceViewImpl::onCurrentSeanceConnect(const CSeanceViewData& data) {

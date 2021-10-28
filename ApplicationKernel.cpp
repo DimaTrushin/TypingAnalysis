@@ -10,7 +10,7 @@ CApplicationKernel::CApplicationKernel() {
   KeyboardHandler->subscribeToKeyPressing(SeanceManager_->pressingInput());
   KeyboardHandler->subscribeToKeyReleasing(SeanceManager_->releasingInput());
 
-  SeanceManager_->subscribeToCurrentSeance(CurrentSession_->seanceInput());
+  SeanceManager_->subscribeToCurrentSeance(SessionSelector_->seanceInput());
 }
 
 } // namespace NSApplication

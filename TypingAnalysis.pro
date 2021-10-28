@@ -66,6 +66,7 @@ HEADERS += \
   Kernel/SeanceViewData.h \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
+  Kernel/TextData.h \
   Kernel/TextMode.h \
   Kernel/TextModule.h \
   Keyboard/AnyKeyboardKiller.h \
@@ -122,6 +123,7 @@ SOURCES += \
   Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
+  Kernel/TextData.cpp \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
   Keyboard/KeyID.cpp \

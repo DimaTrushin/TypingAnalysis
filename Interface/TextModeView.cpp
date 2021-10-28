@@ -42,30 +42,30 @@ void CTextModeViewImpl::subscribeToTextMode(CTextModeObserver* obs) {
 }
 
 void CTextModeViewImpl::TextButtonToggled(int id, bool checked) {
-  qDebug() << "TextButtonToggled id = " << id << "checked = " << checked;
   if (!checked)
     return;
+  qDebug() << "TextButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::ShiftButtonToggled(int id, bool checked) {
-  qDebug() << "ShiftButtonToggled id = " << id << "checked = " << checked;
   if (!checked)
     return;
+  qDebug() << "ShiftButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::CtrlButtonToggled(int id, bool checked) {
-  qDebug() << "CtrlButtonToggled id = " << id << "checked = " << checked;
   if (!checked)
     return;
+  qDebug() << "CtrlButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::AltButtonToggled(int id, bool checked) {
-  qDebug() << "AltButtonToggled id = " << id << "checked = " << checked;
   if (!checked)
     return;
+  qDebug() << "AltButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 

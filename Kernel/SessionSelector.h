@@ -35,13 +35,10 @@ public:
   void setCurrentSession(Index);
 
 private:
-  void resetCurrentSession();
-
   void handleSeance(const CSeance& Seance);
   void notifySeanceViewData(const CSeance& Seance);
 
   bool hasCurrentSession() const;
-  void handleCurrentSession();
 
   CSessionGetType getCurrentSession() const;
   CSessionGetType getCurrentSessionFromSeance(const CSeance&) const;
@@ -49,7 +46,7 @@ private:
   CSeanceInput Seance_;
   CSessionObservable Session_;
   CSeanceViewDataObservable SeanceViewData_;
-  Index CurrentSession_ = CSeanceViewData::kNotSelected;
+  Index SessionIndex_ = CSeanceViewData::kNotSelected;
 };
 
 } // namespace NSSessionSelectorDetail

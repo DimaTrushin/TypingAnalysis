@@ -18,7 +18,7 @@ public:
 
 protected:
   CSeanceManager SeanceManager_;
-  CSessionSelector CurrentSession_;
+  CSessionSelector SessionSelector_;
   CTextModule TextModule_;
 };
 
