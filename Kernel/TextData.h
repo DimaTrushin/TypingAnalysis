@@ -12,6 +12,7 @@ namespace NSKernel {
 struct CTextData {
   std::reference_wrapper<const CSession> Session;
   std::reference_wrapper<const CTextDataTree> TextTree;
+  CTextMode TextMode;
 };
 
 } // namespace NSKernel
