@@ -75,5 +75,46 @@ bool CKeyEvent::isBackspace() const {
   return KeyID_ == CKeyIDEnum::Backspace;
 }
 
+bool CKeyEvent::isEnter() const {
+  return KeyID_ == CKeyIDEnum::Enter;
+}
+
+bool CKeyEvent::isSpace() const {
+  return KeyID_ == CKeyIDEnum::Spacebar;
+}
+
+bool CKeyEvent::isTab() const {
+  return KeyID_ == CKeyIDEnum::Tab;
+}
+
+bool CKeyEvent::isEscape() const {
+  return KeyID_ == CKeyIDEnum::Esc;
+}
+
+bool CKeyEvent::isControl() const {
+  return isShift() || isCtrl() || isAlt() || isCapslock();
+}
+
+bool CKeyEvent::isShift() const {
+  return KeyID_ == CKeyIDEnum::LeftShift || KeyID_ == CKeyIDEnum::RightShift;
+}
+
+bool CKeyEvent::isCtrl() const {
+  return KeyID_ == CKeyIDEnum::LeftCtrl || KeyID_ == CKeyIDEnum::RightCtrl;
+}
+
+bool CKeyEvent::isAlt() const {
+  return KeyID_ == CKeyIDEnum::LeftAlt || KeyID_ == CKeyIDEnum::RightAlt;
+}
+
+bool CKeyEvent::isCapslock() const {
+  return KeyID_ == CKeyIDEnum::Capslock;
+}
+
+bool CKeyEvent::isTrackableSpecial() const {
+  return isBackspace() || isEnter() || isSpace() || isTab() || isEscape() ||
+         isControl();
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

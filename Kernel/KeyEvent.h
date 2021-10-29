@@ -42,6 +42,18 @@ public:
   QChar getSymbol(unsigned char index) const;
 
   bool isBackspace() const;
+  bool isEnter() const;
+  bool isSpace() const;
+  bool isTab() const;
+  bool isEscape() const;
+  bool isControl() const;
+  bool isShift() const;
+  bool isCtrl() const;
+  bool isAlt() const;
+  bool isCapslock() const;
+
+  // This is a key satisfying one of the condition above
+  bool isTrackableSpecial() const;
 
 private:
   CKeyPosition KeyPosition_;

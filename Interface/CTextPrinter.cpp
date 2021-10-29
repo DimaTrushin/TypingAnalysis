@@ -19,27 +19,47 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   // Preliminary implementation
-  //  printSession(data.Session);
-  printTextTree(data.TextTree);
+  switch (data.TextMode.TextMode) {
+  case ETextMode::Raw:
+    printSession(data.Session);
+    break;
+  case ETextMode::Full:
+    printFullText(data.TextTree);
+    break;
+  case ETextMode::Printed:
+    printPrintedText(data.TextTree);
+    break;
+  default:
+    assert(false);
+  }
 }
 
 void CTextPrinterImpl::printSession(const CSession& Session) {
   // Debug version of the code
   QString Text;
   for (const auto& element : Session) {
-    Text.push_back(
-        QString(element.getTextData().Symbol, element.getTextData().Size));
+    if (element.isTrackableSpecial()) {
+      assert(element.getLabel().Size > 0);
+      Text.push_back(element.getLabel().LowSymbol);
+    } else {
+      Text.push_back(
+          QString(element.getTextData().Symbol, element.getTextData().Size));
+    }
   }
   TextEdit_->setPlainText(Text);
 }
 
-void CTextPrinterImpl::printTextTree(const CTextDataTree& TextTree) {
+void CTextPrinterImpl::printFullText(const CTextDataTree& TextTree) {
   QString Text;
-  //  for (auto iter = TextTree->beginFullText(); iter !=
-  //  TextTree->endFullText();
-  //       ++iter) {
-  //    Text.push_back(iter->getSymbol());
-  //  }
+  for (auto iter = TextTree->beginFullText(); iter != TextTree->endFullText();
+       ++iter) {
+    Text.push_back(iter->getSymbol());
+  }
+  TextEdit_->setPlainText(Text);
+}
+
+void CTextPrinterImpl::printPrintedText(const CTextDataTree& TextTree) {
+  QString Text;
   for (auto iter = TextTree->beginPrintedText();
        iter != TextTree->endPrintedText(); ++iter) {
     Text.push_back(iter->getSymbol());

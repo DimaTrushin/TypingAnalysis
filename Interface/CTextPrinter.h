@@ -21,6 +21,7 @@ class CTextPrinterImpl {
 
   using CSession = NSKernel::CSession;
   using CTextDataTree = NSKernel::CTextDataTree;
+  using ETextMode = NSKernel::ETextMode;
 
 public:
   CTextPrinterImpl(QTextEdit* TextEdit);
@@ -30,7 +31,8 @@ public:
 private:
   void handleTextData(const CTextData& data);
   void printSession(const CSession& Session);
-  void printTextTree(const CTextDataTree& TextTree);
+  void printFullText(const CTextDataTree& TextTree);
+  void printPrintedText(const CTextDataTree& TextTree);
 
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
