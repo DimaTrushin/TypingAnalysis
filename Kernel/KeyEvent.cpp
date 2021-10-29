@@ -42,7 +42,7 @@ CKeyEvent::CLabelData CKeyEvent::getLabel() const {
   return KeyLabel_;
 }
 
-CKeyEvent::CKeyTextData CKeyEvent::getText() const {
+CKeyEvent::CKeyTextData CKeyEvent::getTextData() const {
   return KeyText_;
 }
 
@@ -56,6 +56,23 @@ CTime CKeyEvent::getReleasingTime() const {
 
 CTime CKeyEvent::getDuration() const {
   return ReleasingTime_ - PressingTime_;
+}
+
+int CKeyEvent::getTextSize() const {
+  return KeyText_.Size;
+}
+
+bool CKeyEvent::hasText() const {
+  return getTextSize() != 0;
+}
+
+QChar CKeyEvent::getSymbol(int index) const {
+  assert(0 <= index && index < KeyText_.Size);
+  return KeyText_.Symbol[index];
+}
+
+bool CKeyEvent::isBackspace() const {
+  return KeyID_ == CKeyIDEnum::Backspace;
 }
 
 } // namespace NSKernel

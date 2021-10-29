@@ -42,7 +42,8 @@ void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
   // TO DO
   // Do some work to construct CSessionData
   // This is a preliminary version
-  TextDataOutput_.set(CTextData{std::cref(Session)});
+  TreeConverter_.convert(Session, &TextDataTree_);
+  TextDataOutput_.set(CTextData{std::cref(Session), std::cref(TextDataTree_)});
 }
 } // namespace NSTextModuleDetail
 } // namespace NSKernel

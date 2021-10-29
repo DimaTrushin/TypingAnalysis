@@ -2,7 +2,9 @@
 #define NSAPPLICATION_NSKERNEL_CTEXTMODULE_H
 
 #include "Kernel/Session.h"
+#include "Kernel/SessionToTreeConverter.h"
 #include "Kernel/TextData.h"
+#include "Kernel/TextDataTree.h"
 #include "Kernel/TextMode.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
@@ -41,6 +43,8 @@ private:
   CTextMode CurrentTextMode_;
   CTextModeObservable TextModeOutput_;
   CTextDataObservable TextDataOutput_;
+  CTextDataTree TextDataTree_;
+  CSessionToTreeConverter TreeConverter_;
 };
 
 } // namespace NSTextModuleDetail

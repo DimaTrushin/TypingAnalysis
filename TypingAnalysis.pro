@@ -65,7 +65,9 @@ HEADERS += \
   Kernel/SeanceViewData.h \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
+  Kernel/SessionToTreeConverter.h \
   Kernel/TextData.h \
+  Kernel/TextDataTree.h \
   Kernel/TextMode.h \
   Kernel/TextModule.h \
   Keyboard/AnyKeyboardKiller.h \
@@ -105,7 +107,8 @@ HEADERS += \
   QtLoopException.h \
   TimeApp.h \
   Timer.h \
-  TimerAccess.h
+  TimerAccess.h \
+  VTree.h
 
 SOURCES += \
   AppStatusAccess.cpp \
@@ -123,7 +126,9 @@ SOURCES += \
   Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
+  Kernel/SessionToTreeConverter.cpp \
   Kernel/TextData.cpp \
+  Kernel/TextDataTree.cpp \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
   Keyboard/KeyID.cpp \

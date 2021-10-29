@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSINTERFACE_CTEXTPRINTER_H
 
 #include "Kernel/TextData.h"
+#include "Kernel/TextDataTree.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
@@ -19,6 +20,7 @@ class CTextPrinterImpl {
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
   using CSession = NSKernel::CSession;
+  using CTextDataTree = NSKernel::CTextDataTree;
 
 public:
   CTextPrinterImpl(QTextEdit* TextEdit);
@@ -28,6 +30,7 @@ public:
 private:
   void handleTextData(const CTextData& data);
   void printSession(const CSession& Session);
+  void printTextTree(const CTextDataTree& TextTree);
 
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;

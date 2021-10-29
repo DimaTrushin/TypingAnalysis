@@ -9,6 +9,7 @@ namespace NSKernel {
 class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyID = NSKeyboard::CKeyID;
+  using CKeyIDEnum = NSKeyboard::CKeyIDEnum;
   using CKeyPressing = NSKeyboard::CKeyPressing;
   using CLabelData = NSKeyboard::CLabelData;
   using CKeyTextData = NSKeyboard::CKeyTextData;
@@ -32,10 +33,15 @@ public:
   CKeyPosition getPosition() const;
   CKeyID getID() const;
   CLabelData getLabel() const;
-  CKeyTextData getText() const;
+  CKeyTextData getTextData() const;
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
   CTime getDuration() const;
+  int getTextSize() const;
+  bool hasText() const;
+  QChar getSymbol(int index) const;
+
+  bool isBackspace() const;
 
 private:
   CKeyPosition KeyPosition_;
