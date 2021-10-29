@@ -37,9 +37,9 @@ public:
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
   CTime getDuration() const;
-  int getTextSize() const;
+  unsigned char getTextSize() const;
   bool hasText() const;
-  QChar getSymbol(int index) const;
+  QChar getSymbol(unsigned char index) const;
 
   bool isBackspace() const;
 

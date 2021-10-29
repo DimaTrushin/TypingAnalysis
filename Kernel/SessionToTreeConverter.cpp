@@ -19,7 +19,7 @@ void CSessionToTreeConverter::convert(const CSession& Source,
 
   for (const auto& element : Source) {
     if (element.hasText())
-      for (int i = 0; i < element.getTextSize(); ++i) {
+      for (unsigned char i = 0; i < element.getTextSize(); ++i) {
         Target->add(element.getSymbol(i), ESymbolStatus::TextSymbol);
       }
     if (element.isBackspace())

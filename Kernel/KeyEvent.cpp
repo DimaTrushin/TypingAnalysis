@@ -58,7 +58,7 @@ CTime CKeyEvent::getDuration() const {
   return ReleasingTime_ - PressingTime_;
 }
 
-int CKeyEvent::getTextSize() const {
+unsigned char CKeyEvent::getTextSize() const {
   return KeyText_.Size;
 }
 
@@ -66,7 +66,7 @@ bool CKeyEvent::hasText() const {
   return getTextSize() != 0;
 }
 
-QChar CKeyEvent::getSymbol(int index) const {
+QChar CKeyEvent::getSymbol(unsigned char index) const {
   assert(0 <= index && index < KeyText_.Size);
   return KeyText_.Symbol[index];
 }
