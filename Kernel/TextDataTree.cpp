@@ -23,7 +23,7 @@ CTextNode::CTextNode(QChar Symbol, ESymbolStatus Status)
 
 // bool CTextNode::isAnyPrinted() const {
 //  return SymbolStatus_ == ESymbolStatus::TextSymbol ||
-//         SymbolStatus_ == ESymbolStatus::MistakeSymbol;
+//         SymbolStatus_ == ESymbolStatus::ErroneousSymbol;
 //}
 
 // CTime CTextNode::getPressingTime() const {

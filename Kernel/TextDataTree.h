@@ -15,12 +15,12 @@ namespace NSKernel {
 // DeletedSymbolAccidental -- deleted symbol that is NOT mistake
 // DeletedSymbolRequired -- deleted symbol that is mistake
 // TextSymbol -- printed symbol that is NOT the one where we made a mistake
-// MistakeSymbol -- printed symbol that is the one where we made a mistake
+// ErroneousSymbol -- printed symbol that is the one where we made a mistake
 enum class ESymbolStatus : unsigned char {
   TextSymbol,
   DeletedSymbolAccidental,
   DeletedSymbolRequired,
-  MistakeSymbol,
+  ErroneousSymbol,
   RootSymbol
 };
 
@@ -36,7 +36,7 @@ TOut& operator<<(TOut& out, ESymbolStatus s) {
   case ESymbolStatus::DeletedSymbolRequired:
     out << "DSR";
     break;
-  case ESymbolStatus::MistakeSymbol:
+  case ESymbolStatus::ErroneousSymbol:
     out << "MS";
     break;
   case ESymbolStatus::RootSymbol:

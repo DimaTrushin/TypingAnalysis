@@ -6,6 +6,8 @@
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
+#include <QColor>
+
 QT_BEGIN_NAMESPACE
 class QTextEdit;
 QT_END_NAMESPACE
@@ -13,19 +15,55 @@ QT_END_NAMESPACE
 namespace NSApplication {
 namespace NSInterface {
 
+struct CTextPalette {
+  enum EKeyStatus : unsigned char {
+    MainText,
+    AccidentallyDeleted,
+    RequiredDeletion,
+    Erroneous,
+    Backspace,
+    Control,
+    EssentialControl,
+    Ignore,
+    End,
+  };
+
+  std::array<QColor, EKeyStatus::End> Text{{
+      {0, 0, 0} /*MainText*/,
+      {0, 0, 0} /*AccidentallyDeleted*/,
+      {0, 0, 0} /*RequiredDeletion*/,
+      {180, 0, 0} /*Erroneous*/,
+      {180, 0, 0} /*Backspace*/,
+      {0, 190, 40} /*Control*/,
+      {255, 120, 0} /*EssentialControl*/,
+      {0, 0, 0} /*Ignore*/
+  }};
+  std::array<QColor, EKeyStatus::End> Back{{
+      {192, 220, 192} /*MainText*/,
+      {255, 180, 180} /*AccidentallyDeleted*/,
+      {255, 90, 90} /*RequiredDeletion*/,
+      {255, 204, 153} /*Erroneous*/,
+      {192, 220, 192} /*Backspace*/,
+      {192, 220, 192} /*Control*/,
+      {192, 220, 192} /*EssentialControl*/,
+      {0, 0, 0} /*Ignore*/
+  }};
+};
+
 namespace NSTextPrinterDetail {
 class CTextPrinterImpl {
   using CTextData = NSKernel::CTextData;
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
+  using CKeyIDEnum = NSKeyboard::CKeyIDEnum;
   using CKeyEvent = NSKernel::CKeyEvent;
   using CSession = NSKernel::CSession;
   using CConstSessionIterator = CSession::const_iterator;
   using CTextDataTree = NSKernel::CTextDataTree;
   using ETextMode = NSKernel::ETextMode;
 
-  enum class EKeyStatus { End, Text, Special, Ignore };
+  using EKeyStatus = CTextPalette::EKeyStatus;
 
 public:
   CTextPrinterImpl(QTextEdit* TextEdit);
@@ -44,8 +82,7 @@ private:
                              const CConstSessionIterator sentinel,
                              CConstSessionIterator* pIter);
   void printBuffer(EKeyStatus Status);
-  void printBufferAsText();
-  void printBufferAsSpecial();
+  void printBuffer(QColor Text, QColor Back);
   void clear();
 
   static constexpr const size_t kDefaultBufferSize = 128;
@@ -53,6 +90,7 @@ private:
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
   std::vector<QChar> buffer_ = std::vector<QChar>(kDefaultBufferSize);
+  CTextPalette Palette_;
 };
 
 } // namespace NSTextPrinterDetail

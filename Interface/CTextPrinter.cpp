@@ -11,6 +11,8 @@ CTextPrinterImpl::CTextPrinterImpl(QTextEdit* TextEdit)
     : TextEdit_(TextEdit),
       TextDataInput_([this](const CTextData& data) { handleTextData(data); }) {
   assert(TextEdit_);
+  TextEdit_->setTextColor(Palette_.Text[EKeyStatus::MainText]);
+  TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
 }
 
 CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
@@ -21,7 +23,6 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
   // Preliminary implementation
   switch (data.TextMode.TextMode) {
   case ETextMode::Raw:
-    //    printSession(data.Session);
     printFormattedSession(data.Session);
     break;
   case ETextMode::Full:
@@ -57,7 +58,7 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   buffer_.clear();
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
-  EKeyStatus CurrentStatus = EKeyStatus::Text;
+  EKeyStatus CurrentStatus = EKeyStatus::MainText;
   while (CurrentStatus != EKeyStatus::End) {
     EKeyStatus NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
     printBuffer(CurrentStatus);
@@ -85,10 +86,12 @@ void CTextPrinterImpl::printPrintedText(const CTextDataTree& TextTree) {
 
 CTextPrinterImpl::EKeyStatus
 CTextPrinterImpl::getKeyStatus(const CKeyEvent& Key) {
+  if (Key.isBackspace())
+    return EKeyStatus::Backspace;
   if (Key.isTrackableSpecial())
-    return EKeyStatus::Special;
+    return EKeyStatus::Control;
   if (Key.getTextSize() > 0)
-    return EKeyStatus::Text;
+    return EKeyStatus::MainText;
   return EKeyStatus::Ignore;
 }
 
@@ -101,11 +104,12 @@ CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
   while (iter != sentinel && (getKeyStatus(*iter) == Status ||
                               getKeyStatus(*iter) == EKeyStatus::Ignore)) {
     switch (Status) {
-    case EKeyStatus::Text:
+    case EKeyStatus::MainText:
       for (unsigned char i = 0; i < iter->getTextSize(); ++i)
         buffer_.push_back(iter->getSymbol(i));
       break;
-    case EKeyStatus::Special:
+    case EKeyStatus::Backspace:
+    case EKeyStatus::Control:
       buffer_.push_back(iter->getLabel().LowSymbol);
       break;
     default:
@@ -120,34 +124,31 @@ CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
 
 void CTextPrinterImpl::printBuffer(EKeyStatus Status) {
   switch (Status) {
-  case EKeyStatus::Text:
-    printBufferAsText();
+  case EKeyStatus::MainText:
+    printBuffer(Palette_.Text[EKeyStatus::MainText],
+                Palette_.Back[EKeyStatus::MainText]);
     break;
-  case EKeyStatus::Special:
-    printBufferAsSpecial();
+  case EKeyStatus::Backspace:
+    printBuffer(Palette_.Text[EKeyStatus::Backspace],
+                Palette_.Back[EKeyStatus::Backspace]);
+    break;
+  case EKeyStatus::Control:
+    printBuffer(Palette_.Text[EKeyStatus::Control],
+                Palette_.Back[EKeyStatus::Control]);
     break;
   default:
     break;
   }
 }
 
-void CTextPrinterImpl::printBufferAsText() {
-  // TO DO
-  // set color
-  auto color = TextEdit_->textColor();
-  TextEdit_->setTextColor(QColor());
+void CTextPrinterImpl::printBuffer(QColor Text, QColor Back) {
+  auto TextColor = TextEdit_->textColor();
+  auto BackColor = TextEdit_->textBackgroundColor();
+  TextEdit_->setTextColor(Text);
+  TextEdit_->setTextBackgroundColor(Back);
   TextEdit_->insertPlainText(QString(buffer_.data(), buffer_.size()));
-  TextEdit_->setTextColor(color);
-}
-
-void CTextPrinterImpl::printBufferAsSpecial() {
-  // TO DO
-  // set color
-  //  TextEdit_->setTextBackgroundColor(QColor(255, 0, 0));
-  auto color = TextEdit_->textColor();
-  TextEdit_->setTextColor(QColor(180, 60, 60));
-  TextEdit_->insertPlainText(QString(buffer_.data(), buffer_.size()));
-  TextEdit_->setTextColor(color);
+  TextEdit_->setTextBackgroundColor(BackColor);
+  TextEdit_->setTextColor(TextColor);
 }
 
 void CTextPrinterImpl::clear() {
