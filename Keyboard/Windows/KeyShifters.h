@@ -3,6 +3,7 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
+namespace NSWindows {
 
 class CKeyShiftersEnum {
 public:
@@ -32,7 +33,7 @@ public:
 };
 
 using CKeyShifters = CKeyShiftersEnum::CType;
-
+} // namespace NSWindows
 } // namespace NSKeyboard
 } // namespace NSApplication
 

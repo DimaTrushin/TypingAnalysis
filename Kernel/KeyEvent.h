@@ -1,35 +1,11 @@
 #ifndef NSAPPLICATION_NSKERNEL_CKEYEVENT_H
 #define NSAPPLICATION_NSKERNEL_CKEYEVENT_H
 
+#include "KeyFlags.h"
 #include "Keyboard/RawKeyEvent.h"
 
 namespace NSApplication {
 namespace NSKernel {
-
-struct CKeyFlagsEnum {
-  using CType = unsigned short;
-  enum : CType {
-    BasicKey = 0,
-    Shift = 1,
-    Ctrl = 2,
-    ShiftCtrl = Shift | Ctrl,
-    Alt = 4,
-    ShiftAlt = Shift | Alt,
-    CtrlAlt = Ctrl | Alt,
-    ShiftCtrlAlt = Shift | Ctrl | Alt,
-    Caps = 8,
-    CapsShift = Caps | Shift,
-    CapsCtrl = Caps | Ctrl,
-    CapsShiftCtrl = Caps | Shift | Ctrl,
-    CapsAlt = Caps | Alt,
-    CapsShiftAlt = Caps | Shift | Alt,
-    CapsCtrlAlt = Caps | Ctrl | Alt,
-    CapsShiftCtrlAlt = Caps | Shift | Ctrl | Alt,
-    AutoRepeat = 512,
-  };
-};
-
-using CKeyFlags = CKeyFlagsEnum::CType;
 
 class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;

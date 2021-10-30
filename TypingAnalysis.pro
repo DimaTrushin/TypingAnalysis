@@ -59,6 +59,7 @@ HEADERS += \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
   Kernel/KeyEvent.h \
+  Kernel/KeyFlags.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
@@ -73,12 +74,12 @@ HEADERS += \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
-  Keyboard/KeyShifters.h \
   Keyboard/KeyTextData.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
+  Keyboard/Windows/KeyShifters.h \
   Library/AnyObject/AnyMovable.h \
   Library/Observer/Impl/Observable.h \
   Library/Observer/Impl/ObservableImpl.h \
@@ -121,6 +122,7 @@ SOURCES += \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
   Kernel/KeyEvent.cpp \
+  Kernel/KeyFlags.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \
@@ -133,12 +135,12 @@ SOURCES += \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
   Keyboard/KeyID.cpp \
-  Keyboard/KeyShifters.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
+  Keyboard/Windows/KeyShifters.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
