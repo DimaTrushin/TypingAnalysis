@@ -14,6 +14,9 @@ class CSession : protected std::vector<CKeyEvent> {
 public:
   using CBase::CBase;
 
+  using iterator = CBase::iterator;
+  using const_iterator = CBase::const_iterator;
+
   using CBase::empty;
   using CBase::size;
   using CBase::operator[];
