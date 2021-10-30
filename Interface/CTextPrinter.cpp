@@ -38,17 +38,17 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
 
 void CTextPrinterImpl::printSession(const CSession& Session) {
   // Debug version of the code
-  QString Text;
+  buffer_.clear();
   for (const auto& element : Session) {
     if (element.isTrackableSpecial()) {
       assert(element.getLabel().Size > 0);
-      Text.push_back(element.getLabel().LowSymbol);
+      buffer_.push_back(element.getLabel().LowSymbol);
     } else {
-      Text.push_back(
-          QString(element.getTextData().Symbol, element.getTextData().Size));
+      for (unsigned char i = 0; i < element.getTextSize(); ++i)
+        buffer_.push_back(element.getSymbol(i));
     }
   }
-  TextEdit_->setPlainText(Text);
+  TextEdit_->setPlainText(QString(buffer_.data(), buffer_.size()));
 }
 
 void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
@@ -67,21 +67,29 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
 }
 
 void CTextPrinterImpl::printFullText(const CTextDataTree& TextTree) {
-  QString Text;
+  buffer_.clear();
   for (auto iter = TextTree->beginFullText(); iter != TextTree->endFullText();
        ++iter) {
-    Text.push_back(iter->getSymbol());
+    buffer_.push_back(iter->getSymbol());
   }
-  TextEdit_->setPlainText(Text);
+  // TO DO
+  // If I use setPlainText function sometimes the color changes randomly
+  clear();
+  printBuffer(Palette_.Text[EKeyStatus::MainText],
+              Palette_.Back[EKeyStatus::MainText]);
 }
 
 void CTextPrinterImpl::printPrintedText(const CTextDataTree& TextTree) {
-  QString Text;
+  buffer_.clear();
   for (auto iter = TextTree->beginPrintedText();
        iter != TextTree->endPrintedText(); ++iter) {
-    Text.push_back(iter->getSymbol());
+    buffer_.push_back(iter->getSymbol());
   }
-  TextEdit_->setPlainText(Text);
+  // TO DO
+  // If I use setPlainText function sometimes the color changes randomly
+  clear();
+  printBuffer(Palette_.Text[EKeyStatus::MainText],
+              Palette_.Back[EKeyStatus::MainText]);
 }
 
 CTextPrinterImpl::EKeyStatus
