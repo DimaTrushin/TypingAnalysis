@@ -92,6 +92,7 @@ HEADERS += \
   Library/AnyObject/AnyMovable.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
+  Library/StlExtension/VTree.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -107,8 +108,7 @@ HEADERS += \
   QtLoopException.h \
   TimeApp.h \
   Timer.h \
-  TimerAccess.h \
-  VTree.h
+  TimerAccess.h
 
 SOURCES += \
   AppStatusAccess.cpp \

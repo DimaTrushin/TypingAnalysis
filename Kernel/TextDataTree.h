@@ -2,9 +2,9 @@
 #define NSAPPLICATION_NSKERNEL_CTEXTDATATREE_H
 
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Library/StlExtension/VTree.h"
 #include "TextMode.h"
 #include "TimeApp.h"
-#include "VTree.h"
 
 #include <QChar>
 
