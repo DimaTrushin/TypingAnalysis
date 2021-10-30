@@ -34,7 +34,7 @@ struct CTextPalette {
       {0, 0, 0} /*RequiredDeletion*/,
       {180, 0, 0} /*Erroneous*/,
       {180, 0, 0} /*Backspace*/,
-      {0, 190, 40} /*Control*/,
+      {50, 50, 255} /*Control*/,
       {255, 120, 0} /*EssentialControl*/,
       {0, 0, 0} /*Ignore*/
   }};
