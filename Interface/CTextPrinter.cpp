@@ -100,6 +100,8 @@ CTextPrinterImpl::getKeyStatus(const CKeyEvent& Key) {
     return EKeyStatus::Backspace;
   if (Key.isTrackableSpecial())
     return EKeyStatus::Control;
+  if (Key.isSilentDeadKey())
+    return EKeyStatus::SilentDeadKey;
   if (Key.getTextSize() > 0)
     return EKeyStatus::MainText;
   return EKeyStatus::Ignore;
@@ -114,21 +116,14 @@ CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
   while (iter != sentinel && (getKeyStatus(*iter) == Status ||
                               getKeyStatus(*iter) == EKeyStatus::Ignore)) {
     switch (Status) {
-      // I need a new item for dead keys!!! Otherwise they are not shown
-      // correctly if they were pressed in a raw. Silent dead key is an issue
-      // now.
     case EKeyStatus::MainText:
       assert(iter->getTextSize() > 0);
       buffer_.push_back(iter->getSymbol(iter->getTextSize() - 1));
       break;
     case EKeyStatus::Backspace:
     case EKeyStatus::Control:
-      // Dead Key is considered as a Control Key.
-      // This should not happen. Something is wrong!
+    case EKeyStatus::SilentDeadKey:
       buffer_.push_back(iter->getLabel().LowSymbol);
-      qDebug() << "Back || Control" << iter->getLabel().LowSymbol;
-      qDebug() << "isBackspace()" << iter->isBackspace();
-      qDebug() << "isControl()" << iter->isControl();
       break;
     default:
       break;
@@ -192,6 +187,10 @@ QString CTextPrinterImpl::coloredTextFromBuffer(EKeyStatus Status) {
   case EKeyStatus::Control:
     Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::Control],
                                  Palette_.Back[EKeyStatus::Control]);
+    break;
+  case EKeyStatus::SilentDeadKey:
+    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::SilentDeadKey],
+                                 Palette_.Back[EKeyStatus::SilentDeadKey]);
     break;
   default:
     break;

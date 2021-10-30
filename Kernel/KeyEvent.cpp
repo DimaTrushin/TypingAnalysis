@@ -132,5 +132,13 @@ bool CKeyEvent::isCapslockToggled() const {
   return CKeyFlagsEnum::Caps & Flags_;
 }
 
+bool CKeyEvent::isDeadKey() const {
+  return CKeyFlagsEnum::DeadKey & Flags_;
+}
+
+bool CKeyEvent::isSilentDeadKey() const {
+  return isDeadKey() && !hasText();
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

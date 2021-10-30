@@ -25,6 +25,7 @@ struct CTextPalette {
     Backspace,
     Control,
     EssentialControl,
+    SilentDeadKey,
     Ignore,
     End,
   };
@@ -37,6 +38,7 @@ struct CTextPalette {
       {180, 0, 0} /*Backspace*/,
       {50, 50, 255} /*Control*/,
       {255, 120, 0} /*EssentialControl*/,
+      {180, 0, 0} /*SilentDeadKey*/,
       {0, 0, 0} /*Ignore*/
   }};
   std::array<QColor, EKeyStatus::End> Back{{
@@ -47,6 +49,7 @@ struct CTextPalette {
       {192, 220, 192} /*Backspace*/,
       {192, 220, 192} /*Control*/,
       {192, 220, 192} /*EssentialControl*/,
+      {192, 220, 192} /*SilentDeadKey*/,
       {0, 0, 0} /*Ignore*/
   }};
 };

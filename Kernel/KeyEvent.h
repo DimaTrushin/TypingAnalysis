@@ -57,6 +57,9 @@ public:
   bool isAltActive() const;
   bool isCapslockToggled() const;
 
+  bool isDeadKey() const;
+  bool isSilentDeadKey() const;
+
 private:
   CKeyPosition KeyPosition_;
   CKeyID KeyID_;
