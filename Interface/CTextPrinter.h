@@ -89,6 +89,17 @@ private:
 
   static constexpr const size_t kDefaultBufferSize = 128;
 
+  class CColorAnchor {
+  public:
+    CColorAnchor(QColor Text, QColor Back, QTextEdit* TextEdit);
+    ~CColorAnchor();
+
+  private:
+    QColor OldText_;
+    QColor OldBack_;
+    QTextEdit* TextEdit_;
+  };
+
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
   std::vector<QChar> buffer_ = std::vector<QChar>(kDefaultBufferSize);

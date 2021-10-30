@@ -149,13 +149,8 @@ void CTextPrinterImpl::printBuffer(EKeyStatus Status) {
 }
 
 void CTextPrinterImpl::printBuffer(QColor Text, QColor Back) {
-  auto TextColor = TextEdit_->textColor();
-  auto BackColor = TextEdit_->textBackgroundColor();
-  TextEdit_->setTextColor(Text);
-  TextEdit_->setTextBackgroundColor(Back);
+  auto Anchor = CColorAnchor(Text, Back, TextEdit_);
   TextEdit_->insertPlainText(QString(buffer_.data(), buffer_.size()));
-  TextEdit_->setTextBackgroundColor(BackColor);
-  TextEdit_->setTextColor(TextColor);
 }
 
 void CTextPrinterImpl::clear() {
@@ -169,6 +164,20 @@ void CTextPrinterImpl::setDefaultBackgroundColor() {
   palette.setBrush(QPalette::Active, QPalette::Base, brush);
   palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
   TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
+}
+
+CTextPrinterImpl::CColorAnchor::CColorAnchor(QColor Text, QColor Back,
+                                             QTextEdit* TextEdit)
+    : OldText_(TextEdit->textColor()),
+      OldBack_(TextEdit->textBackgroundColor()), TextEdit_(TextEdit) {
+  assert(TextEdit_);
+  TextEdit_->setTextColor(Text);
+  TextEdit_->setTextBackgroundColor(Back);
+}
+
+CTextPrinterImpl::CColorAnchor::~CColorAnchor() {
+  TextEdit_->setTextBackgroundColor(OldBack_);
+  TextEdit_->setTextColor(OldText_);
 }
 
 } // namespace NSTextPrinterDetail
