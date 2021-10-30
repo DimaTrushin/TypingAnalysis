@@ -2,7 +2,6 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-namespace NSWindows {
 
 bool CKeyShiftersEnum::isAltOrShiftAlt(CKeyShiftersEnum::CType Shifters) {
   return (Shifters & ShiftCtrlAlt) == Alt ||
@@ -14,6 +13,5 @@ bool CKeyShiftersEnum::isCtrlOrShiftCtrl(CKeyShiftersEnum::CType Shifters) {
          (Shifters & ShiftCtrlAlt) == ShiftCtrl;
 }
 
-} // namespace NSWindows
 } // namespace NSKeyboard
 } // namespace NSApplication

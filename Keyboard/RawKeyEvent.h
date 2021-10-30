@@ -4,6 +4,7 @@
 #include "KeyTextData.h"
 #include "Keyboard/KeyID.h"
 #include "Keyboard/KeyPosition.h"
+#include "Keyboard/KeyShifters.h"
 #include "TimeApp.h"
 
 #include <QChar>
@@ -21,6 +22,7 @@ struct CKeyPressing {
   CKeyID KeyID;
   CLabelData KeyLabel;
   CKeyTextData KeyText;
+  CKeyShifters Shifters;
 };
 
 struct CKeyReleasing {

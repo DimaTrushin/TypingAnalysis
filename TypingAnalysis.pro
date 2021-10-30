@@ -73,6 +73,7 @@ HEADERS += \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
+  Keyboard/KeyShifters.h \
   Keyboard/KeyTextData.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
@@ -132,6 +133,7 @@ SOURCES += \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
   Keyboard/KeyID.cpp \
+  Keyboard/KeyShifters.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/KeyboardListener.cpp \
@@ -163,7 +165,6 @@ win32 {
     Keyboard/Windows/KeyIDWin.h \
     Keyboard/Windows/KeyMapper.h \
     Keyboard/Windows/KeyPositionWin.h \
-    Keyboard/Windows/KeyShifters.h \
     Keyboard/Windows/KeyTextMaker.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h \
@@ -175,7 +176,6 @@ win32 {
     Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyMapper.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
-    Keyboard/Windows/KeyShifters.cpp \
     Keyboard/Windows/KeyTextMaker.cpp \
     Keyboard/Windows/RawInputReader.cpp \
     Keyboard/Windows/VkCode.cpp \

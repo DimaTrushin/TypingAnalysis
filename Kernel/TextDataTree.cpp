@@ -94,6 +94,8 @@ void CTextDataTreeImpl::deleteLastData() {
 }
 
 void CTextDataTreeImpl::deleteLastBlock() {
+  // TO DO
+  // neet to make the behaviour more adequate
   deleteLastTextDelimiterBlock();
   deleteLastSymbolBlock();
 }

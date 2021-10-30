@@ -109,8 +109,8 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   // Add low level key filter
 
   if (isPressing(KeyData))
-    emit KeyPressing(
-        {Time, KeyPosition, KeyID, getKeyLabel(KeyData), getKeyText(KeyData)});
+    emit KeyPressing({Time, KeyPosition, KeyID, getKeyLabel(KeyData),
+                      getKeyText(KeyData), CWinKeyboardApi::getShifters()});
   else
     emit KeyReleasing({Time, KeyPosition, KeyID});
 }

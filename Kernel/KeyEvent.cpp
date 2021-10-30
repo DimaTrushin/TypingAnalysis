@@ -5,17 +5,17 @@ namespace NSKernel {
 
 CKeyEvent::CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID,
                      CLabelData KeyLabel, CKeyTextData KeyText,
-                     CTime PressingTime, EKeyFlags Flags)
+                     CTime PressingTime, CKeyFlags Flags)
     : KeyPosition_(KeyPosition), KeyID_(KeyID), KeyLabel_(KeyLabel),
       KeyText_(KeyText), Flags_(Flags), PressingTime_(PressingTime),
       ReleasingTime_(PressingTime_) {
 }
 
 CKeyEvent::CKeyEvent(const CKeyEvent::CKeyPressing& PressingEvent,
-                     EKeyFlags Flags)
+                     CKeyFlags Flags)
     : CKeyEvent(PressingEvent.KeyPosition, PressingEvent.KeyID,
                 PressingEvent.KeyLabel, PressingEvent.KeyText,
-                PressingEvent.Time, Flags) {
+                PressingEvent.Time, Flags | PressingEvent.Shifters) {
 }
 
 void CKeyEvent::setReleasingTime(CTime ReleasingTime) {
@@ -27,7 +27,7 @@ bool CKeyEvent::isSameKey(const CKeyEvent& KeyEvent) const {
 }
 
 bool CKeyEvent::isAutoRepeat() const {
-  return Flags_ & AutoRepeat;
+  return Flags_ & CKeyFlagsEnum::AutoRepeat;
 }
 
 CKeyEvent::CKeyPosition CKeyEvent::getPosition() const {
@@ -114,6 +114,22 @@ bool CKeyEvent::isCapslock() const {
 bool CKeyEvent::isTrackableSpecial() const {
   return isBackspace() || isEnter() || isSpace() || isTab() || isEscape() ||
          isControl();
+}
+
+bool CKeyEvent::isShiftActive() const {
+  return CKeyFlagsEnum::Shift & Flags_;
+}
+
+bool CKeyEvent::isCtrlActive() const {
+  return CKeyFlagsEnum::Ctrl & Flags_;
+}
+
+bool CKeyEvent::isAltActive() const {
+  return CKeyFlagsEnum::Alt & Flags_;
+}
+
+bool CKeyEvent::isCapslockToggled() const {
+  return CKeyFlagsEnum::Caps & Flags_;
 }
 
 } // namespace NSKernel

@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CWINKEYBOARDAPI_H
 
-#include "KeyShifters.h"
+#include "Keyboard/KeyShifters.h"
 #include "VkCode.h"
 
 #include <Windows.h>

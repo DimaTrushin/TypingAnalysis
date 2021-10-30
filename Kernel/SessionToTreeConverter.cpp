@@ -22,10 +22,12 @@ void CSessionToTreeConverter::convert(const CSession& Source,
       for (unsigned char i = 0; i < element.getTextSize(); ++i) {
         Target->add(element.getSymbol(i), ESymbolStatus::TextSymbol);
       }
-    if (element.isBackspace())
-      Target->deleteLastData();
-    // TO DO
-    // Ctrl + Backspace
+    if (element.isBackspace()) {
+      if (element.isCtrlActive())
+        Target->deleteLastBlock();
+      else
+        Target->deleteLastData();
+    }
   }
 }
 

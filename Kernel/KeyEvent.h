@@ -6,6 +6,31 @@
 namespace NSApplication {
 namespace NSKernel {
 
+struct CKeyFlagsEnum {
+  using CType = unsigned short;
+  enum : CType {
+    BasicKey = 0,
+    Shift = 1,
+    Ctrl = 2,
+    ShiftCtrl = Shift | Ctrl,
+    Alt = 4,
+    ShiftAlt = Shift | Alt,
+    CtrlAlt = Ctrl | Alt,
+    ShiftCtrlAlt = Shift | Ctrl | Alt,
+    Caps = 8,
+    CapsShift = Caps | Shift,
+    CapsCtrl = Caps | Ctrl,
+    CapsShiftCtrl = Caps | Shift | Ctrl,
+    CapsAlt = Caps | Alt,
+    CapsShiftAlt = Caps | Shift | Alt,
+    CapsCtrlAlt = Caps | Ctrl | Alt,
+    CapsShiftCtrlAlt = Caps | Shift | Ctrl | Alt,
+    AutoRepeat = 512,
+  };
+};
+
+using CKeyFlags = CKeyFlagsEnum::CType;
+
 class CKeyEvent {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyID = NSKeyboard::CKeyID;
@@ -15,15 +40,11 @@ class CKeyEvent {
   using CKeyTextData = NSKeyboard::CKeyTextData;
 
 public:
-  enum EKeyFlags : unsigned short {
-    BasicKey = 0,
-    AutoRepeat = 1,
-  };
-
   CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, CLabelData KeyLabel,
             CKeyTextData KeyText, CTime PressingTime,
-            EKeyFlags Flags = BasicKey);
-  CKeyEvent(const CKeyPressing& PressingEvent, EKeyFlags Flags = BasicKey);
+            CKeyFlags Flags = CKeyFlagsEnum::BasicKey);
+  CKeyEvent(const CKeyPressing& PressingEvent,
+            CKeyFlags Flags = CKeyFlagsEnum::BasicKey);
 
   void setReleasingTime(CTime ReleasingTime);
 
@@ -55,6 +76,11 @@ public:
   // This is a key satisfying one of the condition above
   bool isTrackableSpecial() const;
 
+  bool isShiftActive() const;
+  bool isCtrlActive() const;
+  bool isAltActive() const;
+  bool isCapslockToggled() const;
+
 private:
   CKeyPosition KeyPosition_;
   CKeyID KeyID_;
@@ -63,7 +89,7 @@ private:
   unsigned short Flags_ = 0;
   CTime PressingTime_;
   CTime ReleasingTime_;
-};
+}; // namespace NSKernel
 
 } // namespace NSKernel
 } // namespace NSApplication

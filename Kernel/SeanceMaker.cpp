@@ -28,7 +28,7 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
     CurrentSession().emplace_back(KeyPressing);
     PressedKeys_.push_back(&CurrentSession().back());
   } else if (isAutoRepeatAllowed(KeyPressing.KeyID)) {
-    CurrentSession().emplace_back(KeyPressing, CKeyEvent::AutoRepeat);
+    CurrentSession().emplace_back(KeyPressing, CKeyFlagsEnum::AutoRepeat);
   }
   LastEvent_ = KeyPressing.Time;
   qDebug() << QString("seances = %1 current size = %2 pressed = %3")

@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYMAPPER_H
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYMAPPER_H
 
-#include "KeyShifters.h"
+#include "Keyboard/KeyShifters.h"
 #include "VkCode.h"
 
 #include <QChar>
