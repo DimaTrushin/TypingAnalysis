@@ -24,6 +24,8 @@ void CSessionToTreeConverter::convert(const CSession& Source,
       }
     if (element.isBackspace())
       Target->deleteLastData();
+    // TO DO
+    // Ctrl + Backspace
   }
 }
 

@@ -62,6 +62,10 @@ void CTextNode::setSymbolStatus(ESymbolStatus newStatus) {
 
 namespace NSTextDataTreeDetail {
 
+CTextDataTreeImpl::CTextDataTreeImpl()
+    : Tree_{CTextNode(QChar(), ESymbolStatus::RootSymbol)} {
+}
+
 void CTextDataTreeImpl::clear() {
   Tree_.destroyExceptRoot();
   //  getRootNode().Data_.MistakeRoutes_.clear();
@@ -89,10 +93,10 @@ void CTextDataTreeImpl::deleteLastData() {
   --FinalElement_;
 }
 
-// void CTextDataTree::deleteLastBlock() {
-//  deleteLastTextDelimiterBlock();
-//  deleteLastSymbolBlock();
-//}
+void CTextDataTreeImpl::deleteLastBlock() {
+  deleteLastTextDelimiterBlock();
+  deleteLastSymbolBlock();
+}
 
 CTextDataTreeImpl::CIndex
 CTextDataTreeImpl::getNumberOfPlacesWithDeletion() const {
@@ -337,15 +341,15 @@ CTextDataTreeImpl::CFullTextIterator CTextDataTreeImpl::endFullText() {
 //  return size() - 1;
 //}
 
-// void CTextDataTree::deleteLastTextDelimiterBlock() {
-//  //  while (FinalElement_->isTextDelimiter())
-//  //    deleteLastData();
-//}
+void CTextDataTreeImpl::deleteLastTextDelimiterBlock() {
+  while (FinalElement_->getSymbol().isPunct())
+    deleteLastData();
+}
 
-// void CTextDataTree::deleteLastSymbolBlock() {
-//  //  while (FinalElement_->isSymbol())
-//  //    deleteLastData();
-//}
+void CTextDataTreeImpl::deleteLastSymbolBlock() {
+  while (FinalElement_->getSymbol().isLetterOrNumber())
+    deleteLastData();
+}
 } // namespace NSTextDataTreeDetail
 } // namespace NSKernel
 } // namespace NSApplication

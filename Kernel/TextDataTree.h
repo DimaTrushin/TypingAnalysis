@@ -48,47 +48,7 @@ TOut& operator<<(TOut& out, ESymbolStatus s) {
   return out;
 }
 
-class CTextNode {
-public:
-  using TreePtr = NSLibrary::CVTree<CTextNode>*;
-  // struct Handler {pHost, index};
-  // using CMistakeRoutesContainer = std::list<Handler>;
-  using CIndex = int64_t;
-
-  // Root node is created by default
-  CTextNode() = default;
-
-  // pressing time, releasing time, response time
-  // Default status = ESymbolStatus::TextSymbol
-  explicit CTextNode(QChar Symbol, ESymbolStatus Status);
-
-  //  bool isTextDelimiter() const;
-  //  bool isSymbol() const;
-  //  bool isAnyDeleted() const;
-  //  bool isAnyPrinted() const;
-
-  //  CTime getPressingTime() const;
-  //  CTime getReleasingTime() const;
-  //  CTime getResponseTime() const;
-  //  CTime getDurationTime() const;
-
-  QChar getSymbol() const;
-  ESymbolStatus getSymbolStatus() const;
-  void setSymbolStatus(ESymbolStatus newStatus);
-
-  template<class TOut>
-  friend TOut& operator<<(TOut& out, const CTextNode& data) {
-    out << data.SymbolStatus_;
-    return out;
-  }
-
-private:
-  //  CTime ResponseTime_;
-  //  CTime PressingTime_;
-  //  CTime ReleaseTime_;
-  QChar Symbol_;
-  ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
-};
+class CTextNode;
 
 namespace NSTextDataTreeDetail {
 
@@ -96,7 +56,7 @@ namespace NSTextDataTreeDetail {
 class CTextDataTreeImpl {
 public:
   using CTree = NSLibrary::CVTree<CTextNode>;
-  using CIndex = CTextNode::CIndex;
+  using CIndex = int64_t;
 
   using CConstFullTextIterator = CTree::CConstPreOrderIterator;
   using CFullTextIterator = CTree::CPreOrderIterator;
@@ -109,7 +69,7 @@ public:
   using CConstBasicIterator = CTree::CConstBasicIterator;
   using CBasicIterator = CTree::CBasicIterator;
 
-  CTextDataTreeImpl() = default;
+  CTextDataTreeImpl();
   CTextDataTreeImpl(const CTextDataTreeImpl&) = delete;
   CTextDataTreeImpl(CTextDataTreeImpl&&) noexcept = delete;
   CTextDataTreeImpl& operator=(const CTextDataTreeImpl&) = delete;
@@ -122,7 +82,7 @@ public:
   // action for Backspace
   void deleteLastData();
   // action for Ctrl + Backspace
-  //  void deleteLastBlock();
+  void deleteLastBlock();
 
   CIndex getNumberOfPlacesWithDeletion() const;
   CIndex getNumberOfDeletionSeries() const;
@@ -177,13 +137,56 @@ private:
   //  CIndex getPrintedTextLength() const;
   //  CIndex getFullTextLength() const;
 
-  //  void deleteLastTextDelimiterBlock();
-  //  void deleteLastSymbolBlock();
+  void deleteLastTextDelimiterBlock();
+  void deleteLastSymbolBlock();
 
-  CTree Tree_{CTextNode(QChar(), ESymbolStatus::RootSymbol)};
+  CTree Tree_;
   CTextIterator FinalElement_ = rootIterator();
 };
+using CMistakeRoutesContainer = std::list<CTextDataTreeImpl::CFullTextIterator>;
 } // namespace NSTextDataTreeDetail
+
+class CTextNode {
+  using CMistakeRoutesContainer = NSTextDataTreeDetail::CMistakeRoutesContainer;
+
+public:
+  using CIndex = int64_t;
+
+  // Root node is created by default
+  CTextNode() = default;
+
+  // pressing time, releasing time, response time
+  // Default status = ESymbolStatus::TextSymbol
+  explicit CTextNode(QChar Symbol, ESymbolStatus Status);
+
+  //  bool isTextDelimiter() const;
+  //  bool isSymbol() const;
+  //  bool isAnyDeleted() const;
+  //  bool isAnyPrinted() const;
+
+  //  CTime getPressingTime() const;
+  //  CTime getReleasingTime() const;
+  //  CTime getResponseTime() const;
+  //  CTime getDurationTime() const;
+
+  QChar getSymbol() const;
+  ESymbolStatus getSymbolStatus() const;
+  void setSymbolStatus(ESymbolStatus newStatus);
+
+  template<class TOut>
+  friend TOut& operator<<(TOut& out, const CTextNode& data) {
+    out << data.SymbolStatus_;
+    return out;
+  }
+
+private:
+  //  CTime ResponseTime_;
+  //  CTime PressingTime_;
+  //  CTime ReleaseTime_;
+  QChar Symbol_;
+  ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
+  //  CMistakeRoutesContainer MistakeRoutes_;
+};
 
 using CTextDataTree =
     NSLibrary::CBasicWrapper<NSTextDataTreeDetail::CTextDataTreeImpl>;
