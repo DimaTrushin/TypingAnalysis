@@ -59,7 +59,7 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
   QString Text;
-  EKeyStatus CurrentStatus = EKeyStatus::MainText;
+  EKeyStatus CurrentStatus = getKeyStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
     EKeyStatus NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
     Text.append(coloredTextFromBuffer(CurrentStatus));
@@ -114,19 +114,28 @@ CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
   while (iter != sentinel && (getKeyStatus(*iter) == Status ||
                               getKeyStatus(*iter) == EKeyStatus::Ignore)) {
     switch (Status) {
+      // I need a new item for dead keys!!! Otherwise they are not shown
+      // correctly if they were pressed in a raw. Silent dead key is an issue
+      // now.
     case EKeyStatus::MainText:
-      for (unsigned char i = 0; i < iter->getTextSize(); ++i)
-        buffer_.push_back(iter->getSymbol(i));
+      assert(iter->getTextSize() > 0);
+      buffer_.push_back(iter->getSymbol(iter->getTextSize() - 1));
       break;
     case EKeyStatus::Backspace:
     case EKeyStatus::Control:
+      // Dead Key is considered as a Control Key.
+      // This should not happen. Something is wrong!
       buffer_.push_back(iter->getLabel().LowSymbol);
+      qDebug() << "Back || Control" << iter->getLabel().LowSymbol;
+      qDebug() << "isBackspace()" << iter->isBackspace();
+      qDebug() << "isControl()" << iter->isControl();
       break;
     default:
       break;
     }
     ++iter;
   }
+  qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
     return EKeyStatus::End;
   return getKeyStatus(*iter);
