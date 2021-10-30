@@ -20,7 +20,9 @@ public:
   size_t numberOfMappers() const;
 
   CKeyTextData getText(CVKCode VK, CKeyShifters Shifters, HKL Layout);
+  // Should move next function to the level up to KeyboardHandler level
   CLabelData getLabel(USHORT MakeCode, USHORT Flags, HKL Layout);
+  bool isDeadKey(CVKCode VK, CKeyShifters Shifters) const;
 
 private:
   bool isLayoutChanged(HKL Layout) const;
@@ -37,7 +39,6 @@ private:
   HKL CurrentLayout() const;
   const CKeyData& DeadKey() const;
   bool hasDeadKeyInBuffer() const;
-  bool isDeadKey(CVKCode VK, CKeyShifters Shifters) const;
 
   std::map<HKL, CKeyMapper> Mappers_;
   std::map<HKL, CKeyMapper>::iterator CurrentMapperIt_;

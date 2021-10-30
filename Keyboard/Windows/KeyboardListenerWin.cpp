@@ -104,13 +104,14 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   CKeyID KeyID = CKeyIDWin::make(KeyData.VKey, KeyData.MakeCode, KeyData.Flags);
   if (KeyID == CKeyIDEnum::Unknown || KeyID == CKeyIDEnum::Ignore)
     return;
-
-  // TO DO
-  // Add low level key filter
+  CLabelData Label = getKeyLabel(KeyData);
+  // The next function modifies the state of the KeyTextMaker_ because of the
+  // dead keys
+  CKeyTextData KeyTextData = getKeyText(KeyData);
+  CKeyFlags Flags = getFlags(KeyData);
 
   if (isPressing(KeyData))
-    emit KeyPressing({Time, KeyPosition, KeyID, getKeyLabel(KeyData),
-                      getKeyText(KeyData), CWinKeyboardApi::getShifters()});
+    emit KeyPressing({Time, KeyPosition, KeyID, Label, KeyTextData, Flags});
   else
     emit KeyReleasing({Time, KeyPosition, KeyID});
 }
@@ -131,6 +132,14 @@ CKeyTextData CKeyboardListenerWinImpl::getKeyText(const RAWKEYBOARD& KeyData) {
 CLabelData CKeyboardListenerWinImpl::getKeyLabel(const RAWKEYBOARD& KeyData) {
   return KeyTextMaker_.getLabel(KeyData.MakeCode, KeyData.Flags,
                                 CWinKeyboardApi::getForegroundLayout());
+}
+
+CKeyboardListenerWinImpl::CKeyFlags
+CKeyboardListenerWinImpl::getFlags(const RAWKEYBOARD& KeyData) {
+  CKeyFlags Flags = CWinKeyboardApi::getShifters();
+  if (KeyTextMaker_.isDeadKey(KeyData.VKey, CWinKeyboardApi::getShifters()))
+    Flags |= CKeyFlagsEnum::DeadKey;
+  return Flags;
 }
 
 HWND CKeyboardListenerWinImpl::hwnd() const {

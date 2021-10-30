@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDLISTENERWIN_H
 
+#include "Kernel/KeyFlags.h"
 #include "KeyPositionWin.h"
 #include "KeyTextMaker.h"
 #include "Keyboard/AnyKeyboardKiller.h"
@@ -25,6 +26,8 @@ class CKeyboardListenerWinImpl : public QObject {
 
   friend class CKiller;
   using CMessageStatus = BOOL;
+  using CKeyFlags = NSKernel::CKeyFlags;
+  using CKeyFlagsEnum = NSKernel::CKeyFlagsEnum;
 
 public:
   using CAnyKillerPromise = std::promise<CAnyKeyboardKiller>;
@@ -54,6 +57,7 @@ private:
 
   CKeyTextData getKeyText(const RAWKEYBOARD& KeyData);
   CLabelData getKeyLabel(const RAWKEYBOARD& KeyData);
+  CKeyFlags getFlags(const RAWKEYBOARD& KeyData);
 
   static constexpr CMessageStatus Error = -1;
   static constexpr CMessageStatus Quit = 0;

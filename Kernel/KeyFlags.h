@@ -12,7 +12,8 @@ struct CKeyFlagsEnum {
     Ctrl = 2,
     Alt = 4,
     Caps = 8,
-    AutoRepeat = 512,
+    AutoRepeat = 256,
+    DeadKey = 512
   };
 };
 

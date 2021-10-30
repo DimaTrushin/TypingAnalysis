@@ -78,6 +78,10 @@ CLabelData CKeyTextMaker::getLabel(USHORT MakeCode, USHORT Flags, HKL Layout) {
   }
 }
 
+bool CKeyTextMaker::isDeadKey(CVKCode VK, CKeyShifters Shifters) const {
+  return CurrentMapper().isDeadKey(VK, Shifters);
+}
+
 bool CKeyTextMaker::isLayoutChanged(HKL Layout) const {
   return Layout != CurrentLayout();
 }
@@ -170,10 +174,6 @@ const CKeyTextMaker::CKeyData& CKeyTextMaker::DeadKey() const {
 
 bool CKeyTextMaker::hasDeadKeyInBuffer() const {
   return PreviousDeadKey_.has_value();
-}
-
-bool CKeyTextMaker::isDeadKey(CVKCode VK, CKeyShifters Shifters) const {
-  return CurrentMapper().isDeadKey(VK, Shifters);
 }
 
 } // namespace NSWindows
