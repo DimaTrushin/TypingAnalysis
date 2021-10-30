@@ -87,6 +87,9 @@ private:
   void clear();
   void setDefaultBackgroundColor();
 
+  QString coloredTextFromBuffer(EKeyStatus Status);
+  QString coloredTextFromBuffer(QColor Text, QColor Back);
+
   static constexpr const size_t kDefaultBufferSize = 128;
 
   class CColorAnchor {

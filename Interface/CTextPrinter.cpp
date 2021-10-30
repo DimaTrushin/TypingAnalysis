@@ -51,18 +51,21 @@ void CTextPrinterImpl::printSession(const CSession& Session) {
 }
 
 void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
-  clear();
-  if (Session.empty())
+  if (Session.empty()) {
+    clear();
     return;
+  }
   buffer_.clear();
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
+  QString Text;
   EKeyStatus CurrentStatus = EKeyStatus::MainText;
   while (CurrentStatus != EKeyStatus::End) {
     EKeyStatus NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
-    printBuffer(CurrentStatus);
+    Text.append(coloredTextFromBuffer(CurrentStatus));
     CurrentStatus = NewStatus;
   }
+  TextEdit_->setHtml(Text);
 }
 
 void CTextPrinterImpl::printFullText(const CTextDataTree& TextTree) {
@@ -164,6 +167,41 @@ void CTextPrinterImpl::setDefaultBackgroundColor() {
   palette.setBrush(QPalette::Active, QPalette::Base, brush);
   palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
   TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
+}
+
+QString CTextPrinterImpl::coloredTextFromBuffer(EKeyStatus Status) {
+  QString Text;
+  switch (Status) {
+  case EKeyStatus::MainText:
+    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::MainText],
+                                 Palette_.Back[EKeyStatus::MainText]);
+    break;
+  case EKeyStatus::Backspace:
+    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::Backspace],
+                                 Palette_.Back[EKeyStatus::Backspace]);
+    break;
+  case EKeyStatus::Control:
+    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::Control],
+                                 Palette_.Back[EKeyStatus::Control]);
+    break;
+  default:
+    break;
+  }
+  return Text;
+}
+
+QString CTextPrinterImpl::coloredTextFromBuffer(QColor Text, QColor Back) {
+
+  return QString("<span "
+                 "style=\"color:rgb(%1,%2,%3);background-color:rgb(%4,%5,%6);"
+                 "\">%7</span>")
+      .arg(Text.red())
+      .arg(Text.green())
+      .arg(Text.blue())
+      .arg(Back.red())
+      .arg(Back.green())
+      .arg(Back.blue())
+      .arg(QString(buffer_.data(), buffer_.size()));
 }
 
 CTextPrinterImpl::CColorAnchor::CColorAnchor(QColor Text, QColor Back,
