@@ -11,8 +11,7 @@ CTextPrinterImpl::CTextPrinterImpl(QTextEdit* TextEdit)
     : TextEdit_(TextEdit),
       TextDataInput_([this](const CTextData& data) { handleTextData(data); }) {
   assert(TextEdit_);
-  TextEdit_->setTextColor(Palette_.Text[EKeyStatus::MainText]);
-  TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
+  setDefaultBackgroundColor();
 }
 
 CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
@@ -161,6 +160,15 @@ void CTextPrinterImpl::printBuffer(QColor Text, QColor Back) {
 
 void CTextPrinterImpl::clear() {
   TextEdit_->clear();
+}
+
+void CTextPrinterImpl::setDefaultBackgroundColor() {
+  QPalette palette;
+  QBrush brush(Palette_.Back[EKeyStatus::MainText]);
+  brush.setStyle(Qt::SolidPattern);
+  palette.setBrush(QPalette::Active, QPalette::Base, brush);
+  palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+  TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
 }
 
 } // namespace NSTextPrinterDetail

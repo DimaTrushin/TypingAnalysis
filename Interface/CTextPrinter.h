@@ -7,6 +7,7 @@
 #include "Library/StlExtension/MvcWrappers.h"
 
 #include <QColor>
+#include <QPalette>
 
 QT_BEGIN_NAMESPACE
 class QTextEdit;
@@ -84,6 +85,7 @@ private:
   void printBuffer(EKeyStatus Status);
   void printBuffer(QColor Text, QColor Back);
   void clear();
+  void setDefaultBackgroundColor();
 
   static constexpr const size_t kDefaultBufferSize = 128;
 
