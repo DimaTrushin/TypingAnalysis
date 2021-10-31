@@ -441,26 +441,107 @@ This object eats \verb"CKeyPressing" and \verb"CKeyReleasing" events. It tries t
 
 \subsection{CSessionSelector}
 
-TO DO
+This object selects one session in the seance. It sends the information about the seance and currently chosen session to \verb"CSeanceView" via observer pattern. \verb"CSeanceView" notifies \verb"CSeanceViewController" when the chosen session is changed in the widget by user. \verb"CSeanceViewController" sets new session. The objects \verb"CSessionSelector", \verb"CSeanceView", \verb"CSeanceViewController" are model, view, and controller, respectively.
 
 \subsection{CTextModule}
 
-TO DO
+\subsubsection{General information}
 
-\paragraph{TextTree}
+This module receives the chosen session from \verb"SessionSelector". The module contains the following information:
+\begin{enumerate}
+\item \verb"CTextMode" is the information about currently chosen mode, i.e. raw session data, or printed text, or text with deleted symbols etc.
+\item \verb"CTextDataTree" is a specific data structure required to identify mistakes in the text.
+\end{enumerate}
+
+\verb"CTextModule" notifies \verb"CTextModeView" about the state of the current text mode. \verb"CTextModeView" displays the state and notifies \verb"CTextModeController" whenever the state was changed. \verb"CTextModeController" sets new state in the \verb"CTextModule". The objects \verb"CTextModule", \verb"CTextModeView", and \verb"TextModeController" are model, view, and controller, respectively.
+
+\subsubsection{Text Tree}
+
+\paragraph{CVTree}
+
+The text tree is based on \verb"CVTree" template. This structure represents a tree. Each node has five connections:
+\begin{enumerate}
+\item parent
+\item first child
+\item last child
+\item previous sibling
+\item next sibling
+\end{enumerate}
+and also contains some information in the node. The following picture shows an example of \verb"CVTree" .
 \begin{center}
 \includegraphics[scale = 0.2]{Figures/VTree.png}
+
+Yellow arrows point to a parent, red arrows point to the first and last children, blue arrows point to the previous and next siblings.
 \end{center}
 
+In order to be efficient, the exact implementation uses \verb"std::vector". This results in some limitations:\footnote{I would like to use \textbf{std::pmr} and usual pointers in order to overcome these limitations.}
+\begin{enumerate}
+\item We cannot add and delete vertices in arbitrary places.
+\item We can add to a vertex on the route from the root to the most right lief.
+\item We can only add a last children to a vertex.
+\end{enumerate}
+
+The tree \verb"CVTree" supports three types of iterators:
+\begin{enumerate}
+\item PreOrder\footnote{The name was randomly chosen. I do not know how to name it properly.} iterators. The best way to discribe the order is the following: in order to print the tree you need print current vertex and then print all subtrees from left to right. The nodes on the picture are numbered according to this order.
+
+\item LeftSon iterator. This iterators move on the right branch of the tree between the root and the most right lief.
+
+\item Sibling iterator. This iterators are used to cycle through all the children of a vertex.
+\end{enumerate}
+
+\paragraph{CTextDataTree}
+
+In order to track mistakes in the text we need a forest. Instead of dealing with a forest, we add a formal node as a new root and the forest become a tree. Here is an example:
 \begin{center}
 \includegraphics[scale = 0.4]{Figures/TreePrimitives3a.png}
+
+An example of a \verb"CTextDataTree"
 \end{center}
 
+Suppose user types the following:
+\begin{center}
+\verb"BC[Backspace]D[backspace][backspace]B[Backspace]BDE[Backspace]"
+\end{center}
+The previous picture shows the structure of the corresponding \verb"CTextDataTree". However, it is more convenient to think of it as shown below (without all the pointers of the nodes):
 \begin{center}
 \includegraphics[scale = 0.4]{Figures/TreePrimitives4a.png}
+\end{center}
+As we can see the printed text correspond to the route from the root to the \verb"FinalElement" (a marked node in the tree). This route always goes through last child of each vertex. In the example above, printed text is
+\begin{center}
+\verb"BD"
+\end{center}
+Since we do not know the source text, we assume that the resulting text is the correct one, i.e. \verb"BD" is the correct text in this example. We compare everything with the printed text in order to find a mistake.
+
+The vertices have the following states:
+\begin{enumerate}
+\item Yellow color. The root of the tree. This is an auxiliary node.
+\item Green color. This color shows the regular text.
+\item Orange color. This color shows where exactly a mistake happened.
+\item Violet color. This color shows deleted symbols that need not be deleted, that is, if the user did not erase them, this would not lead to a mistake.
+\item Red color. This color shows deleted symbols that were needed to be deleted in order to get a correct text.
+\end{enumerate}
+The algorithm for finding mistakes is the following:
+\begin{enumerate}
+\item We go from the root to the \verb"FinalElement" through last children.
+\item For each node with two or more children we execute the following algorithm:
+\begin{enumerate}
+\item Take a route from the current node to a lief in its subtree.
+\item Compare symbols in the route with the symbols in the printed text. 
+\begin{itemize}
+\item If the symbol is the same, this symbol is considered accidentally deleted and we move to the next one.
+\item If symbol is different, we consider this place as a mistake. The symbol and all the remaining ones are considered as symbols required for deletion. The node in the printed text is marked as the place where the mistake happened.
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+Logically, we transform the tree into a different form as shown below:\footnote{The implementation of the exact procedure is a bit more sophisticated.}
+\begin{center}
 \includegraphics[scale = 0.4]{Figures/TreePrimitives5a.png}
 \includegraphics[scale = 0.4]{Figures/TreePrimitives6a.png}
+
+Yellow node is the root. Green node shows the regular text. Orange nodes represent places where mistakes were done. Violet nodes show accidentally deleted symbols. Red nodes show deleted symbols that are required to be deleted.
 \end{center}
+After this transformation, every node with more than one child is the symbol preceding a mistake. Al elements after \verb"FinalElement" are considered as mistakes (red nodes). This approach allows to find all the mistakes as well as how many times the mistake was done in a particular place. As a result, we can analyze the distribution of the mistakes.
 
 \subsection{Qt Resources}
 
