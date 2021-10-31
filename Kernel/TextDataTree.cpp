@@ -274,7 +274,7 @@ void CTextDataTreeImpl::setMistakeInformation() {
 }
 
 void CTextDataTreeImpl::setMistakeRoutes() {
-  for (CTextIterator currentPosition = Tree_.begin();
+  for (CTextIterator currentPosition = rootIterator();
        currentPosition != FinalElement_; ++currentPosition) {
     reAssignMistakeRoutes(currentPosition);
     assignNewMistakeRoutes(currentPosition);
@@ -283,7 +283,7 @@ void CTextDataTreeImpl::setMistakeRoutes() {
 }
 
 void CTextDataTreeImpl::setMistakeSymbols() {
-  for (CTextIterator itCurrentSymbol = Tree_.begin();
+  for (CTextIterator itCurrentSymbol = rootIterator();
        itCurrentSymbol != FinalElement_; ++itCurrentSymbol)
     if (!itCurrentSymbol->hasNoMistakeRouts())
       itCurrentSymbol.LastChild()->setSymbolStatus(
@@ -291,7 +291,7 @@ void CTextDataTreeImpl::setMistakeSymbols() {
 }
 
 void CTextDataTreeImpl::setRequiredDeleted() {
-  for (CTextIterator currentPosition = Tree_.begin();
+  for (CTextIterator currentPosition = rootIterator();
        currentPosition != endPrintedText(); ++currentPosition)
     for (auto itMistakeRoute = currentPosition->beginMistakes();
          itMistakeRoute != currentPosition->endMistakes(); ++itMistakeRoute)
