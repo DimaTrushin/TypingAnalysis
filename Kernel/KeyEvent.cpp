@@ -129,7 +129,7 @@ bool CKeyEvent::isAltActive() const {
 }
 
 bool CKeyEvent::isCapslockToggled() const {
-  return CKeyFlagsEnum::Caps & Flags_;
+  return CKeyFlagsEnum::Capslock & Flags_;
 }
 
 bool CKeyEvent::isDeadKey() const {
