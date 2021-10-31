@@ -3,63 +3,6 @@
 namespace NSApplication {
 namespace NSKernel {
 
-CTextNode::CTextNode(QChar Symbol, ESymbolStatus Status)
-    : Symbol_(Symbol), SymbolStatus_(Status) {
-}
-
-// bool CTextNode::isTextDelimiter() const {
-//  return (pKeyEvent_ != nullptr) &&
-//         (pKeyEvent_->isSpacebar() || pKeyEvent_->isEnter());
-//}
-
-// bool CTextNode::isSymbol() const {
-//  return (pKeyEvent_ != nullptr) && pKeyEvent_->isSymbolKey();
-//}
-
-// bool CTextNode::isAnyDeleted() const {
-//  return SymbolStatus_ == ESymbolStatus::DeletedSymbolAccidental ||
-//         SymbolStatus_ == ESymbolStatus::DeletedSymbolRequired;
-//}
-
-// bool CTextNode::isAnyPrinted() const {
-//  return SymbolStatus_ == ESymbolStatus::TextSymbol ||
-//         SymbolStatus_ == ESymbolStatus::ErroneousSymbol;
-//}
-
-// CTime CTextNode::getPressingTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getPressingTime();
-//}
-
-// CTime CTextNode::getReleasingTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getReleasingTime();
-//}
-
-// CTime CTextNode::getResponseTime() const {
-//  return ResponseTime_;
-//}
-
-// CTime CTextNode::getDurationTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getDurationTime();
-//}
-
-QChar CTextNode::getSymbol() const {
-  return Symbol_;
-}
-
-ESymbolStatus CTextNode::getSymbolStatus() const {
-  return SymbolStatus_;
-}
-
-void CTextNode::setSymbolStatus(ESymbolStatus newStatus) {
-  SymbolStatus_ = newStatus;
-}
-
 namespace NSTextDataTreeDetail {
 
 CTextDataTreeImpl::CTextDataTreeImpl()
@@ -68,7 +11,7 @@ CTextDataTreeImpl::CTextDataTreeImpl()
 
 void CTextDataTreeImpl::clear() {
   Tree_.destroyExceptRoot();
-  //  getRootNode().Data_.MistakeRoutes_.clear();
+  Tree_.dataRoot().clearMistakeRoutes();
   FinalElement_ = rootIterator();
 }
 
@@ -324,6 +267,110 @@ CTextDataTreeImpl::CFullTextIterator CTextDataTreeImpl::endFullText() {
   return Tree_.endPreOrder();
 }
 
+void CTextDataTreeImpl::setMistakeInformation() {
+  setMistakeRoutes();
+  setMistakeSymbols();
+  setRequiredDeleted();
+}
+
+void CTextDataTreeImpl::setMistakeRoutes() {
+  for (CTextIterator currentPosition = Tree_.begin();
+       currentPosition != FinalElement_; ++currentPosition) {
+    reAssignMistakeRoutes(currentPosition);
+    assignNewMistakeRoutes(currentPosition);
+  }
+  assignMistakeRoutesForFinalElement();
+}
+
+void CTextDataTreeImpl::setMistakeSymbols() {
+  for (CTextIterator itCurrentSymbol = Tree_.begin();
+       itCurrentSymbol != FinalElement_; ++itCurrentSymbol)
+    if (!itCurrentSymbol->hasNoMistakeRouts())
+      itCurrentSymbol.LastChild()->setSymbolStatus(
+          ESymbolStatus::ErroneousSymbol);
+}
+
+void CTextDataTreeImpl::setRequiredDeleted() {
+  for (CTextIterator currentPosition = Tree_.begin();
+       currentPosition != endPrintedText(); ++currentPosition)
+    for (auto itMistakeRoute = currentPosition->beginMistakes();
+         itMistakeRoute != currentPosition->endMistakes(); ++itMistakeRoute)
+      setRequiredDeletedFrom(*itMistakeRoute);
+}
+
+void CTextDataTreeImpl::reAssignMistakeRoutes(
+    const CTextIterator& currentPosition) {
+  auto itMistakeRoute = currentPosition->beginMistakes();
+  CTextIterator next = currentPosition;
+  ++next;
+  while (itMistakeRoute != currentPosition->endMistakes()) {
+    if (next->getSymbol() == (*itMistakeRoute)->getSymbol()) {
+      // we did not make a mistake in the next symbol
+      // need to pass mistake routes to the node with the next symbol
+      if (itMistakeRoute->hasChildren()) {
+        // if there are mistake routes
+        reAssignChildernTo(*itMistakeRoute, &next);
+      }
+      // remove itMistakeRoute from the current node of the tree
+      itMistakeRoute = currentPosition->eraseMistakeNode(itMistakeRoute);
+      continue;
+    }
+    ++itMistakeRoute;
+  }
+}
+
+void CTextDataTreeImpl::assignNewMistakeRoutes(
+    const CTextIterator& currentPosition) {
+  CTextIterator currentNode(currentPosition);
+  auto itMistakeRoute = currentNode.FirstChild();
+
+  CTextIterator nextNode = currentPosition;
+  ++nextNode;
+  while (itMistakeRoute != currentNode.LastChild()) {
+    if (nextNode->getSymbol() == itMistakeRoute->getSymbol()) {
+      // If the symbol is the same, we did NOT make a mistake in the next symbol
+      // if there are children, send them to the nextNode's MistakeRoutes
+      if (itMistakeRoute.hasChildren()) {
+        reAssignChildernTo(itMistakeRoute, &nextNode);
+      }
+    } else {
+      // if the symbol is NOT the same, we made a mistake in the next symbol
+      // need to write the current route to the MistakeRoutes of the currentNode
+      currentPosition->addMistakeRoute(itMistakeRoute);
+    }
+    ++itMistakeRoute;
+  }
+}
+
+void CTextDataTreeImpl::assignMistakeRoutesForFinalElement() {
+  if (!FinalElement_.hasChildren())
+    return;
+  for (auto itMistakeRoute = FinalElement_.FirstChild();
+       itMistakeRoute != FinalElement_.LastChild(); ++itMistakeRoute)
+    FinalElement_->addMistakeRoute(itMistakeRoute);
+  FinalElement_->addMistakeRoute(FinalElement_.LastChild());
+}
+
+void CTextDataTreeImpl::reAssignChildernTo(const CTextIterator& source,
+                                           CTextIterator* target) {
+  for (auto itChild = source.FirstChild(); itChild != source.LastChild();
+       ++itChild)
+    (*target)->addMistakeRoute(itChild);
+  (*target)->addMistakeRoute(source.LastChild());
+}
+
+void CTextDataTreeImpl::setRequiredDeletedFrom(
+    const CSiblingIterator& currentNode) {
+  currentNode->setSymbolStatus(ESymbolStatus::DeletedSymbolRequired);
+
+  if (!currentNode.hasChildren())
+    return;
+  for (auto itChild = currentNode.FirstChild();
+       itChild != currentNode.LastChild(); ++itChild)
+    setRequiredDeletedFrom(itChild);
+  setRequiredDeletedFrom(currentNode.LastChild());
+}
+
 // void CTextDataTree::setFinalElement(const CTextDataTree& Tree) {
 //  CIndex difference =
 //      Tree.FinalElement_ - CConstTextIterator(Tree.beginFromRoot());
@@ -353,5 +400,104 @@ void CTextDataTreeImpl::deleteLastSymbolBlock() {
     deleteLastData();
 }
 } // namespace NSTextDataTreeDetail
+
+CTextNode::CTextNode(QChar Symbol, ESymbolStatus Status)
+    : Symbol_(Symbol), SymbolStatus_(Status) {
+}
+
+// bool CTextNode::isTextDelimiter() const {
+//  return (pKeyEvent_ != nullptr) &&
+//         (pKeyEvent_->isSpacebar() || pKeyEvent_->isEnter());
+//}
+
+// bool CTextNode::isSymbol() const {
+//  return (pKeyEvent_ != nullptr) && pKeyEvent_->isSymbolKey();
+//}
+
+// bool CTextNode::isAnyDeleted() const {
+//  return SymbolStatus_ == ESymbolStatus::DeletedSymbolAccidental ||
+//         SymbolStatus_ == ESymbolStatus::DeletedSymbolRequired;
+//}
+
+// bool CTextNode::isAnyPrinted() const {
+//  return SymbolStatus_ == ESymbolStatus::TextSymbol ||
+//         SymbolStatus_ == ESymbolStatus::ErroneousSymbol;
+//}
+
+// CTime CTextNode::getPressingTime() const {
+//  if (pKeyEvent_ == nullptr)
+//    return 0;
+//  return pKeyEvent_->getPressingTime();
+//}
+
+// CTime CTextNode::getReleasingTime() const {
+//  if (pKeyEvent_ == nullptr)
+//    return 0;
+//  return pKeyEvent_->getReleasingTime();
+//}
+
+// CTime CTextNode::getResponseTime() const {
+//  return ResponseTime_;
+//}
+
+// CTime CTextNode::getDurationTime() const {
+//  if (pKeyEvent_ == nullptr)
+//    return 0;
+//  return pKeyEvent_->getDurationTime();
+//}
+
+QChar CTextNode::getSymbol() const {
+  return Symbol_;
+}
+
+ESymbolStatus CTextNode::getSymbolStatus() const {
+  return SymbolStatus_;
+}
+
+void CTextNode::setSymbolStatus(ESymbolStatus newStatus) {
+  SymbolStatus_ = newStatus;
+}
+
+void CTextNode::clearMistakeRoutes() {
+  MistakeRoutes_.clear();
+}
+
+CTextNode::CMistakeIterator CTextNode::beginMistakes() {
+  return MistakeRoutes_.begin();
+}
+
+CTextNode::CConstMistakeIterator CTextNode::beginMistakes() const {
+  return MistakeRoutes_.begin();
+}
+
+CTextNode::CConstMistakeIterator CTextNode::cbeginMistakes() const {
+  return MistakeRoutes_.cbegin();
+}
+
+CTextNode::CMistakeIterator CTextNode::endMistakes() {
+  return MistakeRoutes_.end();
+}
+
+CTextNode::CConstMistakeIterator CTextNode::endMistakes() const {
+  return MistakeRoutes_.end();
+}
+
+CTextNode::CConstMistakeIterator CTextNode::cendMistakes() const {
+  return MistakeRoutes_.cend();
+}
+
+CTextNode::CMistakeIterator
+CTextNode::eraseMistakeNode(CConstMistakeIterator Current) {
+  return MistakeRoutes_.erase(Current);
+}
+
+bool CTextNode::hasNoMistakeRouts() const {
+  return MistakeRoutes_.empty();
+}
+
+void CTextNode::addMistakeRoute(CFullTextIterator iter) {
+  MistakeRoutes_.push_back(std::move(iter));
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

@@ -29,6 +29,7 @@ void CSessionToTreeConverter::convert(const CSession& Source,
         Target->deleteLastData();
     }
   }
+  Target->setMistakeInformation();
 }
 
 } // namespace NSKernel

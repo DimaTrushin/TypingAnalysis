@@ -62,6 +62,7 @@ public:
   using CFullTextIterator = CTree::CPreOrderIterator;
   using CConstTextIterator = CTree::CConstLastSonIterator;
   using CTextIterator = CTree::CLastSonIterator;
+  using CSiblingIterator = CTree::CSiblingIterator;
 
   // These two iterators do not have a travel logic
   // They denote the begin and the end of a text
@@ -130,7 +131,20 @@ public:
   CConstFullTextIterator endFullText() const;
   CFullTextIterator endFullText();
 
+  void setMistakeInformation();
+
 private:
+  void setMistakeRoutes();
+  void setMistakeSymbols();
+  void setRequiredDeleted();
+
+  void reAssignMistakeRoutes(const CTextIterator& currentPosition);
+  void assignNewMistakeRoutes(const CTextIterator& currentPosition);
+  void assignMistakeRoutesForFinalElement();
+
+  void reAssignChildernTo(const CTextIterator& source, CTextIterator* target);
+  void setRequiredDeletedFrom(const CSiblingIterator& currentNode);
+
   //  void setFinalElement(const CTextDataTree& Tree);
   //  void setFinalElementHost();
 
@@ -151,7 +165,11 @@ class CTextNode {
 
 public:
   using CIndex = int64_t;
+  using CMistakeIterator = CMistakeRoutesContainer::iterator;
+  using CConstMistakeIterator = CMistakeRoutesContainer::const_iterator;
 
+  using CTree = NSLibrary::CVTree<CTextNode>;
+  using CFullTextIterator = CTree::CPreOrderIterator;
   // Root node is created by default
   CTextNode() = default;
 
@@ -173,11 +191,25 @@ public:
   ESymbolStatus getSymbolStatus() const;
   void setSymbolStatus(ESymbolStatus newStatus);
 
+  void clearMistakeRoutes();
+
   template<class TOut>
   friend TOut& operator<<(TOut& out, const CTextNode& data) {
     out << data.SymbolStatus_;
     return out;
   }
+
+  CMistakeIterator beginMistakes();
+  CConstMistakeIterator beginMistakes() const;
+  CConstMistakeIterator cbeginMistakes() const;
+  CMistakeIterator endMistakes();
+  CConstMistakeIterator endMistakes() const;
+  CConstMistakeIterator cendMistakes() const;
+
+  CMistakeIterator eraseMistakeNode(CConstMistakeIterator Current);
+
+  bool hasNoMistakeRouts() const;
+  void addMistakeRoute(CFullTextIterator iter);
 
 private:
   //  CTime ResponseTime_;
@@ -185,7 +217,7 @@ private:
   //  CTime ReleaseTime_;
   QChar Symbol_;
   ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
-  //  CMistakeRoutesContainer MistakeRoutes_;
+  CMistakeRoutesContainer MistakeRoutes_;
 };
 
 using CTextDataTree =
