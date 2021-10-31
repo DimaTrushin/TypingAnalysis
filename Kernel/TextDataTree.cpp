@@ -371,17 +371,6 @@ void CTextDataTreeImpl::setRequiredDeletedFrom(
   setRequiredDeletedFrom(currentNode.LastChild());
 }
 
-// void CTextDataTree::setFinalElement(const CTextDataTree& Tree) {
-//  CIndex difference =
-//      Tree.FinalElement_ - CConstTextIterator(Tree.beginFromRoot());
-//  FinalElement_ = beginFromRoot();
-//  FinalElement_ += difference;
-//}
-
-// void CTextDataTree::setFinalElementHost() {
-//  FinalElement_.changeHost(this);
-//}
-
 // CIndex CTextDataTree::getPrintedTextLength() const {
 //  return endPrintedText() - beginPrintedText();
 //}
@@ -404,25 +393,6 @@ void CTextDataTreeImpl::deleteLastSymbolBlock() {
 CTextNode::CTextNode(QChar Symbol, ESymbolStatus Status)
     : Symbol_(Symbol), SymbolStatus_(Status) {
 }
-
-// bool CTextNode::isTextDelimiter() const {
-//  return (pKeyEvent_ != nullptr) &&
-//         (pKeyEvent_->isSpacebar() || pKeyEvent_->isEnter());
-//}
-
-// bool CTextNode::isSymbol() const {
-//  return (pKeyEvent_ != nullptr) && pKeyEvent_->isSymbolKey();
-//}
-
-// bool CTextNode::isAnyDeleted() const {
-//  return SymbolStatus_ == ESymbolStatus::DeletedSymbolAccidental ||
-//         SymbolStatus_ == ESymbolStatus::DeletedSymbolRequired;
-//}
-
-// bool CTextNode::isAnyPrinted() const {
-//  return SymbolStatus_ == ESymbolStatus::TextSymbol ||
-//         SymbolStatus_ == ESymbolStatus::ErroneousSymbol;
-//}
 
 // CTime CTextNode::getPressingTime() const {
 //  if (pKeyEvent_ == nullptr)

@@ -145,9 +145,6 @@ private:
   void reAssignChildernTo(const CTextIterator& source, CTextIterator* target);
   void setRequiredDeletedFrom(const CSiblingIterator& currentNode);
 
-  //  void setFinalElement(const CTextDataTree& Tree);
-  //  void setFinalElementHost();
-
   //  CIndex getPrintedTextLength() const;
   //  CIndex getFullTextLength() const;
 
@@ -176,11 +173,6 @@ public:
   // pressing time, releasing time, response time
   // Default status = ESymbolStatus::TextSymbol
   explicit CTextNode(QChar Symbol, ESymbolStatus Status);
-
-  //  bool isTextDelimiter() const;
-  //  bool isSymbol() const;
-  //  bool isAnyDeleted() const;
-  //  bool isAnyPrinted() const;
 
   //  CTime getPressingTime() const;
   //  CTime getReleasingTime() const;
