@@ -439,6 +439,28 @@ This object eats \verb"CKeyPressing" and \verb"CKeyReleasing" events. It tries t
 \item The logic for division of \verb"CRawSeance" into \verb"CRawSession"s is the following. \verb"SeanceMaker" keep track the time of the last event and the keys that are being pressed currently. If the current \verb"CRawSession" is not empty, there are no pressed keys, and the time since the last event exceeds the time limit (if it is set) the new \verb"CRawSession" is opened. Currently, the time limit is set to be 10 seconds. (TO DO) In the future, there will be an option to set the time limit via application settings.
 \end{enumerate}
 
+\subsection{CSessionSelector}
+
+TO DO
+
+\subsection{CTextModule}
+
+TO DO
+
+\paragraph{TextTree}
+\begin{center}
+\includegraphics[scale = 0.2]{Figures/VTree.png}
+\end{center}
+
+\begin{center}
+\includegraphics[scale = 0.4]{Figures/TreePrimitives3a.png}
+\end{center}
+
+\begin{center}
+\includegraphics[scale = 0.4]{Figures/TreePrimitives4a.png}
+\includegraphics[scale = 0.4]{Figures/TreePrimitives5a.png}
+\includegraphics[scale = 0.4]{Figures/TreePrimitives6a.png}
+\end{center}
 
 \subsection{Qt Resources}
 
