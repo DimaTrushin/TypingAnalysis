@@ -65,7 +65,7 @@ private:
   CKeyID KeyID_;
   CLabelData KeyLabel_;
   CKeyTextData KeyText_;
-  unsigned short Flags_ = 0;
+  CKeyFlags Flags_ = 0;
   CTime PressingTime_;
   CTime ReleasingTime_;
 }; // namespace NSKernel
