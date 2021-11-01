@@ -25,7 +25,7 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
     printFormattedSession(data.Session);
     break;
   case ETextMode::Full:
-    printFullText(data.TextTree);
+    printFormattedFullText(data.TextTree);
     break;
   case ETextMode::Printed:
     printPrintedText(data.TextTree);
@@ -59,9 +59,27 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
   QString Text;
-  EKeyStatus CurrentStatus = getKeyStatus(*iter);
+  EKeyStatus CurrentStatus = getKeyRawStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
-    EKeyStatus NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
+    EKeyStatus NewStatus = extractToBufferRaw(CurrentStatus, sentinel, &iter);
+    Text.append(coloredTextFromBuffer(CurrentStatus));
+    CurrentStatus = NewStatus;
+  }
+  TextEdit_->setHtml(Text);
+}
+
+void CTextPrinterImpl::printFormattedFullText(const CTextDataTree& TextTree) {
+  if (TextTree->getFullTextLength() == 0) {
+    clear();
+    return;
+  }
+  buffer_.clear();
+  CConstFullTextIterator iter = TextTree->beginFullText();
+  CConstFullTextIterator sentinel = TextTree->endFullText();
+  QString Text;
+  EKeyStatus CurrentStatus = getKeyTextStatus(*iter);
+  while (CurrentStatus != EKeyStatus::End) {
+    EKeyStatus NewStatus = extractToBufferText(CurrentStatus, sentinel, &iter);
     Text.append(coloredTextFromBuffer(CurrentStatus));
     CurrentStatus = NewStatus;
   }
@@ -95,7 +113,7 @@ void CTextPrinterImpl::printPrintedText(const CTextDataTree& TextTree) {
 }
 
 CTextPrinterImpl::EKeyStatus
-CTextPrinterImpl::getKeyStatus(const CKeyEvent& Key) {
+CTextPrinterImpl::getKeyRawStatus(const CKeyEvent& Key) {
   if (Key.isBackspace())
     return EKeyStatus::Backspace;
   if (Key.isTrackableSpecial())
@@ -108,13 +126,34 @@ CTextPrinterImpl::getKeyStatus(const CKeyEvent& Key) {
 }
 
 CTextPrinterImpl::EKeyStatus
-CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
-                                  const CConstSessionIterator sentinel,
-                                  CConstSessionIterator* pIter) {
+CTextPrinterImpl::getKeyTextStatus(const CTextNode& TextNode) {
+  switch (TextNode.getSymbolStatus()) {
+  case ESymbolStatus::TextSymbol:
+    return EKeyStatus::MainText;
+    break;
+  case ESymbolStatus::DeletedSymbolAccidental:
+    return EKeyStatus::AccidentallyDeleted;
+    break;
+  case ESymbolStatus::DeletedSymbolRequired:
+    return EKeyStatus::RequiredDeletion;
+    break;
+  case ESymbolStatus::ErroneousSymbol:
+    return EKeyStatus::Erroneous;
+    break;
+  default:
+    return EKeyStatus::Ignore;
+    break;
+  }
+}
+
+CTextPrinterImpl::EKeyStatus
+CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
+                                     const CConstSessionIterator sentinel,
+                                     CConstSessionIterator* pIter) {
   auto& iter = *pIter;
   buffer_.clear();
-  while (iter != sentinel && (getKeyStatus(*iter) == Status ||
-                              getKeyStatus(*iter) == EKeyStatus::Ignore)) {
+  while (iter != sentinel && (getKeyRawStatus(*iter) == Status ||
+                              getKeyRawStatus(*iter) == EKeyStatus::Ignore)) {
     switch (Status) {
     case EKeyStatus::MainText:
       assert(iter->getTextSize() > 0);
@@ -133,7 +172,24 @@ CTextPrinterImpl::extractToBuffer(EKeyStatus Status,
   qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
     return EKeyStatus::End;
-  return getKeyStatus(*iter);
+  return getKeyRawStatus(*iter);
+}
+
+CTextPrinterImpl::EKeyStatus
+CTextPrinterImpl::extractToBufferText(EKeyStatus Status,
+                                      const CConstFullTextIterator sentinel,
+                                      CConstFullTextIterator* pIter) {
+  auto& iter = *pIter;
+  buffer_.clear();
+  while (iter != sentinel && (getKeyTextStatus(*iter) == Status ||
+                              getKeyTextStatus(*iter) == EKeyStatus::Ignore)) {
+    buffer_.push_back(iter->getSymbol());
+    ++iter;
+  }
+  qDebug() << "buffer_.size() = " << buffer_.size();
+  if (iter == sentinel)
+    return EKeyStatus::End;
+  return getKeyTextStatus(*iter);
 }
 
 void CTextPrinterImpl::printBuffer(EKeyStatus Status) {
@@ -175,29 +231,11 @@ void CTextPrinterImpl::setDefaultBackgroundColor() {
 
 QString CTextPrinterImpl::coloredTextFromBuffer(EKeyStatus Status) {
   QString Text;
-  switch (Status) {
-  case EKeyStatus::MainText:
-    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::MainText],
-                                 Palette_.Back[EKeyStatus::MainText]);
-    break;
-  case EKeyStatus::Backspace:
-    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::Backspace],
-                                 Palette_.Back[EKeyStatus::Backspace]);
-    break;
-  case EKeyStatus::Control:
-    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::Control],
-                                 Palette_.Back[EKeyStatus::Control]);
-    break;
-  case EKeyStatus::SilentDeadKey:
-    Text = coloredTextFromBuffer(Palette_.Text[EKeyStatus::SilentDeadKey],
-                                 Palette_.Back[EKeyStatus::SilentDeadKey]);
-    break;
-  default:
-    break;
+  if (Status < EKeyStatus::Ignore) {
+    Text = coloredTextFromBuffer(Palette_.Text[Status], Palette_.Back[Status]);
   }
   return Text;
 }
-
 QString CTextPrinterImpl::coloredTextFromBuffer(QColor Text, QColor Back) {
 
   return QString("<span "

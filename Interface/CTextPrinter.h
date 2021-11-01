@@ -66,8 +66,13 @@ class CTextPrinterImpl {
   using CConstSessionIterator = CSession::const_iterator;
   using CTextDataTree = NSKernel::CTextDataTree;
   using ETextMode = NSKernel::ETextMode;
+  using CFullTextIterator = CTextDataTree::CFullTextIterator;
+  using CConstFullTextIterator = CTextDataTree::CConstFullTextIterator;
+
+  using CTextNode = NSKernel::CTextNode;
 
   using EKeyStatus = CTextPalette::EKeyStatus;
+  using ESymbolStatus = NSKernel::ESymbolStatus;
 
 public:
   CTextPrinterImpl(QTextEdit* TextEdit);
@@ -78,13 +83,19 @@ private:
   void handleTextData(const CTextData& data);
   void printSession(const CSession& Session);
   void printFormattedSession(const CSession& Session);
+  void printFormattedFullText(const CTextDataTree& TextTree);
   void printFullText(const CTextDataTree& TextTree);
   void printPrintedText(const CTextDataTree& TextTree);
 
-  EKeyStatus getKeyStatus(const CKeyEvent& Key);
-  EKeyStatus extractToBuffer(EKeyStatus Status,
-                             const CConstSessionIterator sentinel,
-                             CConstSessionIterator* pIter);
+  EKeyStatus getKeyRawStatus(const CKeyEvent& Key);
+  EKeyStatus getKeyTextStatus(const CTextNode& TextNode);
+  EKeyStatus extractToBufferRaw(EKeyStatus Status,
+                                const CConstSessionIterator sentinel,
+                                CConstSessionIterator* pIter);
+  EKeyStatus extractToBufferText(EKeyStatus Status,
+                                 const CConstFullTextIterator sentinel,
+                                 CConstFullTextIterator* pIter);
+
   void printBuffer(EKeyStatus Status);
   void printBuffer(QColor Text, QColor Back);
   void clear();

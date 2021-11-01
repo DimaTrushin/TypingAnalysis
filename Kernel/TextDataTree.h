@@ -62,6 +62,7 @@ public:
   using CFullTextIterator = CTree::CPreOrderIterator;
   using CConstTextIterator = CTree::CConstLastSonIterator;
   using CTextIterator = CTree::CLastSonIterator;
+  using CConstSiblingIterator = CTree::CConstSiblingIterator;
   using CSiblingIterator = CTree::CSiblingIterator;
 
   // These two iterators do not have a travel logic
@@ -92,6 +93,9 @@ public:
   CIndex getNumberOfReturnPoints() const;
   //  // including the root symbol
   CIndex getTotalNumberOfSymbols() const;
+
+  CIndex getPrintedTextLength() const;
+  CIndex getFullTextLength() const;
 
   //  CIndex getTextLength(ETextMode TextMode) const;
   //  CIndex getDeletionSeriesLengthSupremum() const;
@@ -144,9 +148,6 @@ private:
 
   void reAssignChildernTo(const CTextIterator& source, CTextIterator* target);
   void setRequiredDeletedFrom(const CSiblingIterator& currentNode);
-
-  //  CIndex getPrintedTextLength() const;
-  //  CIndex getFullTextLength() const;
 
   void deleteLastTextDelimiterBlock();
   void deleteLastSymbolBlock();
@@ -212,8 +213,23 @@ private:
   CMistakeRoutesContainer MistakeRoutes_;
 };
 
-using CTextDataTree =
-    NSLibrary::CBasicWrapper<NSTextDataTreeDetail::CTextDataTreeImpl>;
+class CTextDataTree
+    : public NSLibrary::CBasicWrapper<NSTextDataTreeDetail::CTextDataTreeImpl> {
+  using CTextDataTreeImpl = NSTextDataTreeDetail::CTextDataTreeImpl;
+  using CBase = NSLibrary::CBasicWrapper<CTextDataTreeImpl>;
+
+public:
+  using CConstFullTextIterator =
+      typename CTextDataTreeImpl::CConstFullTextIterator;
+  using CFullTextIterator = typename CTextDataTreeImpl::CFullTextIterator;
+  using CConstTextIterator = typename CTextDataTreeImpl::CConstTextIterator;
+  using CTextIterator = typename CTextDataTreeImpl::CTextIterator;
+  using CConstSiblingIterator =
+      typename CTextDataTreeImpl::CConstSiblingIterator;
+  using CSiblingIterator = typename CTextDataTreeImpl::CSiblingIterator;
+
+  using CBase::CBase;
+};
 } // namespace NSKernel
 } // namespace NSApplication
 

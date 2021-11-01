@@ -94,6 +94,14 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::getTotalNumberOfSymbols() const {
   return Tree_.size();
 }
 
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::getPrintedTextLength() const {
+  return FinalElement_.getDistanceToRoot();
+}
+
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::getFullTextLength() const {
+  return Tree_.size() - 1;
+}
+
 // CTextDataTree::CIndex CTextDataTree::getTextLength(ETextMode TextMode) const
 // {
 //  if (TextMode == ETextMode::Full)
@@ -268,6 +276,7 @@ CTextDataTreeImpl::CFullTextIterator CTextDataTreeImpl::endFullText() {
 }
 
 void CTextDataTreeImpl::setMistakeInformation() {
+  // There is something wrong here
   setMistakeRoutes();
   setMistakeSymbols();
   setRequiredDeleted();
@@ -370,14 +379,6 @@ void CTextDataTreeImpl::setRequiredDeletedFrom(
     setRequiredDeletedFrom(itChild);
   setRequiredDeletedFrom(currentNode.LastChild());
 }
-
-// CIndex CTextDataTree::getPrintedTextLength() const {
-//  return endPrintedText() - beginPrintedText();
-//}
-
-// CIndex CTextDataTree::getFullTextLength() const {
-//  return size() - 1;
-//}
 
 void CTextDataTreeImpl::deleteLastTextDelimiterBlock() {
   while (FinalElement_->getSymbol().isPunct())
