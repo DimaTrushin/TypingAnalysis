@@ -543,6 +543,27 @@ Yellow node is the root. Green node shows the regular text. Orange nodes represe
 \end{center}
 After this transformation, every node with more than one child is the symbol preceding a mistake. Al elements after \verb"FinalElement" are considered as mistakes (red nodes). This approach allows to find all the mistakes as well as how many times the mistake was done in a particular place. As a result, we can analyze the distribution of the mistakes.
 
+\paragraph{Text Mode}
+
+Currently there are three different text modes:
+\begin{enumerate}
+\item Raw output
+\item Full text
+\item Printed text
+\end{enumerate}
+The Raw output shows each key in the session, Full text shows printed text including all deleted symbols, Printed text shows only final text without deleted symbols. The following examples illustrate the output for the tree from the previous section:
+\begin{center}
+\includegraphics[scale = 0.6]{Figures/raw_session.jpg}
+\quad
+\includegraphics[scale = 0.6]{Figures/full_text.jpg}
+\quad
+\includegraphics[scale = 0.6]{Figures/printed_text.jpg}
+
+1) The first figure shows the Raw output. Here you can see the labels of the keys. 2) The second figure shows all the symbols printed and deleted ones. Black symbols on the green background represent the usual text. Orange background corresponds to a symbol where a mistake appeared. Pink and red colors represent deleted symbols. The red ones are the symbols that were required to delete. The pink ones are the symbols that did not lead to a mistake. The user did not need to delete them. 3) The latter mode is Printed text. It shows the final text.
+\end{center}
+
+
+
 \subsection{Qt Resources}
 
 \subsection{ApplicationImpl}
