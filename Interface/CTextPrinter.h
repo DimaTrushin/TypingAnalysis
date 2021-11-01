@@ -68,6 +68,8 @@ class CTextPrinterImpl {
   using ETextMode = NSKernel::ETextMode;
   using CFullTextIterator = CTextDataTree::CFullTextIterator;
   using CConstFullTextIterator = CTextDataTree::CConstFullTextIterator;
+  using CTextIterator = CTextDataTree::CTextIterator;
+  using CConstTextIterator = CTextDataTree::CConstTextIterator;
 
   using CTextNode = NSKernel::CTextNode;
 
@@ -75,29 +77,26 @@ class CTextPrinterImpl {
   using ESymbolStatus = NSKernel::ESymbolStatus;
 
 public:
-  CTextPrinterImpl(QTextEdit* TextEdit);
+  explicit CTextPrinterImpl(QTextEdit* TextEdit);
 
   CTextDataObserver* textDataInput();
 
 private:
   void handleTextData(const CTextData& data);
-  void printSession(const CSession& Session);
   void printFormattedSession(const CSession& Session);
-  void printFormattedFullText(const CTextDataTree& TextTree);
-  void printFullText(const CTextDataTree& TextTree);
-  void printPrintedText(const CTextDataTree& TextTree);
+  template<class CConstIterator>
+  void printFormattedText(const CTextDataTree& TextTree);
 
   EKeyStatus getKeyRawStatus(const CKeyEvent& Key);
   EKeyStatus getKeyTextStatus(const CTextNode& TextNode);
   EKeyStatus extractToBufferRaw(EKeyStatus Status,
                                 const CConstSessionIterator sentinel,
                                 CConstSessionIterator* pIter);
+  template<class CConstIterator>
   EKeyStatus extractToBufferText(EKeyStatus Status,
-                                 const CConstFullTextIterator sentinel,
-                                 CConstFullTextIterator* pIter);
+                                 const CConstIterator sentinel,
+                                 CConstIterator* pIter);
 
-  void printBuffer(EKeyStatus Status);
-  void printBuffer(QColor Text, QColor Back);
   void clear();
   void setDefaultBackgroundColor();
 
@@ -105,17 +104,6 @@ private:
   QString coloredTextFromBuffer(QColor Text, QColor Back);
 
   static constexpr const size_t kDefaultBufferSize = 128;
-
-  class CColorAnchor {
-  public:
-    CColorAnchor(QColor Text, QColor Back, QTextEdit* TextEdit);
-    ~CColorAnchor();
-
-  private:
-    QColor OldText_;
-    QColor OldBack_;
-    QTextEdit* TextEdit_;
-  };
 
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;

@@ -276,7 +276,6 @@ CTextDataTreeImpl::CFullTextIterator CTextDataTreeImpl::endFullText() {
 }
 
 void CTextDataTreeImpl::setMistakeInformation() {
-  // There is something wrong here
   setMistakeRoutes();
   setMistakeSymbols();
   setRequiredDeleted();

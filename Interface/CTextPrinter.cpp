@@ -1,5 +1,7 @@
 #include "CTextPrinter.h"
 
+#include <type_traits>
+
 #include <QTextEdit>
 
 namespace NSApplication {
@@ -25,29 +27,14 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
     printFormattedSession(data.Session);
     break;
   case ETextMode::Full:
-    printFormattedFullText(data.TextTree);
+    printFormattedText<CConstFullTextIterator>(data.TextTree);
     break;
   case ETextMode::Printed:
-    printPrintedText(data.TextTree);
+    printFormattedText<CConstTextIterator>(data.TextTree);
     break;
   default:
     assert(false);
   }
-}
-
-void CTextPrinterImpl::printSession(const CSession& Session) {
-  // Debug version of the code
-  buffer_.clear();
-  for (const auto& element : Session) {
-    if (element.isTrackableSpecial()) {
-      assert(element.getLabel().Size > 0);
-      buffer_.push_back(element.getLabel().LowSymbol);
-    } else {
-      for (unsigned char i = 0; i < element.getTextSize(); ++i)
-        buffer_.push_back(element.getSymbol(i));
-    }
-  }
-  TextEdit_->setPlainText(QString(buffer_.data(), buffer_.size()));
 }
 
 void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
@@ -68,14 +55,27 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   TextEdit_->setHtml(Text);
 }
 
-void CTextPrinterImpl::printFormattedFullText(const CTextDataTree& TextTree) {
-  if (TextTree->getFullTextLength() == 0) {
-    clear();
-    return;
+template<class CConstIterator>
+void CTextPrinterImpl::printFormattedText(const CTextDataTree& TextTree) {
+  // This looks ugly. Need to think of a better interface.
+  CConstIterator iter;
+  CConstIterator sentinel;
+  if constexpr (std::is_same_v<CConstIterator, CConstFullTextIterator> ||
+                std::is_same_v<CConstIterator, CFullTextIterator>) {
+    if (TextTree->getFullTextLength() == 0) {
+      clear();
+      return;
+    }
+    iter = TextTree->beginFullText();
+    sentinel = TextTree->endFullText();
+  } else {
+    if (TextTree->getPrintedTextLength() == 0) {
+      clear();
+      return;
+    }
+    iter = TextTree->beginPrintedText();
+    sentinel = TextTree->endPrintedText();
   }
-  buffer_.clear();
-  CConstFullTextIterator iter = TextTree->beginFullText();
-  CConstFullTextIterator sentinel = TextTree->endFullText();
   QString Text;
   EKeyStatus CurrentStatus = getKeyTextStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
@@ -84,32 +84,6 @@ void CTextPrinterImpl::printFormattedFullText(const CTextDataTree& TextTree) {
     CurrentStatus = NewStatus;
   }
   TextEdit_->setHtml(Text);
-}
-
-void CTextPrinterImpl::printFullText(const CTextDataTree& TextTree) {
-  buffer_.clear();
-  for (auto iter = TextTree->beginFullText(); iter != TextTree->endFullText();
-       ++iter) {
-    buffer_.push_back(iter->getSymbol());
-  }
-  // TO DO
-  // If I use setPlainText function sometimes the color changes randomly
-  clear();
-  printBuffer(Palette_.Text[EKeyStatus::MainText],
-              Palette_.Back[EKeyStatus::MainText]);
-}
-
-void CTextPrinterImpl::printPrintedText(const CTextDataTree& TextTree) {
-  buffer_.clear();
-  for (auto iter = TextTree->beginPrintedText();
-       iter != TextTree->endPrintedText(); ++iter) {
-    buffer_.push_back(iter->getSymbol());
-  }
-  // TO DO
-  // If I use setPlainText function sometimes the color changes randomly
-  clear();
-  printBuffer(Palette_.Text[EKeyStatus::MainText],
-              Palette_.Back[EKeyStatus::MainText]);
 }
 
 CTextPrinterImpl::EKeyStatus
@@ -174,11 +148,9 @@ CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
     return EKeyStatus::End;
   return getKeyRawStatus(*iter);
 }
-
-CTextPrinterImpl::EKeyStatus
-CTextPrinterImpl::extractToBufferText(EKeyStatus Status,
-                                      const CConstFullTextIterator sentinel,
-                                      CConstFullTextIterator* pIter) {
+template<class CConstIterator>
+CTextPrinterImpl::EKeyStatus CTextPrinterImpl::extractToBufferText(
+    EKeyStatus Status, const CConstIterator sentinel, CConstIterator* pIter) {
   auto& iter = *pIter;
   buffer_.clear();
   while (iter != sentinel && (getKeyTextStatus(*iter) == Status ||
@@ -190,30 +162,6 @@ CTextPrinterImpl::extractToBufferText(EKeyStatus Status,
   if (iter == sentinel)
     return EKeyStatus::End;
   return getKeyTextStatus(*iter);
-}
-
-void CTextPrinterImpl::printBuffer(EKeyStatus Status) {
-  switch (Status) {
-  case EKeyStatus::MainText:
-    printBuffer(Palette_.Text[EKeyStatus::MainText],
-                Palette_.Back[EKeyStatus::MainText]);
-    break;
-  case EKeyStatus::Backspace:
-    printBuffer(Palette_.Text[EKeyStatus::Backspace],
-                Palette_.Back[EKeyStatus::Backspace]);
-    break;
-  case EKeyStatus::Control:
-    printBuffer(Palette_.Text[EKeyStatus::Control],
-                Palette_.Back[EKeyStatus::Control]);
-    break;
-  default:
-    break;
-  }
-}
-
-void CTextPrinterImpl::printBuffer(QColor Text, QColor Back) {
-  auto Anchor = CColorAnchor(Text, Back, TextEdit_);
-  TextEdit_->insertPlainText(QString(buffer_.data(), buffer_.size()));
 }
 
 void CTextPrinterImpl::clear() {
@@ -248,20 +196,6 @@ QString CTextPrinterImpl::coloredTextFromBuffer(QColor Text, QColor Back) {
       .arg(Back.green())
       .arg(Back.blue())
       .arg(QString(buffer_.data(), buffer_.size()));
-}
-
-CTextPrinterImpl::CColorAnchor::CColorAnchor(QColor Text, QColor Back,
-                                             QTextEdit* TextEdit)
-    : OldText_(TextEdit->textColor()),
-      OldBack_(TextEdit->textBackgroundColor()), TextEdit_(TextEdit) {
-  assert(TextEdit_);
-  TextEdit_->setTextColor(Text);
-  TextEdit_->setTextBackgroundColor(Back);
-}
-
-CTextPrinterImpl::CColorAnchor::~CColorAnchor() {
-  TextEdit_->setTextBackgroundColor(OldBack_);
-  TextEdit_->setTextColor(OldText_);
 }
 
 } // namespace NSTextPrinterDetail
