@@ -6,6 +6,8 @@
 #include "TextMode.h"
 #include "TimeApp.h"
 
+#include <list>
+
 #include <QChar>
 
 namespace NSApplication {
