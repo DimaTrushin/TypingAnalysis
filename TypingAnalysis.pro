@@ -50,6 +50,7 @@ macx {
 }
 
 HEADERS += \
+  InstructionLevels.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
@@ -59,6 +60,7 @@ HEADERS += \
   Interface/TextModeView.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
+  Kernel/MathFunction.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
@@ -130,6 +132,7 @@ SOURCES += \
   Interface/TextModeView.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
+  Kernel/MathFunction.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \
@@ -228,6 +231,27 @@ contains(DEFINES, SEANCE_MANAGER_DEBUG) {
       AppDebug/SeanceManagerDebugOut.cpp
 }
 
+
+win32-msvc* {
+    QMAKE_CXXFLAGS += -EHsc
+
+    # A custom compiler
+    # The compiler compiles on AVX level
+    SOURCES_AVX += Kernel/MathFunctionAVX.cpp
+    AVX_FLAGS =
+    win32-msvc*:AVX_FLAGS = /arch:AVX
+    AVX_OUT =
+    win32-msvc*:AVX_OUT = /Fo${QMAKE_FILE_OUT}
+    avx_compiler.name = avx_compiler
+    avx_compiler.input = SOURCES_AVX
+    avx_compiler.dependency_type = TYPE_C
+    avx_compiler.variable_out = OBJECTS
+    avx_compiler.output = \
+        ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+    avx_compiler.commands = $${QMAKE_CXX} $(CXXFLAGS) $${AVX_FLAGS} \
+        $(INCPATH) -c ${QMAKE_FILE_IN} $${AVX_OUT}
+    QMAKE_EXTRA_COMPILERS += avx_compiler
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
