@@ -50,7 +50,6 @@ macx {
 }
 
 HEADERS += \
-  AppStatusAccess.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
@@ -81,12 +80,14 @@ HEADERS += \
   Keyboard/RawKeyEvent.h \
   Keyboard/Windows/KeyShifters.h \
   Library/AnyObject/AnyMovable.h \
+  Library/FunctionModuleBase.h \
   Library/Observer/Impl/Observable.h \
   Library/Observer/Impl/ObservableImpl.h \
   Library/Observer/Impl/Observer.h \
   Library/Observer/Impl/Source.h \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
+  Library/Selector.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
@@ -95,6 +96,9 @@ HEADERS += \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/StlExtension/VTree.h \
+  Library/TypeList/ElementList.h \
+  Library/TypeList/NullType.h \
+  Library/TypeList/TypeList.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -104,16 +108,19 @@ HEADERS += \
   ApplicationGlobals.h \
   ApplicationImpl.h \
   ApplicationKernel.h \
+  AppStatusAccess.h \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   Qt/SeanceDescriptionModel.h \
   QtLoopException.h \
+  SimdDetector.h \
+  SimdDetectorAccess.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
 
 SOURCES += \
-  AppStatusAccess.cpp \
+  3dparty/vectorclass/instrset_detect.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceView.cpp \
@@ -150,8 +157,11 @@ SOURCES += \
   ApplicationGlobals.cpp \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
+  AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   Qt/SeanceDescriptionModel.cpp \
+  SimdDetector.cpp \
+  SimdDetectorAccess.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp
