@@ -1,3 +1,6 @@
 [submodule "Library"]
 	path = Library
 	url = https://github.com/DimaTrushin/Library.git
+[submodule "3dparty/vectorclass"]
+	path = 3dparty/vectorclass
+	url = https://github.com/vectorclass/version2

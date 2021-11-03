@@ -50,7 +50,7 @@ macx {
 }
 
 HEADERS += \
-  AppStatusAccess.h \
+  InstructionLevels.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
@@ -61,6 +61,7 @@ HEADERS += \
   Kernel/AnalitycalModule.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
+  Kernel/MathFunction.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
@@ -82,12 +83,14 @@ HEADERS += \
   Keyboard/RawKeyEvent.h \
   Keyboard/Windows/KeyShifters.h \
   Library/AnyObject/AnyMovable.h \
+  Library/FunctionModuleBase.h \
   Library/Observer/Impl/Observable.h \
   Library/Observer/Impl/ObservableImpl.h \
   Library/Observer/Impl/Observer.h \
   Library/Observer/Impl/Source.h \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
+  Library/Selector.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
@@ -96,6 +99,9 @@ HEADERS += \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/StlExtension/VTree.h \
+  Library/TypeList/ElementList.h \
+  Library/TypeList/NullType.h \
+  Library/TypeList/TypeList.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -105,16 +111,19 @@ HEADERS += \
   ApplicationGlobals.h \
   ApplicationImpl.h \
   ApplicationKernel.h \
+  AppStatusAccess.h \
   ExceptionHandler.h \
   KeyboardHandlerAccess.h \
   Qt/SeanceDescriptionModel.h \
   QtLoopException.h \
+  SimdDetector.h \
+  SimdDetectorAccess.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
 
 SOURCES += \
-  AppStatusAccess.cpp \
+  3dparty/vectorclass/instrset_detect.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceView.cpp \
@@ -125,6 +134,7 @@ SOURCES += \
   Kernel/AnalitycalModule.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
+  Kernel/MathFunction.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \
@@ -152,8 +162,11 @@ SOURCES += \
   ApplicationGlobals.cpp \
   ApplicationImpl.cpp \
   ApplicationKernel.cpp \
+  AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   Qt/SeanceDescriptionModel.cpp \
+  SimdDetector.cpp \
+  SimdDetectorAccess.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp
@@ -219,7 +232,45 @@ contains(DEFINES, SEANCE_MANAGER_DEBUG) {
       AppDebug/SeanceManagerDebugGUI.cpp \
       AppDebug/SeanceManagerDebugOut.cpp
 }
+# The custom compiler compiles on AVX level
+win32 {
+  win32-msvc*{
+    QMAKE_CXXFLAGS += -EHsc
+    AVX_FLAGS = /arch:AVX
+    AVX_OUT = /Fo${QMAKE_FILE_OUT}
+  }
 
+  win32-g++*{
+    AVX_FLAGS = -mavx
+    AVX_OUT = -o${QMAKE_FILE_OUT}
+  }
+
+  win32-clang*{
+  }
+
+  SOURCES_AVX += Kernel/MathFunctionAVX.cpp
+  avx_compiler.name = avx_compiler
+  avx_compiler.input = SOURCES_AVX
+  avx_compiler.dependency_type = TYPE_C
+  avx_compiler.variable_out = OBJECTS
+  avx_compiler.output = \
+    ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+  avx_compiler.commands = $${QMAKE_CXX} $(CXXFLAGS) $${AVX_FLAGS} \
+    $(INCPATH) -c ${QMAKE_FILE_IN} $${AVX_OUT}
+  QMAKE_EXTRA_COMPILERS += avx_compiler
+}
+
+linux {
+  linux-g++*{
+  }
+
+  linux-clang*{
+  }
+}
+
+win32-msvc* {
+
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
