@@ -20,6 +20,10 @@ public:
   using CBase::CBase;
   static constexpr const double one_over_sqrt_two_pi =
       0.398942280401432702863218082712;
+  template<typename T>
+  static T deviation(T mean) {
+    return 1.25 * sqrt(mean + 1.);
+  }
 };
 } // namespace NSMathFunctionDetail
 
@@ -34,7 +38,7 @@ private:
 
   template<typename T>
   static T function0(T mean, double arg) {
-    T deviation = 1.25 * sqrt(mean + 1.);
+    T deviation = CBase::deviation(mean);
     T one_over_div = 1. / deviation;
     T arg_minus_mean = arg - mean;
 
@@ -56,7 +60,7 @@ public:
 private:
   template<typename T>
   static T function1(T mean, double arg) {
-    T deviation = 1.25 * sqrt(mean + 1.);
+    T deviation = CBase::deviation(mean);
     T one_over_div = 1. / deviation;
     T arg_minus_mean = arg - mean;
 
@@ -79,7 +83,7 @@ public:
 private:
   template<typename T>
   static T function2(T mean, double arg) {
-    T deviation = 1.25 * sqrt(mean);
+    T deviation = CBase::deviation(mean);
     T one_over_div = 1. / deviation;
     T arg_minus_mean = arg - mean;
 
