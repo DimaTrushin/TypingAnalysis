@@ -31,6 +31,7 @@ class CDensity0 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
+  CDensity0();
   CDensity0(int instruction_level);
 
 private:
@@ -55,6 +56,7 @@ class CDensity1 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
+  CDensity1();
   CDensity1(int instruction_level);
 
 private:
@@ -78,6 +80,7 @@ class CDensity2 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
+  CDensity2();
   CDensity2(int instruction_level);
 
 private:

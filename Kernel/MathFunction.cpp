@@ -6,8 +6,14 @@
 // because it contains function templates that must see vector class includes
 #include "MathFunction.h"
 
+#include "SimdDetectorAccess.h"
+
 namespace NSApplication {
 namespace NSKernel {
+
+CDensity0::CDensity0()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
 
 CDensity0::CDensity0(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
@@ -31,6 +37,10 @@ double CDensity0::compute_SSE2(const std::vector<double>& means, double arg) {
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
 }
 
+CDensity1::CDensity1()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
+
 CDensity1::CDensity1(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
@@ -51,6 +61,10 @@ double CDensity1::compute_SSE2(const std::vector<double>& means, double arg) {
   tmp_result += function1(means_block, arg).cutoff(leftover);
 
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
+}
+
+CDensity2::CDensity2()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
 CDensity2::CDensity2(int instruction_level)
