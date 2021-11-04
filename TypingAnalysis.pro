@@ -102,6 +102,8 @@ HEADERS += \
   Library/TypeList/ElementList.h \
   Library/TypeList/NullType.h \
   Library/TypeList/TypeList.h \
+  PplModule.h \
+  PplModuleAccess.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -153,6 +155,8 @@ SOURCES += \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
   Keyboard/Windows/KeyShifters.cpp \
+  PplModule.cpp \
+  PplModuleAccess.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \

@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include "PplModuleAccess.h"
+
 #include "TimerAccess.h"
 #include <QDebug>
 
@@ -43,17 +45,19 @@ const double* CPlotData::dataY1() const {
 }
 
 void CPlotData::fillY0(const CContainer& Samples, const CDensity0& F) {
-  // Need to parallelize
-  for (size_t i = 0; i < X_.size(); ++i) {
+  CMainParallelAccess Parallel;
+  Parallel->parallel_for(0, X_.size(), [&](size_t i) {
     Y0_[i] = F(Samples, X_[i]);
-  }
+    ;
+  });
 }
 
 void CPlotData::fillY1(const CContainer& Samples, const CDensity1& F) {
-  // Need to parallelize
-  for (size_t i = 0; i < X_.size(); ++i) {
+  CMainParallelAccess Parallel;
+  Parallel->parallel_for(0, X_.size(), [&](size_t i) {
     Y1_[i] = F(Samples, X_[i]);
-  }
+    ;
+  });
 }
 
 void CPlotData::fillX() {
