@@ -17,19 +17,30 @@ void CSessionToTreeConverter::convert(const CSession& Source,
   if (Source.empty())
     return;
 
-  for (const auto& element : Source) {
-    if (element.hasText())
-      for (unsigned char i = 0; i < element.getTextSize(); ++i) {
-        Target->add(element.getSymbol(i), ESymbolStatus::TextSymbol);
-      }
-    if (element.isBackspace()) {
-      if (element.isCtrlActive())
-        Target->deleteLastBlock();
-      else
-        Target->deleteLastData();
-    }
-  }
+  LastPressedTime_ = Source.begin()->getPressingTime();
+  for (const auto& KeyEvent : Source)
+    handleEvent_(KeyEvent, pTarget);
   Target->setMistakeInformation();
+}
+
+void CSessionToTreeConverter::handleEvent_(const CKeyEvent& KeyEvent,
+                                           CTextDataTree* pTarget) {
+  CTextDataTree& Target = *pTarget;
+  if (KeyEvent.hasText())
+    for (unsigned char i = 0; i < KeyEvent.getTextSize(); ++i) {
+      Target->add(KeyEvent.getSymbol(i), KeyEvent.getPressingTime(),
+                  KeyEvent.getReleasingTime(), ESymbolStatus::TextSymbol,
+                  KeyEvent.getPressingTime() - LastPressedTime_);
+      LastPressedTime_ = KeyEvent.getPressingTime();
+    }
+
+  if (KeyEvent.isBackspace()) {
+    if (KeyEvent.isCtrlActive())
+      Target->deleteLastBlock();
+    else
+      Target->deleteLastData();
+  }
+  LastPressedTime_ = KeyEvent.getPressingTime();
 }
 
 } // namespace NSKernel

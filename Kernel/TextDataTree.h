@@ -80,7 +80,8 @@ public:
   CTextDataTreeImpl& operator=(CTextDataTreeImpl&&) noexcept = delete;
 
   void clear();
-  void add(QChar Symbol, ESymbolStatus Status);
+  void add(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
+           ESymbolStatus Status, CTime ResponseTime);
   void addData(const CTextNode& TextData);
   void addData(CTextNode&& TextData);
   // action for Backspace
@@ -170,17 +171,17 @@ public:
 
   using CTree = NSLibrary::CVTree<CTextNode>;
   using CFullTextIterator = CTree::CPreOrderIterator;
-  // Root node is created by default
+
   CTextNode() = default;
 
-  // pressing time, releasing time, response time
   // Default status = ESymbolStatus::TextSymbol
-  explicit CTextNode(QChar Symbol, ESymbolStatus Status);
+  explicit CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
+                     ESymbolStatus Status, CTime ResponseTime);
 
-  //  CTime getPressingTime() const;
-  //  CTime getReleasingTime() const;
-  //  CTime getResponseTime() const;
-  //  CTime getDurationTime() const;
+  CTime getPressingTime() const;
+  CTime getReleaseTime() const;
+  CTime getResponseTime() const;
+  CTime getDurationTime() const;
 
   QChar getSymbol() const;
   ESymbolStatus getSymbolStatus() const;
@@ -207,9 +208,9 @@ public:
   void addMistakeRoute(CFullTextIterator iter);
 
 private:
-  //  CTime ResponseTime_;
-  //  CTime PressingTime_;
-  //  CTime ReleaseTime_;
+  CTime PressingTime_;
+  CTime ReleaseTime_;
+  CTime ResponseTime_;
   QChar Symbol_;
   ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
   CMistakeRoutesContainer MistakeRoutes_;

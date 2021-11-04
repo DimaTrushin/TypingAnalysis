@@ -7,14 +7,18 @@
 namespace NSApplication {
 namespace NSKernel {
 
+class CKeyEvent;
 class CSession;
 
 class CSessionToTreeConverter {
+
 public:
   void convert(const CSession& Source, CTextDataTree* Target);
 
 private:
-  CTime LastPressedTime_;
+  void handleEvent_(const CKeyEvent& Event, CTextDataTree* pTarget);
+
+  CTime LastPressedTime_{};
 };
 
 } // namespace NSKernel

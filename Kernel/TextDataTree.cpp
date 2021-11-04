@@ -6,7 +6,8 @@ namespace NSKernel {
 namespace NSTextDataTreeDetail {
 
 CTextDataTreeImpl::CTextDataTreeImpl()
-    : Tree_{CTextNode(QChar(), ESymbolStatus::RootSymbol)} {
+    : Tree_{CTextNode(QChar(), CTime(), CTime(), ESymbolStatus::RootSymbol,
+                      CTime())} {
 }
 
 void CTextDataTreeImpl::clear() {
@@ -15,8 +16,9 @@ void CTextDataTreeImpl::clear() {
   FinalElement_ = rootIterator();
 }
 
-void CTextDataTreeImpl::add(QChar Symbol, ESymbolStatus Status) {
-  addData(CTextNode(Symbol, Status));
+void CTextDataTreeImpl::add(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
+                            ESymbolStatus Status, CTime ResponseTime) {
+  addData(CTextNode(Symbol, PressingTime, ReleaseTime, Status, ResponseTime));
 }
 
 void CTextDataTreeImpl::addData(const CTextNode& TextData) {
@@ -390,31 +392,27 @@ void CTextDataTreeImpl::deleteLastSymbolBlock() {
 }
 } // namespace NSTextDataTreeDetail
 
-CTextNode::CTextNode(QChar Symbol, ESymbolStatus Status)
-    : Symbol_(Symbol), SymbolStatus_(Status) {
+CTextNode::CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
+                     ESymbolStatus Status, CTime ResponseTime)
+    : PressingTime_(PressingTime), ReleaseTime_(ReleaseTime),
+      ResponseTime_(ResponseTime), Symbol_(Symbol), SymbolStatus_(Status) {
 }
 
-// CTime CTextNode::getPressingTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getPressingTime();
-//}
+CTime CTextNode::getPressingTime() const {
+  return PressingTime_;
+}
 
-// CTime CTextNode::getReleasingTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getReleasingTime();
-//}
+CTime CTextNode::getReleaseTime() const {
+  return ReleaseTime_;
+}
 
-// CTime CTextNode::getResponseTime() const {
-//  return ResponseTime_;
-//}
+CTime CTextNode::getResponseTime() const {
+  return ResponseTime_;
+}
 
-// CTime CTextNode::getDurationTime() const {
-//  if (pKeyEvent_ == nullptr)
-//    return 0;
-//  return pKeyEvent_->getDurationTime();
-//}
+CTime CTextNode::getDurationTime() const {
+  return ReleaseTime_ - PressingTime_;
+}
 
 QChar CTextNode::getSymbol() const {
   return Symbol_;
