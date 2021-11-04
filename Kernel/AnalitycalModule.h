@@ -73,10 +73,15 @@ class CAnalitycalModuleImpl {
 public:
   CAnalitycalModuleImpl();
 
+  CTextDataObserver* textDataInput();
+
 private:
   void handleTextData(const CTextData& Data);
 
   CContainer getSpeedData(const CTextData& Data) const;
+  CContainer getRawSpeedData(const CSession& Session) const;
+  CContainer getFullTextSpeedData(const CTextDataTree& TextTree) const;
+  CContainer getTextSpeedData(const CTextDataTree& TextTree) const;
 
   CFunctionData SpeedData_;
   CTextDataInput TextData_;

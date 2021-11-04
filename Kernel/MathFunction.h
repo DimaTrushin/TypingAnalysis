@@ -37,6 +37,9 @@ public:
 private:
   using CBase::one_over_sqrt_two_pi;
 
+  // MinGW dies here trying to call this function in debug mode
+  // SIGSEGV segmentation fault
+  // This happens only in AVX mode, probably an issue with compiler flags
   template<typename T>
   static T function0(T mean, double arg) {
     T deviation = CBase::deviation(mean);

@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <cassert>
 
+#include "TimerAccess.h"
+#include <QDebug>
+
 namespace NSApplication {
 namespace NSKernel {
 
@@ -82,17 +85,95 @@ CAnalitycalModuleImpl::CAnalitycalModuleImpl()
       }) {
 }
 
+CAnalitycalModuleImpl::CTextDataObserver*
+CAnalitycalModuleImpl::textDataInput() {
+  return &TextData_;
+}
+
 void CAnalitycalModuleImpl::handleTextData(const CTextData& Data) {
+  CTime time = CTimerAccess()->get();
   // preliminary implementation
   CContainer Samples = getSpeedData(Data);
   SpeedData_.set(std::move(Samples));
   DensityOut_.notify();
+  time = CTimerAccess()->get() - time;
+  qDebug() << "math time =" << time.toMicroSecondsI() << "mc";
 }
 
 CAnalitycalModuleImpl::CContainer
 CAnalitycalModuleImpl::getSpeedData(const CTextData& Data) const {
+  CContainer SpeedData;
+  switch (Data.TextMode.TextMode) {
+  case ETextMode::Raw:
+    SpeedData = getRawSpeedData(Data.Session);
+    break;
+  case ETextMode::Full:
+    SpeedData = getFullTextSpeedData(Data.TextTree);
+    break;
+  case ETextMode::Printed:
+    SpeedData = getTextSpeedData(Data.TextTree);
+    break;
+  default:
+    assert(false);
+  }
+  return SpeedData;
+}
+
+CAnalitycalModuleImpl::CContainer
+CAnalitycalModuleImpl::getRawSpeedData(const CSession& Session) const {
+  CContainer SpeedData;
+  if (Session.empty())
+    return SpeedData;
   // TO DO
-  return CContainer();
+  // debug version
+  SpeedData.reserve(Session.size());
+  auto iter = Session.begin();
+  CTime PreviousTime = iter->getPressingTime();
+  for (; iter != Session.end(); ++iter) {
+    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+    if (ResponseTime > CTime())
+      SpeedData.push_back(1. / ResponseTime.toSecondsF());
+    PreviousTime = iter->getPressingTime();
+  }
+  return SpeedData;
+}
+
+CAnalitycalModuleImpl::CContainer CAnalitycalModuleImpl::getFullTextSpeedData(
+    const CTextDataTree& TextTree) const {
+  CContainer SpeedData;
+  // TO DO
+  // debug version
+  if (TextTree->getFullTextLength() == 0)
+    return SpeedData;
+  SpeedData.reserve(TextTree->getFullTextLength());
+  auto iter = TextTree->beginFullText();
+  CTime PreviousTime = iter->getPressingTime();
+  for (; iter != TextTree->endFullText(); ++iter) {
+    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+    if (ResponseTime > CTime())
+      SpeedData.push_back(1. / ResponseTime.toSecondsF());
+    PreviousTime = iter->getPressingTime();
+  }
+  return SpeedData;
+}
+
+CAnalitycalModuleImpl::CContainer
+CAnalitycalModuleImpl::getTextSpeedData(const CTextDataTree& TextTree) const {
+  CContainer SpeedData;
+  // TO DO
+  // debug version
+  if (TextTree->getPrintedTextLength() == 0)
+    return SpeedData;
+  SpeedData.reserve(TextTree->getPrintedTextLength());
+  auto iter = TextTree->beginPrintedText();
+  CTime PreviousTime = iter->getPressingTime();
+  for (; iter != TextTree->endPrintedText(); ++iter) {
+    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+    if (ResponseTime > CTime())
+      SpeedData.push_back(1. / ResponseTime.toSecondsF());
+    PreviousTime = iter->getPressingTime();
+  }
+  return SpeedData;
 }
 } // namespace NSAnalitycalModuleDetail
 } // namespace NSKernel
