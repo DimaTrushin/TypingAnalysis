@@ -39,6 +39,8 @@ public:
     }
   }
 
+  void switchMode(EParallelMode Mode);
+
 private:
   static constexpr const bool kIsSerialSupported = true;
 #ifdef _MSC_VER
