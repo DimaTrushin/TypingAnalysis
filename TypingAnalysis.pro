@@ -50,6 +50,10 @@ macx {
 }
 
 HEADERS += \
+  Compute/ParallelMode.h \
+  Compute/ParallelModule.h \
+  Compute/ParallelSerial.h \
+  Compute/ParallelWin.h \
   InstructionLevels.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
@@ -102,8 +106,7 @@ HEADERS += \
   Library/TypeList/ElementList.h \
   Library/TypeList/NullType.h \
   Library/TypeList/TypeList.h \
-  PplModule.h \
-  PplModuleAccess.h \
+  ParallelModuleAccess.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -126,6 +129,10 @@ HEADERS += \
 
 SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
+  Compute/ParallelMode.cpp \
+  Compute/ParallelModule.cpp \
+  Compute/ParallelSerial.cpp \
+  Compute/ParallelWin.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceView.cpp \
@@ -155,8 +162,7 @@ SOURCES += \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
   Keyboard/Windows/KeyShifters.cpp \
-  PplModule.cpp \
-  PplModuleAccess.cpp \
+  ParallelModuleAccess.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
@@ -180,6 +186,14 @@ FORMS += \
 
 
 win32 {
+  win32-msvc*{
+    HEADERS += \
+      Compute/ParallelPpl.h
+
+    SOURCES += \
+      Compute/ParallelPpl.cpp
+  }
+
     HEADERS += \
     Keyboard/Windows/KeyboardListenerWin.h \
     Keyboard/Windows/MessageWindow.h \
@@ -205,17 +219,21 @@ win32 {
 
 macx {
     HEADERS += \
+    Compute/ParallelMac.h \
     Keyboard/Macos/KeyboardListenerMac.h
 
     SOURCES += \
+    Compute/ParallelMac.cpp \
     Keyboard/Macos/KeyboardListenerMac.cpp
 }
 
 linux {
     HEADERS += \
+    Compute/ParallelLin.h \
     Keyboard/Linux/KeyboardListenerLin.h
 
     SOURCES += \
+    Compute/ParallelLin.cpp \
     Keyboard/Linux/KeyboardListenerLin.cpp
 }
 

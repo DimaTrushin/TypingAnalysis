@@ -2,7 +2,7 @@
 
 #include "AppStatusAccess.h"
 #include "KeyboardHandlerAccess.h"
-#include "PplModuleAccess.h"
+#include "ParallelModuleAccess.h"
 #include "SimdDetectorAccess.h"
 #include "TimerAccess.h"
 
@@ -13,7 +13,7 @@ CApplicationGlobals::CApplicationGlobals() {
   CKeyboardHandlerInit MainKeyboardHandler;
   CAppStatusInit MainAppStatusAccessorInit;
   CSimdDetectorInit MainSimdDetector;
-  CMainParallelInit MainParallelInit;
+  CParallelInit MainComputerInit(NSCompute::EParallelMode::Ppl);
 }
 
 } // namespace NSApplication

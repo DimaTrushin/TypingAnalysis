@@ -1,16 +1,16 @@
-#include "PplModule.h"
+#include "ParallelPpl.h"
 
 namespace NSApplication {
+namespace NSCompute {
 
-#ifdef _MSC_VER
-CParallelModulePpl::CParallelModulePpl() {
+CParallelPpl::CParallelPpl() {
   scheduler = concurrency::Scheduler::Create(concurrency::SchedulerPolicy{});
   scheduler->Attach();
 }
 
-CParallelModulePpl::~CParallelModulePpl() {
+CParallelPpl::~CParallelPpl() {
   concurrency::CurrentScheduler::Detach();
 }
-#endif
 
+} // namespace NSCompute
 } // namespace NSApplication
