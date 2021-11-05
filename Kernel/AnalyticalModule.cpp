@@ -94,6 +94,11 @@ CAnalitycalModuleImpl::textDataInput() {
   return &TextData_;
 }
 
+void CAnalitycalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
+  assert(obs);
+  DensityOut_.subscribe(obs);
+}
+
 void CAnalitycalModuleImpl::handleTextData(const CTextData& Data) {
   CTime time = CTimerAccess()->get();
   // preliminary implementation

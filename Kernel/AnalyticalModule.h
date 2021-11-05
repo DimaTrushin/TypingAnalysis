@@ -74,6 +74,7 @@ public:
   CAnalitycalModuleImpl();
 
   CTextDataObserver* textDataInput();
+  void subscribeToSpeedData(CPlotDataObserver* obs);
 
 private:
   void handleTextData(const CTextData& Data);
