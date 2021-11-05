@@ -1,5 +1,5 @@
-#ifndef NSAPPLICATION_NSKERNEL_CANALITYCALMODULE_H
-#define NSAPPLICATION_NSKERNEL_CANALITYCALMODULE_H
+#ifndef NSAPPLICATION_NSKERNEL_CANALYTICALMODULE_H
+#define NSAPPLICATION_NSKERNEL_CANALYTICALMODULE_H
 
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
@@ -59,8 +59,8 @@ private:
   CPlotData PlotData_;
 };
 
-namespace NSAnalitycalModuleDetail {
-class CAnalitycalModuleImpl {
+namespace NSAnalyticalModuleDetail {
+class CAnalyticalModuleImpl {
   using CContainer = std::vector<double>;
 
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
@@ -71,7 +71,7 @@ class CAnalitycalModuleImpl {
   using CPlotDataGetType = CPlotDataObserver::CGetType;
 
 public:
-  CAnalitycalModuleImpl();
+  CAnalyticalModuleImpl();
 
   CTextDataObserver* textDataInput();
   void subscribeToSpeedData(CPlotDataObserver* obs);
@@ -89,10 +89,10 @@ private:
   CPlotDataObservable DensityOut_;
 };
 
-} // namespace NSAnalitycalModuleDetail
+} // namespace NSAnalyticalModuleDetail
 
-using CAnalitycalModule =
-    NSLibrary::CModelWrapper<NSAnalitycalModuleDetail::CAnalitycalModuleImpl>;
+using CAnalyticalModule =
+    NSLibrary::CModelWrapper<NSAnalyticalModuleDetail::CAnalyticalModuleImpl>;
 
 } // namespace NSKernel
 } // namespace NSApplication

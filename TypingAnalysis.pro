@@ -62,7 +62,7 @@ HEADERS += \
   Interface/SessionFlusher.h \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
-  Kernel/AnalitycalModule.h \
+  Kernel/AnalyticalModule.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
   Kernel/MathFunction.h \
@@ -140,7 +140,7 @@ SOURCES += \
   Interface/SessionFlusher.cpp \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
-  Kernel/AnalitycalModule.cpp \
+  Kernel/AnalyticalModule.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
   Kernel/MathFunction.cpp \

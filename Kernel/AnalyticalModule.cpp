@@ -1,4 +1,4 @@
-#include "AnalitycalModule.h"
+#include "AnalyticalModule.h"
 
 #include <algorithm>
 #include <cassert>
@@ -81,25 +81,25 @@ const CPlotData& CFunctionData::plotData() const {
   return PlotData_;
 }
 
-namespace NSAnalitycalModuleDetail {
-CAnalitycalModuleImpl::CAnalitycalModuleImpl()
+namespace NSAnalyticalModuleDetail {
+CAnalyticalModuleImpl::CAnalyticalModuleImpl()
     : TextData_([this](const CTextData& Data) { handleTextData(Data); }),
       DensityOut_([this]() -> CPlotDataGetType {
         return std::cref(SpeedData_.plotData());
       }) {
 }
 
-CAnalitycalModuleImpl::CTextDataObserver*
-CAnalitycalModuleImpl::textDataInput() {
+CAnalyticalModuleImpl::CTextDataObserver*
+CAnalyticalModuleImpl::textDataInput() {
   return &TextData_;
 }
 
-void CAnalitycalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
+void CAnalyticalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
   assert(obs);
   DensityOut_.subscribe(obs);
 }
 
-void CAnalitycalModuleImpl::handleTextData(const CTextData& Data) {
+void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
   CTime time = CTimerAccess()->get();
   // preliminary implementation
   CContainer Samples = getSpeedData(Data);
@@ -109,8 +109,8 @@ void CAnalitycalModuleImpl::handleTextData(const CTextData& Data) {
   qDebug() << "math time =" << time.toMicroSecondsI() << "mc";
 }
 
-CAnalitycalModuleImpl::CContainer
-CAnalitycalModuleImpl::getSpeedData(const CTextData& Data) const {
+CAnalyticalModuleImpl::CContainer
+CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   CContainer SpeedData;
   switch (Data.TextMode.TextMode) {
   case ETextMode::Raw:
@@ -128,8 +128,8 @@ CAnalitycalModuleImpl::getSpeedData(const CTextData& Data) const {
   return SpeedData;
 }
 
-CAnalitycalModuleImpl::CContainer
-CAnalitycalModuleImpl::getRawSpeedData(const CSession& Session) const {
+CAnalyticalModuleImpl::CContainer
+CAnalyticalModuleImpl::getRawSpeedData(const CSession& Session) const {
   CContainer SpeedData;
   if (Session.empty())
     return SpeedData;
@@ -147,7 +147,7 @@ CAnalitycalModuleImpl::getRawSpeedData(const CSession& Session) const {
   return SpeedData;
 }
 
-CAnalitycalModuleImpl::CContainer CAnalitycalModuleImpl::getFullTextSpeedData(
+CAnalyticalModuleImpl::CContainer CAnalyticalModuleImpl::getFullTextSpeedData(
     const CTextDataTree& TextTree) const {
   CContainer SpeedData;
   // TO DO
@@ -166,8 +166,8 @@ CAnalitycalModuleImpl::CContainer CAnalitycalModuleImpl::getFullTextSpeedData(
   return SpeedData;
 }
 
-CAnalitycalModuleImpl::CContainer
-CAnalitycalModuleImpl::getTextSpeedData(const CTextDataTree& TextTree) const {
+CAnalyticalModuleImpl::CContainer
+CAnalyticalModuleImpl::getTextSpeedData(const CTextDataTree& TextTree) const {
   CContainer SpeedData;
   // TO DO
   // debug version
@@ -184,6 +184,6 @@ CAnalitycalModuleImpl::getTextSpeedData(const CTextDataTree& TextTree) const {
   }
   return SpeedData;
 }
-} // namespace NSAnalitycalModuleDetail
+} // namespace NSAnalyticalModuleDetail
 } // namespace NSKernel
 } // namespace NSApplication
