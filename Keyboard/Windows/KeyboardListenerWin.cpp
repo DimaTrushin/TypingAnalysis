@@ -104,10 +104,10 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
   CKeyID KeyID = CKeyIDWin::make(KeyData.VKey, KeyData.MakeCode, KeyData.Flags);
   if (KeyID == CKeyIDEnum::Unknown || KeyID == CKeyIDEnum::Ignore)
     return;
-  CKeyFlags Flags = getFlags(KeyData);
-  CLabelData Label = getKeyLabel(KeyData);
 
   if (isPressing(KeyData)) {
+    CKeyFlags Flags = getFlags(KeyData);
+    CLabelData Label = getKeyLabel(KeyData);
     // The next function modifies the state of the KeyTextMaker_ because of the
     // dead keys. This code is fragile. Must not move this function out of if
     // statement.
