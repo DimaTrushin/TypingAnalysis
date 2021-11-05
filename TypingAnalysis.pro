@@ -1,3 +1,6 @@
+TEMPLATE = app
+TARGET = TypingAnalysis
+
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -54,7 +57,6 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelWin.h \
-  InstructionLevels.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
@@ -85,31 +87,27 @@ HEADERS += \
   Keyboard/KeyboardListener.h \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
-  Keyboard/Windows/KeyShifters.h \
   Library/AnyObject/AnyMovable.h \
-  Library/FunctionModuleBase.h \
   Library/Observer/Impl/Observable.h \
   Library/Observer/Impl/ObservableImpl.h \
   Library/Observer/Impl/Observer.h \
   Library/Observer/Impl/Source.h \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
-  Library/Selector.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
-  Library/StlExtension/ThreadDetachable.h \
-  Library/AnyObject/AnyMovable.h \
-  Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/ThreadDetachable.h \
   Library/StlExtension/VTree.h \
   Library/TypeList/ElementList.h \
   Library/TypeList/NullType.h \
   Library/TypeList/TypeList.h \
-  ParallelModuleAccess.h \
+  Library/FunctionModuleBase.h \
+  Library/Selector.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
+  Qt/SeanceDescriptionModel.h \
   Qt/QtLoopExceptionHandler.h \
   Application.h \
   ApplicationGUI.h \
@@ -118,8 +116,9 @@ HEADERS += \
   ApplicationKernel.h \
   AppStatusAccess.h \
   ExceptionHandler.h \
+  InstructionLevels.h \
   KeyboardHandlerAccess.h \
-  Qt/SeanceDescriptionModel.h \
+  ParallelModuleAccess.h \
   QtLoopException.h \
   SimdDetector.h \
   SimdDetectorAccess.h \
@@ -161,12 +160,11 @@ SOURCES += \
   Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
-  Keyboard/Windows/KeyShifters.cpp \
-  ParallelModuleAccess.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
   Qt/QtLoopExceptionHandler.cpp \
+  Qt/SeanceDescriptionModel.cpp \
   Application.cpp \
   ApplicationGUI.cpp \
   ApplicationGlobals.cpp \
@@ -174,7 +172,7 @@ SOURCES += \
   ApplicationKernel.cpp \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
-  Qt/SeanceDescriptionModel.cpp \
+  ParallelModuleAccess.cpp \
   SimdDetector.cpp \
   SimdDetectorAccess.cpp \
   TimeApp.cpp \
@@ -200,17 +198,20 @@ win32 {
     Keyboard/Windows/KeyIDWin.h \
     Keyboard/Windows/KeyMapper.h \
     Keyboard/Windows/KeyPositionWin.h \
+    Keyboard/Windows/KeyShifters.h \
     Keyboard/Windows/KeyTextMaker.h \
     Keyboard/Windows/RawInputHook.h \
     Keyboard/Windows/RawInputReader.h \
     Keyboard/Windows/VkCode.h \
     Keyboard/Windows/WinKeyboardApi.h
 
+
     SOURCES += \
     Keyboard/Windows/KeyboardListenerWin.cpp \
     Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyMapper.cpp \
     Keyboard/Windows/KeyPositionWin.cpp \
+    Keyboard/Windows/KeyShifters.cpp \
     Keyboard/Windows/KeyTextMaker.cpp \
     Keyboard/Windows/RawInputReader.cpp \
     Keyboard/Windows/VkCode.cpp \
@@ -288,10 +289,6 @@ linux {
 
   linux-clang*{
   }
-}
-
-win32-msvc* {
-
 }
 
 # Default rules for deployment.
