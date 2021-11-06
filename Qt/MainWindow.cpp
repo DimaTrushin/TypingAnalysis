@@ -3,6 +3,7 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QwtPlot>
 
 namespace NSApplication {
 namespace NSQt {
@@ -10,6 +11,7 @@ namespace NSQt {
 CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
+  addQwtPanel();
   adjustStaticInterface();
 }
 
@@ -44,6 +46,10 @@ QTextEdit* CMainWindow::getMainTextEdit() const {
   return ui_->textEdit_2;
 }
 
+QwtPlot* CMainWindow::getSpeedPlot() const {
+  return SpeedPlot_;
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();
@@ -53,6 +59,7 @@ void CMainWindow::adjustSplitters() {
   adjustSplitter();
   adjustSplitter2();
   adjustSplitter3();
+  adjustMainSplitter();
   adjustSplitter5();
   adjustSplitter6();
 }
@@ -67,6 +74,10 @@ void CMainWindow::adjustSplitter2() {
 
 void CMainWindow::adjustSplitter3() {
   ui_->splitter_3->setSizes(QList<int>() << 8000 << 2000);
+}
+
+void CMainWindow::adjustMainSplitter() {
+  ui_->splitter_3->setSizes(QList<int>() << 8000 << 8000 << 8000);
 }
 
 void CMainWindow::adjustSplitter5() {
@@ -108,5 +119,9 @@ void CMainWindow::adjustButtonGroup4() {
   ui_->buttonGroup_4->setId(ui_->radioButton_14, 2);
 }
 
+void CMainWindow::addQwtPanel() {
+  SpeedPlot_ = new QwtPlot(ui_->splitter_4);
+  ui_->splitter_4->addWidget(SpeedPlot_);
+}
 } // namespace NSQt
 } // namespace NSApplication

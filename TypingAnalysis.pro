@@ -5,7 +5,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17 rtti_off warn_on
+CONFIG += c++17 warn_on
 
 DEFINES += KEYBOARD_HANDLER_DEBUG \
            SEANCE_MANAGER_DEBUG
@@ -51,6 +51,15 @@ macx {
  macx-clang*{
  }
 }
+
+# Qwt related includes and libraries
+win32 {
+  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/qwt/lib -lqwt
+  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/qwt/lib -lqwtd
+}
+include ( 3dparty/qwt/qwt.prf )
+INCLUDEPATH += 3dparty/qwt/src 3dparty/qwt/classincludes
+
 
 HEADERS += \
   Compute/ParallelMode.h \

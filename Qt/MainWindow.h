@@ -8,10 +8,12 @@ QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
-class QCloseEvent;
-class QTreeView;
 class QButtonGroup;
+class QCloseEvent;
+class QSplitter;
 class QTextEdit;
+class QTreeView;
+class QwtPlot;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -31,6 +33,7 @@ public:
   QButtonGroup* getCtrlButtonGroup() const;
   QButtonGroup* getAltButtonGroup() const;
   QTextEdit* getMainTextEdit() const;
+  QwtPlot* getSpeedPlot() const;
 
 signals:
   bool closeMainWindow();
@@ -41,6 +44,7 @@ private:
   void adjustSplitter();
   void adjustSplitter2();
   void adjustSplitter3();
+  void adjustMainSplitter();
   void adjustSplitter5();
   void adjustSplitter6();
   void adjustButtonGroups();
@@ -49,7 +53,10 @@ private:
   void adjustButtonGroup3();
   void adjustButtonGroup4();
 
+  void addQwtPanel();
+
   std::unique_ptr<Ui::MainWindow> ui_;
+  QwtPlot* SpeedPlot_;
 };
 } // namespace NSQt
 } // namespace NSApplication
