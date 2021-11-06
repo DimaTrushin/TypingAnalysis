@@ -77,7 +77,7 @@ void CMainWindow::adjustSplitter3() {
 }
 
 void CMainWindow::adjustMainSplitter() {
-  ui_->splitter_3->setSizes(QList<int>() << 8000 << 8000 << 8000);
+  ui_->splitter_4->setSizes(QList<int>() << 4000 << 4000 << 4000);
 }
 
 void CMainWindow::adjustSplitter5() {
@@ -121,6 +121,7 @@ void CMainWindow::adjustButtonGroup4() {
 
 void CMainWindow::addQwtPanel() {
   SpeedPlot_ = new QwtPlot(ui_->splitter_4);
+  SpeedPlot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   ui_->splitter_4->addWidget(SpeedPlot_);
 }
 } // namespace NSQt

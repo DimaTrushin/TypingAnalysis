@@ -195,11 +195,8 @@ win32 {
     HEADERS += \
       Compute/ParallelPpl.h
 
-
-
     SOURCES += \
       Compute/ParallelPpl.cpp
-
   }
 
     HEADERS += \
