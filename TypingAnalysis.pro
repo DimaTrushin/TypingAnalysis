@@ -193,17 +193,17 @@ FORMS += \
 win32 {
   win32-msvc*{
     HEADERS += \
-      Compute/ParallelPpl.h \
-      Compute/ParallelWin.h
+      Compute/ParallelPpl.h
+
 
 
     SOURCES += \
-      Compute/ParallelPpl.cpp \
-      Compute/ParallelWin.cpp
+      Compute/ParallelPpl.cpp
 
   }
 
     HEADERS += \
+    Compute/ParallelWin.h \
     Keyboard/Windows/KeyboardListenerWin.h \
     Keyboard/Windows/MessageWindow.h \
     Keyboard/Windows/KeyIDWin.h \
@@ -218,6 +218,7 @@ win32 {
 
 
     SOURCES += \
+    Compute/ParallelWin.cpp \
     Keyboard/Windows/KeyboardListenerWin.cpp \
     Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyMapper.cpp \
