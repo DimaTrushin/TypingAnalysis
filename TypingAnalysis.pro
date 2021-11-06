@@ -56,7 +56,6 @@ HEADERS += \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
-  Compute/ParallelWin.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/SeanceView.h \
@@ -131,7 +130,6 @@ SOURCES += \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
-  Compute/ParallelWin.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/SeanceView.cpp \
@@ -188,11 +186,14 @@ win32 {
     HEADERS += \
       Compute/ParallelPpl.h
 
+
     SOURCES += \
       Compute/ParallelPpl.cpp
+
   }
 
     HEADERS += \
+    Compute/ParallelWin.h \
     Keyboard/Windows/KeyboardListenerWin.h \
     Keyboard/Windows/MessageWindow.h \
     Keyboard/Windows/KeyIDWin.h \
@@ -207,6 +208,7 @@ win32 {
 
 
     SOURCES += \
+    Compute/ParallelWin.cpp \
     Keyboard/Windows/KeyboardListenerWin.cpp \
     Keyboard/Windows/KeyIDWin.cpp \
     Keyboard/Windows/KeyMapper.cpp \

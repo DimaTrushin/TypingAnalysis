@@ -1,6 +1,7 @@
 #include "ApplicationGlobals.h"
 
 #include "AppStatusAccess.h"
+#include "Compute/ParallelMode.h"
 #include "KeyboardHandlerAccess.h"
 #include "ParallelModuleAccess.h"
 #include "SimdDetectorAccess.h"
