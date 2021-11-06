@@ -27,12 +27,12 @@ public:
 };
 } // namespace NSMathFunctionDetail
 
-class CDensity0 : public NSMathFunctionDetail::CFunctionBase {
+class CNormalApproximation0 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
-  CDensity0();
-  CDensity0(int instruction_level);
+  CNormalApproximation0();
+  CNormalApproximation0(int instruction_level);
 
 private:
   using CBase::one_over_sqrt_two_pi;
@@ -55,12 +55,12 @@ private:
   static double compute_AVX(const std::vector<double>& means, double arg);
 };
 
-class CDensity1 : public NSMathFunctionDetail::CFunctionBase {
+class CNormalApproximation1 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
-  CDensity1();
-  CDensity1(int instruction_level);
+  CNormalApproximation1();
+  CNormalApproximation1(int instruction_level);
 
 private:
   template<typename T>
@@ -79,12 +79,12 @@ private:
   static double compute_AVX(const std::vector<double>& means, double arg);
 };
 
-class CDensity2 : public NSMathFunctionDetail::CFunctionBase {
+class CNormalApproximation2 : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
-  CDensity2();
-  CDensity2(int instruction_level);
+  CNormalApproximation2();
+  CNormalApproximation2(int instruction_level);
 
 private:
   template<typename T>

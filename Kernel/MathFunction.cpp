@@ -11,15 +11,15 @@
 namespace NSApplication {
 namespace NSKernel {
 
-CDensity0::CDensity0()
+CNormalApproximation0::CNormalApproximation0()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CDensity0::CDensity0(int instruction_level)
+CNormalApproximation0::CNormalApproximation0(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double CDensity0::compute_SSE2(const std::vector<double>& means, double arg) {
+double CNormalApproximation0::compute_SSE2(const std::vector<double>& means, double arg) {
   Vec2d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-2);
   int leftover = static_cast<int>(means.size() - regular_part);
@@ -37,15 +37,15 @@ double CDensity0::compute_SSE2(const std::vector<double>& means, double arg) {
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
 }
 
-CDensity1::CDensity1()
+CNormalApproximation1::CNormalApproximation1()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CDensity1::CDensity1(int instruction_level)
+CNormalApproximation1::CNormalApproximation1(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double CDensity1::compute_SSE2(const std::vector<double>& means, double arg) {
+double CNormalApproximation1::compute_SSE2(const std::vector<double>& means, double arg) {
   Vec2d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-2);
   int leftover = static_cast<int>(means.size() - regular_part);
@@ -63,15 +63,15 @@ double CDensity1::compute_SSE2(const std::vector<double>& means, double arg) {
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
 }
 
-CDensity2::CDensity2()
+CNormalApproximation2::CNormalApproximation2()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CDensity2::CDensity2(int instruction_level)
+CNormalApproximation2::CNormalApproximation2(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double CDensity2::compute_SSE2(const std::vector<double>& means, double arg) {
+double CNormalApproximation2::compute_SSE2(const std::vector<double>& means, double arg) {
   Vec2d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-2);
   int leftover = static_cast<int>(means.size() - regular_part);

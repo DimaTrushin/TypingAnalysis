@@ -9,7 +9,8 @@
 namespace NSApplication {
 namespace NSKernel {
 
-double CDensity0::compute_AVX(const std::vector<double>& means, double arg) {
+double CNormalApproximation0::compute_AVX(const std::vector<double>& means,
+                                          double arg) {
   Vec4d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-4);
   int leftover = static_cast<int>(means.size() - regular_part);
@@ -27,7 +28,8 @@ double CDensity0::compute_AVX(const std::vector<double>& means, double arg) {
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
 }
 
-double CDensity1::compute_AVX(const std::vector<double>& means, double arg) {
+double CNormalApproximation1::compute_AVX(const std::vector<double>& means,
+                                          double arg) {
   Vec4d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-4);
   int leftover = static_cast<int>(means.size() - regular_part);
@@ -45,7 +47,8 @@ double CDensity1::compute_AVX(const std::vector<double>& means, double arg) {
   return horizontal_add(tmp_result) / static_cast<double>(means.size());
 }
 
-double CDensity2::compute_AVX(const std::vector<double>& means, double arg) {
+double CNormalApproximation2::compute_AVX(const std::vector<double>& means,
+                                          double arg) {
   Vec4d tmp_result = 0;
   size_t regular_part = means.size() & static_cast<size_t>(-4);
   int leftover = static_cast<int>(means.size() - regular_part);

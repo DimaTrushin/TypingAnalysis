@@ -26,8 +26,8 @@ public:
   const double* dataY0() const;
   const double* dataY1() const;
 
-  void fillY0(const CContainer& Samples, const CDensity0& F);
-  void fillY1(const CContainer& Samples, const CDensity1& F);
+  void fillY0(const CContainer& Samples, const CNormalApproximation0& F);
+  void fillY1(const CContainer& Samples, const CNormalApproximation1& F);
 
 private:
   static constexpr const CIndex kDefaultGridSize = 2500;
@@ -52,10 +52,13 @@ public:
   void set(CContainer&& Samples);
   const CPlotData& plotData() const;
 
+  double compute0(double arg) const;
+  double compute1(double arg) const;
+
 private:
   CContainer Samples_;
-  CDensity0 Density0_{};
-  CDensity1 Density1_{};
+  CNormalApproximation0 Density0_{};
+  CNormalApproximation1 Density1_{};
   CPlotData PlotData_;
 };
 

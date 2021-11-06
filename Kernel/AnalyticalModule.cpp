@@ -44,7 +44,8 @@ const double* CPlotData::dataY1() const {
   return Y1_.data();
 }
 
-void CPlotData::fillY0(const CContainer& Samples, const CDensity0& F) {
+void CPlotData::fillY0(const CContainer& Samples,
+                       const CNormalApproximation0& F) {
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
     Y0_[i] = F(Samples, X_[i]);
@@ -52,7 +53,8 @@ void CPlotData::fillY0(const CContainer& Samples, const CDensity0& F) {
   });
 }
 
-void CPlotData::fillY1(const CContainer& Samples, const CDensity1& F) {
+void CPlotData::fillY1(const CContainer& Samples,
+                       const CNormalApproximation1& F) {
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
     Y1_[i] = F(Samples, X_[i]);
@@ -79,6 +81,14 @@ void CFunctionData::set(CContainer&& Samples) {
 
 const CPlotData& CFunctionData::plotData() const {
   return PlotData_;
+}
+
+double CFunctionData::compute0(double arg) const {
+  return Density0_(Samples_, arg);
+}
+
+double CFunctionData::compute1(double arg) const {
+  return Density1_(Samples_, arg);
 }
 
 namespace NSAnalyticalModuleDetail {
