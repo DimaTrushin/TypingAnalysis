@@ -4,9 +4,9 @@
 namespace NSApplication {
 namespace NSKernel {
 
-enum class ETextMode : unsigned char { NotDefined, Raw, Full, Printed };
+enum class ETextMode : unsigned char { Raw, Full, Printed };
 
-enum class EModifierMode : unsigned char { NotDefined, Non, All, Essential };
+enum class EModifierMode : unsigned char { Non, All, Essential };
 
 struct CTextMode {
   ETextMode TextMode = ETextMode::Raw;
@@ -20,13 +20,6 @@ struct CTextMode {
   }
   friend bool operator!=(const CTextMode& lhs, const CTextMode& rhs) {
     return !(lhs == rhs);
-  }
-
-  bool isWellDefined() const {
-    return TextMode != ETextMode::NotDefined &&
-           ShiftMode != EModifierMode::NotDefined &&
-           CtrlMode != EModifierMode::NotDefined &&
-           AltMode != EModifierMode::NotDefined;
   }
 };
 

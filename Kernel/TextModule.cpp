@@ -20,7 +20,6 @@ void CTextModuleImpl::subscribeToCurrentTextMode(CTextModeObserver* obs) {
 void CTextModuleImpl::setCurrentTextMode(CTextMode Mode) {
   if (CurrentTextMode_ == Mode)
     return;
-  assert(Mode.isWellDefined());
   CurrentTextMode_ = Mode;
   TextModeOutput_.notify();
   if (!CurrentSession_.hasValue())

@@ -58,8 +58,9 @@ private:
   static int getTextInt(ETextMode);
   static int getModifierInt(EModifierMode);
 
-  void onTextModeInput();
+  void onTextModeInput(const CTextMode& Mode);
   CTextMode getCurrentTextMode() const;
+  bool areSwitchesInCorrectState() const;
 
   QButtonGroup* TextButtonGroup_;
   QButtonGroup* ShiftButtonGroup_;

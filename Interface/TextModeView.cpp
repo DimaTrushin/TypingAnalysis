@@ -17,7 +17,7 @@ CTextModeViewImpl::CTextModeViewImpl(QButtonGroup* TextButtonGroup,
                                      QButtonGroup* AltButtonGroup)
     : TextButtonGroup_(TextButtonGroup), ShiftButtonGroup_(ShiftButtonGroup),
       CtrlButtonGroup_(CtrlButtonGroup), AltButtonGroup_(AltButtonGroup),
-      TextModeInput_([this](const CTextMode&) { onTextModeInput(); }) {
+      TextModeInput_([this](const CTextMode& Mode) { onTextModeInput(Mode); }) {
   assert(TextButtonGroup_);
   assert(ShiftButtonGroup_);
   assert(CtrlButtonGroup_);
@@ -74,7 +74,8 @@ void CTextModeViewImpl::handleTextModeSwitchByGui() {
     return;
   qDebug() << "handleTextModeSwitchByGui";
   std::lock_guard<CSupressor> guard(MySignal_);
-  TextModeOutput_.set(getCurrentTextMode());
+  if (areSwitchesInCorrectState())
+    TextModeOutput_.set(getCurrentTextMode());
 }
 
 void CTextModeViewImpl::toggleTextButton(int id) {
@@ -112,7 +113,8 @@ CTextModeViewImpl::ETextMode CTextModeViewImpl::getTextMode(int Id) {
     return ETextMode::Printed;
     break;
   default:
-    return ETextMode::NotDefined;
+    assert(false);
+    return ETextMode::Raw;
     break;
   }
 }
@@ -129,7 +131,8 @@ CTextModeViewImpl::EModifierMode CTextModeViewImpl::getModifierMod(int Id) {
     return EModifierMode::Essential;
     break;
   default:
-    return EModifierMode::NotDefined;
+    assert(false);
+    return EModifierMode::Non;
     break;
   }
 }
@@ -146,6 +149,7 @@ int CTextModeViewImpl::getTextInt(ETextMode Mode) {
     return 2;
     break;
   default:
+    assert(false);
     return -1;
     break;
   }
@@ -168,12 +172,12 @@ int CTextModeViewImpl::getModifierInt(EModifierMode Mode) {
   }
 }
 
-void CTextModeViewImpl::onTextModeInput() {
+void CTextModeViewImpl::onTextModeInput(const CTextMode& Mode) {
   if (MySignal_.isLocked())
     return;
   qDebug() << "onTextModeInput";
   std::lock_guard<CSupressor> guard(FromModel_);
-  toggleAllButtons(*TextModeInput_.data());
+  toggleAllButtons(Mode);
 }
 
 CTextModeViewImpl::CTextMode CTextModeViewImpl::getCurrentTextMode() const {
@@ -181,6 +185,13 @@ CTextModeViewImpl::CTextMode CTextModeViewImpl::getCurrentTextMode() const {
           getModifierMod(ShiftButtonGroup_->checkedId()),
           getModifierMod(CtrlButtonGroup_->checkedId()),
           getModifierMod(AltButtonGroup_->checkedId())};
+}
+
+bool CTextModeViewImpl::areSwitchesInCorrectState() const {
+  return TextButtonGroup_->checkedId() != -1 &&
+         ShiftButtonGroup_->checkedId() != -1 &&
+         CtrlButtonGroup_->checkedId() != -1 &&
+         AltButtonGroup_->checkedId() != -1;
 }
 } // namespace NSTextModeViewDetail
 } // namespace NSInterface

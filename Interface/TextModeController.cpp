@@ -17,8 +17,7 @@ NSTextModeControllerDetail::CTextModeControllerImpl::textModeInput() {
 
 void NSTextModeControllerDetail::CTextModeControllerImpl::handleTextMode(
     const CTextMode& Mode) {
-  if (Mode.isWellDefined())
-    TextModule_->setCurrentTextMode(Mode);
+  TextModule_->setCurrentTextMode(Mode);
 }
 } // namespace NSInterface
 } // namespace NSApplication
