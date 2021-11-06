@@ -13,7 +13,7 @@ public:
 
   template<class TIndex, class TFunction>
   void for_(TIndex begin, TIndex end, const TFunction& func) {
-    concurrency::parallel_for(begin, end, [&func](TIndex ind) { func(ind); });
+    concurrency::parallel_for(begin, end, func);
   }
 
 private:
