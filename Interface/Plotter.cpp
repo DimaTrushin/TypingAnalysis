@@ -6,6 +6,7 @@
 #include <QwtLegendLabel>
 #include <QwtPlot>
 #include <QwtPlotCurve>
+#include <QwtPlotGrid>
 
 namespace NSApplication {
 namespace NSInterface {
@@ -13,12 +14,12 @@ namespace NSInterface {
 namespace NSPlotterDetail {
 
 CPlotterImpl::CPlotterImpl(QwtPlot* Plot)
-    : Plot_(Plot), Speed0_(std::make_unique<QwtPlotCurve>("Speed")),
-      Speed1_(std::make_unique<QwtPlotCurve>("Speed Derivative")),
-      SpeedDataInput_(
-          [this](const CPlotData& PlotData) { handlePlotData(PlotData); }) {
+    : Plot_(Plot), SpeedDataInput_([this](const CPlotData& PlotData) {
+        handlePlotData(PlotData);
+      }) {
   assert(Plot_);
   adjustPlot();
+  setCurves();
 }
 
 NSPlotterDetail::CPlotterImpl::CPlotDataObserver*
@@ -26,26 +27,73 @@ NSPlotterDetail::CPlotterImpl::speedDataInput() {
   return &SpeedDataInput_;
 }
 
+void CPlotterImpl::legendChecked(const QVariant& itemInfo, bool on, int) {
+  QwtPlotItem* plotItem = Plot_->infoToItem(itemInfo);
+  if (plotItem)
+    plotItem->setVisible(on);
+  Plot_->replot();
+}
+
 CPlotterImpl::~CPlotterImpl() = default;
 
 void CPlotterImpl::adjustPlot() {
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  Plot_->setTitle("Speed density");
+  std::unique_ptr<QwtLegend> Legend = std::make_unique<QwtLegend>();
+  Legend->setDefaultItemMode(QwtLegendData::Checkable);
+  QObject::connect(Legend.get(), &QwtLegend::checked, this,
+                   &CPlotterImpl::legendChecked);
+  Plot_->insertLegend(Legend.release(), QwtPlot::RightLegend);
 
+  Plot_->setAxisVisible(QwtAxis::YRight);
+  Plot_->setAxisTitle(QwtAxis::XBottom, "Speed, symbols/minute");
+
+  std::unique_ptr<QwtPlotGrid> grid = std::make_unique<QwtPlotGrid>();
+  grid->enableXMin(true);
+  grid->setMajorPen(Qt::gray, 0, Qt::DotLine);
+  grid->setMinorPen(Qt::gray, 0, Qt::DotLine);
+  grid.release()->attach(Plot_);
+}
+
+void CPlotterImpl::setCurves() {
+
+  std::unique_ptr<QwtPlotCurve> Speed0 =
+      std::make_unique<QwtPlotCurve>("Density");
+  Speed0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+  Speed0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+  Speed0->setCurveAttribute(QwtPlotCurve::Fitted, true);
+  Speed0->setRenderHint(QwtPlotItem::RenderAntialiased);
+  Speed0->setPen(QColor(200, 50, 50));
+  Speed0_ = Speed0.release();
   Speed0_->attach(Plot_);
-  Speed0_->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  Speed0_->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  Speed0_->setRenderHint(QwtPlotItem::RenderAntialiased);
+  checkItem(Speed0_, true);
 
-  Speed0_->setPen(QColor(200, 50, 50));
-
+  std::unique_ptr<QwtPlotCurve> Speed1 =
+      std::make_unique<QwtPlotCurve>("Derivative");
+  Speed1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+  Speed1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+  Speed1->setCurveAttribute(QwtPlotCurve::Fitted, true);
+  Speed1->setRenderHint(QwtPlotItem::RenderAntialiased);
+  Speed1->setPen(QColor(50, 50, 200));
+  Speed1->setYAxis(QwtAxis::YRight);
+  Speed1_ = Speed1.release();
   Speed1_->attach(Plot_);
-  Speed1_->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  Speed1_->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  Speed1_->setRenderHint(QwtPlotItem::RenderAntialiased);
+  checkItem(Speed1_, true);
+}
 
-  Speed1_->setPen(QColor(50, 50, 200));
+void CPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
 
-  //  setZ(100); // on top of the marker
+  QwtLegend* lgd = qobject_cast<QwtLegend*>(Plot_->legend());
+
+  QList<QWidget*> legendWidgets = lgd->legendWidgets(Plot_->itemToInfo(item));
+
+  if (legendWidgets.size() == 1) {
+    QwtLegendLabel* legendLabel =
+        qobject_cast<QwtLegendLabel*>(legendWidgets[0]);
+
+    if (legendLabel)
+      legendLabel->setChecked(on);
+  }
 }
 
 void NSPlotterDetail::CPlotterImpl::handlePlotData(const CPlotData& PlotData) {

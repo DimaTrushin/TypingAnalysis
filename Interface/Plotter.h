@@ -31,15 +31,19 @@ public:
 
   CPlotDataObserver* speedDataInput();
 
+public slots:
+  void legendChecked(const QVariant&, bool, int);
+
 private:
   void adjustPlot();
+  void setCurves();
+  void checkItem(QwtPlotItem* item, bool on);
 
   void handlePlotData(const CPlotData& PlotData);
 
   QwtPlot* Plot_;
-  // Probably I should use raw pointers and qt will manage the memory
-  std::unique_ptr<QwtPlotCurve> Speed0_;
-  std::unique_ptr<QwtPlotCurve> Speed1_;
+  QwtPlotCurve* Speed0_;
+  QwtPlotCurve* Speed1_;
   CPlotDataInput SpeedDataInput_;
 };
 

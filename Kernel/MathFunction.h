@@ -22,7 +22,8 @@ public:
       0.398942280401432702863218082712;
   template<typename T>
   static T deviation(T mean) {
-    return 1.25 * sqrt(mean + 1.);
+    //    return 1.25 * sqrt(mean + 1.);
+    return 2.5 * sqrt(mean + 1.);
   }
 };
 } // namespace NSMathFunctionDetail
