@@ -7,7 +7,8 @@ CApplicationGUI::CApplicationGUI()
       TextModeView_(
           AppWindow_.getTextButtonGroup(), AppWindow_.getShiftButtonGroup(),
           AppWindow_.getCtrlButtonGroup(), AppWindow_.getAltButtonGroup()),
-      MainTextPrinter_(AppWindow_.getMainTextEdit()) {
+      MainTextPrinter_(AppWindow_.getMainTextEdit()),
+      SpeedPlotter_(AppWindow_.getSpeedPlot()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

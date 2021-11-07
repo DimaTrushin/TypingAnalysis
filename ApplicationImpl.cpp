@@ -26,6 +26,9 @@ CApplicationImpl::CApplicationImpl()
   TextModule_->subscribeToTextData(MainTextPrinter_->textDataInput());
 
   TextModule_->subscribeToTextData(AnalyticalModule_->textDataInput());
+
+  AnalyticalModule_->subscribeToSpeedData(SpeedPlotter_->speedDataInput());
+
 #ifdef KEYBOARD_HANDLER_DEBUG
   {
     CKeyboardHandlerAccess KeyboardHandler;

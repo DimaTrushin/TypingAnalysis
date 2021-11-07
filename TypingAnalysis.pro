@@ -67,6 +67,7 @@ HEADERS += \
   Compute/ParallelSerial.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
+  Interface/Plotter.h \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
@@ -76,6 +77,7 @@ HEADERS += \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
   Kernel/MathFunction.h \
+  Kernel/PlotData.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
   Kernel/SeanceManager.h \
@@ -141,6 +143,7 @@ SOURCES += \
   Compute/ParallelSerial.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
+  Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
@@ -150,6 +153,7 @@ SOURCES += \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
   Kernel/MathFunction.cpp \
+  Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
   Kernel/SeanceManager.cpp \

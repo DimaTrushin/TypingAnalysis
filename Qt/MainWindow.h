@@ -13,8 +13,9 @@ class QCloseEvent;
 class QSplitter;
 class QTextEdit;
 class QTreeView;
-class QwtPlot;
 QT_END_NAMESPACE
+
+class QwtPlot;
 
 namespace NSApplication {
 namespace NSQt {

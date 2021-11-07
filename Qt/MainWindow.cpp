@@ -121,7 +121,6 @@ void CMainWindow::adjustButtonGroup4() {
 
 void CMainWindow::addQwtPanel() {
   SpeedPlot_ = new QwtPlot(ui_->splitter_4);
-  SpeedPlot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   ui_->splitter_4->addWidget(SpeedPlot_);
 }
 } // namespace NSQt
