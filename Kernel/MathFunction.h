@@ -227,6 +227,57 @@ private:
   static double compute_AVX(const std::vector<double>& means, double arg);
 };
 
+class CRayleighApproximation0 : public NSMathFunctionDetail::CFunctionBase {
+  using CBase = NSMathFunctionDetail::CFunctionBase;
+
+public:
+  CRayleighApproximation0();
+  CRayleighApproximation0(int instruction_level);
+
+private:
+  template<class T>
+  struct CFunction {
+    static T compute(T mean, double arg) {
+      return arg * exp(-arg * arg / (2. * mean * mean)) / (mean * mean);
+    }
+  };
+
+  template<class TParameters>
+  static double compute(const std::vector<double>& means, double arg) {
+    return CBase::compute_<TParameters, CFunction>(means, arg);
+  }
+
+  static double compute_SSE2(const std::vector<double>& means, double arg);
+  static double compute_AVX(const std::vector<double>& means, double arg);
+};
+
+class CRayleighApproximation1 : public NSMathFunctionDetail::CFunctionBase {
+  using CBase = NSMathFunctionDetail::CFunctionBase;
+
+public:
+  CRayleighApproximation1();
+  CRayleighApproximation1(int instruction_level);
+
+private:
+  template<class T>
+  struct CFunction {
+    static T compute(T mean, double arg) {
+      T mean_square = mean * mean;
+      T arg_square = arg * arg;
+      return (1. - arg_square / mean_square) *
+             exp(-arg_square / (2. * mean_square)) / mean_square;
+    }
+  };
+
+  template<class TParameters>
+  static double compute(const std::vector<double>& means, double arg) {
+    return CBase::compute_<TParameters, CFunction>(means, arg);
+  }
+
+  static double compute_SSE2(const std::vector<double>& means, double arg);
+  static double compute_AVX(const std::vector<double>& means, double arg);
+};
+
 } // namespace NSKernel
 } // namespace NSApplication
 

@@ -10,14 +10,15 @@ namespace NSKernel {
 CPlotData::CPlotData()
     : X_(kDefaultGridSize), Y0_(kDefaultGridSize, 0.),
       Y1_(kDefaultGridSize, 0.), YMB0_(kDefaultGridSize, 0.),
-      YMB1_(kDefaultGridSize, 0.) {
+      YMB1_(kDefaultGridSize, 0.), YR0_(kDefaultGridSize, 0.),
+      YR1_(kDefaultGridSize, 0.) {
   fillX();
   assert(isCorrect_());
 }
 
 CPlotData::CPlotData(CIndex GridSize)
     : X_(GridSize), Y0_(GridSize, 0.), Y1_(GridSize, 0.), YMB0_(GridSize, 0.),
-      YMB1_(GridSize, 0.) {
+      YMB1_(GridSize, 0.), YR0_(GridSize, 0.), YR1_(GridSize, 0.) {
   fillX();
   assert(isCorrect_());
 }
@@ -52,6 +53,16 @@ const double* CPlotData::dataYMB1() const {
   return YMB1_.data();
 }
 
+const double* CPlotData::dataYR0() const {
+  assert(isCorrect_());
+  return YR0_.data();
+}
+
+const double* CPlotData::dataYR1() const {
+  assert(isCorrect());
+  return YR1_.data();
+}
+
 void CPlotData::fillY0(const CContainer& Samples,
                        const CNormalApproximation0& F) {
   CParallelAccess Parallel;
@@ -84,6 +95,24 @@ void CPlotData::fillYMB1(const CContainer& Samples,
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
     YMB1_[i] = F(Samples, X_[i]);
+    ;
+  });
+}
+
+void CPlotData::fillYR0(const CContainer& Samples,
+                        const CRayleighApproximation0& F) {
+  CParallelAccess Parallel;
+  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
+    YR0_[i] = F(Samples, X_[i]);
+    ;
+  });
+}
+
+void CPlotData::fillYR1(const CContainer& Samples,
+                        const CRayleighApproximation1& F) {
+  CParallelAccess Parallel;
+  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
+    YR1_[i] = F(Samples, X_[i]);
     ;
   });
 }

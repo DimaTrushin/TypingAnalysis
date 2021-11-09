@@ -46,6 +46,8 @@ private:
   QwtPlotCurve* Speed1_;
   QwtPlotCurve* SpeedMB0_;
   QwtPlotCurve* SpeedMB1_;
+  QwtPlotCurve* SpeedR0_;
+  QwtPlotCurve* SpeedR1_;
   CPlotDataInput SpeedDataInput_;
 };
 

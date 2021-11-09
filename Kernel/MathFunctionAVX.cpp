@@ -30,5 +30,15 @@ CMaxwellBoltzmannApproximation1::compute_AVX(const std::vector<double>& means,
   return compute<CAvxParameters>(means, arg);
 }
 
+double CRayleighApproximation0::compute_AVX(const std::vector<double>& means,
+                                            double arg) {
+  return compute<CAvxParameters>(means, arg);
+}
+
+double CRayleighApproximation1::compute_AVX(const std::vector<double>& means,
+                                            double arg) {
+  return compute<CAvxParameters>(means, arg);
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

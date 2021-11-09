@@ -25,6 +25,8 @@ private:
   CNormalApproximation1 Density1_{};
   CMaxwellBoltzmannApproximation0 DensityMB0_{};
   CMaxwellBoltzmannApproximation1 DensityMB1_{};
+  CRayleighApproximation0 DensityR0_{};
+  CRayleighApproximation1 DensityR1_{};
   CPlotData PlotData_;
 };
 

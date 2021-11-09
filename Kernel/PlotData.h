@@ -24,6 +24,8 @@ public:
   const double* dataY1() const;
   const double* dataYMB0() const;
   const double* dataYMB1() const;
+  const double* dataYR0() const;
+  const double* dataYR1() const;
 
   void fillY0(const CContainer& Samples, const CNormalApproximation0& F);
   void fillY1(const CContainer& Samples, const CNormalApproximation1& F);
@@ -31,6 +33,8 @@ public:
                 const CMaxwellBoltzmannApproximation0& F);
   void fillYMB1(const CContainer& Samples,
                 const CMaxwellBoltzmannApproximation1& F);
+  void fillYR0(const CContainer& Samples, const CRayleighApproximation0& F);
+  void fillYR1(const CContainer& Samples, const CRayleighApproximation1& F);
 
 private:
   static constexpr const CIndex kDefaultGridSize = 2500;
@@ -46,6 +50,8 @@ private:
   CContainer Y1_;
   CContainer YMB0_;
   CContainer YMB1_;
+  CContainer YR0_;
+  CContainer YR1_;
   double Maximum_ = kMaximum;
   double Minimum_ = kMinimum;
 };
