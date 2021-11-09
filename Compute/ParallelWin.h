@@ -3,6 +3,7 @@
 
 #include "ParallelMode.h"
 #include "ParallelSerial.h"
+#include "ParallelTbb.h"
 
 #ifdef _MSC_VER
 #include "ParallelPpl.h"
@@ -29,7 +30,7 @@ public:
 #endif
       break;
     case EParallelMode::Tbb:
-      SerialComputer_.for_(begin, end, F);
+      TbbComputer_.for_(begin, end, F);
       break;
     case EParallelMode::LibDispatch:
       SerialComputer_.for_(begin, end, F);
@@ -48,7 +49,7 @@ private:
 #else
   static constexpr const bool kIsPplSupported = false;
 #endif
-  static constexpr const bool kIsTbbSupported = false;
+  static constexpr const bool kIsTbbSupported = true;
   static constexpr const bool kIsLibDispatchSupported = false;
 
 #ifdef _MSC_VER
@@ -61,6 +62,7 @@ private:
 #ifdef _MSC_VER
   CParallelPpl PplComputer_;
 #endif
+  CParallelTbb TbbComputer_;
   EParallelMode Mode_ = kDefaultMode;
 };
 

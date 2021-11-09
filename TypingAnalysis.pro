@@ -52,6 +52,25 @@ macx {
  }
 }
 
+# You must configure the kit as follows.
+# Go to:
+# Kit -> Build -> Build Steps
+# Add Conan install as the first step
+
+# Tbb related includes and libraries
+CONFIG += file_copies
+COPIES += TbbDllFiles
+TbbDllFiles.files = $$files($${OUT_PWD}/tbb/dll/*.dll)
+CONFIG(release, debug|release): TbbDllFiles.path = $${OUT_PWD}/release
+else:CONFIG(debug, debug|release):TbbDllFiles.path = $${OUT_PWD}/debug
+
+INCLUDEPATH += $${OUT_PWD}/tbb/include
+
+win32 {
+  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/tbb/lib -ltbb
+  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/tbb/lib -ltbb_debug
+}
+
 # Qwt related includes and libraries
 win32 {
   CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/qwt/lib -lqwt
@@ -65,6 +84,7 @@ HEADERS += \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
+  Compute/ParallelTbb.h \
   Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/Plotter.h \
@@ -141,6 +161,7 @@ SOURCES += \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
+  Compute/ParallelTbb.cpp \
   Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/Plotter.cpp \

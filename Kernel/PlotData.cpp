@@ -59,7 +59,7 @@ const double* CPlotData::dataYR0() const {
 }
 
 const double* CPlotData::dataYR1() const {
-  assert(isCorrect());
+  assert(isCorrect_());
   return YR1_.data();
 }
 

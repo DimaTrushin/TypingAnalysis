@@ -14,7 +14,7 @@ CApplicationGlobals::CApplicationGlobals() {
   CKeyboardHandlerInit MainKeyboardHandler;
   CAppStatusInit MainAppStatusAccessorInit;
   CSimdDetectorInit MainSimdDetector;
-  CParallelInit MainComputerInit(NSCompute::EParallelMode::Ppl);
+  CParallelInit MainComputerInit(NSCompute::EParallelMode::Tbb);
 }
 
 } // namespace NSApplication

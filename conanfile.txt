@@ -1,0 +1,10 @@
+[requires]
+tbb/2020.3
+
+[generators]
+qmake
+
+[imports]
+bin, *.dll -> ./tbb/dll
+lib, *.lib -> ./tbb/lib
+include, *.* -> ./tbb/include
