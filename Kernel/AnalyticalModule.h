@@ -23,6 +23,8 @@ private:
   CContainer Samples_;
   CNormalApproximation0 Density0_{};
   CNormalApproximation1 Density1_{};
+  CMaxwellBoltzmannApproximation0 DensityMB0_{};
+  CMaxwellBoltzmannApproximation1 DensityMB1_{};
   CPlotData PlotData_;
 };
 

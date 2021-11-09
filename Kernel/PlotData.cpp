@@ -9,13 +9,15 @@ namespace NSKernel {
 
 CPlotData::CPlotData()
     : X_(kDefaultGridSize), Y0_(kDefaultGridSize, 0.),
-      Y1_(kDefaultGridSize, 0.) {
+      Y1_(kDefaultGridSize, 0.), YMB0_(kDefaultGridSize, 0.),
+      YMB1_(kDefaultGridSize, 0.) {
   fillX();
   assert(isCorrect_());
 }
 
 CPlotData::CPlotData(CIndex GridSize)
-    : X_(GridSize), Y0_(GridSize, 0.), Y1_(GridSize, 0.) {
+    : X_(GridSize), Y0_(GridSize, 0.), Y1_(GridSize, 0.), YMB0_(GridSize, 0.),
+      YMB1_(GridSize, 0.) {
   fillX();
   assert(isCorrect_());
 }
@@ -40,6 +42,16 @@ const double* CPlotData::dataY1() const {
   return Y1_.data();
 }
 
+const double* CPlotData::dataYMB0() const {
+  assert(isCorrect_());
+  return YMB0_.data();
+}
+
+const double* CPlotData::dataYMB1() const {
+  assert(isCorrect_());
+  return YMB1_.data();
+}
+
 void CPlotData::fillY0(const CContainer& Samples,
                        const CNormalApproximation0& F) {
   CParallelAccess Parallel;
@@ -54,6 +66,24 @@ void CPlotData::fillY1(const CContainer& Samples,
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
     Y1_[i] = F(Samples, X_[i]);
+    ;
+  });
+}
+
+void CPlotData::fillYMB0(const CContainer& Samples,
+                         const CMaxwellBoltzmannApproximation0& F) {
+  CParallelAccess Parallel;
+  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
+    YMB0_[i] = F(Samples, X_[i]);
+    ;
+  });
+}
+
+void CPlotData::fillYMB1(const CContainer& Samples,
+                         const CMaxwellBoltzmannApproximation1& F) {
+  CParallelAccess Parallel;
+  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
+    YMB1_[i] = F(Samples, X_[i]);
     ;
   });
 }

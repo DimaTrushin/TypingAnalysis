@@ -15,6 +15,8 @@ void CFunctionData::set(CContainer&& Samples) {
   Samples_ = std::move(Samples);
   PlotData_.fillY0(Samples_, Density0_);
   PlotData_.fillY1(Samples_, Density1_);
+  PlotData_.fillYMB0(Samples_, DensityMB0_);
+  PlotData_.fillYMB1(Samples_, DensityMB1_);
 }
 
 const CPlotData& CFunctionData::plotData() const {

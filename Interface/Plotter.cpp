@@ -79,6 +79,29 @@ void CPlotterImpl::setCurves() {
   Speed1_ = Speed1.release();
   Speed1_->attach(Plot_);
   checkItem(Speed1_, true);
+
+  std::unique_ptr<QwtPlotCurve> SpeedMB0 =
+      std::make_unique<QwtPlotCurve>("DensityMB");
+  SpeedMB0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+  SpeedMB0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+  SpeedMB0->setCurveAttribute(QwtPlotCurve::Fitted, true);
+  SpeedMB0->setRenderHint(QwtPlotItem::RenderAntialiased);
+  SpeedMB0->setPen(QColor(50, 200, 50));
+  SpeedMB0_ = SpeedMB0.release();
+  SpeedMB0_->attach(Plot_);
+  checkItem(SpeedMB0_, true);
+
+  std::unique_ptr<QwtPlotCurve> SpeedMB1 =
+      std::make_unique<QwtPlotCurve>("Derivative");
+  SpeedMB1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+  SpeedMB1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+  SpeedMB1->setCurveAttribute(QwtPlotCurve::Fitted, true);
+  SpeedMB1->setRenderHint(QwtPlotItem::RenderAntialiased);
+  SpeedMB1->setPen(QColor(50, 50, 200));
+  SpeedMB1->setYAxis(QwtAxis::YRight);
+  SpeedMB1_ = SpeedMB1.release();
+  SpeedMB1_->attach(Plot_);
+  checkItem(SpeedMB1_, true);
 }
 
 void CPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
@@ -101,6 +124,10 @@ void NSPlotterDetail::CPlotterImpl::handlePlotData(const CPlotData& PlotData) {
                          PlotData.gridSize());
   Speed1_->setRawSamples(PlotData.dataX(), PlotData.dataY1(),
                          PlotData.gridSize());
+  SpeedMB0_->setRawSamples(PlotData.dataX(), PlotData.dataYMB0(),
+                           PlotData.gridSize());
+  SpeedMB1_->setRawSamples(PlotData.dataX(), PlotData.dataYMB1(),
+                           PlotData.gridSize());
   Plot_->replot();
 }
 
