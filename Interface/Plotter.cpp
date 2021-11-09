@@ -104,7 +104,7 @@ void CPlotterImpl::setCurves() {
   checkItem(SpeedMB1_, true);
 
   std::unique_ptr<QwtPlotCurve> SpeedR0 =
-      std::make_unique<QwtPlotCurve>("DensityMB");
+      std::make_unique<QwtPlotCurve>("DensitRL");
   SpeedR0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   SpeedR0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   SpeedR0->setCurveAttribute(QwtPlotCurve::Fitted, true);

@@ -447,53 +447,6 @@
                         <bool>true</bool>
                        </property>
                       </widget>
-                      <widget class="QTextEdit" name="textEdit_3">
-                       <property name="palette">
-                        <palette>
-                         <active>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>192</red>
-                             <green>220</green>
-                             <blue>192</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </active>
-                         <inactive>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>192</red>
-                             <green>220</green>
-                             <blue>192</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </inactive>
-                         <disabled>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>68</red>
-                             <green>68</green>
-                             <blue>68</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </disabled>
-                        </palette>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <pointsize>14</pointsize>
-                        </font>
-                       </property>
-                       <property name="readOnly">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
                      </widget>
                     </item>
                    </layout>
@@ -795,9 +748,9 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

@@ -77,7 +77,7 @@ void CMainWindow::adjustSplitter3() {
 }
 
 void CMainWindow::adjustMainSplitter() {
-  ui_->splitter_4->setSizes(QList<int>() << 4000 << 4000 << 4000);
+  ui_->splitter_4->setSizes(QList<int>() << 5000 << 5000);
 }
 
 void CMainWindow::adjustSplitter5() {
