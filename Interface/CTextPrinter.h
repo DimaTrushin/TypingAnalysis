@@ -76,6 +76,8 @@ class CTextPrinterImpl {
   using EKeyStatus = CTextPalette::EKeyStatus;
   using ESymbolStatus = NSKernel::ESymbolStatus;
 
+  using CTextDataTree = NSKernel::CTextDataTree;
+
 public:
   explicit CTextPrinterImpl(QTextEdit* TextEdit);
 
@@ -84,8 +86,8 @@ public:
 private:
   void handleTextData(const CTextData& data);
   void printFormattedSession(const CSession& Session);
-  template<class CConstIterator>
-  void printFormattedText(const CTextDataTree& TextTree);
+  template<class TText>
+  void printFormattedText(const TText& TextView);
 
   EKeyStatus getKeyRawStatus(const CKeyEvent& Key);
   EKeyStatus getKeyTextStatus(const CTextNode& TextNode);

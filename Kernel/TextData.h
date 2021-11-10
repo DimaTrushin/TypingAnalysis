@@ -10,6 +10,19 @@ namespace NSApplication {
 namespace NSKernel {
 
 struct CTextData {
+  using CFullTextProxy =
+      NSTextDataTreeDetail::CTextDataTreeImpl::CFullTextProxy;
+  using CConstFullTextProxy =
+      NSTextDataTreeDetail::CTextDataTreeImpl::CConstFullTextProxy;
+  using CPrintedTextProxy =
+      NSTextDataTreeDetail::CTextDataTreeImpl::CPrintedTextProxy;
+  using CConstPrintedTextProxy =
+      NSTextDataTreeDetail::CTextDataTreeImpl::CConstPrintedTextProxy;
+
+  CConstFullTextProxy textConstFullView() const;
+
+  CConstPrintedTextProxy textConstPrintedView() const;
+
   std::reference_wrapper<const CSession> Session;
   std::reference_wrapper<const CTextDataTree> TextTree;
   CTextMode TextMode;

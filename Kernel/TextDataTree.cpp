@@ -283,6 +283,24 @@ void CTextDataTreeImpl::setMistakeInformation() {
   setRequiredDeleted();
 }
 
+CTextDataTreeImpl::CFullTextProxy CTextDataTreeImpl::textFullView() {
+  return CFullTextProxy(this);
+}
+
+CTextDataTreeImpl::CConstFullTextProxy
+CTextDataTreeImpl::textConstFullView() const {
+  return CConstFullTextProxy(this);
+}
+
+CTextDataTreeImpl::CPrintedTextProxy CTextDataTreeImpl::textPrintedView() {
+  return CPrintedTextProxy(this);
+}
+
+CTextDataTreeImpl::CConstPrintedTextProxy
+CTextDataTreeImpl::textConstPrintedView() const {
+  return CConstPrintedTextProxy(this);
+}
+
 void CTextDataTreeImpl::setMistakeRoutes() {
   for (CTextIterator currentPosition = rootIterator();
        currentPosition != FinalElement_; ++currentPosition) {
@@ -390,6 +408,144 @@ void CTextDataTreeImpl::deleteLastSymbolBlock() {
   while (FinalElement_->getSymbol().isLetterOrNumber())
     deleteLastData();
 }
+
+CTextDataTreeImpl::CFullTextIterator
+CTextDataTreeImpl::CFullTextProxy::begin() {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CFullTextProxy::begin() const {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CFullTextProxy::cbegin() const {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CFullTextIterator CTextDataTreeImpl::CFullTextProxy::end() {
+  return pTree_->endFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CFullTextProxy::end() const {
+  return pTree_->endFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CFullTextProxy::cend() const {
+  return pTree_->endFullText();
+}
+
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::CFullTextProxy::size() const {
+  return pTree_->getFullTextLength();
+}
+
+CTextDataTreeImpl::CFullTextProxy::CFullTextProxy(CTextDataTreeImpl* pTree)
+    : pTree_(pTree) {
+  assert(pTree_);
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CConstFullTextProxy::begin() const {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CConstFullTextProxy::cbegin() const {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CConstFullTextProxy::end() const {
+  return pTree_->endFullText();
+}
+
+CTextDataTreeImpl::CConstFullTextIterator
+CTextDataTreeImpl::CConstFullTextProxy::cend() const {
+  return pTree_->beginFullText();
+}
+
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::CConstFullTextProxy::size() const {
+  return pTree_->getFullTextLength();
+}
+
+CTextDataTreeImpl::CConstFullTextProxy::CConstFullTextProxy(
+    const CTextDataTreeImpl* pTree)
+    : pTree_(pTree) {
+  assert(pTree_);
+}
+
+CTextDataTreeImpl::CTextIterator CTextDataTreeImpl::CPrintedTextProxy::begin() {
+  return pTree_->beginPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CPrintedTextProxy::begin() const {
+  return pTree_->beginPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CPrintedTextProxy::cbegin() const {
+  return pTree_->beginPrintedText();
+}
+
+CTextDataTreeImpl::CTextIterator CTextDataTreeImpl::CPrintedTextProxy::end() {
+  return pTree_->endPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CPrintedTextProxy::end() const {
+  return pTree_->endPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CPrintedTextProxy::cend() const {
+  return pTree_->endPrintedText();
+}
+
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::CPrintedTextProxy::size() const {
+  return pTree_->getPrintedTextLength();
+}
+
+CTextDataTreeImpl::CPrintedTextProxy::CPrintedTextProxy(
+    CTextDataTreeImpl* pTree)
+    : pTree_(pTree) {
+  assert(pTree_);
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CConstPrintedTextProxy::begin() const {
+  return pTree_->beginPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CConstPrintedTextProxy::cbegin() const {
+  return pTree_->beginPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CConstPrintedTextProxy::end() const {
+  return pTree_->endPrintedText();
+}
+
+CTextDataTreeImpl::CConstTextIterator
+CTextDataTreeImpl::CConstPrintedTextProxy::cend() const {
+  return pTree_->endPrintedText();
+}
+
+CTextDataTreeImpl::CIndex
+CTextDataTreeImpl::CConstPrintedTextProxy::size() const {
+  return pTree_->getPrintedTextLength();
+}
+
+CTextDataTreeImpl::CConstPrintedTextProxy::CConstPrintedTextProxy(
+    const CTextDataTreeImpl* pTree)
+    : pTree_(pTree) {
+  assert(pTree_);
+}
+
 } // namespace NSTextDataTreeDetail
 
 CTextNode::CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,

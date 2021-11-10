@@ -140,6 +140,94 @@ public:
 
   void setMistakeInformation();
 
+  class CFullTextProxy {
+    friend class CTextDataTreeImpl;
+
+  public:
+    using iterator = CFullTextIterator;
+    using const_iterator = CConstFullTextIterator;
+
+    CFullTextIterator begin();
+    CConstFullTextIterator begin() const;
+    CConstFullTextIterator cbegin() const;
+
+    CFullTextIterator end();
+    CConstFullTextIterator end() const;
+    CConstFullTextIterator cend() const;
+
+    CIndex size() const;
+
+  private:
+    CFullTextProxy(CTextDataTreeImpl* pTree);
+    CTextDataTreeImpl* pTree_;
+  };
+
+  class CConstFullTextProxy {
+    friend class CTextDataTreeImpl;
+
+  public:
+    using const_iterator = CConstFullTextIterator;
+
+    CConstFullTextIterator begin() const;
+    CConstFullTextIterator cbegin() const;
+
+    CConstFullTextIterator end() const;
+    CConstFullTextIterator cend() const;
+
+    CIndex size() const;
+
+  private:
+    CConstFullTextProxy(const CTextDataTreeImpl* pTree);
+    const CTextDataTreeImpl* pTree_;
+  };
+
+  CFullTextProxy textFullView();
+  CConstFullTextProxy textConstFullView() const;
+
+  class CPrintedTextProxy {
+    friend class CTextDataTreeImpl;
+
+  public:
+    using iterator = CTextIterator;
+    using const_iterator = CConstTextIterator;
+
+    CTextIterator begin();
+    CConstTextIterator begin() const;
+    CConstTextIterator cbegin() const;
+
+    CTextIterator end();
+    CConstTextIterator end() const;
+    CConstTextIterator cend() const;
+
+    CIndex size() const;
+
+  private:
+    CPrintedTextProxy(CTextDataTreeImpl* pTree);
+    CTextDataTreeImpl* pTree_;
+  };
+
+  class CConstPrintedTextProxy {
+    friend class CTextDataTreeImpl;
+
+  public:
+    using const_iterator = CConstTextIterator;
+
+    CConstTextIterator begin() const;
+    CConstTextIterator cbegin() const;
+
+    CConstTextIterator end() const;
+    CConstTextIterator cend() const;
+
+    CIndex size() const;
+
+  private:
+    CConstPrintedTextProxy(const CTextDataTreeImpl* pTree);
+    const CTextDataTreeImpl* pTree_;
+  };
+
+  CPrintedTextProxy textPrintedView();
+  CConstPrintedTextProxy textConstPrintedView() const;
+
 private:
   void setMistakeRoutes();
   void setMistakeSymbols();

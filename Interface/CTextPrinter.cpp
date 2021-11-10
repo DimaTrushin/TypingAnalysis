@@ -27,10 +27,10 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
     printFormattedSession(data.Session);
     break;
   case ETextMode::Full:
-    printFormattedText<CConstFullTextIterator>(data.TextTree);
+    printFormattedText(data.textConstFullView());
     break;
   case ETextMode::Printed:
-    printFormattedText<CConstTextIterator>(data.TextTree);
+    printFormattedText(data.textConstPrintedView());
     break;
   default:
     assert(false);
@@ -55,27 +55,17 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   TextEdit_->setHtml(Text);
 }
 
-template<class CConstIterator>
-void CTextPrinterImpl::printFormattedText(const CTextDataTree& TextTree) {
-  // This looks ugly. Need to think of a better interface.
-  CConstIterator iter;
-  CConstIterator sentinel;
-  if constexpr (std::is_same_v<CConstIterator, CConstFullTextIterator> ||
-                std::is_same_v<CConstIterator, CFullTextIterator>) {
-    if (TextTree->getFullTextLength() == 0) {
-      clear();
-      return;
-    }
-    iter = TextTree->beginFullText();
-    sentinel = TextTree->endFullText();
-  } else {
-    if (TextTree->getPrintedTextLength() == 0) {
-      clear();
-      return;
-    }
-    iter = TextTree->beginPrintedText();
-    sentinel = TextTree->endPrintedText();
+template<class TText>
+void CTextPrinterImpl::printFormattedText(const TText& TextView) {
+  using const_iterator = typename TText::const_iterator;
+  const_iterator iter;
+  const_iterator sentinel;
+  if (TextView.size() == 0) {
+    clear();
+    return;
   }
+  iter = TextView.begin();
+  sentinel = TextView.end();
   QString Text;
   EKeyStatus CurrentStatus = getKeyTextStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
@@ -131,7 +121,7 @@ CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
     switch (Status) {
     case EKeyStatus::MainText:
       assert(iter->getTextSize() > 0);
-      buffer_.push_back(iter->getSymbol(iter->getTextSize() - 1));
+      buffer_.push_back(iter->getLastSymbol());
       break;
     case EKeyStatus::Backspace:
     case EKeyStatus::Control:
