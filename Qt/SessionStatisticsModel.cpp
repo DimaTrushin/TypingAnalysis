@@ -56,35 +56,36 @@ bool CSessionStatisticsModel::setStatistics(const CTextData& Data) {
   clear();
   // TO DO
   // debug version
-  beginInsertRows(QModelIndex(), 0, 8);
-  Data_.clear();
-  Data_.push_back(
+  std::deque<CDescription> NewData;
+  NewData.push_back(
       {"Places With Deletion",
        QString::number(Data.TextTree.get()->getNumberOfPlacesWithDeletion())});
-  Data_.push_back(
+  NewData.push_back(
       {"Deletion Series",
        QString::number(Data.TextTree.get()->getNumberOfDeletionSeries())});
-  Data_.push_back(
+  NewData.push_back(
       {"Deleted Symbols",
        QString::number(Data.TextTree.get()->getNumberOfDeletedSymbols())});
-  Data_.push_back(
+  NewData.push_back(
       {"Return Points",
        QString::number(Data.TextTree.get()->getNumberOfReturnPoints())});
-  Data_.push_back(
+  NewData.push_back(
       {"Tree size", QString::number(Data.TextTree.get()->getTreeSize())});
-  Data_.push_back(
+  NewData.push_back(
       {"Deletion Length Supremum",
        QString::number(
            Data.TextTree.get()->getDeletionSeriesLengthSupremum())});
-  Data_.push_back(
+  NewData.push_back(
       {"Mistake Places",
        QString::number(Data.TextTree.get()->getNumberOfMistakePlaces())});
-  Data_.push_back(
+  NewData.push_back(
       {"Mistake Routes",
        QString::number(Data.TextTree.get()->getNumberOfMistakeRoutes())});
-  Data_.push_back(
+  NewData.push_back(
       {"Mistake Route Length Supremum",
        QString::number(Data.TextTree.get()->getMistakeRoutesLengthSupremum())});
+  beginInsertRows(QModelIndex(), 0, NewData.size() - 1);
+  Data_ = std::move(NewData);
   endInsertRows();
   return false;
 }
