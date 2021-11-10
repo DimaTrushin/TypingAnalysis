@@ -112,48 +112,49 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::getFullTextLength() const {
 //  return getPrintedTextLength();
 //}
 
-// CTextDataTree::CIndex CTextDataTree::getDeletionSeriesLengthSupremum() const
-// {
-//  CIndex lengthsup = 0;
-//  for (CConstTextIterator itCurrentSymbol = beginFromRoot();
-//       itCurrentSymbol != FinalElement_; ++itCurrentSymbol)
-//    for (auto child = itCurrentSymbol.FirstChild();
-//         child != itCurrentSymbol.LastChild(); ++child)
-//      lengthsup = std::max(lengthsup, child.getLengthOfSubTree());
-//  lengthsup = std::max(lengthsup, FinalElement_.getLengthOfSubTree() - 1);
-//  return lengthsup;
-//}
+CTextDataTreeImpl::CIndex
+CTextDataTreeImpl::getDeletionSeriesLengthSupremum() const {
+  CIndex lengthsup = 0;
+  for (CConstTextIterator itCurrentSymbol = rootIterator();
+       itCurrentSymbol != FinalElement_; ++itCurrentSymbol)
+    for (auto child = itCurrentSymbol.FirstChild();
+         child != itCurrentSymbol.LastChild(); ++child)
+      lengthsup = std::max(lengthsup, child.getLengthOfSubTree());
+  lengthsup = std::max(lengthsup, FinalElement_.getLengthOfSubTree() - 1);
+  return lengthsup;
+}
 
 //// symbols deleted at the end are assumed to be mistakes
-// CTextDataTree::CIndex CTextDataTree::getNumberOfMistakePlaces() const {
-//  CIndex mistakePlaces = 0;
-//  for (CConstTextIterator index = beginFromRoot(); index != endPrintedText();
-//       ++index)
-//    if (!index->MistakeRoutes_.empty())
-//      ++mistakePlaces;
-//  return mistakePlaces;
-//}
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::getNumberOfMistakePlaces() const {
+  CIndex mistakePlaces = 0;
+  for (CConstTextIterator index = rootIterator(); index != endPrintedText();
+       ++index)
+    if (!index->hasNoMistakeRoutes())
+      ++mistakePlaces;
+  return mistakePlaces;
+}
 
 //// symbols deleted at the end are assumed to be mistakes
-// CTextDataTree::CIndex CTextDataTree::getNumberOfMistakeRoutes() const {
-//  CIndex mistakes = 0;
-//  for (CConstTextIterator index = beginFromRoot(); index != endPrintedText();
-//       ++index)
-//    mistakes += index->MistakeRoutes_.size();
-//  return mistakes;
-//}
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::getNumberOfMistakeRoutes() const {
+  CIndex mistakes = 0;
+  for (CConstTextIterator index = rootIterator(); index != endPrintedText();
+       ++index)
+    mistakes += index->numberOfMistakeRoutes();
+  return mistakes;
+}
 
 // symbols deleted at the end are assumed to be mistakes
-// CTextDataTree::CIndex CTextDataTree::getMistakeRoutesLengthSupremum() const {
-//  CIndex lengthSupremum = 0;
-//  for (CConstTextIterator index = beginFromRoot(); index != endPrintedText();
-//       ++index)
-//    for (auto itMistakeRoute = index->MistakeRoutes_.cbegin();
-//         itMistakeRoute != index->MistakeRoutes_.end(); ++itMistakeRoute)
-//      lengthSupremum =
-//          std::max(lengthSupremum, itMistakeRoute->getLengthOfSubTree());
-//  return lengthSupremum;
-//}
+CTextDataTreeImpl::CIndex
+CTextDataTreeImpl::getMistakeRoutesLengthSupremum() const {
+  CIndex lengthSupremum = 0;
+  for (CConstTextIterator index = rootIterator(); index != endPrintedText();
+       ++index)
+    for (auto itMistakeRoute = index->cbeginMistakes();
+         itMistakeRoute != index->cendMistakes(); ++itMistakeRoute)
+      lengthSupremum =
+          std::max(lengthSupremum, itMistakeRoute->getLengthOfSubTree());
+  return lengthSupremum;
+}
 
 // bool CTextDataTree::isTextEmpty(ETextMode TextMode) const {
 //  if (getTextLength(TextMode) == 0)
@@ -313,7 +314,7 @@ void CTextDataTreeImpl::setMistakeRoutes() {
 void CTextDataTreeImpl::setMistakeSymbols() {
   for (CTextIterator itCurrentSymbol = rootIterator();
        itCurrentSymbol != FinalElement_; ++itCurrentSymbol)
-    if (!itCurrentSymbol->hasNoMistakeRouts())
+    if (!itCurrentSymbol->hasNoMistakeRoutes())
       itCurrentSymbol.LastChild()->setSymbolStatus(
           ESymbolStatus::ErroneousSymbol);
 }
@@ -631,12 +632,16 @@ CTextNode::eraseMistakeNode(CConstMistakeIterator Current) {
   return MistakeRoutes_.erase(Current);
 }
 
-bool CTextNode::hasNoMistakeRouts() const {
+bool CTextNode::hasNoMistakeRoutes() const {
   return MistakeRoutes_.empty();
 }
 
 void CTextNode::addMistakeRoute(CFullTextIterator iter) {
   MistakeRoutes_.push_back(std::move(iter));
+}
+
+CTextNode::CIndex CTextNode::numberOfMistakeRoutes() const {
+  return MistakeRoutes_.size();
 }
 
 } // namespace NSKernel

@@ -101,10 +101,10 @@ public:
   CIndex getFullTextLength() const;
 
   //  CIndex getTextLength(ETextMode TextMode) const;
-  //  CIndex getDeletionSeriesLengthSupremum() const;
-  //  CIndex getNumberOfMistakePlaces() const;
-  //  CIndex getNumberOfMistakeRoutes() const;
-  //  CIndex getMistakeRoutesLengthSupremum() const;
+  CIndex getDeletionSeriesLengthSupremum() const;
+  CIndex getNumberOfMistakePlaces() const;
+  CIndex getNumberOfMistakeRoutes() const;
+  CIndex getMistakeRoutesLengthSupremum() const;
 
   //  bool isTextEmpty(ETextMode TextMode) const;
   //  microseconds getFirstPressingTime(ETextMode TextMode) const;
@@ -296,8 +296,9 @@ public:
 
   CMistakeIterator eraseMistakeNode(CConstMistakeIterator Current);
 
-  bool hasNoMistakeRouts() const;
+  bool hasNoMistakeRoutes() const;
   void addMistakeRoute(CFullTextIterator iter);
+  CIndex numberOfMistakeRoutes() const;
 
 private:
   CTime PressingTime_;
