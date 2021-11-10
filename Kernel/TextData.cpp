@@ -11,5 +11,9 @@ CTextData::CConstPrintedTextProxy CTextData::textConstPrintedView() const {
   return TextTree.get()->textConstPrintedView();
 }
 
+const CSession& CTextData::rawSession() const {
+  return Session;
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

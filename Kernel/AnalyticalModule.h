@@ -51,9 +51,8 @@ private:
   void handleTextData(const CTextData& Data);
 
   CContainer getSpeedData(const CTextData& Data) const;
-  CContainer getRawSpeedData(const CSession& Session) const;
-  CContainer getFullTextSpeedData(const CTextDataTree& TextTree) const;
-  CContainer getTextSpeedData(const CTextDataTree& TextTree) const;
+  template<class TText>
+  CContainer getSpeedData(const TText& TextView) const;
 
   CFunctionData SpeedData_;
   CTextDataInput TextData_;

@@ -23,6 +23,8 @@ struct CTextData {
 
   CConstPrintedTextProxy textConstPrintedView() const;
 
+  const CSession& rawSession() const;
+
   std::reference_wrapper<const CSession> Session;
   std::reference_wrapper<const CTextDataTree> TextTree;
   CTextMode TextMode;

@@ -66,13 +66,13 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   CContainer SpeedData;
   switch (Data.TextMode.TextMode) {
   case ETextMode::Raw:
-    SpeedData = getRawSpeedData(Data.Session);
+    SpeedData = getSpeedData(Data.rawSession());
     break;
   case ETextMode::Full:
-    SpeedData = getFullTextSpeedData(Data.TextTree);
+    SpeedData = getSpeedData(Data.textConstFullView());
     break;
   case ETextMode::Printed:
-    SpeedData = getTextSpeedData(Data.TextTree);
+    SpeedData = getSpeedData(Data.textConstPrintedView());
     break;
   default:
     assert(false);
@@ -80,18 +80,18 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   return SpeedData;
 }
 
+template<class TText>
 CAnalyticalModuleImpl::CContainer
-CAnalyticalModuleImpl::getRawSpeedData(const CSession& Session) const {
+CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
   CContainer SpeedData;
-  if (Session.empty())
+  if (TextView.empty())
     return SpeedData;
-  // TO DO
-  // debug version
-  SpeedData.reserve(Session.size());
-  auto iter = Session.begin();
+  SpeedData.reserve(TextView.size());
+  auto iter = TextView.begin();
   CTime PreviousTime = iter->getPressingTime();
-  for (; iter != Session.end(); ++iter) {
+  for (; iter != TextView.end(); ++iter) {
     CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+    // Need filter here
     if (ResponseTime > CTime())
       SpeedData.push_back(60. / ResponseTime.toSecondsF());
     PreviousTime = iter->getPressingTime();
@@ -99,43 +99,6 @@ CAnalyticalModuleImpl::getRawSpeedData(const CSession& Session) const {
   return SpeedData;
 }
 
-CAnalyticalModuleImpl::CContainer CAnalyticalModuleImpl::getFullTextSpeedData(
-    const CTextDataTree& TextTree) const {
-  CContainer SpeedData;
-  // TO DO
-  // debug version
-  if (TextTree->getFullTextLength() == 0)
-    return SpeedData;
-  SpeedData.reserve(TextTree->getFullTextLength());
-  auto iter = TextTree->beginFullText();
-  CTime PreviousTime = iter->getPressingTime();
-  for (; iter != TextTree->endFullText(); ++iter) {
-    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
-    if (ResponseTime > CTime())
-      SpeedData.push_back(60. / ResponseTime.toSecondsF());
-    PreviousTime = iter->getPressingTime();
-  }
-  return SpeedData;
-}
-
-CAnalyticalModuleImpl::CContainer
-CAnalyticalModuleImpl::getTextSpeedData(const CTextDataTree& TextTree) const {
-  CContainer SpeedData;
-  // TO DO
-  // debug version
-  if (TextTree->getPrintedTextLength() == 0)
-    return SpeedData;
-  SpeedData.reserve(TextTree->getPrintedTextLength());
-  auto iter = TextTree->beginPrintedText();
-  CTime PreviousTime = iter->getPressingTime();
-  for (; iter != TextTree->endPrintedText(); ++iter) {
-    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
-    if (ResponseTime > CTime())
-      SpeedData.push_back(60. / ResponseTime.toSecondsF());
-    PreviousTime = iter->getPressingTime();
-  }
-  return SpeedData;
-}
 } // namespace NSAnalyticalModuleDetail
 } // namespace NSKernel
 } // namespace NSApplication

@@ -156,6 +156,7 @@ public:
     CConstFullTextIterator cend() const;
 
     CIndex size() const;
+    bool empty() const;
 
   private:
     CFullTextProxy(CTextDataTreeImpl* pTree);
@@ -175,6 +176,7 @@ public:
     CConstFullTextIterator cend() const;
 
     CIndex size() const;
+    bool empty() const;
 
   private:
     CConstFullTextProxy(const CTextDataTreeImpl* pTree);
@@ -200,6 +202,7 @@ public:
     CConstTextIterator cend() const;
 
     CIndex size() const;
+    bool empty() const;
 
   private:
     CPrintedTextProxy(CTextDataTreeImpl* pTree);
@@ -219,6 +222,7 @@ public:
     CConstTextIterator cend() const;
 
     CIndex size() const;
+    bool empty() const;
 
   private:
     CConstPrintedTextProxy(const CTextDataTreeImpl* pTree);

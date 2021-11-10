@@ -442,6 +442,10 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::CFullTextProxy::size() const {
   return pTree_->getFullTextLength();
 }
 
+bool CTextDataTreeImpl::CFullTextProxy::empty() const {
+  return size() == 0;
+}
+
 CTextDataTreeImpl::CFullTextProxy::CFullTextProxy(CTextDataTreeImpl* pTree)
     : pTree_(pTree) {
   assert(pTree_);
@@ -469,6 +473,10 @@ CTextDataTreeImpl::CConstFullTextProxy::cend() const {
 
 CTextDataTreeImpl::CIndex CTextDataTreeImpl::CConstFullTextProxy::size() const {
   return pTree_->getFullTextLength();
+}
+
+bool CTextDataTreeImpl::CConstFullTextProxy::empty() const {
+  return size() == 0;
 }
 
 CTextDataTreeImpl::CConstFullTextProxy::CConstFullTextProxy(
@@ -509,6 +517,10 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::CPrintedTextProxy::size() const {
   return pTree_->getPrintedTextLength();
 }
 
+bool CTextDataTreeImpl::CPrintedTextProxy::empty() const {
+  return size() == 0;
+}
+
 CTextDataTreeImpl::CPrintedTextProxy::CPrintedTextProxy(
     CTextDataTreeImpl* pTree)
     : pTree_(pTree) {
@@ -538,6 +550,10 @@ CTextDataTreeImpl::CConstPrintedTextProxy::cend() const {
 CTextDataTreeImpl::CIndex
 CTextDataTreeImpl::CConstPrintedTextProxy::size() const {
   return pTree_->getPrintedTextLength();
+}
+
+bool CTextDataTreeImpl::CConstPrintedTextProxy::empty() const {
+  return size() == 0;
 }
 
 CTextDataTreeImpl::CConstPrintedTextProxy::CConstPrintedTextProxy(
