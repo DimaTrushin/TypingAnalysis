@@ -91,6 +91,7 @@ HEADERS += \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
   Interface/SessionFlusher.h \
+  Interface/StatisticsView.h \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
   Kernel/AnalyticalModule.h \
@@ -149,6 +150,7 @@ HEADERS += \
   InstructionLevels.h \
   KeyboardHandlerAccess.h \
   ParallelModuleAccess.h \
+  Qt/SessionStatisticsModel.h \
   QtLoopException.h \
   SimdDetector.h \
   SimdDetectorAccess.h \
@@ -168,6 +170,7 @@ SOURCES += \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \
   Interface/SessionFlusher.cpp \
+  Interface/StatisticsView.cpp \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
   Kernel/AnalyticalModule.cpp \
@@ -205,6 +208,7 @@ SOURCES += \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   ParallelModuleAccess.cpp \
+  Qt/SessionStatisticsModel.cpp \
   SimdDetector.cpp \
   SimdDetectorAccess.cpp \
   TimeApp.cpp \

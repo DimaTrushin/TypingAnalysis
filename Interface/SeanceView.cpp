@@ -98,7 +98,6 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   if (MySignal_.isLocked())
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
-  //  if (CurrentSeanceViewData_.hasValue()) {
   SeanceModel_.appendFromSeance(data.Seance);
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);

@@ -8,7 +8,8 @@ CApplicationGUI::CApplicationGUI()
           AppWindow_.getTextButtonGroup(), AppWindow_.getShiftButtonGroup(),
           AppWindow_.getCtrlButtonGroup(), AppWindow_.getAltButtonGroup()),
       MainTextPrinter_(AppWindow_.getMainTextEdit()),
-      SpeedPlotter_(AppWindow_.getSpeedPlot()) {
+      SpeedPlotter_(AppWindow_.getSpeedPlot()),
+      StatisticsView_(AppWindow_.getStatisticsTable()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

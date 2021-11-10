@@ -11,6 +11,7 @@ class MainWindow;
 class QButtonGroup;
 class QCloseEvent;
 class QSplitter;
+class QTableView;
 class QTextEdit;
 class QTreeView;
 QT_END_NAMESPACE
@@ -35,6 +36,7 @@ public:
   QButtonGroup* getAltButtonGroup() const;
   QTextEdit* getMainTextEdit() const;
   QwtPlot* getSpeedPlot() const;
+  QTableView* getStatisticsTable() const;
 
 signals:
   bool closeMainWindow();

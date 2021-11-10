@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
+TARGET = project
 
 # If you link to Qt staticly, you must configure the kit as follows.
 # Go to:

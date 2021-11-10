@@ -92,7 +92,7 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::getNumberOfReturnPoints() const {
   return rootIterator().getNumberOfLeaves() - 1;
 }
 
-CTextDataTreeImpl::CIndex CTextDataTreeImpl::getTotalNumberOfSymbols() const {
+CTextDataTreeImpl::CIndex CTextDataTreeImpl::getTreeSize() const {
   return Tree_.size();
 }
 

@@ -4,6 +4,7 @@
 #include "Interface/CTextPrinter.h"
 #include "Interface/Plotter.h"
 #include "Interface/SeanceView.h"
+#include "Interface/StatisticsView.h"
 #include "Interface/TextModeView.h"
 #include "Qt/MainWindow.h"
 
@@ -34,6 +35,7 @@ protected:
   NSInterface::CTextModeView TextModeView_;
   NSInterface::CTextPrinter MainTextPrinter_;
   NSInterface::CPlotter SpeedPlotter_;
+  NSInterface::CStatisticsView StatisticsView_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

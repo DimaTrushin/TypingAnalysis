@@ -76,8 +76,6 @@ class CTextPrinterImpl {
   using EKeyStatus = CTextPalette::EKeyStatus;
   using ESymbolStatus = NSKernel::ESymbolStatus;
 
-  using CTextDataTree = NSKernel::CTextDataTree;
-
 public:
   explicit CTextPrinterImpl(QTextEdit* TextEdit);
 

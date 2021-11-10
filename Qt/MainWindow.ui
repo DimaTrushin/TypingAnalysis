@@ -451,7 +451,7 @@
                     </item>
                    </layout>
                   </widget>
-                  <widget class="QListView" name="listView"/>
+                  <widget class="QTableView" name="tableView"/>
                  </widget>
                 </item>
                </layout>
@@ -748,9 +748,9 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

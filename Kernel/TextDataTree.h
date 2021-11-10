@@ -95,7 +95,7 @@ public:
   // The number of times text deleting begins
   CIndex getNumberOfReturnPoints() const;
   //  // including the root symbol
-  CIndex getTotalNumberOfSymbols() const;
+  CIndex getTreeSize() const;
 
   CIndex getPrintedTextLength() const;
   CIndex getFullTextLength() const;

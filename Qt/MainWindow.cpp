@@ -50,6 +50,10 @@ QwtPlot* CMainWindow::getSpeedPlot() const {
   return SpeedPlot_;
 }
 
+QTableView* CMainWindow::getStatisticsTable() const {
+  return ui_->tableView;
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();
