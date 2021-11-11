@@ -50,6 +50,11 @@ void CSeanceViewImpl::onCurrentSeanceConnect(const CSeanceViewData& data) {
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
   SeanceModel_.clear();
+  // TO DO
+  // Need to
+  // 1) add here a function to compute seance description to append
+  // 2) pass the description to the Model
+  // 3) make a separate object to make the description
   SeanceModel_.appendFromSeance(data.Seance);
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);

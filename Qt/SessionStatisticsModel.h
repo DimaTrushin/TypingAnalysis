@@ -19,6 +19,7 @@ public:
     QString Data;
     QString Value;
   };
+  using CStatisticsDescription = std::deque<CDescription>;
 
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -29,7 +30,7 @@ public:
   Qt::ItemFlags flags(const QModelIndex& index) const override;
 
   bool clear();
-  bool setStatistics(const CTextData&);
+  bool setStatistics(CStatisticsDescription&&);
 
 private:
   QString headerName(int column) const;
@@ -39,7 +40,7 @@ private:
   static constexpr const char kDefaultDataName_[] = "Data";
   static constexpr const char kDefaultValueName_[] = "Value";
 
-  std::deque<CDescription> Data_;
+  CStatisticsDescription Data_;
 };
 
 } // namespace NSQt

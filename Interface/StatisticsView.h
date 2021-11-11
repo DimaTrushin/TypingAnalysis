@@ -25,12 +25,18 @@ class CStatisticsViewImpl {
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
+  using CDescription = CSessionStatisticsModel::CDescription;
+  using CStatisticsDescription =
+      CSessionStatisticsModel::CStatisticsDescription;
+
 public:
   CStatisticsViewImpl(QTableView* TableView);
   CTextDataObserver* textDataInput();
 
 private:
   void handleTextData(const CTextData& Data);
+
+  CStatisticsDescription createStatisticsData(const CTextData& Data);
 
   QTableView* TableView_;
   CSessionStatisticsModel StatisticsModel_;
