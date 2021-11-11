@@ -25,8 +25,6 @@ CApplicationImpl::CApplicationImpl()
 
   TextModule_->subscribeToTextData(MainTextPrinter_->textDataInput());
 
-  TextModule_->subscribeToTextData(AnalyticalModule_->textDataInput());
-
   AnalyticalModule_->subscribeToSpeedData(SpeedPlotter_->speedDataInput());
   TextModule_->subscribeToTextData(StatisticsView_->textDataInput());
 
