@@ -19,31 +19,6 @@ namespace NSApplication {
 namespace NSInterface {
 
 namespace NSSeanceViewDetail {
-class CSimpleSeanceViewImpl : public QObject {
-  Q_OBJECT
-  using CSeanceDescriptionModel = NSQt::CSeanceDescriptionModel;
-
-  using CSeance = NSKernel::CSeance;
-  using CSeanceInput = NSLibrary::CObserverHot<CSeance>;
-  using CSeanceObserver = NSLibrary::CObserver<CSeance>;
-  using CSeanceGetType = CSeanceObserver::CGetType;
-
-public:
-  CSimpleSeanceViewImpl(QTreeView*);
-
-  CSeanceObserver* currentSeanceInput();
-
-public slots:
-  void onSelectionChanged(int level, int index);
-
-private:
-  void onCurrentSeanceConnect();
-  void onCurrentSeanceNotify();
-
-  QTreeView* TreeView_;
-  CSeanceDescriptionModel SeanceModel_;
-  CSeanceInput CurrentSeance_;
-};
 
 class CSeanceViewImpl : public QObject {
   Q_OBJECT
@@ -93,9 +68,6 @@ private:
 };
 
 } // namespace NSSeanceViewDetail
-
-using CSimpleSeanceView =
-    NSLibrary::CViewWrapper<NSSeanceViewDetail::CSimpleSeanceViewImpl>;
 
 using CSeanceView =
     NSLibrary::CViewWrapper<NSSeanceViewDetail::CSeanceViewImpl>;

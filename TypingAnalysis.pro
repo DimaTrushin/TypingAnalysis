@@ -7,8 +7,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17 warn_on
 
-DEFINES += KEYBOARD_HANDLER_DEBUG \
-           SEANCE_MANAGER_DEBUG
+DEFINES += KEYBOARD_HANDLER_DEBUG
+
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -285,14 +285,6 @@ contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     AppDebug/KeyboardHandlerDebugOut.cpp
 }
 
-contains(DEFINES, SEANCE_MANAGER_DEBUG) {
-    HEADERS += \
-      AppDebug/SeanceManagerDebugGUI.h \
-      AppDebug/SeanceManagerDebugOut.h
-    SOURCES += \
-      AppDebug/SeanceManagerDebugGUI.cpp \
-      AppDebug/SeanceManagerDebugOut.cpp
-}
 # The custom compiler compiles on AVX level
 win32 {
   win32-msvc*{

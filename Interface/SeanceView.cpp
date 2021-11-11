@@ -9,43 +9,6 @@ namespace NSApplication {
 namespace NSInterface {
 namespace NSSeanceViewDetail {
 
-CSimpleSeanceViewImpl::CSimpleSeanceViewImpl(QTreeView* TreeView)
-    : TreeView_(TreeView),
-      CurrentSeance_([this](CSeanceGetType) { onCurrentSeanceConnect(); },
-                     [this](CSeanceGetType) { onCurrentSeanceNotify(); }) {
-  assert(TreeView_);
-  TreeView_->setModel(&SeanceModel_);
-  TreeView_->expandAll();
-  QObject::connect(TreeView_->selectionModel(),
-                   &QItemSelectionModel::selectionChanged, &SeanceModel_,
-                   &CSeanceDescriptionModel::onSelectionChanged);
-  QObject::connect(&SeanceModel_, &CSeanceDescriptionModel::selectionChanged,
-                   this, &CSimpleSeanceViewImpl::onSelectionChanged);
-}
-
-CSimpleSeanceViewImpl::CSeanceObserver*
-CSimpleSeanceViewImpl::currentSeanceInput() {
-  return &CurrentSeance_;
-}
-
-void CSimpleSeanceViewImpl::onSelectionChanged(int level, int index) {
-  assert(index >= -1);
-  qDebug() << "level =" << level << "index =" << index;
-}
-
-void CSimpleSeanceViewImpl::onCurrentSeanceConnect() {
-  SeanceModel_.clear();
-  if (CurrentSeance_.hasValue())
-    SeanceModel_.appendFromSeance(*CurrentSeance_.data());
-}
-
-void CSimpleSeanceViewImpl::onCurrentSeanceNotify() {
-  if (CurrentSeance_.hasValue())
-    SeanceModel_.appendFromSeance(*CurrentSeance_.data());
-  else
-    SeanceModel_.clear();
-}
-
 CSeanceViewImpl::CSeanceViewImpl(QTreeView* TreeView)
     : TreeView_(TreeView),
       CurrentSeanceViewData_(

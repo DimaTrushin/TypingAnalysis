@@ -39,13 +39,6 @@ CApplicationImpl::CApplicationImpl()
         KeyboardHandlerOut_->keyReleasingInput());
   }
 #endif
-
-#ifdef SEANCE_MANAGER_DEBUG
-  SeanceManager_->subscribeToCurrentSeance(
-      SeanceManagerOut_->currentSeanceInput());
-  SeanceManager_->subscribeToCurrentSeance(
-      SeanceManagerOut_->currentSeanceTreeInput());
-#endif
 }
 
 } // namespace NSApplication

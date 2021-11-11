@@ -14,10 +14,6 @@
 #include "AppDebug/KeyboardHandlerDebugOut.h"
 #endif
 
-#ifdef SEANCE_MANAGER_DEBUG
-#include "AppDebug/SeanceManagerDebugOut.h"
-#endif
-
 namespace NSApplication {
 
 class CApplicationGUI {
@@ -39,10 +35,6 @@ protected:
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();
-#endif
-
-#ifdef SEANCE_MANAGER_DEBUG
-  NSAppDebug::CSeanceManagerDebugOut SeanceManagerOut_ = mainWindow();
 #endif
 };
 
