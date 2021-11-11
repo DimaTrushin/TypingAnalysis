@@ -63,6 +63,8 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
 
 CAnalyticalModuleImpl::CContainer
 CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
+  // TO DO
+  // Need to exclude auto repeat
   CContainer SpeedData;
   switch (Data.TextMode.TextMode) {
   case ETextMode::Raw:
@@ -83,6 +85,8 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
 template<class TText>
 CAnalyticalModuleImpl::CContainer
 CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
+  // TO DO
+  // Need to exclude auto repeat
   CContainer SpeedData;
   if (TextView.empty())
     return SpeedData;
