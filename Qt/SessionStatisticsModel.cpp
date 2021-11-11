@@ -8,7 +8,7 @@ namespace NSQt {
 int CSessionStatisticsModel::rowCount(const QModelIndex& index) const {
   if (index.isValid())
     return 0;
-  return Data_.size();
+  return static_cast<int>(Data_.size());
 }
 
 int CSessionStatisticsModel::columnCount(const QModelIndex& index) const {
@@ -46,7 +46,7 @@ Qt::ItemFlags CSessionStatisticsModel::flags(const QModelIndex&) const {
 bool CSessionStatisticsModel::clear() {
   if (Data_.size() == 0)
     return false;
-  beginRemoveRows(QModelIndex(), 0, Data_.size() - 1);
+  beginRemoveRows(QModelIndex(), 0, static_cast<int>(Data_.size() - 1));
   Data_.clear();
   endRemoveRows();
   return true;
@@ -54,7 +54,7 @@ bool CSessionStatisticsModel::clear() {
 
 bool CSessionStatisticsModel::setStatistics(CStatisticsDescription&& NewData) {
   clear();
-  beginInsertRows(QModelIndex(), 0, NewData.size() - 1);
+  beginInsertRows(QModelIndex(), 0, static_cast<int>(NewData.size() - 1));
   Data_ = std::move(NewData);
   endInsertRows();
   return true;

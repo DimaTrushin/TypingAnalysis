@@ -282,6 +282,7 @@ void CTextDataTreeImpl::setMistakeInformation() {
   setMistakeRoutes();
   setMistakeSymbols();
   setRequiredDeleted();
+  setNodeDepths();
 }
 
 CTextDataTreeImpl::CFullTextProxy CTextDataTreeImpl::textFullView() {
@@ -325,6 +326,45 @@ void CTextDataTreeImpl::setRequiredDeleted() {
     for (auto itMistakeRoute = currentPosition->beginMistakes();
          itMistakeRoute != currentPosition->endMistakes(); ++itMistakeRoute)
       setRequiredDeletedFrom(*itMistakeRoute);
+}
+
+void CTextDataTreeImpl::setNodeDepths() {
+
+  for (CFullTextIterator iter = rootIterator(); iter != endFullText(); ++iter) {
+    CFullTextIterator parent;
+    switch (iter->getSymbolStatus()) {
+    case ESymbolStatus::TextSymbol:
+      iter->setDepth(0);
+      break;
+    case ESymbolStatus::DeletedSymbolAccidental:
+      parent = iter;
+      parent.setToParent();
+      if (parent->getSymbolStatus() == ESymbolStatus::DeletedSymbolAccidental)
+        iter->setDepth(parent->getDepth() + 1);
+      else
+        iter->setDepth(0);
+      break;
+    case ESymbolStatus::DeletedSymbolRequired:
+      parent = iter;
+      parent.setToParent();
+      if (parent->getSymbolStatus() == ESymbolStatus::DeletedSymbolRequired)
+        iter->setDepth(parent->getDepth() + 1);
+      else
+        iter->setDepth(0);
+      break;
+    case ESymbolStatus::ErroneousSymbol:
+      parent = iter;
+      parent.setToParent();
+      iter->setDepth(parent->numberOfMistakeRoutes());
+      break;
+    case ESymbolStatus::RootSymbol:
+      iter->setDepth(0);
+      break;
+    default:
+      assert(false);
+      break;
+    }
+  }
 }
 
 void CTextDataTreeImpl::reAssignMistakeRoutes(
@@ -595,8 +635,16 @@ ESymbolStatus CTextNode::getSymbolStatus() const {
   return SymbolStatus_;
 }
 
+unsigned char CTextNode::getDepth() const {
+  return Depth_;
+}
+
 void CTextNode::setSymbolStatus(ESymbolStatus newStatus) {
   SymbolStatus_ = newStatus;
+}
+
+void CTextNode::setDepth(unsigned char Depth) {
+  Depth_ = Depth;
 }
 
 void CTextNode::clearMistakeRoutes() {

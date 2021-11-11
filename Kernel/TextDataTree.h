@@ -236,6 +236,7 @@ private:
   void setMistakeRoutes();
   void setMistakeSymbols();
   void setRequiredDeleted();
+  void setNodeDepths();
 
   void reAssignMistakeRoutes(const CTextIterator& currentPosition);
   void assignNewMistakeRoutes(const CTextIterator& currentPosition);
@@ -277,7 +278,10 @@ public:
 
   QChar getSymbol() const;
   ESymbolStatus getSymbolStatus() const;
+  unsigned char getDepth() const;
   void setSymbolStatus(ESymbolStatus newStatus);
+
+  void setDepth(unsigned char Depth);
 
   void clearMistakeRoutes();
 
@@ -305,6 +309,7 @@ private:
   CTime ReleaseTime_;
   CTime ResponseTime_;
   QChar Symbol_;
+  unsigned char Depth_ = 0;
   ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
   CMistakeRoutesContainer MistakeRoutes_;
 };

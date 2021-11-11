@@ -7,6 +7,14 @@
 namespace NSApplication {
 namespace NSInterface {
 
+bool operator==(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
+  return lhs.Status == rhs.Status && lhs.Depth == rhs.Depth;
+}
+
+bool operator!=(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
+  return !(lhs == rhs);
+}
+
 namespace NSTextPrinterDetail {
 
 CTextPrinterImpl::CTextPrinterImpl(QTextEdit* TextEdit)
@@ -49,7 +57,7 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
   EKeyStatus CurrentStatus = getKeyRawStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
     EKeyStatus NewStatus = extractToBufferRaw(CurrentStatus, sentinel, &iter);
-    Text.append(coloredTextFromBuffer(CurrentStatus));
+    Text.append(coloredTextFromBuffer({CurrentStatus, 0}));
     CurrentStatus = NewStatus;
   }
   TextEdit_->setHtml(Text);
@@ -67,9 +75,9 @@ void CTextPrinterImpl::printFormattedText(const TText& TextView) {
   iter = TextView.begin();
   sentinel = TextView.end();
   QString Text;
-  EKeyStatus CurrentStatus = getKeyTextStatus(*iter);
-  while (CurrentStatus != EKeyStatus::End) {
-    EKeyStatus NewStatus = extractToBufferText(CurrentStatus, sentinel, &iter);
+  CStatusData CurrentStatus = getKeyTextStatus(*iter);
+  while (CurrentStatus.Status != EKeyStatus::End) {
+    CStatusData NewStatus = extractToBufferText(CurrentStatus, sentinel, &iter);
     Text.append(coloredTextFromBuffer(CurrentStatus));
     CurrentStatus = NewStatus;
   }
@@ -89,23 +97,24 @@ CTextPrinterImpl::getKeyRawStatus(const CKeyEvent& Key) {
   return EKeyStatus::Ignore;
 }
 
-CTextPrinterImpl::EKeyStatus
+CTextPrinterImpl::CStatusData
 CTextPrinterImpl::getKeyTextStatus(const CTextNode& TextNode) {
   switch (TextNode.getSymbolStatus()) {
   case ESymbolStatus::TextSymbol:
-    return EKeyStatus::MainText;
+    return {EKeyStatus::MainText, TextNode.getDepth()};
     break;
   case ESymbolStatus::DeletedSymbolAccidental:
-    return EKeyStatus::AccidentallyDeleted;
+    return {EKeyStatus::AccidentallyDeleted, TextNode.getDepth()};
     break;
   case ESymbolStatus::DeletedSymbolRequired:
-    return EKeyStatus::RequiredDeletion;
+    return {EKeyStatus::RequiredDeletion, TextNode.getDepth()};
     break;
   case ESymbolStatus::ErroneousSymbol:
-    return EKeyStatus::Erroneous;
+    return {EKeyStatus::Erroneous, TextNode.getDepth()};
     break;
   default:
-    return EKeyStatus::Ignore;
+    assert(false);
+    return {EKeyStatus::Ignore, TextNode.getDepth()};
     break;
   }
 }
@@ -139,18 +148,17 @@ CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
   return getKeyRawStatus(*iter);
 }
 template<class CConstIterator>
-CTextPrinterImpl::EKeyStatus CTextPrinterImpl::extractToBufferText(
-    EKeyStatus Status, const CConstIterator sentinel, CConstIterator* pIter) {
+CTextPrinterImpl::CStatusData CTextPrinterImpl::extractToBufferText(
+    CStatusData Status, const CConstIterator sentinel, CConstIterator* pIter) {
   auto& iter = *pIter;
   buffer_.clear();
-  while (iter != sentinel && (getKeyTextStatus(*iter) == Status ||
-                              getKeyTextStatus(*iter) == EKeyStatus::Ignore)) {
+  while (iter != sentinel && getKeyTextStatus(*iter) == Status) {
     buffer_.push_back(iter->getSymbol());
     ++iter;
   }
   qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
-    return EKeyStatus::End;
+    return {EKeyStatus::End, 0};
   return getKeyTextStatus(*iter);
 }
 
@@ -167,10 +175,12 @@ void CTextPrinterImpl::setDefaultBackgroundColor() {
   TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
 }
 
-QString CTextPrinterImpl::coloredTextFromBuffer(EKeyStatus Status) {
+QString CTextPrinterImpl::coloredTextFromBuffer(CStatusData StatusData) {
   QString Text;
-  if (Status < EKeyStatus::Ignore) {
-    Text = coloredTextFromBuffer(Palette_.Text[Status], Palette_.Back[Status]);
+  if (StatusData.Status < EKeyStatus::Ignore) {
+    Text = coloredTextFromBuffer(
+        Palette_.Text[StatusData.Status],
+        shade(Palette_.Back[StatusData.Status], StatusData.Depth));
   }
   return Text;
 }
@@ -186,6 +196,14 @@ QString CTextPrinterImpl::coloredTextFromBuffer(QColor Text, QColor Back) {
       .arg(Back.green())
       .arg(Back.blue())
       .arg(QString(buffer_.data(), buffer_.size()));
+}
+
+QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
+  int h, s, l;
+  Depth = std::min<unsigned char>(Depth, 10);
+  Color.getHsv(&h, &s, &l);
+  l = (l > 15 * Depth ? l - 15 * Depth : 0);
+  return QColor::fromHsv(h, s, l);
 }
 
 } // namespace NSTextPrinterDetail

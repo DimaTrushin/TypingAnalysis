@@ -30,6 +30,14 @@ struct CTextPalette {
     End,
   };
 
+  struct CStatusData {
+    EKeyStatus Status;
+    unsigned char Depth;
+
+    friend bool operator==(CStatusData lhs, CStatusData rhs);
+    friend bool operator!=(CStatusData lhs, CStatusData rhs);
+  };
+
   std::array<QColor, EKeyStatus::End> Text{{
       {0, 0, 0} /*MainText*/,
       {0, 0, 0} /*AccidentallyDeleted*/,
@@ -75,6 +83,9 @@ class CTextPrinterImpl {
 
   using EKeyStatus = CTextPalette::EKeyStatus;
   using ESymbolStatus = NSKernel::ESymbolStatus;
+  using CStatusData = CTextPalette::CStatusData;
+
+  using CQCharBuffer = std::vector<QChar>;
 
 public:
   explicit CTextPrinterImpl(QTextEdit* TextEdit);
@@ -88,26 +99,27 @@ private:
   void printFormattedText(const TText& TextView);
 
   EKeyStatus getKeyRawStatus(const CKeyEvent& Key);
-  EKeyStatus getKeyTextStatus(const CTextNode& TextNode);
+  CStatusData getKeyTextStatus(const CTextNode& TextNode);
   EKeyStatus extractToBufferRaw(EKeyStatus Status,
                                 const CConstSessionIterator sentinel,
                                 CConstSessionIterator* pIter);
   template<class CConstIterator>
-  EKeyStatus extractToBufferText(EKeyStatus Status,
-                                 const CConstIterator sentinel,
-                                 CConstIterator* pIter);
+  CStatusData extractToBufferText(CStatusData Status,
+                                  const CConstIterator sentinel,
+                                  CConstIterator* pIter);
 
   void clear();
   void setDefaultBackgroundColor();
 
-  QString coloredTextFromBuffer(EKeyStatus Status);
+  QString coloredTextFromBuffer(CStatusData Status);
   QString coloredTextFromBuffer(QColor Text, QColor Back);
+  static QColor shade(QColor Color, unsigned char Depth);
 
   static constexpr const size_t kDefaultBufferSize = 128;
 
   QTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
-  std::vector<QChar> buffer_ = std::vector<QChar>(kDefaultBufferSize);
+  CQCharBuffer buffer_ = CQCharBuffer(kDefaultBufferSize);
   CTextPalette Palette_;
 };
 
