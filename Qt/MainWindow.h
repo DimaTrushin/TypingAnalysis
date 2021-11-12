@@ -38,7 +38,7 @@ public:
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
 
-signals:
+Q_SIGNALS:
   bool closeMainWindow();
 
 private:

@@ -113,9 +113,9 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
     // statement.
     CKeyTextData KeyTextData = getKeyText(KeyData);
 
-    emit KeyPressing({Time, KeyPosition, KeyID, Label, KeyTextData, Flags});
+    Q_EMIT KeyPressing({Time, KeyPosition, KeyID, Label, KeyTextData, Flags});
   } else {
-    emit KeyReleasing({Time, KeyPosition, KeyID});
+    Q_EMIT KeyReleasing({Time, KeyPosition, KeyID});
   }
 }
 

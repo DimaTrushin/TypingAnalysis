@@ -128,9 +128,9 @@ void CSeanceDescriptionModel::onSelectionChanged(
   if (IndexList.size() > 0) {
     auto Index = IndexList.at(0);
     assert(get_level(Index) == 1);
-    emit selectionChanged(get_level(Index), Index.row());
+    Q_EMIT selectionChanged(get_level(Index), Index.row());
   } else {
-    emit selectionChanged(-1, -1);
+    Q_EMIT selectionChanged(-1, -1);
   }
 }
 

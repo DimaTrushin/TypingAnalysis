@@ -40,10 +40,10 @@ public:
   bool appendFromSeance(const CSeance&);
   bool clear();
 
-signals:
+Q_SIGNALS:
   void selectionChanged(int level, int index);
 
-public slots:
+public Q_SLOTS:
   void onSelectionChanged(const QItemSelection& selected,
                           const QItemSelection& deselected);
 

@@ -31,7 +31,7 @@ public:
 
   CPlotDataObserver* speedDataInput();
 
-public slots:
+public Q_SLOTS:
   void legendChecked(const QVariant&, bool, int);
 
 private:

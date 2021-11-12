@@ -1,5 +1,5 @@
 [requires]
-tbb/2020.3
+onetbb/2021.3.0
 
 [generators]
 qmake

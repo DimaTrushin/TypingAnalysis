@@ -20,7 +20,7 @@ public:
 
   void subscribeToAppState(CStateObserver* Observer);
 
-public slots:
+public Q_SLOTS:
   void applicationStateChanged(Qt::ApplicationState);
 
 private:

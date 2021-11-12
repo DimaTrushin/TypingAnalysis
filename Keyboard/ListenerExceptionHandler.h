@@ -18,7 +18,7 @@ public:
   CExceptionConnector(CKeyboardHandler*);
   ~CExceptionConnector();
 
-signals:
+Q_SIGNALS:
   void KeyboardException(const CQtException&);
 };
 

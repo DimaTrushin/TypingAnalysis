@@ -38,7 +38,7 @@ public:
   CTextModeObserver* textModeInput();
   void subscribeToTextMode(CTextModeObserver*);
 
-public slots:
+public Q_SLOTS:
   void TextButtonToggled(int id, bool checked);
   void ShiftButtonToggled(int id, bool checked);
   void CtrlButtonToggled(int id, bool checked);

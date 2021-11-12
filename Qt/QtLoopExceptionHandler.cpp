@@ -18,7 +18,7 @@ void CQtLoopExceptionHandler::handleException(const CQtException& Exception) {
   } catch (...) {
     CExceptionHandler React;
   }
-  emit quit();
+  Q_EMIT quit();
 }
 
 } // namespace NSQt

@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 TARGET = project
 
+CONFIG           += no_keywords
+
 # If you link to Qt staticly, you must configure the kit as follows.
 # Go to:
 # Kit -> Build -> Build Steps -> Additional parameters

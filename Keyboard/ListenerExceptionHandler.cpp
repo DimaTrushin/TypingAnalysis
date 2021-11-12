@@ -21,9 +21,9 @@ CListenerExceptionHandler::CListenerExceptionHandler(
   try {
     throw;
   } catch (std::exception& Exception) {
-    emit KeyboardException(CQtException(Exception.what()));
+    Q_EMIT KeyboardException(CQtException(Exception.what()));
   } catch (...) {
-    emit KeyboardException(CQtException(kUnknownExceptionMsg_));
+    Q_EMIT KeyboardException(CQtException(kUnknownExceptionMsg_));
   }
 }
 

@@ -47,7 +47,7 @@ public:
   CSeanceViewDataObserver* currentSeanceViewDataInput();
   void subscribeToSessionIndex(CIndexObserver* obs);
 
-public slots:
+public Q_SLOTS:
   void onSelectionChanged(int level, int index);
 
 private:

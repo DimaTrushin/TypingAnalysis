@@ -26,7 +26,7 @@ public:
   CKeyboardListenerLinImpl(CAnyKillerPromise, CKeyboardHandler*);
   ~CKeyboardListenerLinImpl();
 
-signals:
+Q_SIGNALS:
   void KeyPressing(const CKeyPressing&);
   void KeyReleasing(const CKeyReleasing&);
 

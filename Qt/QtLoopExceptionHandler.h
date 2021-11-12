@@ -25,9 +25,9 @@ public:
     connect(obj, std::forward<TS>(signal), this,
             &CQtLoopExceptionHandler::handleException);
   }
-signals:
+Q_SIGNALS:
   void quit();
-public slots:
+public Q_SLOTS:
   void handleException(const CQtException&);
 };
 

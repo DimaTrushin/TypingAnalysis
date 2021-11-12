@@ -71,7 +71,7 @@ void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
 }
 
 void CKeyboardHandler::onKeyboardException(const CQtException& message) {
-  emit quit(message);
+  Q_EMIT quit(message);
 }
 
 void CKeyboardHandler::stopListener() const noexcept {

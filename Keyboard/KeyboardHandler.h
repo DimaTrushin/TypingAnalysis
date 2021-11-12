@@ -47,9 +47,9 @@ public:
   void subscribeToKeyPressing(CKeyPressingObserver* Observer);
   void subscribeToKeyReleasing(CKeyReleasingObserver* Observer);
 
-signals:
+Q_SIGNALS:
   void quit(const CQtException&);
-public slots:
+public Q_SLOTS:
   void onKeyPressing(const CKeyPressing&);
   void onKeyReleasing(const CKeyReleasing&);
   void onKeyboardException(const CQtException&);
