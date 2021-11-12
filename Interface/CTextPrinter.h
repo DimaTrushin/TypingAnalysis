@@ -9,6 +9,8 @@
 #include <QColor>
 #include <QPalette>
 
+#include <array>
+
 QT_BEGIN_NAMESPACE
 class QTextEdit;
 QT_END_NAMESPACE

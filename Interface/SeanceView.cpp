@@ -3,6 +3,7 @@
 #include <cassert>
 #include <mutex>
 
+#include <QDebug>
 #include <QTreeView>
 
 namespace NSApplication {

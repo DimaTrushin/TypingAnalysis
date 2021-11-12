@@ -2,6 +2,7 @@
 
 #include <type_traits>
 
+#include <QDebug>
 #include <QTextEdit>
 
 namespace NSApplication {
