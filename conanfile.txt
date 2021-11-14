@@ -1,10 +1,15 @@
 [requires]
-onetbb/2021.3.0
+tbb/2020.3
+qwt/6.2.0
+
+[options]
+tbb:shared=False
 
 [generators]
 qmake
 
 [imports]
-bin, *.dll -> ./tbb/dll
-lib, *.lib -> ./tbb/lib
-include, *.* -> ./tbb/include
+lib, qwt*.lib -> ./3dparty/lib
+lib, tbb*.lib -> ./3dparty/lib
+include/tbb, *.* -> ./3dparty/include/tbb
+include, qwt*.* -> ./3dparty/include/qwt

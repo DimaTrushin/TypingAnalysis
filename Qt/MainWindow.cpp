@@ -2,8 +2,8 @@
 
 #include "ui_MainWindow.h"
 
+#include "qwt_plot.h"
 #include <QCloseEvent>
-#include <QwtPlot>
 
 namespace NSApplication {
 namespace NSQt {

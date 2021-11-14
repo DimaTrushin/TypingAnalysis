@@ -2,11 +2,11 @@
 
 #include <cassert>
 
-#include <QwtLegend>
-#include <QwtLegendLabel>
-#include <QwtPlot>
-#include <QwtPlotCurve>
-#include <QwtPlotGrid>
+#include "qwt_legend.h"
+#include "qwt_legend_label.h"
+#include "qwt_plot.h"
+#include "qwt_plot_curve.h"
+#include "qwt_plot_grid.h"
 
 namespace NSApplication {
 namespace NSInterface {

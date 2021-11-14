@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = TypingAnalysis
 
 QT       += core gui
-CONFIG           += no_keywords
+CONFIG   += no_keywords
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -58,27 +58,27 @@ macx {
 # Kit -> Build -> Build Steps
 # Add Conan install as the first step
 
-# Tbb related includes and libraries
-CONFIG += file_copies
-COPIES += TbbDllFiles
-TbbDllFiles.files = $$files($${OUT_PWD}/tbb/dll/*.dll)
-CONFIG(release, debug|release): TbbDllFiles.path = $${OUT_PWD}/release
-else:CONFIG(debug, debug|release):TbbDllFiles.path = $${OUT_PWD}/debug
+# 3d party library related code
+#CONFIG += file_copies
+#COPIES += SharedDllFiles
+#SharedDllFiles.files = $$files($${OUT_PWD}/3dparty/dll/*.dll)
+#CONFIG(release, debug|release): SharedDllFiles.path = $${OUT_PWD}/release
+#else:CONFIG(debug, debug|release):SharedDllFiles.path = $${OUT_PWD}/debug
 
-INCLUDEPATH += $${OUT_PWD}/tbb/include
+INCLUDEPATH += $${OUT_PWD}/3dparty/include
 
 win32 {
-  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/tbb/lib -ltbb
-  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/tbb/lib -ltbb_debug
+  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -ltbb
+  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -ltbb_debug
 }
 
 # Qwt related includes and libraries
+INCLUDEPATH += $${OUT_PWD}/3dparty/include/qwt
+
 win32 {
-  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/qwt/lib -lqwt
-  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/qwt/lib -lqwtd
+  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -lqwt
+  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -lqwtd
 }
-include ( 3dparty/qwt/qwt.prf )
-INCLUDEPATH += 3dparty/qwt/src 3dparty/qwt/classincludes
 
 
 HEADERS += \
