@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_CAPPLICATIONGUI_H
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
-#include "Interface/CTextPrinter.h"
 #include "Interface/Plotter.h"
 #include "Interface/SeanceView.h"
 #include "Interface/StatisticsView.h"
 #include "Interface/TextModeView.h"
+#include "Interface/TextPrinter.h"
 #include "Qt/MainWindow.h"
 
 #include <memory>

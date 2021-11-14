@@ -1,4 +1,4 @@
-#include "CTextPrinter.h"
+#include "TextPrinter.h"
 
 #include <type_traits>
 

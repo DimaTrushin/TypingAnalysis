@@ -86,7 +86,6 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
-  Interface/CTextPrinter.h \
   Interface/KeyboardShutter.h \
   Interface/Plotter.h \
   Interface/SeanceView.h \
@@ -95,6 +94,7 @@ HEADERS += \
   Interface/StatisticsView.h \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
+  Interface/TextPrinter.h \
   Kernel/AnalyticalModule.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
@@ -165,7 +165,6 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
-  Interface/CTextPrinter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
@@ -174,6 +173,7 @@ SOURCES += \
   Interface/StatisticsView.cpp \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
+  Interface/TextPrinter.cpp \
   Kernel/AnalyticalModule.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
