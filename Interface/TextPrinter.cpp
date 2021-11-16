@@ -51,38 +51,42 @@ void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
     clear();
     return;
   }
-  buffer_.clear();
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
-  QString Text;
+  QTextDocument* Doc = getDefaultDocument();
+  QTextEdit tmpEdit;
+  tmpEdit.setDocument(Doc);
+
   EKeyStatus CurrentStatus = getKeyRawStatus(*iter);
   while (CurrentStatus != EKeyStatus::End) {
     EKeyStatus NewStatus = extractToBufferRaw(CurrentStatus, sentinel, &iter);
-    Text.append(coloredTextFromBuffer({CurrentStatus, 0}));
+    setFormat({CurrentStatus, 0}, &tmpEdit);
+    insertTextFromBuffer(&tmpEdit);
     CurrentStatus = NewStatus;
   }
-  TextEdit_->setHtml(Text);
+  TextEdit_->setDocument(Doc);
 }
 
 template<class TText>
 void CTextPrinterImpl::printFormattedText(const TText& TextView) {
-  using const_iterator = typename TText::const_iterator;
-  const_iterator iter;
-  const_iterator sentinel;
   if (TextView.size() == 0) {
     clear();
     return;
   }
-  iter = TextView.begin();
-  sentinel = TextView.end();
-  QString Text;
+  auto iter = TextView.cbegin();
+  auto sentinel = TextView.cend();
+  QTextDocument* Doc = getDefaultDocument();
+  QTextEdit tmpEdit;
+  tmpEdit.setDocument(Doc);
+
   CStatusData CurrentStatus = getKeyTextStatus(*iter);
   while (CurrentStatus.Status != EKeyStatus::End) {
     CStatusData NewStatus = extractToBufferText(CurrentStatus, sentinel, &iter);
-    Text.append(coloredTextFromBuffer(CurrentStatus));
+    setFormat(CurrentStatus, &tmpEdit);
+    insertTextFromBuffer(&tmpEdit);
     CurrentStatus = NewStatus;
   }
-  TextEdit_->setHtml(Text);
+  TextEdit_->setDocument(Doc);
 }
 
 CTextPrinterImpl::EKeyStatus
@@ -148,6 +152,7 @@ CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
     return EKeyStatus::End;
   return getKeyRawStatus(*iter);
 }
+
 template<class CConstIterator>
 CTextPrinterImpl::CStatusData CTextPrinterImpl::extractToBufferText(
     CStatusData Status, const CConstIterator sentinel, CConstIterator* pIter) {
@@ -163,40 +168,23 @@ CTextPrinterImpl::CStatusData CTextPrinterImpl::extractToBufferText(
   return getKeyTextStatus(*iter);
 }
 
+void CTextPrinterImpl::setFormat(CStatusData Status,
+                                 QTextEdit* pTextEdit) const {
+  pTextEdit->setTextBackgroundColor(
+      shade(Palette_.Back[Status.Status], Status.Depth));
+  pTextEdit->setTextColor(Palette_.Text[Status.Status]);
+}
+
+void CTextPrinterImpl::insertTextFromBuffer(QTextEdit* pTextEdit) const {
+  pTextEdit->insertPlainText(QString(buffer_.data(), int(buffer_.size())));
+}
+
 void CTextPrinterImpl::clear() {
   TextEdit_->clear();
 }
 
 void CTextPrinterImpl::setDefaultBackgroundColor() {
-  QPalette palette;
-  QBrush brush(Palette_.Back[EKeyStatus::MainText]);
-  brush.setStyle(Qt::SolidPattern);
-  palette.setBrush(QPalette::Active, QPalette::Base, brush);
-  palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
   TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
-}
-
-QString CTextPrinterImpl::coloredTextFromBuffer(CStatusData StatusData) {
-  QString Text;
-  if (StatusData.Status < EKeyStatus::Ignore) {
-    Text = coloredTextFromBuffer(
-        Palette_.Text[StatusData.Status],
-        shade(Palette_.Back[StatusData.Status], StatusData.Depth));
-  }
-  return Text;
-}
-QString CTextPrinterImpl::coloredTextFromBuffer(QColor Text, QColor Back) {
-
-  return QString("<span "
-                 "style=\"color:rgb(%1,%2,%3);background-color:rgb(%4,%5,%6);"
-                 "\">%7</span>")
-      .arg(Text.red())
-      .arg(Text.green())
-      .arg(Text.blue())
-      .arg(Back.red())
-      .arg(Back.green())
-      .arg(Back.blue())
-      .arg(QString(buffer_.data(), buffer_.size()));
 }
 
 QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
@@ -205,6 +193,14 @@ QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
   Color.getHsv(&h, &s, &l);
   l = (l > 15 * Depth ? l - 15 * Depth : 0);
   return QColor::fromHsv(h, s, l);
+}
+
+QTextDocument* CTextPrinterImpl::getDefaultDocument() const {
+  QTextDocument* Doc = new QTextDocument(TextEdit_);
+  QFont t;
+  t.setPointSize(14);
+  Doc->setDefaultFont(t);
+  return Doc;
 }
 
 } // namespace NSTextPrinterDetail

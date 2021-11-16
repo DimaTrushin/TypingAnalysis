@@ -509,7 +509,7 @@ CTextDataTreeImpl::CConstFullTextProxy::end() const {
 
 CTextDataTreeImpl::CConstFullTextIterator
 CTextDataTreeImpl::CConstFullTextProxy::cend() const {
-  return pTree_->beginFullText();
+  return pTree_->endFullText();
 }
 
 CTextDataTreeImpl::CIndex CTextDataTreeImpl::CConstFullTextProxy::size() const {

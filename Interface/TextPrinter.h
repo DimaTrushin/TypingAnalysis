@@ -12,6 +12,7 @@
 #include <array>
 
 QT_BEGIN_NAMESPACE
+class QTextDocument;
 class QTextEdit;
 QT_END_NAMESPACE
 
@@ -109,13 +110,15 @@ private:
   CStatusData extractToBufferText(CStatusData Status,
                                   const CConstIterator sentinel,
                                   CConstIterator* pIter);
+  void setFormat(CStatusData Status, QTextEdit* pTextEdit) const;
+  void insertTextFromBuffer(QTextEdit* pTextEdit) const;
 
   void clear();
   void setDefaultBackgroundColor();
 
-  QString coloredTextFromBuffer(CStatusData Status);
-  QString coloredTextFromBuffer(QColor Text, QColor Back);
   static QColor shade(QColor Color, unsigned char Depth);
+
+  QTextDocument* getDefaultDocument() const;
 
   static constexpr const size_t kDefaultBufferSize = 128;
 
