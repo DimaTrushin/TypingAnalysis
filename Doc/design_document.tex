@@ -387,17 +387,35 @@ This object is a wrapper over the Qt application instance. It has observable val
 
 This object is a singleton according to section~\ref{section::Singleton}. It has one output sending the application current status. There are two options: active and inactive.
 
+\subsubsection{SimDetector}
+
+This object determines the level of SIMD instructions available in run-time. It detects the level during construction time of the object and holds the value. Additionally, it disables subnormal numbers to speed up computations. According to the manual of the Vector Class Library by Agner Fog, many inline functions of the library do not support subnormal numbers. So, it is recommended to call \verb"no_subnormals".
+
+This object is a singleton according to section~\ref{section::Singleton}. It provides one function \verb"level" to determine the level of accessible SIMD instructions.
+
+\subsubsection{Parallel}
+
+This object is capable of calling parallel algorithms. Its role is to simplify the access to different concurrent libraries. Currently, the following libraries are supported:
+\begin{enumerate}
+\item Inter TBB. Accessible on all platforms.
+\item Microsoft Parallel Library. Windows only.
+\item LibDispatch. (not implemented yet) Linux and Mac only.
+\end{enumerate}
+This object keeps the information on available libraries on the current machine, grants access to parallel algorithms of the current active library, and allows you to switch to a different available library in run-time.
+
+This object is a singleton according to section~\ref{section::Singleton}.
+
 \subsection{Kernel}
 
 
-\subsection{Sessions and Seances}
+\subsubsection{Sessions and Seances}
 
 When the application runs it uses a continuous time scale. Each new run of the application has its one time scale starting from zero. All key events on the same time line are grouped into a Seance. Each Seance can be separated into peaces called Sessions. The Session is considered as a peace of information to analyze. Each session is analyzed independently. When we load a file it contains key events on a different time scale. The notion of Seance allows us to separate current Seance intercepted while application is running and other Seances that are loaded from files.
 
 The Seance is presented by \verb"CSeance" class. Currently this is an extension of \verb"std::deque" of \verb"CSession"-s (TO DO partially implemented). Session is presented by \verb"CSession" class. Currently this is an extension of \verb"std::vector" of \verb"CKeyEvent"-s. (TO DO partially implemented).
 
 
-\subsection{CSeanceManager}
+\subsubsection{CSeanceManager}
 
 To understand \verb"CSeanceManater" and its responsibilities let us look on the following picture:
 \begin{center}
@@ -439,13 +457,13 @@ This object eats \verb"CKeyPressing" and \verb"CKeyReleasing" events. It tries t
 \item The logic for division of \verb"CRawSeance" into \verb"CRawSession"s is the following. \verb"SeanceMaker" keep track the time of the last event and the keys that are being pressed currently. If the current \verb"CRawSession" is not empty, there are no pressed keys, and the time since the last event exceeds the time limit (if it is set) the new \verb"CRawSession" is opened. Currently, the time limit is set to be 10 seconds. (TO DO) In the future, there will be an option to set the time limit via application settings.
 \end{enumerate}
 
-\subsection{CSessionSelector}
+\subsubsection{CSessionSelector}
 
 This object selects one session in the seance. It sends the information about the seance and currently chosen session to \verb"CSeanceView" via observer pattern. \verb"CSeanceView" notifies \verb"CSeanceViewController" when the chosen session is changed in the widget by user. \verb"CSeanceViewController" sets new session. The objects \verb"CSessionSelector", \verb"CSeanceView", \verb"CSeanceViewController" are model, view, and controller, respectively.
 
-\subsection{CTextModule}
+\subsubsection{CTextModule}
 
-\subsubsection{General information}
+\paragraph{General information}
 
 This module receives the chosen session from \verb"SessionSelector". The module contains the following information:
 \begin{enumerate}
@@ -454,8 +472,6 @@ This module receives the chosen session from \verb"SessionSelector". The module 
 \end{enumerate}
 
 \verb"CTextModule" notifies \verb"CTextModeView" about the state of the current text mode. \verb"CTextModeView" displays the state and notifies \verb"CTextModeController" whenever the state was changed. \verb"CTextModeController" sets new state in the \verb"CTextModule". The objects \verb"CTextModule", \verb"CTextModeView", and \verb"TextModeController" are model, view, and controller, respectively.
-
-\subsubsection{Text Tree}
 
 \paragraph{CVTree}
 
@@ -562,6 +578,54 @@ The Raw output shows each key in the session, Full text shows printed text inclu
 1) The first figure shows the Raw output. Here you can see the labels of the keys. 2) The second figure shows all the symbols printed and deleted ones. Black symbols on the green background represent the usual text. Orange background corresponds to a symbol where a mistake appeared. Pink and red colors represent deleted symbols. The red ones are the symbols that were required to delete. The pink ones are the symbols that did not lead to a mistake. The user did not need to delete them. 3) The latter mode is Printed text. It shows the final text.
 \end{center}
 
+\subsubsection{Analytical Module}
+
+The aim of the module is to extract information from the \verb"CTextData" came from \verb"CTextModule". Currently it extracts:
+\begin{enumerate}
+\item Density of the speed distribution.
+\end{enumerate}
+
+\paragraph{CFunctionData}
+
+This object hold required information to compute density of random variable. It contains
+\begin{enumerate}
+\item Samples. Data samples of the random variable, i.e. if the random variable is the speed of typing, then Samples contain the values of the speed of each key.
+\item Functional objects to compute approximation and its derivative. Currently there are three different ones:
+\begin{enumerate}
+\item Approximation using normal distribution. 
+\item Approximation using Maxwell-Boltzmann distribution.
+\item Approximation using Rayleigh distribution.
+\end{enumerate}
+\item Plot Data. This object contains the information required to draw the required plots.
+\end{enumerate}
+
+The objects computing density or its derivative use Samples and an argument. Internally each such an object uses SIMD to speed up the computation. Currently SSE2 and AVX levels are used. The level SSE2 is default for x64 systems and allows to operate with $2$ doubles at the same time. The level AVX allows to operate with $4$ doubles at the same time. The level of instructions is determined in run-time by special object \verb"SimdDetector". In order to deal with SIMD instructions, Vector Class Library of Agner Fog is used.
+
+Each object computing the density is based on \verb"FunctionModuleBase" template. The template simplifies the dispatching of functions for different SIMD levels.
+
+\begin{center}
+\includegraphics[scale = 0.6]{Figures/Density.jpg}
+
+The red color plot is the approximation using normal distribution, the green color plot is the approximation using Maxwell-Boltzmann distribution, and the blue color plot is the approximation using Rayleigh distribution.
+\end{center}
+\begin{center}
+\includegraphics[scale = 0.6]{Figures/DensityAndDerivative.jpg}
+
+Here you can see the plots of the approximation using normal distribution and its derivative. The axis for the approximation is on the left and the axis for the derivative is on the right.
+\end{center}
+
+% TO DO
+% Should describe the math related to computation of approximations.
+
+\paragraph{CPlotData}
+
+Computation of the plots is the most time consuming place of the application. \verb"CPlotData" stores inside the values of $x$-coordinates for the grid to draw plots and $y$-values on the grid for each plot. In order to fill the grid we use \verb"parallel_for" algorithm. We use three parallel libraries:
+\begin{enumerate}
+\item Inter TBB. Accessible on all platforms.
+\item Microsoft Parallel Library. Windows only.
+\item LibDispatch. (not implemented yet) Linux and Mac only.
+\end{enumerate}
+In order to simplify the usage of the libraries, we use a wrapper \verb"CParallelModule". This module keeps the information on available libraries on the current machine, grants access to \verb"parallel_for" algorithm of the current active library, and allows you to switch to a different available library in run-time.
 
 
 \subsection{Qt Resources}
