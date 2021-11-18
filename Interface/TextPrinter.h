@@ -97,19 +97,15 @@ public:
 
 private:
   void handleTextData(const CTextData& data);
-  void printFormattedSession(const CSession& Session);
+  template<class TNode>
+  CStatusData getStatus(const TNode& Node) const;
+  template<class TConstIterator>
+  CStatusData extractToBuffer(CStatusData Current,
+                              const TConstIterator sentinel,
+                              TConstIterator* pIter);
   template<class TText>
   void printFormattedText(const TText& TextView);
 
-  EKeyStatus getKeyRawStatus(const CKeyEvent& Key);
-  CStatusData getKeyTextStatus(const CTextNode& TextNode);
-  EKeyStatus extractToBufferRaw(EKeyStatus Status,
-                                const CConstSessionIterator sentinel,
-                                CConstSessionIterator* pIter);
-  template<class CConstIterator>
-  CStatusData extractToBufferText(CStatusData Status,
-                                  const CConstIterator sentinel,
-                                  CConstIterator* pIter);
   void setFormat(CStatusData Status, QTextEdit* pTextEdit) const;
   void insertTextFromBuffer(QTextEdit* pTextEdit) const;
 

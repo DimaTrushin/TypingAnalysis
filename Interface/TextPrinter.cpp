@@ -1,7 +1,5 @@
 #include "TextPrinter.h"
 
-#include <type_traits>
-
 #include <QDebug>
 #include <QTextEdit>
 
@@ -33,7 +31,7 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
   // Preliminary implementation
   switch (data.TextMode.TextMode) {
   case ETextMode::Raw:
-    printFormattedSession(data.Session);
+    printFormattedText(data.Session.get());
     break;
   case ETextMode::Full:
     printFormattedText(data.textConstFullView());
@@ -46,64 +44,9 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
   }
 }
 
-void CTextPrinterImpl::printFormattedSession(const CSession& Session) {
-  if (Session.empty()) {
-    clear();
-    return;
-  }
-  auto iter = Session.cbegin();
-  auto sentinel = Session.cend();
-  QTextDocument* Doc = getDefaultDocument();
-  QTextEdit tmpEdit;
-  tmpEdit.setDocument(Doc);
-
-  EKeyStatus CurrentStatus = getKeyRawStatus(*iter);
-  while (CurrentStatus != EKeyStatus::End) {
-    EKeyStatus NewStatus = extractToBufferRaw(CurrentStatus, sentinel, &iter);
-    setFormat({CurrentStatus, 0}, &tmpEdit);
-    insertTextFromBuffer(&tmpEdit);
-    CurrentStatus = NewStatus;
-  }
-  TextEdit_->setDocument(Doc);
-}
-
-template<class TText>
-void CTextPrinterImpl::printFormattedText(const TText& TextView) {
-  if (TextView.size() == 0) {
-    clear();
-    return;
-  }
-  auto iter = TextView.cbegin();
-  auto sentinel = TextView.cend();
-  QTextDocument* Doc = getDefaultDocument();
-  QTextEdit tmpEdit;
-  tmpEdit.setDocument(Doc);
-
-  CStatusData CurrentStatus = getKeyTextStatus(*iter);
-  while (CurrentStatus.Status != EKeyStatus::End) {
-    CStatusData NewStatus = extractToBufferText(CurrentStatus, sentinel, &iter);
-    setFormat(CurrentStatus, &tmpEdit);
-    insertTextFromBuffer(&tmpEdit);
-    CurrentStatus = NewStatus;
-  }
-  TextEdit_->setDocument(Doc);
-}
-
-CTextPrinterImpl::EKeyStatus
-CTextPrinterImpl::getKeyRawStatus(const CKeyEvent& Key) {
-  if (Key.isBackspace())
-    return EKeyStatus::Backspace;
-  if (Key.isTrackableSpecial())
-    return EKeyStatus::Control;
-  if (Key.isSilentDeadKey())
-    return EKeyStatus::SilentDeadKey;
-  if (Key.getTextSize() > 0)
-    return EKeyStatus::MainText;
-  return EKeyStatus::Ignore;
-}
-
+template<class TNode>
 CTextPrinterImpl::CStatusData
-CTextPrinterImpl::getKeyTextStatus(const CTextNode& TextNode) {
+CTextPrinterImpl::getStatus(const TNode& TextNode) const {
   switch (TextNode.getSymbolStatus()) {
   case ESymbolStatus::TextSymbol:
     return {EKeyStatus::MainText, TextNode.getDepth()};
@@ -124,15 +67,48 @@ CTextPrinterImpl::getKeyTextStatus(const CTextNode& TextNode) {
   }
 }
 
-CTextPrinterImpl::EKeyStatus
-CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
-                                     const CConstSessionIterator sentinel,
-                                     CConstSessionIterator* pIter) {
+template<>
+CTextPrinterImpl::CStatusData
+CTextPrinterImpl::getStatus<CTextPrinterImpl::CKeyEvent>(
+    const CKeyEvent& Key) const {
+  if (Key.isBackspace())
+    return {EKeyStatus::Backspace, 0};
+  if (Key.isTrackableSpecial())
+    return {EKeyStatus::Control, 0};
+  if (Key.isSilentDeadKey())
+    return {EKeyStatus::SilentDeadKey, 0};
+  if (Key.getTextSize() > 0)
+    return {EKeyStatus::MainText, 0};
+  return {EKeyStatus::Ignore, 0};
+}
+
+template<class TConstIterator>
+CTextPrinterImpl::CStatusData
+CTextPrinterImpl::extractToBuffer(CStatusData StatusData,
+                                  const TConstIterator sentinel,
+                                  TConstIterator* pIter) {
   auto& iter = *pIter;
   buffer_.clear();
-  while (iter != sentinel && (getKeyRawStatus(*iter) == Status ||
-                              getKeyRawStatus(*iter) == EKeyStatus::Ignore)) {
-    switch (Status) {
+  while (iter != sentinel && getStatus(*iter) == StatusData) {
+    buffer_.push_back(iter->getSymbol());
+    ++iter;
+  }
+  qDebug() << "buffer_.size() = " << buffer_.size();
+  if (iter == sentinel)
+    return {EKeyStatus::End, 0};
+  return getStatus(*iter);
+}
+
+template<>
+CTextPrinterImpl::CStatusData
+CTextPrinterImpl::extractToBuffer<CTextPrinterImpl::CSession::const_iterator>(
+    CStatusData StatusData, const CSession::const_iterator sentinel,
+    CSession::const_iterator* pIter) {
+  auto& iter = *pIter;
+  buffer_.clear();
+  while (iter != sentinel && (getStatus(*iter) == StatusData ||
+                              getStatus(*iter).Status == EKeyStatus::Ignore)) {
+    switch (StatusData.Status) {
     case EKeyStatus::MainText:
       assert(iter->getTextSize() > 0);
       buffer_.push_back(iter->getLastSymbol());
@@ -149,23 +125,30 @@ CTextPrinterImpl::extractToBufferRaw(EKeyStatus Status,
   }
   qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
-    return EKeyStatus::End;
-  return getKeyRawStatus(*iter);
+    return {EKeyStatus::End, 0};
+  return getStatus(*iter);
 }
 
-template<class CConstIterator>
-CTextPrinterImpl::CStatusData CTextPrinterImpl::extractToBufferText(
-    CStatusData Status, const CConstIterator sentinel, CConstIterator* pIter) {
-  auto& iter = *pIter;
-  buffer_.clear();
-  while (iter != sentinel && getKeyTextStatus(*iter) == Status) {
-    buffer_.push_back(iter->getSymbol());
-    ++iter;
+template<class TText>
+void CTextPrinterImpl::printFormattedText(const TText& TextView) {
+  if (TextView.empty()) {
+    clear();
+    return;
   }
-  qDebug() << "buffer_.size() = " << buffer_.size();
-  if (iter == sentinel)
-    return {EKeyStatus::End, 0};
-  return getKeyTextStatus(*iter);
+  auto iter = TextView.cbegin();
+  auto sentinel = TextView.cend();
+  QTextDocument* Doc = getDefaultDocument();
+  QTextEdit tmpEdit;
+  tmpEdit.setDocument(Doc);
+
+  CStatusData CurrentStatus = getStatus(*iter);
+  while (CurrentStatus.Status != EKeyStatus::End) {
+    CStatusData NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
+    setFormat(CurrentStatus, &tmpEdit);
+    insertTextFromBuffer(&tmpEdit);
+    CurrentStatus = NewStatus;
+  }
+  TextEdit_->setDocument(Doc);
 }
 
 void CTextPrinterImpl::setFormat(CStatusData Status,
