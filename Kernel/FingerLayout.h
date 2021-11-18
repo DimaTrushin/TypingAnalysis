@@ -65,7 +65,12 @@ public:
     bool operator()(CFinger lhs, CFinger rhs) const;
   };
 
-  struct CLeftReverseRightDirectUndefinedLast {
+  struct CLeftReverseRightDirect {
+    static int cmp(CFinger lhs, CFinger rhs);
+    bool operator()(CFinger lhs, CFinger rhs) const;
+  };
+
+  struct CStandardOrder {
     static int cmp(CFinger lhs, CFinger rhs);
     bool operator()(CFinger lhs, CFinger rhs) const;
   };
@@ -81,8 +86,7 @@ class CFingerLayout {
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CKeyPositionContainer = std::set<CKeyPosition>;
   using CLayoutContainer =
-      std::map<CFinger, CKeyPositionContainer,
-               CFinger::CLeftReverseRightDirectUndefinedLast>;
+      std::map<CFinger, CKeyPositionContainer, CFinger::CStandardOrder>;
 
 public:
   CFingerLayout() = default;

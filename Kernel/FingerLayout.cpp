@@ -100,10 +100,7 @@ bool CFinger::CUndefinedLast::operator()(CFinger lhs, CFinger rhs) const {
   return cmp(lhs, rhs) > 0;
 }
 
-int CFinger::CLeftReverseRightDirectUndefinedLast::cmp(CFinger lhs,
-                                                       CFinger rhs) {
-  if (CUndefinedLast::cmp(lhs, rhs) != 0)
-    return CUndefinedLast::cmp(lhs, rhs);
+int CFinger::CLeftReverseRightDirect::cmp(CFinger lhs, CFinger rhs) {
   if (CLeftHandFirst::cmp(lhs, rhs) != 0)
     return CLeftHandFirst::cmp(lhs, rhs);
   assert(lhs.isLeftHand() == rhs.isLeftHand());
@@ -115,9 +112,23 @@ int CFinger::CLeftReverseRightDirectUndefinedLast::cmp(CFinger lhs,
   }
 }
 
-bool CFinger::CLeftReverseRightDirectUndefinedLast::operator()(
-    CFinger lhs, CFinger rhs) const {
+bool CFinger::CLeftReverseRightDirect::operator()(CFinger lhs,
+                                                  CFinger rhs) const {
   return cmp(lhs, rhs) > 0;
+}
+
+int CFinger::CStandardOrder::cmp(CFinger lhs, CFinger rhs) {
+  if (CUndefinedLast::cmp(lhs, rhs) != 0)
+    return CUndefinedLast::cmp(lhs, rhs);
+  if (CThumbFirst::cmp(lhs, rhs) != 0)
+    return CThumbFirst::cmp(lhs, rhs);
+  if (CLeftHandFirst::cmp(lhs, rhs) != 0)
+    return CLeftHandFirst::cmp(lhs, rhs);
+  return CLeftReverseRightDirect::cmp(lhs, rhs);
+}
+
+bool CFinger::CStandardOrder::operator()(CFinger lhs, CFinger rhs) const {
+  return cmp(lhs, rhs);
 }
 
 CFingerLayout CFingerLayout::getDefault() {
