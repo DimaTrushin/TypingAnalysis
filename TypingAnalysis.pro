@@ -96,6 +96,7 @@ HEADERS += \
   Interface/TextModeView.h \
   Interface/TextPrinter.h \
   Kernel/AnalyticalModule.h \
+  Kernel/FingerLayout.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
   Kernel/MathFunction.h \
@@ -175,6 +176,7 @@ SOURCES += \
   Interface/TextModeView.cpp \
   Interface/TextPrinter.cpp \
   Kernel/AnalyticalModule.cpp \
+  Kernel/FingerLayout.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
   Kernel/MathFunction.cpp \
