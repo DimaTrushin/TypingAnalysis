@@ -99,6 +99,7 @@ HEADERS += \
   Kernel/FingerLayout.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
+  Kernel/KeyScheme.h \
   Kernel/MathFunction.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
@@ -179,6 +180,7 @@ SOURCES += \
   Kernel/FingerLayout.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
+  Kernel/KeyScheme.cpp \
   Kernel/MathFunction.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
