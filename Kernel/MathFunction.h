@@ -49,6 +49,8 @@ protected:
 
   template<class TParameters, template<class> class TFunction>
   static double compute_(const std::vector<double>& means, double arg) {
+    if (means.empty())
+      return 0.;
     using CVect = typename TParameters::CVect;
     using CFunction = TFunction<CVect>;
     CVect tmp_result = 0;
