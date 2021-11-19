@@ -66,7 +66,7 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   // TO DO
   // Need to exclude auto repeat
   CContainer SpeedData;
-  switch (Data.TextMode.TextMode) {
+  switch (Data.textMode()) {
   case ETextMode::Raw:
     SpeedData = getSpeedData(Data.rawSession());
     break;

@@ -29,9 +29,9 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   // Preliminary implementation
-  switch (data.TextMode.TextMode) {
+  switch (data.textMode()) {
   case ETextMode::Raw:
-    printFormattedText(data.Session.get());
+    printFormattedText(data.rawSession());
     break;
   case ETextMode::Full:
     printFormattedText(data.textConstFullView());

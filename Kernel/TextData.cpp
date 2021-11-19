@@ -3,16 +3,46 @@
 namespace NSApplication {
 namespace NSKernel {
 
+CTextData::CTextData(const CSession& Session, const CTextDataTree& TextTree,
+                     CTextMode TextMode)
+    : Session_(std::cref(Session)), TextTree_(std::cref(TextTree)),
+      TextMode_(TextMode) {
+}
+
 CTextData::CConstFullTextProxy CTextData::textConstFullView() const {
-  return TextTree.get()->textConstFullView();
+  return TextTree_.get()->textConstFullView();
 }
 
 CTextData::CConstPrintedTextProxy CTextData::textConstPrintedView() const {
-  return TextTree.get()->textConstPrintedView();
+  return TextTree_.get()->textConstPrintedView();
 }
 
 const CSession& CTextData::rawSession() const {
-  return Session;
+  return Session_;
+}
+
+const CTextDataTree& CTextData::textTree() const {
+  return TextTree_;
+}
+
+CTextMode CTextData::textInfo() const {
+  return TextMode_;
+}
+
+ETextMode CTextData::textMode() const {
+  return TextMode_.TextMode;
+}
+
+EModifierMode CTextData::shiftMode() const {
+  return TextMode_.ShiftMode;
+}
+
+EModifierMode CTextData::ctrlMode() const {
+  return TextMode_.CtrlMode;
+}
+
+EModifierMode CTextData::altMode() const {
+  return TextMode_.AltMode;
 }
 
 } // namespace NSKernel

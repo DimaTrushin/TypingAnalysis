@@ -39,8 +39,7 @@ void CTextModuleImpl::subscribeToTextData(CTextDataObserver* obs) {
 void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
   qDebug() << "CTextModule::handleCurrentSession";
   TreeConverter_.convert(Session, &TextDataTree_);
-  TextDataOutput_.set(CTextData{std::cref(Session), std::cref(TextDataTree_),
-                                CurrentTextMode_});
+  TextDataOutput_.set(CTextData(Session, TextDataTree_, CurrentTextMode_));
 }
 } // namespace NSTextModuleDetail
 } // namespace NSKernel

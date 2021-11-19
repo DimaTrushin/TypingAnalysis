@@ -104,7 +104,7 @@ int CFinger::CLeftReverseRightDirect::cmp(CFinger lhs, CFinger rhs) {
   if (CLeftHandFirst::cmp(lhs, rhs) != 0)
     return CLeftHandFirst::cmp(lhs, rhs);
   assert(lhs.isLeftHand() == rhs.isLeftHand());
-  assert(lhs.isRightHand() == rhs.isTightHand());
+  assert(lhs.isRightHand() == rhs.isRightHand());
   if (lhs.isLeftHand()) {
     return CReverseOrder::cmp(lhs, rhs);
   } else {

@@ -39,31 +39,30 @@ CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
   CStatisticsDescription Statistics;
   Statistics.push_back(
       {"Places With Deletion",
-       QString::number(Data.TextTree.get()->getNumberOfPlacesWithDeletion())});
+       QString::number(Data.textTree()->getNumberOfPlacesWithDeletion())});
   Statistics.push_back(
       {"Deletion Series",
-       QString::number(Data.TextTree.get()->getNumberOfDeletionSeries())});
+       QString::number(Data.textTree()->getNumberOfDeletionSeries())});
   Statistics.push_back(
       {"Deleted Symbols",
-       QString::number(Data.TextTree.get()->getNumberOfDeletedSymbols())});
+       QString::number(Data.textTree()->getNumberOfDeletedSymbols())});
   Statistics.push_back(
       {"Return Points",
-       QString::number(Data.TextTree.get()->getNumberOfReturnPoints())});
+       QString::number(Data.textTree()->getNumberOfReturnPoints())});
   Statistics.push_back(
-      {"Tree size", QString::number(Data.TextTree.get()->getTreeSize())});
+      {"Tree size", QString::number(Data.textTree()->getTreeSize())});
   Statistics.push_back(
       {"Deletion Length Supremum",
-       QString::number(
-           Data.TextTree.get()->getDeletionSeriesLengthSupremum())});
+       QString::number(Data.textTree()->getDeletionSeriesLengthSupremum())});
   Statistics.push_back(
       {"Mistake Places",
-       QString::number(Data.TextTree.get()->getNumberOfMistakePlaces())});
+       QString::number(Data.textTree()->getNumberOfMistakePlaces())});
   Statistics.push_back(
       {"Mistake Routes",
-       QString::number(Data.TextTree.get()->getNumberOfMistakeRoutes())});
+       QString::number(Data.textTree()->getNumberOfMistakeRoutes())});
   Statistics.push_back(
       {"Mistake Route Length Supremum",
-       QString::number(Data.TextTree.get()->getMistakeRoutesLengthSupremum())});
+       QString::number(Data.textTree()->getMistakeRoutesLengthSupremum())});
   return Statistics;
 }
 } // namespace NSStatisticsViewDetail
