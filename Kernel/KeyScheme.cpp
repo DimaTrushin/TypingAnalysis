@@ -43,7 +43,7 @@ CKeyScheme::CKeyScheme(CSchemeContainer&& Data) : Data_(std::move(Data)) {
 }
 
 void CKeyScheme::add(CFinger Finger, CKeySegment&& Segment) {
-  Data_[Finger].push_back(Segment);
+  Data_[Finger].push_back(std::move(Segment));
 }
 
 CKeyScheme CKeyScheme::getDefaultEmpty() {
