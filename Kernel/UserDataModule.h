@@ -1,5 +1,5 @@
-#ifndef NSAPPLICATION_NSKERNEL_CUSERDATA_H
-#define NSAPPLICATION_NSKERNEL_CUSERDATA_H
+#ifndef NSAPPLICATION_NSKERNEL_CUSERDATAMODULE_H
+#define NSAPPLICATION_NSKERNEL_CUSERDATAMODULE_H
 
 #include "Kernel/FingerLayout.h"
 #include "Library/Observer/Observer.h"
@@ -8,14 +8,14 @@
 namespace NSApplication {
 namespace NSKernel {
 
-namespace NSUserDataDetail {
+namespace NSUserDataModuleDetail {
 
-class CUserDataImpl {
+class CUserDataModuleImpl {
   using CFingerLayoutObserver = NSLibrary::CObserver<CFingerLayout>;
   using CFingerLayoutObservable = NSLibrary::CObservableData<CFingerLayout>;
 
 public:
-  CUserDataImpl();
+  CUserDataModuleImpl();
 
   void subscribeToFingerLayout(CFingerLayoutObserver* obs);
   void setFingerLayout(CFingerLayout&& FingerLayout);
@@ -24,9 +24,10 @@ private:
   CFingerLayoutObservable FingerLayoutOutput_;
 };
 
-} // namespace NSUserDataDetail
+} // namespace NSUserDataModuleDetail
 
-using CUserData = NSLibrary::CModelWrapper<NSUserDataDetail::CUserDataImpl>;
+using CUserDataModule =
+    NSLibrary::CModelWrapper<NSUserDataModuleDetail::CUserDataModuleImpl>;
 
 } // namespace NSKernel
 } // namespace NSApplication

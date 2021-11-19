@@ -11,6 +11,9 @@ CApplicationKernel::CApplicationKernel() {
 
   SeanceManager_->subscribeToCurrentSeance(SessionSelector_->seanceInput());
   TextModule_->subscribeToTextData(AnalyticalModule_->textDataInput());
+
+  TextModule_->subscribeToTextData(KeySchemeModule_->textDataInput());
+  UserData_->subscribeToFingerLayout(KeySchemeModule_->fingerLayoutInput());
 }
 
 } // namespace NSApplication

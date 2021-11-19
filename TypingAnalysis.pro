@@ -100,6 +100,7 @@ HEADERS += \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
   Kernel/KeyScheme.h \
+  Kernel/KeySchemeModule.h \
   Kernel/MathFunction.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
@@ -113,7 +114,7 @@ HEADERS += \
   Kernel/TextDataTree.h \
   Kernel/TextMode.h \
   Kernel/TextModule.h \
-  Kernel/UserData.h \
+  Kernel/UserDataModule.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -182,6 +183,7 @@ SOURCES += \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
   Kernel/KeyScheme.cpp \
+  Kernel/KeySchemeModule.cpp \
   Kernel/MathFunction.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
@@ -195,7 +197,7 @@ SOURCES += \
   Kernel/TextDataTree.cpp \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
-  Kernel/UserData.cpp \
+  Kernel/UserDataModule.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \
