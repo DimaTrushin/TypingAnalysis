@@ -91,6 +91,7 @@ class CFingerLayout {
 public:
   CFingerLayout() = default;
   static CFingerLayout getDefault();
+  CFinger find(CKeyPosition Position) const;
 
 private:
   CFingerLayout(CLayoutContainer Layout);

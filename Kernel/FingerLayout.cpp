@@ -128,27 +128,35 @@ int CFinger::CStandardOrder::cmp(CFinger lhs, CFinger rhs) {
 }
 
 bool CFinger::CStandardOrder::operator()(CFinger lhs, CFinger rhs) const {
-  return cmp(lhs, rhs);
+  return cmp(lhs, rhs) > 0;
 }
 
 CFingerLayout CFingerLayout::getDefault() {
   return CFingerLayout(getDefaultLayout());
 }
 
+CFinger CFingerLayout::find(CKeyPosition Position) const {
+  for (const auto& FingerPair : Layout_) {
+    if (FingerPair.second.count(Position) > 0)
+      return FingerPair.first;
+  }
+  return CFinger();
+}
+
 CFingerLayout::CFingerLayout(CLayoutContainer Layout) : Layout_(Layout) {
 }
 
 CFingerLayout::CLayoutContainer CFingerLayout::getDefaultLayout() {
-  CLayoutContainer Layout = {{CFinger::LeftIndex(), getDefaultLeftIndex()},
-                             {CFinger::LeftMiddle(), getDefaultLeftMiddle()},
-                             {CFinger::LeftRing(), getDefaultLeftRing()},
-                             {CFinger::LeftPinky(), getDefaultLeftPinky()},
-                             {CFinger::RightThumb(), getDefaultRightThumb()},
-                             {CFinger::RightIndex(), getDefaultRightIndex()},
-                             {CFinger::RightMiddle(), getDefaultRightMiddle()},
-                             {CFinger::RightRing(), getDefaultRightRing()},
-                             {CFinger::RightPinky(), getDefaultRightPinky()},
-                             {CFinger(), {}}};
+  CLayoutContainer Layout{{CFinger::LeftIndex(), getDefaultLeftIndex()},
+                          {CFinger::LeftMiddle(), getDefaultLeftMiddle()},
+                          {CFinger::LeftRing(), getDefaultLeftRing()},
+                          {CFinger::LeftPinky(), getDefaultLeftPinky()},
+                          {CFinger::RightThumb(), getDefaultRightThumb()},
+                          {CFinger::RightIndex(), getDefaultRightIndex()},
+                          {CFinger::RightMiddle(), getDefaultRightMiddle()},
+                          {CFinger::RightRing(), getDefaultRightRing()},
+                          {CFinger::RightPinky(), getDefaultRightPinky()},
+                          {CFinger(), {}}};
   return Layout;
 }
 

@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKERNEL_CKEYSCHEMEMODULE_H
 
 #include "Kernel/FingerLayout.h"
+#include "Kernel/KeySchemeMaker.h"
 #include "Kernel/TextData.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
@@ -18,6 +19,9 @@ class CKeySchemeModuleImpl {
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
+  using CKeySchemeObserver = NSLibrary::CObserver<CKeyScheme>;
+  using CKeySchemeObservable = NSLibrary::CObservableData<CKeyScheme>;
+
 public:
   CKeySchemeModuleImpl();
   CFingerLayoutObserver* fingerLayoutInput();
@@ -31,6 +35,8 @@ private:
 
   CTextDataInput TextDataInput_;
   CFingerLayoutInput FingerLayoutInput_;
+  CKeySchemeObservable KeySchemeOutput_;
+  CKeySchemeMaker KeySchemeMaker_;
 };
 
 } // namespace NSKeySchemeModuleDetail

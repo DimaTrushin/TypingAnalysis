@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include <QString>
+
 #include "Kernel/FingerLayout.h"
 #include "Keyboard/KeyTextData.h"
 #include "TimeApp.h"
@@ -23,15 +25,18 @@ class CKeySegment {
   using CKeyTextData = NSKeyboard::CKeyTextData;
 
 public:
-  CKeySegment(CKeyTextData Symbol, CTime PressingTime);
+  CKeySegment(QString Text, CTime PressingTime);
+  CKeySegment(QChar Symbol, CTime PressingTime);
   void AddSegment(unsigned char Multiplicity, CTime EndTime);
+  void addText(QString Text);
 
   CIndex getNumberOfSegments() const;
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
+  const QString& getText() const;
 
 private:
-  CKeyTextData Symbol_;
+  QString Text_;
   CTime PressingTime_;
   CSegmentContainer Segments_;
 };
@@ -45,7 +50,14 @@ class CKeyScheme {
       std::map<CFinger, CKeySegmentContainer, CFinger::CStandardOrder>;
 
 public:
+  CKeyScheme() = default;
+
+  void add(CFinger Finger, CKeySegment&& Segment);
+
+  static CKeyScheme getDefaultEmpty();
+
 private:
+  CKeyScheme(CSchemeContainer&& Data);
   CSchemeContainer Data_;
 };
 

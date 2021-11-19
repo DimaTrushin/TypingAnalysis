@@ -39,8 +39,7 @@ void CKeySchemeModuleImpl::handleTextData(const CTextData& TextData) {
 
 void CKeySchemeModuleImpl::makeKeyScheme(const CTextData& TextData,
                                          const CFingerLayout& FingerLayout) {
-  // TO DO
-  qDebug() << "makeKeyScheme";
+  KeySchemeOutput_.set(KeySchemeMaker_.make(TextData, FingerLayout));
 }
 
 } // namespace NSKeySchemeModuleDetail

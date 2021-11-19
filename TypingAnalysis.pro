@@ -86,6 +86,7 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
+  HeapWithAccess.h \
   Interface/KeyboardShutter.h \
   Interface/Plotter.h \
   Interface/SeanceView.h \
@@ -100,6 +101,7 @@ HEADERS += \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
   Kernel/KeyScheme.h \
+  Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
   Kernel/MathFunction.h \
   Kernel/PlotData.h \
@@ -169,6 +171,7 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
+  HeapWithAccess.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
@@ -183,6 +186,7 @@ SOURCES += \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
   Kernel/KeyScheme.cpp \
+  Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
   Kernel/MathFunction.cpp \
   Kernel/PlotData.cpp \
