@@ -113,6 +113,7 @@ HEADERS += \
   Kernel/TextDataTree.h \
   Kernel/TextMode.h \
   Kernel/TextModule.h \
+  Kernel/UserData.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
@@ -194,6 +195,7 @@ SOURCES += \
   Kernel/TextDataTree.cpp \
   Kernel/TextMode.cpp \
   Kernel/TextModule.cpp \
+  Kernel/UserData.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
   Keyboard/KeyboardHandler.cpp \
