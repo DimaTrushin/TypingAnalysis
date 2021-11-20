@@ -44,7 +44,8 @@ protected:
     //    return 1.25 * sqrt(mean + 1.);
     //    return 2.5 * sqrt(mean + 1.);
     //    return 2. / 3. * (mean + 1.);
-    return 1. / 8. * (mean + 10.);
+    //    return 1. / 8. * (mean + 10.);
+    return 1. / 10. * mean + 10.;
   }
 
   template<class TParameters, template<class> class TFunction>
