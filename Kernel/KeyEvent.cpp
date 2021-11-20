@@ -76,6 +76,10 @@ QChar CKeyEvent::getLastSymbol() const {
   return KeyText_.Symbol[KeyText_.Size - 1];
 }
 
+QString CKeyEvent::getText() const {
+  return QString(KeyText_.Symbol, KeyText_.Size);
+}
+
 bool CKeyEvent::isBackspace() const {
   return KeyID_ == CKeyIDEnum::Backspace;
 }

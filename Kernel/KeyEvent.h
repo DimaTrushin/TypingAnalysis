@@ -38,6 +38,7 @@ public:
   bool hasText() const;
   QChar getSymbol(unsigned char index) const;
   QChar getLastSymbol() const;
+  QString getText() const;
 
   bool isBackspace() const;
   bool isEnter() const;
