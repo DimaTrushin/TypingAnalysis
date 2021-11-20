@@ -62,8 +62,6 @@ public:
   CKeyScheme make(const CTextData& TextData, const CFingerLayout& Layout);
 
 private:
-  //  CKeyScheme makeRaw(const CSession& Session, const CFingerLayout& Layout);
-
   template<class TTextView>
   CKeyScheme makeScheme(const TTextView& TextView, const CFingerLayout& Layout);
   template<class TIterator>
