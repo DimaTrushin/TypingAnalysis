@@ -44,7 +44,7 @@ public:
   CIndex size() const;
   CKeySegmentBuilt getAndRelease();
   template<class TIterator>
-  void insertKey(TIterator iter);
+  void insertKey(TIterator iter, CTime BeginTime);
 
 private:
   void updateMultiplicities(CTime NewKeyTime);
@@ -74,6 +74,7 @@ private:
   void handleReleasing(const CFingerLayout&, CKeyScheme*);
 
   CKeySegmentsUnderConstruction KeysSegmentsBuilt_;
+  CTime BeginTime_;
 };
 
 } // namespace NSKernel

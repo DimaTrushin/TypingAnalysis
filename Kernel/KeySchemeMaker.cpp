@@ -53,16 +53,17 @@ CKeySegmentBuilt CKeySegmentsUnderConstruction::getAndRelease() {
 }
 
 template<class TIterator>
-void CKeySegmentsUnderConstruction::insertKey(TIterator iter) {
+void CKeySegmentsUnderConstruction::insertKey(TIterator iter, CTime BeginTime) {
   auto iterKey = std::find_if(
       KeysBuilt_.begin(), KeysBuilt_.end(),
       [Position = iter->getPosition()](const CKeySegmentBuilt& Segment) {
         return Segment.KeyPosition == Position;
       });
   if (iterKey == KeysBuilt_.end()) {
-    updateMultiplicities(iter->getPressingTime());
-    KeysBuilt_.push({CKeySegment(getKeyText(iter), iter->getPressingTime()),
-                     iter->getReleasingTime(), iter->getPosition()});
+    updateMultiplicities(iter->getPressingTime() - BeginTime);
+    KeysBuilt_.push(
+        {CKeySegment(getKeyText(iter), iter->getPressingTime() - BeginTime),
+         iter->getReleasingTime() - BeginTime, iter->getPosition()});
   } else {
     iterKey->Segment.addText(getKeyText(iter));
   }
@@ -97,6 +98,7 @@ CKeyScheme CKeySchemeMaker::makeRaw(const CSession& Session,
   CKeyScheme KeyScheme = CKeyScheme::getDefaultEmpty();
   auto iter = Session.cbegin();
   auto sentinel = Session.cend();
+  BeginTime_ = iter->getPressingTime();
 
   while (!isWorkDone(iter, sentinel)) {
     if (isPressingNext(iter, sentinel)) {
@@ -126,11 +128,12 @@ bool CKeySchemeMaker::isPressingNext(CSession::const_iterator iter,
     return false;
   if (KeysSegmentsBuilt_.empty())
     return true;
-  return iter->getPressingTime() < KeysSegmentsBuilt_.getFirstReleaseTime();
+  return iter->getPressingTime() - BeginTime_ <
+         KeysSegmentsBuilt_.getFirstReleaseTime();
 }
 
 void CKeySchemeMaker::handlePressing(CSession::const_iterator* piter) {
-  KeysSegmentsBuilt_.insertKey(*piter);
+  KeysSegmentsBuilt_.insertKey(*piter, BeginTime_);
   ++(*piter);
 }
 
