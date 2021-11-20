@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSKERNEL_CKEYSCHEMEMAKER_H
 #define NSAPPLICATION_NSKERNEL_CKEYSCHEMEMAKER_H
 
-#include "HeapWithAccess.h"
 #include "Kernel/FingerLayout.h"
 #include "Kernel/KeyScheme.h"
 #include "Kernel/Session.h"
 #include "Kernel/TextData.h"
+#include "Library/StlExtension/HeapWithAccess.h"
 
 namespace NSApplication {
 namespace NSKernel {

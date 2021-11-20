@@ -86,7 +86,6 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
-  HeapWithAccess.h \
   Interface/KeyboardShutter.h \
   Interface/Plotter.h \
   Interface/SeanceView.h \
@@ -133,6 +132,7 @@ HEADERS += \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
+  Library/StlExtension/HeapWithAccess.h \
   Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
   Library/StlExtension/ThreadDetachable.h \
@@ -171,7 +171,6 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
-  HeapWithAccess.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
