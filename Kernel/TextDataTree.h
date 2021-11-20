@@ -279,7 +279,7 @@ public:
                      CTime ResponseTime);
 
   CTime getPressingTime() const;
-  CTime getReleaseTime() const;
+  CTime getReleasingTime() const;
   CTime getResponseTime() const;
   CTime getDurationTime() const;
 

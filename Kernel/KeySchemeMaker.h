@@ -62,15 +62,16 @@ public:
   CKeyScheme make(const CTextData& TextData, const CFingerLayout& Layout);
 
 private:
-  CKeyScheme makeRaw(const CSession& Session, const CFingerLayout& Layout);
-  template<class TContainer>
-  CKeyScheme makeText(const TContainer& Container, const CFingerLayout& Layout);
+  //  CKeyScheme makeRaw(const CSession& Session, const CFingerLayout& Layout);
 
-  bool isWorkDone(CSession::const_iterator iter,
-                  CSession::const_iterator sentinel) const;
-  bool isPressingNext(CSession::const_iterator iter,
-                      CSession::const_iterator sentinel) const;
-  void handlePressing(CSession::const_iterator*);
+  template<class TTextView>
+  CKeyScheme makeScheme(const TTextView& TextView, const CFingerLayout& Layout);
+  template<class TIterator>
+  bool isWorkDone(TIterator iter, TIterator sentinel) const;
+  template<class TIterator>
+  bool isPressingNext(TIterator iter, TIterator sentinel) const;
+  template<class TIterator>
+  void handlePressing(TIterator*);
   void handleReleasing(const CFingerLayout&, CKeyScheme*);
 
   CKeySegmentsUnderConstruction KeysSegmentsBuilt_;

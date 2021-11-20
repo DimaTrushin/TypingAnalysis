@@ -80,24 +80,26 @@ CKeyScheme CKeySchemeMaker::make(const CTextData& TextData,
                                  const CFingerLayout& Layout) {
   switch (TextData.textMode()) {
   case ETextMode::Raw:
-    return makeRaw(TextData.rawSession(), Layout);
+    return makeScheme(TextData.rawSession(), Layout);
   case ETextMode::Full:
-    return makeText(TextData.textConstFullView(), Layout);
+    return makeScheme(TextData.textConstFullView(), Layout);
   case ETextMode::Printed:
-    return makeText(TextData.textConstPrintedView(), Layout);
+    return makeScheme(TextData.textConstPrintedView(), Layout);
   default:
     assert(false);
     return {};
   }
 }
 
-CKeyScheme CKeySchemeMaker::makeRaw(const CSession& Session,
-                                    const CFingerLayout& Layout) {
-  if (Session.empty())
+template<class TTextView>
+CKeyScheme CKeySchemeMaker::makeScheme(const TTextView& TextView,
+                                       const CFingerLayout& Layout) {
+  qDebug() << "makeScheme";
+  if (TextView.empty())
     return {};
   CKeyScheme KeyScheme = CKeyScheme::getDefaultEmpty();
-  auto iter = Session.cbegin();
-  auto sentinel = Session.cend();
+  auto iter = TextView.cbegin();
+  auto sentinel = TextView.cend();
   BeginTime_ = iter->getPressingTime();
 
   while (!isWorkDone(iter, sentinel)) {
@@ -110,20 +112,13 @@ CKeyScheme CKeySchemeMaker::makeRaw(const CSession& Session,
   return KeyScheme;
 }
 
-template<class TContainer>
-CKeyScheme CKeySchemeMaker::makeText(const TContainer& Container,
-                                     const CFingerLayout& Layout) {
-  // TO DO
-  return {};
-}
-
-bool CKeySchemeMaker::isWorkDone(CSession::const_iterator iter,
-                                 CSession::const_iterator sentinel) const {
+template<class TIterator>
+bool CKeySchemeMaker::isWorkDone(TIterator iter, TIterator sentinel) const {
   return (iter == sentinel) && KeysSegmentsBuilt_.empty();
 }
 
-bool CKeySchemeMaker::isPressingNext(CSession::const_iterator iter,
-                                     CSession::const_iterator sentinel) const {
+template<class TIterator>
+bool CKeySchemeMaker::isPressingNext(TIterator iter, TIterator sentinel) const {
   if (iter == sentinel)
     return false;
   if (KeysSegmentsBuilt_.empty())
@@ -132,7 +127,8 @@ bool CKeySchemeMaker::isPressingNext(CSession::const_iterator iter,
          KeysSegmentsBuilt_.getFirstReleaseTime();
 }
 
-void CKeySchemeMaker::handlePressing(CSession::const_iterator* piter) {
+template<class TIterator>
+void CKeySchemeMaker::handlePressing(TIterator* piter) {
   KeysSegmentsBuilt_.insertKey(*piter, BeginTime_);
   ++(*piter);
 }

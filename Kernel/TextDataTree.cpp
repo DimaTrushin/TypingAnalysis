@@ -619,7 +619,7 @@ CTime CTextNode::getPressingTime() const {
   return PressingTime_;
 }
 
-CTime CTextNode::getReleaseTime() const {
+CTime CTextNode::getReleasingTime() const {
   return ReleaseTime_;
 }
 
