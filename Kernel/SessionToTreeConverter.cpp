@@ -30,6 +30,7 @@ void CSessionToTreeConverter::handleEvent_(const CKeyEvent& KeyEvent,
     for (unsigned char i = 0; i < KeyEvent.getTextSize(); ++i) {
       Target->add(KeyEvent.getSymbol(i), KeyEvent.getPressingTime(),
                   KeyEvent.getReleasingTime(), ESymbolStatus::TextSymbol,
+                  KeyEvent.getPosition(),
                   KeyEvent.getPressingTime() - LastPressedTime_);
       LastPressedTime_ = KeyEvent.getPressingTime();
     }

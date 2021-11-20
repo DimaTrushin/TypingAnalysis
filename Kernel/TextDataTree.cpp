@@ -7,7 +7,7 @@ namespace NSTextDataTreeDetail {
 
 CTextDataTreeImpl::CTextDataTreeImpl()
     : Tree_{CTextNode(QChar(), CTime(), CTime(), ESymbolStatus::RootSymbol,
-                      CTime())} {
+                      CKeyPosEnum::UNKN, CTime())} {
 }
 
 void CTextDataTreeImpl::clear() {
@@ -17,8 +17,10 @@ void CTextDataTreeImpl::clear() {
 }
 
 void CTextDataTreeImpl::add(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
-                            ESymbolStatus Status, CTime ResponseTime) {
-  addData(CTextNode(Symbol, PressingTime, ReleaseTime, Status, ResponseTime));
+                            ESymbolStatus Status, CKeyPosition Position,
+                            CTime ResponseTime) {
+  addData(CTextNode(Symbol, PressingTime, ReleaseTime, Status, Position,
+                    ResponseTime));
 }
 
 void CTextDataTreeImpl::addData(const CTextNode& TextData) {
@@ -606,9 +608,11 @@ CTextDataTreeImpl::CConstPrintedTextProxy::CConstPrintedTextProxy(
 } // namespace NSTextDataTreeDetail
 
 CTextNode::CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
-                     ESymbolStatus Status, CTime ResponseTime)
+                     ESymbolStatus Status, CKeyPosition Position,
+                     CTime ResponseTime)
     : PressingTime_(PressingTime), ReleaseTime_(ReleaseTime),
-      ResponseTime_(ResponseTime), Symbol_(Symbol), SymbolStatus_(Status) {
+      ResponseTime_(ResponseTime), Symbol_(Symbol), SymbolStatus_(Status),
+      KeyPosition_(Position) {
 }
 
 CTime CTextNode::getPressingTime() const {
@@ -690,6 +694,10 @@ void CTextNode::addMistakeRoute(CFullTextIterator iter) {
 
 CTextNode::CIndex CTextNode::numberOfMistakeRoutes() const {
   return MistakeRoutes_.size();
+}
+
+CTextNode::CKeyPosition CTextNode::getPosition() const {
+  return KeyPosition_;
 }
 
 } // namespace NSKernel

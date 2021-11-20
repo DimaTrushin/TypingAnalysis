@@ -12,38 +12,39 @@ bool CKeySegmentBuilt::CFirstReleasedOnTop::operator()(
 }
 
 template<class TIterator>
-QString CKeysUnderConstruction::getKeyText(TIterator iter) {
+QString CKeySegmentsUnderConstruction::getKeyText(TIterator iter) {
   // TO DO
   return "";
 }
 
 template<>
-QString CKeysUnderConstruction::getKeyText<CSession::const_iterator>(
+QString CKeySegmentsUnderConstruction::getKeyText<CSession::const_iterator>(
     CSession::const_iterator iter) {
   // TO DO
   return "";
 }
 
-CKeysUnderConstruction::CKeyPosition
-CKeysUnderConstruction::getTopPosition() const {
+CKeySegmentsUnderConstruction::CKeyPosition
+CKeySegmentsUnderConstruction::getTopPosition() const {
   return KeysBuilt_.top().KeyPosition;
 }
 
-CTime CKeysUnderConstruction::getFirstReleaseTime() const {
+CTime CKeySegmentsUnderConstruction::getFirstReleaseTime() const {
   if (empty())
     return CTime();
   return KeysBuilt_.top().ReleasingTime;
 }
 
-bool CKeysUnderConstruction::empty() const {
+bool CKeySegmentsUnderConstruction::empty() const {
   return KeysBuilt_.empty();
 }
 
-CKeysUnderConstruction::CIndex CKeysUnderConstruction::size() const {
+CKeySegmentsUnderConstruction::CIndex
+CKeySegmentsUnderConstruction::size() const {
   return KeysBuilt_.size();
 }
 
-CKeySegmentBuilt CKeysUnderConstruction::getAndRelease() {
+CKeySegmentBuilt CKeySegmentsUnderConstruction::getAndRelease() {
   assert(!empty());
   updateMultiplicities(KeysBuilt_.top().ReleasingTime);
   CKeySegmentBuilt Key(std::move(KeysBuilt_.top()));
@@ -52,7 +53,7 @@ CKeySegmentBuilt CKeysUnderConstruction::getAndRelease() {
 }
 
 template<class TIterator>
-void CKeysUnderConstruction::insertKey(TIterator iter) {
+void CKeySegmentsUnderConstruction::insertKey(TIterator iter) {
   auto iterKey = std::find_if(
       KeysBuilt_.begin(), KeysBuilt_.end(),
       [Position = iter->getPosition()](const CKeySegmentBuilt& Segment) {
@@ -67,7 +68,7 @@ void CKeysUnderConstruction::insertKey(TIterator iter) {
   }
 }
 
-void CKeysUnderConstruction::updateMultiplicities(CTime NewKeyTime) {
+void CKeySegmentsUnderConstruction::updateMultiplicities(CTime NewKeyTime) {
   for (auto& KeyBuilt : KeysBuilt_)
     KeyBuilt.Segment.AddSegment(size(), NewKeyTime);
 }
@@ -116,27 +117,27 @@ CKeyScheme CKeySchemeMaker::makeText(const TContainer& Container,
 
 bool CKeySchemeMaker::isWorkDone(CSession::const_iterator iter,
                                  CSession::const_iterator sentinel) const {
-  return (iter == sentinel) && KeysBuilt_.empty();
+  return (iter == sentinel) && KeysSegmentsBuilt_.empty();
 }
 
 bool CKeySchemeMaker::isPressingNext(CSession::const_iterator iter,
                                      CSession::const_iterator sentinel) const {
   if (iter == sentinel)
     return false;
-  if (KeysBuilt_.empty())
+  if (KeysSegmentsBuilt_.empty())
     return true;
-  return iter->getPressingTime() < KeysBuilt_.getFirstReleaseTime();
+  return iter->getPressingTime() < KeysSegmentsBuilt_.getFirstReleaseTime();
 }
 
 void CKeySchemeMaker::handlePressing(CSession::const_iterator* piter) {
-  KeysBuilt_.insertKey(*piter);
+  KeysSegmentsBuilt_.insertKey(*piter);
   ++(*piter);
 }
 
 void CKeySchemeMaker::handleReleasing(const CFingerLayout& Layout,
                                       CKeyScheme* pKeyScheme) {
-  CFinger KeyFinger = Layout.find(KeysBuilt_.getTopPosition());
-  pKeyScheme->add(KeyFinger, KeysBuilt_.getAndRelease().Segment);
+  CFinger KeyFinger = Layout.find(KeysSegmentsBuilt_.getTopPosition());
+  pKeyScheme->add(KeyFinger, KeysSegmentsBuilt_.getAndRelease().Segment);
 }
 
 } // namespace NSKernel

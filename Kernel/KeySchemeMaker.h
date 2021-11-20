@@ -26,7 +26,7 @@ struct CKeySegmentBuilt {
   };
 };
 
-class CKeysUnderConstruction {
+class CKeySegmentsUnderConstruction {
   using CKeySegment = NSKeySchemeDetail::CKeySegment;
   using CKeyPosition = NSKeyboard::CKeyPosition;
   using CContainer =
@@ -55,7 +55,8 @@ private:
 } // namespace NSKeySchemeMakerDetail
 
 class CKeySchemeMaker {
-  using CKeysUnderConstruction = NSKeySchemeMakerDetail::CKeysUnderConstruction;
+  using CKeySegmentsUnderConstruction =
+      NSKeySchemeMakerDetail::CKeySegmentsUnderConstruction;
 
 public:
   CKeyScheme make(const CTextData& TextData, const CFingerLayout& Layout);
@@ -72,7 +73,7 @@ private:
   void handlePressing(CSession::const_iterator*);
   void handleReleasing(const CFingerLayout&, CKeyScheme*);
 
-  CKeysUnderConstruction KeysBuilt_;
+  CKeySegmentsUnderConstruction KeysSegmentsBuilt_;
 };
 
 } // namespace NSKernel
