@@ -11,7 +11,8 @@ namespace NSQt {
 CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
-  addQwtPanel();
+  addQwtPlotPanel();
+  addQwtKeyScheme();
   adjustStaticInterface();
 }
 
@@ -52,6 +53,10 @@ QwtPlot* CMainWindow::getSpeedPlot() const {
 
 QTableView* CMainWindow::getStatisticsTable() const {
   return ui_->tableView;
+}
+
+QwtPlot* CMainWindow::getKeySchemePlot() const {
+  return KeySchemePlot_;
 }
 
 void CMainWindow::adjustStaticInterface() {
@@ -123,9 +128,14 @@ void CMainWindow::adjustButtonGroup4() {
   ui_->buttonGroup_4->setId(ui_->radioButton_14, 2);
 }
 
-void CMainWindow::addQwtPanel() {
+void CMainWindow::addQwtPlotPanel() {
   SpeedPlot_ = new QwtPlot(ui_->splitter_4);
   ui_->splitter_4->addWidget(SpeedPlot_);
+}
+
+void CMainWindow::addQwtKeyScheme() {
+  KeySchemePlot_ = new QwtPlot(ui_->frame_5);
+  ui_->verticalLayout_9->addWidget(KeySchemePlot_);
 }
 } // namespace NSQt
 } // namespace NSApplication

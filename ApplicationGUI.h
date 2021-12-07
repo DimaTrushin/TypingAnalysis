@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_CAPPLICATIONGUI_H
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
+#include "Interface/KeySchemePlotter.h"
 #include "Interface/Plotter.h"
 #include "Interface/SeanceView.h"
 #include "Interface/StatisticsView.h"
@@ -32,6 +33,7 @@ protected:
   NSInterface::CTextPrinter MainTextPrinter_;
   NSInterface::CPlotter SpeedPlotter_;
   NSInterface::CStatisticsView StatisticsView_;
+  NSInterface::CKeySchemePlotter KeySchemePlotter_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

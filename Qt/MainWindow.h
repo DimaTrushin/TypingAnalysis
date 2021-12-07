@@ -37,6 +37,7 @@ public:
   QTextEdit* getMainTextEdit() const;
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
+  QwtPlot* getKeySchemePlot() const;
 
 Q_SIGNALS:
   bool closeMainWindow();
@@ -56,10 +57,12 @@ private:
   void adjustButtonGroup3();
   void adjustButtonGroup4();
 
-  void addQwtPanel();
+  void addQwtPlotPanel();
+  void addQwtKeyScheme();
 
   std::unique_ptr<Ui::MainWindow> ui_;
   QwtPlot* SpeedPlot_;
+  QwtPlot* KeySchemePlot_;
 };
 } // namespace NSQt
 } // namespace NSApplication

@@ -479,9 +479,6 @@
                 <property name="bottomMargin">
                  <number>3</number>
                 </property>
-                <item>
-                 <widget class="QGraphicsView" name="graphicsView"/>
-                </item>
                </layout>
               </widget>
              </widget>
@@ -752,8 +749,8 @@
  </connections>
  <buttongroups>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>
