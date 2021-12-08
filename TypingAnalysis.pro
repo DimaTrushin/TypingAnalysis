@@ -147,6 +147,7 @@ HEADERS += \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
   Qt/SeanceDescriptionModel.h \
+  Qt/SessionStatisticsModel.h \
   Qt/QtLoopExceptionHandler.h \
   Application.h \
   ApplicationGUI.h \
@@ -158,7 +159,6 @@ HEADERS += \
   InstructionLevels.h \
   KeyboardHandlerAccess.h \
   ParallelModuleAccess.h \
-  Qt/SessionStatisticsModel.h \
   QtLoopException.h \
   SimdDetector.h \
   SimdDetectorAccess.h \
@@ -214,6 +214,7 @@ SOURCES += \
   Qt/MainWindow.cpp \
   Qt/QtLoopExceptionHandler.cpp \
   Qt/SeanceDescriptionModel.cpp \
+  Qt/SessionStatisticsModel.cpp \
   Application.cpp \
   ApplicationGUI.cpp \
   ApplicationGlobals.cpp \
@@ -222,7 +223,6 @@ SOURCES += \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   ParallelModuleAccess.cpp \
-  Qt/SessionStatisticsModel.cpp \
   SimdDetector.cpp \
   SimdDetectorAccess.cpp \
   TimeApp.cpp \
