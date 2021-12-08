@@ -31,10 +31,8 @@ void CSeanceManagerImpl::subscribeToCurrentSeance(CSeanceObserver* observer) {
 }
 
 void CSeanceManagerImpl::makeSessions() {
-  if (SeanceMaker_.transferTo(&CurrentSeance_)) {
-    qDebug() << "CurrentSeance_.size() = " << CurrentSeance_.size();
+  if (SeanceMaker_.transferTo(&CurrentSeance_))
     CurrentSeanceOutput_.notify();
-  }
 }
 
 void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {

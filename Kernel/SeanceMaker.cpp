@@ -31,10 +31,6 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
     CurrentSession().emplace_back(KeyPressing, CKeyFlagsEnum::AutoRepeat);
   }
   LastEvent_ = KeyPressing.Time;
-  qDebug() << QString("seances = %1 current size = %2 pressed = %3")
-                  .arg(RawSeance_.size(), 4, 10)
-                  .arg(CurrentSession().size(), 4, 10)
-                  .arg(PressedKeys_.size(), 4, 10);
 }
 
 void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
@@ -45,10 +41,6 @@ void CSeanceMaker::add(const CKeyReleasing& KeyReleasing) {
     PressedKeys_.erase(It);
     LastEvent_ = KeyReleasing.Time;
   }
-  qDebug() << QString("seances = %1 current size = %2 pressed = %3")
-                  .arg(RawSeance_.size(), 4, 10)
-                  .arg(CurrentSession().size(), 4, 10)
-                  .arg(PressedKeys_.size(), 4, 10);
 }
 
 void CSeanceMaker::resetTimeLimit() {

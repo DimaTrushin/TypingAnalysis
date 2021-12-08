@@ -36,7 +36,6 @@ void CSessionSelectorImpl::setCurrentSession(Index SessionIndex) {
 }
 
 void CSessionSelectorImpl::handleSeance(const CSeance& Seance) {
-  qDebug() << "handleSeance";
   notifySeanceViewData(Seance);
   // TO DO
   // Do I need this in the future?

@@ -93,7 +93,6 @@ CTextPrinterImpl::extractToBuffer(CStatusData StatusData,
     buffer_.push_back(iter->getSymbol());
     ++iter;
   }
-  //  qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
     return {EKeyStatus::End, 0};
   return getStatus(*iter);
@@ -123,7 +122,6 @@ CTextPrinterImpl::extractToBuffer<CTextPrinterImpl::CSession::const_iterator>(
     }
     ++iter;
   }
-  //  qDebug() << "buffer_.size() = " << buffer_.size();
   if (iter == sentinel)
     return {EKeyStatus::End, 0};
   return getStatus(*iter);

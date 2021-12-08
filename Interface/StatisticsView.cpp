@@ -23,7 +23,6 @@ CStatisticsViewImpl::CTextDataObserver* CStatisticsViewImpl::textDataInput() {
 }
 
 void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
-  qDebug() << "CStatisticsViewImpl::handleTextData";
   CTime time = CTimerAccess()->get();
   // TO DO
   // Need to

@@ -103,7 +103,6 @@ CKeyScheme CKeySchemeMaker::make(const CTextData& TextData,
 template<class TTextView>
 CKeyScheme CKeySchemeMaker::makeScheme(const TTextView& TextView,
                                        const CFingerLayout& Layout) {
-  qDebug() << "makeScheme";
   if (TextView.empty())
     return {};
   CKeyScheme KeyScheme = CKeyScheme::getDefaultEmpty();

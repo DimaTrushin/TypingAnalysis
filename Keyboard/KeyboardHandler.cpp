@@ -50,24 +50,13 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 }
 
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
-  if (isActive_) {
-    qDebug() << "KeyID =" << KeyPressing.KeyID
-             << "KeyPos =" << KeyPressing.KeyPosition << "symb ="
-             << QString(KeyPressing.KeyText.Symbol, KeyPressing.KeyText.Size)
-             << "lbl =" << KeyPressing.KeyLabel.HighSymbol << "/"
-             << KeyPressing.KeyLabel.LowSymbol
-             << "time =" << KeyPressing.Time.toMilliSecondsF() << "ms";
+  if (isActive_)
     KeyPressingOut_.set(KeyPressing);
-  }
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
-  if (isActive_) {
-    qDebug() << "KeyID =" << KeyReleasing.KeyID
-             << "KeyPos =" << KeyReleasing.KeyPosition
-             << "time =" << KeyReleasing.Time.toMilliSecondsF() << "ms";
+  if (isActive_)
     KeyReleasingOut_.set(KeyReleasing);
-  }
 }
 
 void CKeyboardHandler::onKeyboardException(const CQtException& message) {

@@ -44,35 +44,30 @@ void CTextModeViewImpl::subscribeToTextMode(CTextModeObserver* obs) {
 void CTextModeViewImpl::TextButtonToggled(int id, bool checked) {
   if (!checked)
     return;
-  qDebug() << "TextButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::ShiftButtonToggled(int id, bool checked) {
   if (!checked)
     return;
-  qDebug() << "ShiftButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::CtrlButtonToggled(int id, bool checked) {
   if (!checked)
     return;
-  qDebug() << "CtrlButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::AltButtonToggled(int id, bool checked) {
   if (!checked)
     return;
-  qDebug() << "AltButtonToggled id = " << id << "checked = " << checked;
   handleTextModeSwitchByGui();
 }
 
 void CTextModeViewImpl::handleTextModeSwitchByGui() {
   if (FromModel_.isLocked())
     return;
-  qDebug() << "handleTextModeSwitchByGui";
   std::lock_guard<CSupressor> guard(MySignal_);
   if (areSwitchesInCorrectState())
     TextModeOutput_.set(getCurrentTextMode());
@@ -175,7 +170,6 @@ int CTextModeViewImpl::getModifierInt(EModifierMode Mode) {
 void CTextModeViewImpl::onTextModeInput(const CTextMode& Mode) {
   if (MySignal_.isLocked())
     return;
-  qDebug() << "onTextModeInput";
   std::lock_guard<CSupressor> guard(FromModel_);
   toggleAllButtons(Mode);
 }
