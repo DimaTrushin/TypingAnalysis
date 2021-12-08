@@ -54,6 +54,10 @@ bool CFinger::isRightHand() const {
   return (Finger_ & EFingerEnum::HandMask) == EFingerEnum::Right;
 }
 
+CFinger::EFinger CFinger::id() const {
+  return Finger_;
+}
+
 CFinger::CFinger(EFinger Finger) : Finger_(Finger) {
 }
 

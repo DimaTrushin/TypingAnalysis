@@ -10,6 +10,7 @@ namespace NSApplication {
 namespace NSKernel {
 
 class CFinger {
+public:
   struct EFingerEnum {
     using CType = unsigned char;
     enum : CType {
@@ -27,7 +28,6 @@ class CFinger {
   };
   using EFinger = EFingerEnum::CType;
 
-public:
   CFinger() = default;
 
   static CFinger LeftThumb();
@@ -43,6 +43,8 @@ public:
 
   bool isLeftHand() const;
   bool isRightHand() const;
+
+  EFinger id() const;
 
   struct CLeftHandFirst {
     static int cmp(CFinger lhs, CFinger rhs);

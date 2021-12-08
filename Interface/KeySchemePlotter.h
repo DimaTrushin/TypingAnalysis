@@ -28,6 +28,8 @@ namespace NSKeySchemePlotterDetail {
 class CKeySchemePlotterImpl {
   using CKeyScheme = NSKernel::CKeyScheme;
   using CKeySegment = CKeyScheme::CKeySegment;
+  using CFinger = NSKernel::CFinger;
+  using EFingerEnum = CFinger::EFingerEnum;
 
   using CKeySchemeObserver = NSLibrary::CObserver<CKeyScheme>;
   using CKeySchemeInput = NSLibrary::CHotInput<CKeyScheme>;
@@ -47,7 +49,7 @@ private:
   void setGrid();
 
   void clear();
-
+  void setYAxisNames(const CKeyScheme& KeyScheme);
   void drawKeysAt(int Position, const CKeySegmentContainer& Data);
   void drawKeyAreas(int Position, const CKeySegment& Key);
   void drawKeyContour(int Position, const CKeySegment& Key);
@@ -57,6 +59,9 @@ private:
                unsigned char multiplicity);
   void addContour(int Position, double Begin, double End);
   static QColor shade(QColor Color, unsigned char Depth);
+
+  QString getFingerName(const CFinger& Finger) const;
+  std::vector<QString> getFingerNames(const CKeyScheme& KeyScheme) const;
 
   QwtPlot* Plot_;
   CKeySchemePalette KeySchemePalette_;

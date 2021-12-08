@@ -21,37 +21,28 @@ namespace NSKeySchemePlotterDetail {
 
 namespace {
 
-class LabelScaleDraw : public QwtScaleDraw {
-  QwtText label(double value) const override {
-    // TO DO
-    // Need to reimplement this
-    switch (int(value)) {
-    case 0:
-      return QString("Thumb");
-    case 1:
-      return QString("Left Pinky");
-    case 2:
-      return QString("Left Ring");
-    case 3:
-      return QString("Left Middle");
-    case 4:
-      return QString("Left Index");
-    case 5:
-      return QString("Right Index");
-    case 6:
-      return QString("Right Middle");
-    case 7:
-      return QString("Right Ring");
-    case 8:
-      return QString("Right Pinky");
-    case 9:
-      return QString("Unassigned");
-    default:
-      break;
-    }
-    return QwtScaleDraw::label(value);
+class LabelDefaultScaleDraw : public QwtScaleDraw {
+  QwtText label(double) const override {
+    return QString("");
   }
 };
+
+class LabelScaleDraw : public QwtScaleDraw {
+  using CStringContainer = std::vector<QString>;
+
+public:
+  LabelScaleDraw(CStringContainer&& list) : Text_(std::move(list)) {
+  }
+  QwtText label(double value) const override {
+    if (value < 0 || size_t(value) >= Text_.size())
+      return QString("");
+    return Text_[size_t(value)];
+  }
+
+private:
+  CStringContainer Text_;
+};
+
 } // namespace
 
 CKeySchemePlotterImpl::CKeySchemePlotterImpl(QwtPlot* Plot)
@@ -71,8 +62,7 @@ CKeySchemePlotterImpl::keySchemeInput() {
 
 void CKeySchemePlotterImpl::handleKeyScheme(const CKeyScheme& KeyScheme) {
   clear();
-  // TO DO
-  // reset axist according to KeyScheme
+  setYAxisNames(KeyScheme);
   int Position = 0;
   for (const auto& FingerData : KeyScheme) {
     drawKeysAt(Position, FingerData.second);
@@ -90,7 +80,7 @@ void CKeySchemePlotterImpl::adjustPlot() {
 void CKeySchemePlotterImpl::setAxis() {
   Plot_->setAxisTitle(QwtAxis::XBottom, "Time, ms");
   Plot_->setAxisScale(QwtAxis::XBottom, 0.0, 3000);
-  Plot_->setAxisScaleDraw(QwtAxis::YLeft, new LabelScaleDraw());
+  Plot_->setAxisScaleDraw(QwtAxis::YLeft, new LabelDefaultScaleDraw());
   Plot_->setAxisScale(QwtAxis::YLeft, -0.5, 9.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, 10);
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
@@ -109,6 +99,16 @@ void CKeySchemePlotterImpl::setGrid() {
 void CKeySchemePlotterImpl::clear() {
   Plot_->detachItems();
   setGrid();
+}
+
+void CKeySchemePlotterImpl::setYAxisNames(const CKeyScheme& KeyScheme) {
+  Plot_->setAxisScaleDraw(QwtAxis::YLeft,
+                          new LabelScaleDraw(getFingerNames(KeyScheme)));
+  Plot_->setAxisScale(QwtAxis::YLeft, -0.5,
+                      static_cast<double>(KeyScheme.size()) - 0.5, 1.0);
+  Plot_->setAxisMaxMajor(QwtAxis::YLeft, KeyScheme.size());
+  Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
+  Plot_->setAxisTitle(QwtAxis::YLeft, "Fingers");
 }
 
 void CKeySchemePlotterImpl::drawKeysAt(int Position,
@@ -137,8 +137,6 @@ void CKeySchemePlotterImpl::drawKeyContour(int Position,
 }
 
 void CKeySchemePlotterImpl::drawKeyText(int Position, const CKeySegment& Key) {
-  // TO DO
-  // Preliminary implementation
   std::unique_ptr<QwtPlotMarker> Marker = std::make_unique<QwtPlotMarker>();
   QwtText text(Key.getText());
   //  text.setFont(QFont("Helvetica", 10, QFont::Bold));
@@ -187,6 +185,48 @@ QColor CKeySchemePlotterImpl::shade(QColor Color, unsigned char Depth) {
   Color.getHsv(&h, &s, &l);
   l = (l > 15 * Depth ? l - 15 * Depth : 0);
   return QColor::fromHsv(h, s, l);
+}
+
+QString CKeySchemePlotterImpl::getFingerName(const CFinger& Finger) const {
+  // TO DO
+  // preliminary implementation
+  switch (Finger.id()) {
+  case EFingerEnum::Left | EFingerEnum::Thumb:
+    return "Left Thumb";
+  case EFingerEnum::Left | EFingerEnum::Index:
+    return "Left Index";
+  case EFingerEnum::Left | EFingerEnum::Middle:
+    return "Left Middle";
+  case EFingerEnum::Left | EFingerEnum::Ring:
+    return "Left Ring";
+  case EFingerEnum::Left | EFingerEnum::Pinky:
+    return "Left Pinky";
+  case EFingerEnum::Right | EFingerEnum::Thumb:
+    return "Right Thumb";
+  case EFingerEnum::Right | EFingerEnum::Index:
+    return "Right Index";
+  case EFingerEnum::Right | EFingerEnum::Middle:
+    return "Right Middle";
+  case EFingerEnum::Right | EFingerEnum::Ring:
+    return "Right Ring";
+  case EFingerEnum::Right | EFingerEnum::Pinky:
+    return "Right Pinky";
+  case EFingerEnum::Undefined:
+    return "Undefined";
+  default:
+    return "";
+  }
+}
+
+std::vector<QString>
+CKeySchemePlotterImpl::getFingerNames(const CKeyScheme& KeyScheme) const {
+  std::vector<QString> Names(KeyScheme.size());
+  auto iter = Names.begin();
+  for (const auto& KeyData : KeyScheme) {
+    *iter = getFingerName(KeyData.first);
+    ++iter;
+  }
+  return Names;
 }
 
 } // namespace NSKeySchemePlotterDetail

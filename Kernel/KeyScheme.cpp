@@ -106,8 +106,11 @@ CKeyScheme::const_iterator CKeyScheme::end() const {
 
 CKeyScheme::const_iterator CKeyScheme::cend() const {
   return Data_.cend();
+}
 
-} // namespace NSKernel
+size_t CKeyScheme::size() const {
+  return Data_.size();
+}
 
 } // namespace NSKernel
 } // namespace NSApplication

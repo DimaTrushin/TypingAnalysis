@@ -75,6 +75,8 @@ public:
   const_iterator end() const;
   const_iterator cend() const;
 
+  size_t size() const;
+
 private:
   CKeyScheme(CSchemeContainer&& Data);
   CSchemeContainer Data_;
