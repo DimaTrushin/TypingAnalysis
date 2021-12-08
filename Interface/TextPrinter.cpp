@@ -1,6 +1,7 @@
 #include "TextPrinter.h"
 
-#include <QDebug>
+#include "AppDebug/PerformanceLogger.h"
+
 #include <QTextEdit>
 
 namespace NSApplication {
@@ -28,6 +29,7 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 }
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
+  NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
   // Preliminary implementation
   switch (data.textMode()) {
   case ETextMode::Raw:
@@ -136,6 +138,8 @@ void CTextPrinterImpl::printFormattedText(const TText& TextView) {
   auto iter = TextView.cbegin();
   auto sentinel = TextView.cend();
   QTextDocument* Doc = getDefaultDocument();
+  // This is the only approach that I was able to find to print colored text.
+  // However, printing using temporary QTextEdit object is too slow.
   QTextEdit tmpEdit;
   tmpEdit.setDocument(Doc);
 

@@ -1,6 +1,6 @@
 #include "SessionSelector.h"
 
-#include <QDebug>
+#include "AppDebug/PerformanceLogger.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -27,6 +27,7 @@ void CSessionSelectorImpl::subscribeToSeanceViewData(
 }
 
 void CSessionSelectorImpl::setCurrentSession(Index SessionIndex) {
+  NSAppDebug::CTimeAnchor Anchor("set session & notify time = ");
   assert(SessionIndex < 0 ||
          size_t(SessionIndex) < Seance_.data()->get().size());
   if (SessionIndex_ == SessionIndex)

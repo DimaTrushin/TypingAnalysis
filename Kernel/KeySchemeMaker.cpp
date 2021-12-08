@@ -1,7 +1,5 @@
 #include "KeySchemeMaker.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKernel {
 namespace NSKeySchemeMakerDetail {

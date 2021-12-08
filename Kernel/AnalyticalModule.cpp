@@ -3,10 +3,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include "AppDebug/PerformanceLogger.h"
 #include "ParallelModuleAccess.h"
-
-#include "TimerAccess.h"
-#include <QDebug>
 
 namespace NSApplication {
 namespace NSKernel {
@@ -52,13 +50,12 @@ void CAnalyticalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
 }
 
 void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
-  CTime time = CTimerAccess()->get();
+  NSAppDebug::CTimeAnchor Anchor("math & notify time =");
+
   // preliminary implementation
   CContainer Samples = getSpeedData(Data);
   SpeedData_.set(std::move(Samples));
   DensityOut_.notify();
-  time = CTimerAccess()->get() - time;
-  qDebug() << "math time =" << time.toMicroSecondsI() << "mc";
 }
 
 CAnalyticalModuleImpl::CContainer

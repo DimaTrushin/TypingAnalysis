@@ -1,7 +1,5 @@
 #include "KeySchemeModule.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKernel {
 

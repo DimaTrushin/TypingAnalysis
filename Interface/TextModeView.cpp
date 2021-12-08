@@ -1,7 +1,6 @@
 #include "TextModeView.h"
 
 #include <QButtonGroup>
-#include <QDebug>
 #include <QRadioButton>
 
 #include <mutex>

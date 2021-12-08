@@ -4,8 +4,6 @@
 #include "ListenerExceptionHandler.h"
 #include "QtLoopException.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKeyboard {
 

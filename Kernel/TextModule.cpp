@@ -1,5 +1,6 @@
 #include "TextModule.h"
-#include <QDebug>
+
+#include "AppDebug/PerformanceLogger.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -37,6 +38,7 @@ void CTextModuleImpl::subscribeToTextData(CTextDataObserver* obs) {
 }
 
 void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
+  NSAppDebug::CTimeAnchor Anchor("handle session & notify time =");
   TreeConverter_.convert(Session, &TextDataTree_);
   TextDataOutput_.set(CTextData(Session, TextDataTree_, CurrentTextMode_));
 }

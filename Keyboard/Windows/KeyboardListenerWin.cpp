@@ -6,8 +6,6 @@
 #include "TimerAccess.h"
 #include "WinKeyboardApi.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {

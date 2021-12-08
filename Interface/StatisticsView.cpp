@@ -1,10 +1,10 @@
 #include "StatisticsView.h"
 #include <cassert>
 
-#include <QDebug>
-#include <QTableView>
+#include "AppDebug/PerformanceLogger.h"
+#include "TimerAccess.h"
 
-#include <TimerAccess.h>
+#include <QTableView>
 
 namespace NSApplication {
 namespace NSInterface {
@@ -23,14 +23,11 @@ CStatisticsViewImpl::CTextDataObserver* CStatisticsViewImpl::textDataInput() {
 }
 
 void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
-  CTime time = CTimerAccess()->get();
+  NSAppDebug::CTimeAnchor Anchor("handle textData & notify time =");
   // TO DO
   // Need to
   // 1) make a separate object to make statistics
   StatisticsModel_.setStatistics(createStatisticsData(Data));
-  time = CTimerAccess()->get() - time;
-  qDebug() << "CStatisticsViewImpl::handleTextData time = "
-           << time.toMicroSecondsI() << "mc";
 }
 
 CStatisticsViewImpl::CStatisticsDescription

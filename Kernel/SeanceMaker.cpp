@@ -3,8 +3,6 @@
 #include "Seance.h"
 #include "TimerAccess.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKernel {
 

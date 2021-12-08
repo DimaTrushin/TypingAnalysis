@@ -1,7 +1,5 @@
 #include "SessionStatisticsModel.h"
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSQt {
 

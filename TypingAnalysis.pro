@@ -82,6 +82,7 @@ win32 {
 
 
 HEADERS += \
+  AppDebug/PerformanceLogger.h \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
@@ -168,6 +169,7 @@ HEADERS += \
 
 SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
+  AppDebug/PerformanceLogger.cpp \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \

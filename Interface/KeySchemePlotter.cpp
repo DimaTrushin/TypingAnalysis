@@ -8,7 +8,6 @@
 #include "qwt_symbol.h"
 #include "qwt_text.h"
 
-#include <QDebug>
 #include <QPainterPath>
 #include <QPen>
 
