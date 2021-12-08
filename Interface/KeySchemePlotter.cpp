@@ -2,8 +2,10 @@
 
 #include "qwt_plot.h"
 #include "qwt_plot_grid.h"
+#include "qwt_plot_marker.h"
 #include "qwt_plot_shapeitem.h"
 #include "qwt_scale_draw.h"
+#include "qwt_symbol.h"
 #include "qwt_text.h"
 
 #include <QDebug>
@@ -21,6 +23,8 @@ namespace {
 
 class LabelScaleDraw : public QwtScaleDraw {
   QwtText label(double value) const override {
+    // TO DO
+    // Need to reimplement this
     switch (int(value)) {
     case 0:
       return QString("Thumb");
@@ -134,6 +138,17 @@ void CKeySchemePlotterImpl::drawKeyContour(int Position,
 
 void CKeySchemePlotterImpl::drawKeyText(int Position, const CKeySegment& Key) {
   // TO DO
+  // Preliminary implementation
+  std::unique_ptr<QwtPlotMarker> Marker = std::make_unique<QwtPlotMarker>();
+  QwtText text(Key.getText());
+  //  text.setFont(QFont("Helvetica", 10, QFont::Bold));
+  text.setColor(KeySchemePalette_.Colors[CKeySchemePalette::Text]);
+  double center =
+      (Key.getPressingTime() + Key.getReleasingTime()).toMilliSecondsF() / 2;
+  Marker->setValue(center, Position);
+  Marker->setLabelAlignment(Qt::AlignCenter);
+  Marker->setLabel(text);
+  Marker.release()->attach(Plot_);
 }
 
 void CKeySchemePlotterImpl::addArea(int Position, double Begin, double End,

@@ -15,10 +15,11 @@ namespace NSApplication {
 namespace NSInterface {
 
 struct CKeySchemePalette {
-  enum EPlotItem : unsigned char { KeyArea, KeyBorder, End };
+  enum EPlotItem : unsigned char { KeyArea, KeyBorder, Text, End };
 
-  std::array<QColor, EPlotItem::End> Colors{
-      {{255, 229, 204} /*KeyArea*/, {0, 0, 0} /*KeyBorder*/}};
+  std::array<QColor, EPlotItem::End> Colors{{{255, 229, 204} /*KeyArea*/,
+                                             {0, 0, 0} /*KeyBorder*/,
+                                             {0, 0, 0} /*Text*/}};
   qreal border_width = 2;
 };
 
