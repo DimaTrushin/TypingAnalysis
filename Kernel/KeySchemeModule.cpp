@@ -24,6 +24,11 @@ CKeySchemeModuleImpl::CTextDataObserver* CKeySchemeModuleImpl::textDataInput() {
   return &TextDataInput_;
 }
 
+void CKeySchemeModuleImpl::subscribeToKeyScheme(CKeySchemeObserver* obs) {
+  assert(obs);
+  KeySchemeOutput_.subscribe(obs);
+}
+
 void CKeySchemeModuleImpl::handleFingerLayoutChange(
     const CFingerLayout& FingerLayout) {
   if (!TextDataInput_.hasValue())

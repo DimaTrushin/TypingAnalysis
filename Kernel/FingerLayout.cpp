@@ -1,5 +1,6 @@
 #include "FingerLayout.h"
 
+#include <algorithm>
 #include <cassert>
 
 namespace NSApplication {
@@ -66,8 +67,8 @@ bool CFinger::CLeftHandFirst::operator()(CFinger lhs, CFinger rhs) const {
 }
 
 int CFinger::CThumbFirst::cmp(CFinger lhs, CFinger rhs) {
-  return (lhs.Finger_ & EFingerEnum::Thumb) -
-         (rhs.Finger_ & EFingerEnum::Thumb);
+  return std::min((rhs.Finger_ & EFingerEnum::FingerMask), 1) -
+         std::min((lhs.Finger_ & EFingerEnum::FingerMask), 1);
 }
 
 bool CFinger::CThumbFirst::operator()(CFinger lhs, CFinger rhs) const {

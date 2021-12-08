@@ -39,6 +39,35 @@ const QString& NSKeySchemeDetail::CKeySegment::getText() const {
   return Text_;
 }
 
+NSKeySchemeDetail::CKeySegment::iterator
+NSKeySchemeDetail::CKeySegment::begin() {
+  return Segments_.begin();
+}
+
+NSKeySchemeDetail::CKeySegment::const_iterator
+NSKeySchemeDetail::CKeySegment::begin() const {
+  return Segments_.begin();
+}
+
+NSKeySchemeDetail::CKeySegment::const_iterator
+NSKeySchemeDetail::CKeySegment::cbegin() const {
+  return Segments_.cbegin();
+}
+
+NSKeySchemeDetail::CKeySegment::iterator NSKeySchemeDetail::CKeySegment::end() {
+  return Segments_.end();
+}
+
+NSKeySchemeDetail::CKeySegment::const_iterator
+NSKeySchemeDetail::CKeySegment::end() const {
+  return Segments_.end();
+}
+
+NSKeySchemeDetail::CKeySegment::const_iterator
+NSKeySchemeDetail::CKeySegment::cend() const {
+  return Segments_.cend();
+}
+
 CKeyScheme::CKeyScheme(CSchemeContainer&& Data) : Data_(std::move(Data)) {
 }
 
@@ -53,6 +82,31 @@ CKeyScheme CKeyScheme::getDefaultEmpty() {
       {CFinger::RightThumb(), {}},  {CFinger::RightIndex(), {}},
       {CFinger::RightMiddle(), {}}, {CFinger::RightRing(), {}},
       {CFinger::RightPinky(), {}},  {{}, {}}};
+}
+
+CKeyScheme::iterator CKeyScheme::begin() {
+  return Data_.begin();
+}
+
+CKeyScheme::const_iterator CKeyScheme::begin() const {
+  return Data_.begin();
+}
+
+CKeyScheme::const_iterator CKeyScheme::cbegin() const {
+  return Data_.cbegin();
+}
+
+CKeyScheme::iterator CKeyScheme::end() {
+  return Data_.end();
+}
+
+CKeyScheme::const_iterator CKeyScheme::end() const {
+  return Data_.end();
+}
+
+CKeyScheme::const_iterator CKeyScheme::cend() const {
+  return Data_.cend();
+
 } // namespace NSKernel
 
 } // namespace NSKernel

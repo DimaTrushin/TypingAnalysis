@@ -1,7 +1,6 @@
 #ifndef NSAPPLICATION_NSKERNEL_CKEYSCHEMEMODULE_H
 #define NSAPPLICATION_NSKERNEL_CKEYSCHEMEMODULE_H
 
-#include "Kernel/FingerLayout.h"
 #include "Kernel/KeySchemeMaker.h"
 #include "Kernel/TextData.h"
 #include "Library/Observer/Observer.h"
@@ -26,6 +25,7 @@ public:
   CKeySchemeModuleImpl();
   CFingerLayoutObserver* fingerLayoutInput();
   CTextDataObserver* textDataInput();
+  void subscribeToKeyScheme(CKeySchemeObserver* obs);
 
 private:
   void handleFingerLayoutChange(const CFingerLayout& FingerLayout);

@@ -28,6 +28,8 @@ CApplicationImpl::CApplicationImpl()
   AnalyticalModule_->subscribeToSpeedData(SpeedPlotter_->speedDataInput());
   TextModule_->subscribeToTextData(StatisticsView_->textDataInput());
 
+  KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
+
 #ifdef KEYBOARD_HANDLER_DEBUG
   {
     CKeyboardHandlerAccess KeyboardHandler;

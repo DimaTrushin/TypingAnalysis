@@ -24,6 +24,9 @@ class CKeySegment {
   using CIndex = int64_t;
   using CKeyTextData = NSKeyboard::CKeyTextData;
 
+  using iterator = CSegmentContainer::iterator;
+  using const_iterator = CSegmentContainer::const_iterator;
+
 public:
   CKeySegment(QString Text, CTime PressingTime);
   CKeySegment(QChar Symbol, CTime PressingTime);
@@ -35,6 +38,13 @@ public:
   CTime getReleasingTime() const;
   const QString& getText() const;
 
+  iterator begin();
+  const_iterator begin() const;
+  const_iterator cbegin() const;
+  iterator end();
+  const_iterator end() const;
+  const_iterator cend() const;
+
 private:
   QString Text_;
   CTime PressingTime_;
@@ -44,17 +54,26 @@ private:
 } // namespace NSKeySchemeDetail
 
 class CKeyScheme {
+public:
   using CKeySegment = NSKeySchemeDetail::CKeySegment;
   using CKeySegmentContainer = std::vector<CKeySegment>;
   using CSchemeContainer =
       std::map<CFinger, CKeySegmentContainer, CFinger::CStandardOrder>;
+  using iterator = CSchemeContainer::iterator;
+  using const_iterator = CSchemeContainer::const_iterator;
 
-public:
   CKeyScheme() = default;
 
   void add(CFinger Finger, CKeySegment&& Segment);
 
   static CKeyScheme getDefaultEmpty();
+
+  iterator begin();
+  const_iterator begin() const;
+  const_iterator cbegin() const;
+  iterator end();
+  const_iterator end() const;
+  const_iterator cend() const;
 
 private:
   CKeyScheme(CSchemeContainer&& Data);
