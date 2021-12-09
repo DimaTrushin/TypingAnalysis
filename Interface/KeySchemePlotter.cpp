@@ -102,12 +102,9 @@ void CKeySchemePlotterImpl::setGrid() {
 void CKeySchemePlotterImpl::setNavigation() {
   QwtPlotMagnifier* Mag = new QwtPlotMagnifier(Plot_->canvas());
   Mag->setAxisEnabled(QwtAxis::YLeft, false);
-  //  Mag->setZoomInKey(Qt::Key::Key_Up);
-  //  Mag->setZoomOutKey(Qt::Key::Key_Down);
 
   QwtPlotPanner* panner = new QwtPlotPanner(Plot_->canvas());
   panner->setAxisEnabled(QwtAxis::YLeft, false);
-  panner->setMouseButton(Qt::MiddleButton);
 }
 
 void CKeySchemePlotterImpl::clear() {
@@ -197,7 +194,7 @@ QColor CKeySchemePlotterImpl::shade(QColor Color, unsigned char Depth) {
   int h, s, l;
   Depth = std::min<unsigned char>(Depth, 10);
   Color.getHsv(&h, &s, &l);
-  l = (l > 15 * Depth ? l - 15 * Depth : 0);
+  l = (l > 20 * Depth ? l - 20 * Depth : 0);
   return QColor::fromHsv(h, s, l);
 }
 
