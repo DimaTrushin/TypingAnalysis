@@ -82,7 +82,8 @@ void CKeySchemePlotterImpl::adjustPlot() {
 
 void CKeySchemePlotterImpl::setAxis() {
   Plot_->setAxisTitle(QwtAxis::XBottom, "Time, ms");
-  Plot_->setAxisScale(QwtAxis::XBottom, 0.0, 3000);
+  Plot_->setAxisScale(QwtAxis::XBottom, kDefaultLeftBorder,
+                      kDefaultRightBorder);
   Plot_->setAxisScaleDraw(QwtAxis::YLeft, new LabelDefaultScaleDraw());
   Plot_->setAxisScale(QwtAxis::YLeft, -0.5, 9.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, 10);
@@ -110,6 +111,8 @@ void CKeySchemePlotterImpl::setNavigation() {
 void CKeySchemePlotterImpl::clear() {
   Plot_->detachItems();
   setGrid();
+  Plot_->setAxisScale(QwtAxis::XBottom, kDefaultLeftBorder,
+                      kDefaultRightBorder);
 }
 
 void CKeySchemePlotterImpl::setYAxisNames(const CKeyScheme& KeyScheme) {
@@ -117,7 +120,7 @@ void CKeySchemePlotterImpl::setYAxisNames(const CKeyScheme& KeyScheme) {
                           new LabelScaleDraw(getFingerNames(KeyScheme)));
   Plot_->setAxisScale(QwtAxis::YLeft, -0.5,
                       static_cast<double>(KeyScheme.size()) - 0.5, 1.0);
-  Plot_->setAxisMaxMajor(QwtAxis::YLeft, KeyScheme.size());
+  Plot_->setAxisMaxMajor(QwtAxis::YLeft, static_cast<int>(KeyScheme.size()));
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
   Plot_->setAxisTitle(QwtAxis::YLeft, "Fingers");
 }

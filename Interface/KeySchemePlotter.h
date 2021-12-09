@@ -64,6 +64,9 @@ private:
   QString getFingerName(const CFinger& Finger) const;
   std::vector<QString> getFingerNames(const CKeyScheme& KeyScheme) const;
 
+  static constexpr const double kDefaultLeftBorder = 0.0;
+  static constexpr const double kDefaultRightBorder = 3000.0;
+
   QwtPlot* Plot_;
   CKeySchemePalette KeySchemePalette_;
   CKeySchemeInput KeySchemeInput_;
