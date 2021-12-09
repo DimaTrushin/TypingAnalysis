@@ -1,11 +1,12 @@
 #ifndef NSAPPDEBUG_CPERFORMANCELOGGER_H
 #define NSAPPDEBUG_CPERFORMANCELOGGER_H
 
-#include "TimeApp.h"
+#include "Timer.h"
 
 namespace NSAppDebug {
 
 class CTimeAnchor {
+  using CTimer = NSApplication::CTimer;
   using CTime = NSApplication::CTime;
 
 public:
@@ -15,7 +16,7 @@ public:
   void stop();
 
 private:
-  CTime Begin_;
+  CTimer Timer;
   const char* Message_;
   bool isActive_ = true;
 };
