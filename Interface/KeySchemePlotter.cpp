@@ -1,8 +1,11 @@
 #include "KeySchemePlotter.h"
 
 #include "qwt_plot.h"
+#include "qwt_plot_canvas.h"
 #include "qwt_plot_grid.h"
+#include "qwt_plot_magnifier.h"
 #include "qwt_plot_marker.h"
+#include "qwt_plot_panner.h"
 #include "qwt_plot_shapeitem.h"
 #include "qwt_scale_draw.h"
 #include "qwt_symbol.h"
@@ -52,6 +55,7 @@ CKeySchemePlotterImpl::CKeySchemePlotterImpl(QwtPlot* Plot)
   adjustPlot();
   setAxis();
   setGrid();
+  setNavigation();
 }
 
 CKeySchemePlotterImpl::CKeySchemeObserver*
@@ -93,6 +97,17 @@ void CKeySchemePlotterImpl::setGrid() {
   grid->setMajorPen(Qt::gray, 0, Qt::NoPen);
   grid->setMinorPen(Qt::gray, 0, Qt::SolidLine);
   grid.release()->attach(Plot_);
+}
+
+void CKeySchemePlotterImpl::setNavigation() {
+  QwtPlotMagnifier* Mag = new QwtPlotMagnifier(Plot_->canvas());
+  Mag->setAxisEnabled(QwtAxis::YLeft, false);
+  //  Mag->setZoomInKey(Qt::Key::Key_Up);
+  //  Mag->setZoomOutKey(Qt::Key::Key_Down);
+
+  QwtPlotPanner* panner = new QwtPlotPanner(Plot_->canvas());
+  panner->setAxisEnabled(QwtAxis::YLeft, false);
+  panner->setMouseButton(Qt::MiddleButton);
 }
 
 void CKeySchemePlotterImpl::clear() {

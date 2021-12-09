@@ -47,6 +47,7 @@ private:
   void adjustPlot();
   void setAxis();
   void setGrid();
+  void setNavigation();
 
   void clear();
   void setYAxisNames(const CKeyScheme& KeyScheme);
