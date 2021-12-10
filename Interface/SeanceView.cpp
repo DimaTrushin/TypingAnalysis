@@ -36,7 +36,7 @@ void CSeanceViewImpl::subscribeToSessionIndex(CIndexObserver* obs) {
   IndexOutput_.subscribe(obs);
 }
 
-void CSeanceViewImpl::onSelectionChanged(int level, int index) {
+void CSeanceViewImpl::onSelectionChanged(int, int index) {
   assert(index >= -1);
   if (FromModel_.isLocked())
     return;

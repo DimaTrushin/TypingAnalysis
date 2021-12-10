@@ -40,25 +40,25 @@ void CTextModeViewImpl::subscribeToTextMode(CTextModeObserver* obs) {
   TextModeOutput_.subscribe(obs);
 }
 
-void CTextModeViewImpl::TextButtonToggled(int id, bool checked) {
+void CTextModeViewImpl::TextButtonToggled(int, bool checked) {
   if (!checked)
     return;
   handleTextModeSwitchByGui();
 }
 
-void CTextModeViewImpl::ShiftButtonToggled(int id, bool checked) {
+void CTextModeViewImpl::ShiftButtonToggled(int, bool checked) {
   if (!checked)
     return;
   handleTextModeSwitchByGui();
 }
 
-void CTextModeViewImpl::CtrlButtonToggled(int id, bool checked) {
+void CTextModeViewImpl::CtrlButtonToggled(int, bool checked) {
   if (!checked)
     return;
   handleTextModeSwitchByGui();
 }
 
-void CTextModeViewImpl::AltButtonToggled(int id, bool checked) {
+void CTextModeViewImpl::AltButtonToggled(int, bool checked) {
   if (!checked)
     return;
   handleTextModeSwitchByGui();

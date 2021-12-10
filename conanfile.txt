@@ -7,9 +7,3 @@ tbb:shared=False
 
 [generators]
 qmake
-
-[imports]
-lib, qwt*.lib -> ./3dparty/lib
-lib, tbb*.lib -> ./3dparty/lib
-include/tbb, *.* -> ./3dparty/include/tbb
-include, qwt*.* -> ./3dparty/include/qwt

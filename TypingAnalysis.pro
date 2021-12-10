@@ -58,27 +58,9 @@ macx {
 # Kit -> Build -> Build Steps
 # Add Conan install as the first step
 
-# 3d party library related code
-#CONFIG += file_copies
-#COPIES += SharedDllFiles
-#SharedDllFiles.files = $$files($${OUT_PWD}/3dparty/dll/*.dll)
-#CONFIG(release, debug|release): SharedDllFiles.path = $${OUT_PWD}/release
-#else:CONFIG(debug, debug|release):SharedDllFiles.path = $${OUT_PWD}/debug
+CONFIG += conan_basic_setup
+include($${OUT_PWD}/conanbuildinfo.pri)
 
-INCLUDEPATH += $${OUT_PWD}/3dparty/include
-
-win32 {
-  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -ltbb
-  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -ltbb_debug
-}
-
-# Qwt related includes and libraries
-INCLUDEPATH += $${OUT_PWD}/3dparty/include/qwt
-
-win32 {
-  CONFIG(release, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -lqwt
-  else:CONFIG(debug, debug|release): LIBS += -L$${OUT_PWD}/3dparty/lib -lqwtd
-}
 
 
 HEADERS += \
