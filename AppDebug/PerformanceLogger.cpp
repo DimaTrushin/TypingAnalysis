@@ -14,8 +14,10 @@ CTimeAnchor::~CTimeAnchor() {
 }
 
 void CTimeAnchor::stop() {
-  isActive_ = false;
-  qDebug() << Message_ << Timer.get().toMicroSecondsI() << "mc";
+  if (isActive_) {
+    isActive_ = false;
+    qDebug() << Message_ << Timer.get().toMicroSecondsI() << "mc";
+  }
 }
 
 } // namespace NSAppDebug
