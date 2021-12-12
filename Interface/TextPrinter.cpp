@@ -5,6 +5,8 @@
 #include <QPlainTextEdit>
 #include <QTextEdit>
 
+#include <QDebug>
+
 namespace NSApplication {
 namespace NSInterface {
 
@@ -137,7 +139,8 @@ void CTextPrinterImpl::printFormattedText(const TText& TextView) {
   auto sentinel = TextView.cend();
   // TO DO
   // This is still a bad solution. Need to speed up this part.
-  QTextCursor Cursor = TextEdit_->textCursor();
+  QTextDocument* Doc = getDefaultDocument();
+  QTextCursor Cursor = QTextCursor(Doc);
 
   CStatusData CurrentStatus = getStatus(*iter);
   while (CurrentStatus.Status != EKeyStatus::End) {
@@ -146,6 +149,7 @@ void CTextPrinterImpl::printFormattedText(const TText& TextView) {
     insertTextFromBuffer(&Cursor);
     CurrentStatus = NewStatus;
   }
+  TextEdit_->setDocument(Doc);
 }
 
 void CTextPrinterImpl::setFormat(CStatusData Status,
@@ -171,6 +175,15 @@ QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
   Color.getHsv(&h, &s, &l);
   l = (l > 15 * Depth ? l - 15 * Depth : 0);
   return QColor::fromHsv(h, s, l);
+}
+
+QTextDocument* CTextPrinterImpl::getDefaultDocument() const {
+  QTextDocument* Doc = new QTextDocument(TextEdit_);
+  QFont t;
+  t.setPointSize(kDefaultFontSize);
+  Doc->setDefaultFont(t);
+  Doc->setDocumentLayout(new QPlainTextDocumentLayout(Doc));
+  return Doc;
 }
 
 } // namespace NSTextPrinterDetail

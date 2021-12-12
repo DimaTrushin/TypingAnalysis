@@ -115,7 +115,10 @@ private:
 
   static QColor shade(QColor Color, unsigned char Depth);
 
+  QTextDocument* getDefaultDocument() const;
+
   static constexpr const size_t kDefaultBufferSize = 128;
+  static constexpr const int kDefaultFontSize = 14;
 
   QPlainTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
