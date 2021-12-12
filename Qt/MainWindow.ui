@@ -403,7 +403,7 @@
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
                       </property>
-                      <widget class="QTextEdit" name="textEdit_2">
+                      <widget class="QPlainTextEdit" name="plainTextEdit_2">
                        <property name="palette">
                         <palette>
                          <active>
@@ -445,9 +445,6 @@
                         <font>
                          <pointsize>14</pointsize>
                         </font>
-                       </property>
-                       <property name="readOnly">
-                        <bool>true</bool>
                        </property>
                       </widget>
                      </widget>

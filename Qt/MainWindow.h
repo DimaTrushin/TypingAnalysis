@@ -12,7 +12,7 @@ class QButtonGroup;
 class QCloseEvent;
 class QSplitter;
 class QTableView;
-class QTextEdit;
+class QPlainTextEdit;
 class QTreeView;
 QT_END_NAMESPACE
 
@@ -34,7 +34,7 @@ public:
   QButtonGroup* getShiftButtonGroup() const;
   QButtonGroup* getCtrlButtonGroup() const;
   QButtonGroup* getAltButtonGroup() const;
-  QTextEdit* getMainTextEdit() const;
+  QPlainTextEdit* getMainTextEdit() const;
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;

@@ -13,7 +13,8 @@
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
-class QTextEdit;
+class QPlainTextEdit;
+class QTextCursor;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -91,7 +92,7 @@ class CTextPrinterImpl {
   using CQCharBuffer = std::vector<QChar>;
 
 public:
-  explicit CTextPrinterImpl(QTextEdit* TextEdit);
+  explicit CTextPrinterImpl(QPlainTextEdit* TextEdit);
 
   CTextDataObserver* textDataInput();
 
@@ -106,19 +107,17 @@ private:
   template<class TText>
   void printFormattedText(const TText& TextView);
 
-  void setFormat(CStatusData Status, QTextEdit* pTextEdit) const;
-  void insertTextFromBuffer(QTextEdit* pTextEdit) const;
+  void setFormat(CStatusData Status, QTextCursor* pTextCursor) const;
+  void insertTextFromBuffer(QTextCursor* pTextCursor) const;
 
   void clear();
   void setDefaultBackgroundColor();
 
   static QColor shade(QColor Color, unsigned char Depth);
 
-  QTextDocument* getDefaultDocument() const;
-
   static constexpr const size_t kDefaultBufferSize = 128;
 
-  QTextEdit* TextEdit_;
+  QPlainTextEdit* TextEdit_;
   CTextDataInput TextDataInput_;
   CQCharBuffer buffer_ = CQCharBuffer(kDefaultBufferSize);
   CTextPalette Palette_;

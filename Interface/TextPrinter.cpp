@@ -2,6 +2,7 @@
 
 #include "AppDebug/PerformanceLogger.h"
 
+#include <QPlainTextEdit>
 #include <QTextEdit>
 
 namespace NSApplication {
@@ -17,11 +18,10 @@ bool operator!=(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
 
 namespace NSTextPrinterDetail {
 
-CTextPrinterImpl::CTextPrinterImpl(QTextEdit* TextEdit)
+CTextPrinterImpl::CTextPrinterImpl(QPlainTextEdit* TextEdit)
     : TextEdit_(TextEdit),
       TextDataInput_([this](const CTextData& data) { handleTextData(data); }) {
   assert(TextEdit_);
-  setDefaultBackgroundColor();
 }
 
 CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
@@ -30,7 +30,6 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
-  // Preliminary implementation
   switch (data.textMode()) {
   case ETextMode::Raw:
     printFormattedText(data.rawSession());
@@ -131,45 +130,39 @@ CTextPrinterImpl::extractToBuffer<CTextPrinterImpl::CSession::const_iterator>(
 
 template<class TText>
 void CTextPrinterImpl::printFormattedText(const TText& TextView) {
-  if (TextView.empty()) {
-    clear();
+  clear();
+  if (TextView.empty())
     return;
-  }
   auto iter = TextView.cbegin();
   auto sentinel = TextView.cend();
-  QTextDocument* Doc = getDefaultDocument();
-  // This is the only approach that I was able to find to print colored text.
-  // However, printing using temporary QTextEdit object is too slow.
-  QTextEdit tmpEdit;
-  tmpEdit.setDocument(Doc);
+  // TO DO
+  // This is still a bad solution. Need to speed up this part.
+  QTextCursor Cursor = TextEdit_->textCursor();
 
   CStatusData CurrentStatus = getStatus(*iter);
   while (CurrentStatus.Status != EKeyStatus::End) {
     CStatusData NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
-    setFormat(CurrentStatus, &tmpEdit);
-    insertTextFromBuffer(&tmpEdit);
+    setFormat(CurrentStatus, &Cursor);
+    insertTextFromBuffer(&Cursor);
     CurrentStatus = NewStatus;
   }
-  TextEdit_->setDocument(Doc);
 }
 
 void CTextPrinterImpl::setFormat(CStatusData Status,
-                                 QTextEdit* pTextEdit) const {
-  pTextEdit->setTextBackgroundColor(
-      shade(Palette_.Back[Status.Status], Status.Depth));
-  pTextEdit->setTextColor(Palette_.Text[Status.Status]);
+                                 QTextCursor* pTextCursor) const {
+  QTextCharFormat Format;
+  Format.setForeground(QBrush(Palette_.Text[Status.Status]));
+  Format.setBackground(
+      QBrush(shade(Palette_.Back[Status.Status], Status.Depth)));
+  pTextCursor->setCharFormat(Format);
 }
 
-void CTextPrinterImpl::insertTextFromBuffer(QTextEdit* pTextEdit) const {
-  pTextEdit->insertPlainText(QString(buffer_.data(), int(buffer_.size())));
+void CTextPrinterImpl::insertTextFromBuffer(QTextCursor* pTextCursor) const {
+  pTextCursor->insertText(QString(buffer_.data(), int(buffer_.size())));
 }
 
 void CTextPrinterImpl::clear() {
   TextEdit_->clear();
-}
-
-void CTextPrinterImpl::setDefaultBackgroundColor() {
-  TextEdit_->setTextBackgroundColor(Palette_.Back[EKeyStatus::MainText]);
 }
 
 QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
@@ -178,14 +171,6 @@ QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
   Color.getHsv(&h, &s, &l);
   l = (l > 15 * Depth ? l - 15 * Depth : 0);
   return QColor::fromHsv(h, s, l);
-}
-
-QTextDocument* CTextPrinterImpl::getDefaultDocument() const {
-  QTextDocument* Doc = new QTextDocument(TextEdit_);
-  QFont t;
-  t.setPointSize(14);
-  Doc->setDefaultFont(t);
-  return Doc;
 }
 
 } // namespace NSTextPrinterDetail

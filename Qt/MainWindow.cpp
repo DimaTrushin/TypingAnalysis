@@ -43,8 +43,8 @@ QButtonGroup* CMainWindow::getAltButtonGroup() const {
   return ui_->buttonGroup_4;
 }
 
-QTextEdit* CMainWindow::getMainTextEdit() const {
-  return ui_->textEdit_2;
+QPlainTextEdit* CMainWindow::getMainTextEdit() const {
+  return ui_->plainTextEdit_2;
 }
 
 QwtPlot* CMainWindow::getSpeedPlot() const {
