@@ -13,9 +13,10 @@ CSeanceViewImpl::CSeanceViewImpl(QTreeView* TreeView)
     : TreeView_(TreeView),
       CurrentSeanceViewData_(
           [this](const CSeanceViewData& data) { onCurrentSeanceConnect(data); },
-          [this](const CSeanceViewData& data) {
-            onCurrentSeanceNotify(data);
-          }) {
+          [this](const CSeanceViewData& data) { onCurrentSeanceNotify(data); }),
+      SeanceViewLocalizerInput_([this](const CSeanceViewLocalizer& Localizer) {
+        onSeanceViewLocalizer(Localizer);
+      }) {
   assert(TreeView_);
   TreeView_->setModel(&SeanceModel_);
   TreeView_->expandAll();
@@ -34,6 +35,11 @@ CSeanceViewImpl::currentSeanceViewDataInput() {
 void CSeanceViewImpl::subscribeToSessionIndex(CIndexObserver* obs) {
   assert(obs);
   IndexOutput_.subscribe(obs);
+}
+
+CSeanceViewImpl::CSeanceViewLocalizerObserver*
+CSeanceViewImpl::seanceViewLocalizerInput() {
+  return &SeanceViewLocalizerInput_;
 }
 
 void CSeanceViewImpl::onSelectionChanged(int, int index) {
@@ -76,6 +82,11 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   // Then I should switch to CObserverHot
   //  } else
   //    SeanceModel_.clear();
+}
+
+void CSeanceViewImpl::onSeanceViewLocalizer(
+    const CSeanceViewLocalizer& Localizer) {
+  SeanceModel_.setLocale(Localizer);
 }
 
 bool CSeanceViewImpl::isRowSelected(int row) const {

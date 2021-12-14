@@ -4,9 +4,7 @@ namespace NSApplication {
 
 CApplicationGUI::CApplicationGUI()
     : MainSeanceView_(AppWindow_.getSeanceView()),
-      TextModeView_(
-          AppWindow_.getTextButtonGroup(), AppWindow_.getShiftButtonGroup(),
-          AppWindow_.getCtrlButtonGroup(), AppWindow_.getAltButtonGroup()),
+      TextModeView_(AppWindow_.getTextModeInitData()),
       MainTextPrinter_(AppWindow_.getMainTextEdit()),
       SpeedPlotter_(AppWindow_.getSpeedPlot()),
       StatisticsView_(AppWindow_.getStatisticsTable()),

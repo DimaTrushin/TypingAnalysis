@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <memory>
 
+#include "Interface/TextModeView.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -23,6 +25,8 @@ namespace NSQt {
 
 class CMainWindow : public QMainWindow {
   Q_OBJECT
+  using CTextModeInitData = NSInterface::CTextModeView::CInitData;
+
 public:
   CMainWindow(QWidget* parent = nullptr);
   ~CMainWindow();
@@ -30,6 +34,7 @@ public:
   void closeEvent(QCloseEvent* event);
 
   QTreeView* getSeanceView() const;
+  CTextModeInitData getTextModeInitData() const;
   QButtonGroup* getTextButtonGroup() const;
   QButtonGroup* getShiftButtonGroup() const;
   QButtonGroup* getCtrlButtonGroup() const;

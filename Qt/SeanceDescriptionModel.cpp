@@ -121,6 +121,15 @@ bool CSeanceDescriptionModel::clear() {
   return true;
 }
 
+void CSeanceDescriptionModel::setLocale(const CSeanceViewLocalizer& Localizer) {
+  Description_ = Localizer.description();
+  Size_ = Localizer.size();
+  Q_EMIT headerDataChanged(Qt::Horizontal, 0, 1);
+  CurrentSeance_ = Localizer.currentSeance();
+  Q_EMIT dataChanged(createIndex(0, 0, make_level(0)),
+                     createIndex(0, 0, make_level(0)));
+}
+
 void CSeanceDescriptionModel::onSelectionChanged(
     const QItemSelection& selected, const QItemSelection& deselected) {
   Q_UNUSED(deselected);
@@ -160,15 +169,15 @@ QVariant CSeanceDescriptionModel::get_regular_data(int row, int column) const {
 }
 
 QString CSeanceDescriptionModel::currentSeanceName() const {
-  return kDefaultSeanceName_;
+  return CurrentSeance_;
 }
 
 QString CSeanceDescriptionModel::headerName(int column) const {
   switch (column) {
   case 0:
-    return kDefaultSessionDescription_;
+    return Description_;
   case 1:
-    return kDefaultSizeDescription_;
+    return Size_;
   default:
     return "";
   }

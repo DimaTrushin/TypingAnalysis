@@ -5,6 +5,8 @@
 #include <QItemSelection>
 #include <deque>
 
+#include "Local/Localizer.h"
+
 namespace NSApplication {
 namespace NSKernel {
 class CSeance;
@@ -17,6 +19,8 @@ class CSeanceDescriptionModel : public QAbstractItemModel {
   Q_OBJECT
   using CSeance = NSKernel::CSeance;
   using CSession = NSKernel::CSession;
+
+  using CSeanceViewLocalizer = NSLocal::CSeanceViewLocalizer;
 
 public:
   struct CDescription {
@@ -40,6 +44,8 @@ public:
   bool appendFromSeance(const CSeance&);
   bool clear();
 
+  void setLocale(const CSeanceViewLocalizer& Localizer);
+
 Q_SIGNALS:
   void selectionChanged(int level, int index);
 
@@ -59,9 +65,13 @@ private:
 
   QString getSessionDescription(const CSession&) const;
 
-  static constexpr const char kDefaultSeanceName_[] = "Current Seance";
-  static constexpr const char kDefaultSessionDescription_[] = "Description";
-  static constexpr const char kDefaultSizeDescription_[] = "Size";
+  //  static constexpr const char kDefaultSeanceName_[] = "Current Seance";
+  //  static constexpr const char kDefaultSessionDescription_[] = "Description";
+  //  static constexpr const char kDefaultSizeDescription_[] = "Size";
+
+  QString Description_;
+  QString Size_;
+  QString CurrentSeance_;
 
   std::deque<CDescription> Data_;
 };

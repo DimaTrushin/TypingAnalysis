@@ -1,38 +1,76 @@
 #include "TextModeView.h"
 
 #include <QButtonGroup>
+#include <QGroupBox>
 #include <QRadioButton>
 
 #include <mutex>
+
+#include <QDebug>
 
 namespace NSApplication {
 namespace NSInterface {
 
 namespace NSTextModeViewDetail {
 
-CTextModeViewImpl::CTextModeViewImpl(QButtonGroup* TextButtonGroup,
-                                     QButtonGroup* ShiftButtonGroup,
-                                     QButtonGroup* CtrlButtonGroup,
-                                     QButtonGroup* AltButtonGroup)
-    : TextButtonGroup_(TextButtonGroup), ShiftButtonGroup_(ShiftButtonGroup),
-      CtrlButtonGroup_(CtrlButtonGroup), AltButtonGroup_(AltButtonGroup),
-      TextModeInput_([this](const CTextMode& Mode) { onTextModeInput(Mode); }) {
-  assert(TextButtonGroup_);
-  assert(ShiftButtonGroup_);
-  assert(CtrlButtonGroup_);
-  assert(AltButtonGroup_);
-  QObject::connect(TextButtonGroup_, &QButtonGroup::idToggled, this,
+CTextModeViewImpl::CTextModeViewImpl(const CInitData& InitData)
+    : TextModeGroup_(InitData.TextModeGroup),
+      TextModeBox_(InitData.TextModeBox), Raw_(InitData.Raw),
+      Full_(InitData.Full), Printed_(InitData.Printed),
+      ShiftGroup_(InitData.ShiftGroup), ShiftBox_(InitData.ShiftBox),
+      ShiftNon_(InitData.ShiftNon), ShiftAll_(InitData.ShiftAll),
+      ShiftEssential_(InitData.ShiftEssential), CtrlGroup_(InitData.CtrlGroup),
+      CtrlBox_(InitData.CtrlBox), CtrlNon_(InitData.CtrlNon),
+      CtrlAll_(InitData.CtrlAll), CtrlEssential_(InitData.CtrlEssential),
+      AltGroup_(InitData.AltGroup), AltBox_(InitData.AltBox),
+      AltNon_(InitData.AltNon), AltAll_(InitData.AltAll),
+      AltEssential_(InitData.AltEssential),
+      TextModeInput_([this](const CTextMode& Mode) { onTextModeInput(Mode); }),
+      TextModeViewLocalizerInput_(
+          [this](const CTextModeViewLocalizer& Localizer) {
+            setLocale(Localizer);
+          }) {
+  assert(TextModeGroup_);
+  assert(TextModeBox_);
+  assert(Raw_);
+  assert(Full_);
+  assert(Printed_);
+
+  assert(ShiftGroup_);
+  assert(ShiftBox_);
+  assert(ShiftNon_);
+  assert(ShiftAll_);
+  assert(ShiftEssential_);
+
+  assert(CtrlGroup_);
+  assert(CtrlBox_);
+  assert(CtrlNon_);
+  assert(CtrlAll_);
+  assert(CtrlEssential_);
+
+  assert(AltGroup_);
+  assert(AltBox_);
+  assert(AltNon_);
+  assert(AltAll_);
+  assert(AltEssential_);
+
+  QObject::connect(TextModeGroup_, &QButtonGroup::idToggled, this,
                    &CTextModeViewImpl::TextButtonToggled);
-  QObject::connect(ShiftButtonGroup_, &QButtonGroup::idToggled, this,
+  QObject::connect(ShiftGroup_, &QButtonGroup::idToggled, this,
                    &CTextModeViewImpl::ShiftButtonToggled);
-  QObject::connect(CtrlButtonGroup_, &QButtonGroup::idToggled, this,
+  QObject::connect(CtrlGroup_, &QButtonGroup::idToggled, this,
                    &CTextModeViewImpl::CtrlButtonToggled);
-  QObject::connect(AltButtonGroup_, &QButtonGroup::idToggled, this,
+  QObject::connect(AltGroup_, &QButtonGroup::idToggled, this,
                    &CTextModeViewImpl::AltButtonToggled);
 }
 
 CTextModeViewImpl::CTextModeObserver* CTextModeViewImpl::textModeInput() {
   return &TextModeInput_;
+}
+
+CTextModeViewImpl::CTextModeViewLocalizerObserver*
+CTextModeViewImpl::textModeViewLocalizerInput() {
+  return &TextModeViewLocalizerInput_;
 }
 
 void CTextModeViewImpl::subscribeToTextMode(CTextModeObserver* obs) {
@@ -73,19 +111,19 @@ void CTextModeViewImpl::handleTextModeSwitchByGui() {
 }
 
 void CTextModeViewImpl::toggleTextButton(int id) {
-  TextButtonGroup_->button(id)->toggle();
+  TextModeGroup_->button(id)->toggle();
 }
 
 void CTextModeViewImpl::toggleShiftButton(int id) {
-  ShiftButtonGroup_->button(id)->toggle();
+  ShiftGroup_->button(id)->toggle();
 }
 
 void CTextModeViewImpl::toggleCtrlButton(int id) {
-  CtrlButtonGroup_->button(id)->toggle();
+  CtrlGroup_->button(id)->toggle();
 }
 
 void CTextModeViewImpl::toggleAltButton(int id) {
-  AltButtonGroup_->button(id)->toggle();
+  AltGroup_->button(id)->toggle();
 }
 
 void CTextModeViewImpl::toggleAllButtons(CTextMode Mode) {
@@ -174,17 +212,38 @@ void CTextModeViewImpl::onTextModeInput(const CTextMode& Mode) {
 }
 
 CTextModeViewImpl::CTextMode CTextModeViewImpl::getCurrentTextMode() const {
-  return {getTextMode(TextButtonGroup_->checkedId()),
-          getModifierMod(ShiftButtonGroup_->checkedId()),
-          getModifierMod(CtrlButtonGroup_->checkedId()),
-          getModifierMod(AltButtonGroup_->checkedId())};
+  return {getTextMode(TextModeGroup_->checkedId()),
+          getModifierMod(ShiftGroup_->checkedId()),
+          getModifierMod(CtrlGroup_->checkedId()),
+          getModifierMod(AltGroup_->checkedId())};
 }
 
 bool CTextModeViewImpl::areSwitchesInCorrectState() const {
-  return TextButtonGroup_->checkedId() != -1 &&
-         ShiftButtonGroup_->checkedId() != -1 &&
-         CtrlButtonGroup_->checkedId() != -1 &&
-         AltButtonGroup_->checkedId() != -1;
+  return TextModeGroup_->checkedId() != -1 && ShiftGroup_->checkedId() != -1 &&
+         CtrlGroup_->checkedId() != -1 && AltGroup_->checkedId() != -1;
+}
+
+void CTextModeViewImpl::setLocale(const CTextModeViewLocalizer& Localizer) {
+  qDebug() << "setLocale TextModeView";
+  TextModeBox_->setTitle(Localizer.textMode());
+  Raw_->setText(Localizer.raw());
+  Full_->setText(Localizer.full());
+  Printed_->setText(Localizer.printed());
+
+  ShiftBox_->setTitle(Localizer.shift());
+  ShiftNon_->setText(Localizer.non());
+  ShiftAll_->setText(Localizer.all());
+  ShiftEssential_->setText(Localizer.essential());
+
+  CtrlBox_->setTitle(Localizer.ctrl());
+  CtrlNon_->setText(Localizer.non());
+  CtrlAll_->setText(Localizer.all());
+  CtrlEssential_->setText(Localizer.essential());
+
+  AltBox_->setTitle(Localizer.alt());
+  AltNon_->setText(Localizer.non());
+  AltAll_->setText(Localizer.all());
+  AltEssential_->setText(Localizer.essential());
 }
 } // namespace NSTextModeViewDetail
 } // namespace NSInterface

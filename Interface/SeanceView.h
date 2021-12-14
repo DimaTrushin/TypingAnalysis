@@ -9,6 +9,7 @@
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
+#include "Local/Localizer.h"
 #include "Qt/SeanceDescriptionModel.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +40,11 @@ class CSeanceViewImpl : public QObject {
   using CIndexObservable = NSLibrary::CObservableData<Index>;
   using CIndexGetType = CIndexObserver::CGetType;
 
+  using CSeanceViewLocalizer = NSLocal::CSeanceViewLocalizer;
+  using CSeanceViewLocalizerObserver =
+      NSLibrary::CObserver<CSeanceViewLocalizer>;
+  using CSeanceViewLocalizerInput = NSLibrary::CHotInput<CSeanceViewLocalizer>;
+
   using CSupressor = NSLibrary::CSupressor;
 
 public:
@@ -47,12 +53,15 @@ public:
   CSeanceViewDataObserver* currentSeanceViewDataInput();
   void subscribeToSessionIndex(CIndexObserver* obs);
 
+  CSeanceViewLocalizerObserver* seanceViewLocalizerInput();
+
 public Q_SLOTS:
   void onSelectionChanged(int level, int index);
 
 private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
+  void onSeanceViewLocalizer(const CSeanceViewLocalizer&);
 
   bool isRowSelected(int) const;
   void selectRow(int);
@@ -65,6 +74,7 @@ private:
   CSeanceDescriptionModel SeanceModel_;
   CSeanceViewDataInput CurrentSeanceViewData_;
   CIndexObservable IndexOutput_;
+  CSeanceViewLocalizerInput SeanceViewLocalizerInput_;
 };
 
 } // namespace NSSeanceViewDetail

@@ -27,6 +27,16 @@ QTreeView* CMainWindow::getSeanceView() const {
   return ui_->treeView;
 }
 
+CMainWindow::CTextModeInitData CMainWindow::getTextModeInitData() const {
+  return {ui_->buttonGroup,    ui_->groupBox,      ui_->radioButton,
+          ui_->radioButton_2,  ui_->radioButton_3, ui_->buttonGroup_2,
+          ui_->groupBox_2,     ui_->radioButton_4, ui_->radioButton_5,
+          ui_->radioButton_6,  ui_->buttonGroup_3, ui_->groupBox_3,
+          ui_->radioButton_7,  ui_->radioButton_8, ui_->radioButton_9,
+          ui_->buttonGroup_4,  ui_->groupBox_4,    ui_->radioButton_12,
+          ui_->radioButton_13, ui_->radioButton_14};
+}
+
 QButtonGroup* CMainWindow::getTextButtonGroup() const {
   return ui_->buttonGroup;
 }

@@ -8,6 +8,7 @@
 #include "Kernel/SessionSelector.h"
 #include "Kernel/TextModule.h"
 #include "Kernel/UserDataModule.h"
+#include "Local/LocalizationModule.h"
 
 namespace NSApplication {
 
@@ -18,6 +19,7 @@ class CApplicationKernel : protected CApplicationGlobals {
   using CAnalyticalModule = NSKernel::CAnalyticalModule;
   using CUserDataModule = NSKernel::CUserDataModule;
   using CKeySchemeModule = NSKernel::CKeySchemeModule;
+  using CLocalizationModule = NSLocal::CLocalizationModule;
 
 public:
   CApplicationKernel();
@@ -29,6 +31,7 @@ protected:
   CAnalyticalModule AnalyticalModule_;
   CUserDataModule UserData_;
   CKeySchemeModule KeySchemeModule_;
+  CLocalizationModule LocalizationModule_;
 };
 
 } // namespace NSApplication
