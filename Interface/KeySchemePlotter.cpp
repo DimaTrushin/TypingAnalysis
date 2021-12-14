@@ -83,23 +83,19 @@ void CKeySchemePlotterImpl::handleKeyScheme(const CKeyScheme& KeyScheme) {
 
 void CKeySchemePlotterImpl::adjustPlot() {
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  if (LocalizerInput_.hasValue())
-    Plot_->setTitle(LocalizerInput_.data()->get().title());
+  Plot_->setTitle(title());
   Plot_->setMinimumHeight(300);
 }
 
 void CKeySchemePlotterImpl::setAxis() {
   Plot_->setAxisScale(QwtAxis::XBottom, kDefaultLeftBorder,
                       kDefaultRightBorder);
+  Plot_->setAxisTitle(QwtAxis::XBottom, timeAxisTitle());
   Plot_->setAxisScaleDraw(QwtAxis::YLeft, new LabelDefaultScaleDraw());
   Plot_->setAxisScale(QwtAxis::YLeft, -0.5, 9.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, 10);
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
-  if (LocalizerInput_.hasValue())
-    Plot_->setAxisTitle(QwtAxis::YLeft,
-                        LocalizerInput_.data()->get().fingerAxisTitle());
-  else
-    Plot_->setAxisTitle(QwtAxis::YLeft, "");
+  Plot_->setAxisTitle(QwtAxis::YLeft, fingerAxisTitle());
 }
 
 void CKeySchemePlotterImpl::setGrid() {
@@ -133,11 +129,6 @@ void CKeySchemePlotterImpl::setYAxisNames(const CKeyScheme& KeyScheme) {
                       static_cast<double>(KeyScheme.size()) - 0.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, static_cast<int>(KeyScheme.size()));
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
-  if (LocalizerInput_.hasValue())
-    Plot_->setAxisTitle(QwtAxis::YLeft,
-                        LocalizerInput_.data()->get().fingerAxisTitle());
-  else
-    Plot_->setAxisTitle(QwtAxis::YLeft, "");
 }
 
 void CKeySchemePlotterImpl::drawKeysAt(int Position,
@@ -266,6 +257,24 @@ void CKeySchemePlotterImpl::setLocale(const CLocalizer& Localizer) {
   Plot_->setAxisTitle(QwtAxis::YLeft, Localizer.fingerAxisTitle());
   if (KeySchemeInput_.hasValue())
     setYAxisNames(KeySchemeInput_.data()->get());
+}
+
+QString CKeySchemePlotterImpl::title() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().title();
+}
+
+QString CKeySchemePlotterImpl::timeAxisTitle() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().timeAxisTitle();
+}
+
+QString CKeySchemePlotterImpl::fingerAxisTitle() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().fingerAxisTitle();
 }
 
 } // namespace NSKeySchemePlotterDetail

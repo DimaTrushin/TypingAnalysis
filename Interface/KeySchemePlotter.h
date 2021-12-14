@@ -71,6 +71,9 @@ private:
   std::vector<QString> getFingerNames(const CKeyScheme& KeyScheme) const;
 
   void setLocale(const CLocalizer& Localizer);
+  QString title() const;
+  QString timeAxisTitle() const;
+  QString fingerAxisTitle() const;
 
   static constexpr const double kDefaultLeftBorder = 0.0;
   static constexpr const double kDefaultRightBorder = 3000.0;
