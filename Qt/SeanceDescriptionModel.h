@@ -65,10 +65,6 @@ private:
 
   QString getSessionDescription(const CSession&) const;
 
-  //  static constexpr const char kDefaultSeanceName_[] = "Current Seance";
-  //  static constexpr const char kDefaultSessionDescription_[] = "Description";
-  //  static constexpr const char kDefaultSizeDescription_[] = "Size";
-
   QString Description_;
   QString Size_;
   QString CurrentSeance_;

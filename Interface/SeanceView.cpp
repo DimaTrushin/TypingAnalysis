@@ -14,9 +14,8 @@ CSeanceViewImpl::CSeanceViewImpl(QTreeView* TreeView)
       CurrentSeanceViewData_(
           [this](const CSeanceViewData& data) { onCurrentSeanceConnect(data); },
           [this](const CSeanceViewData& data) { onCurrentSeanceNotify(data); }),
-      LocalizerInput_([this](const CLocalizer& Localizer) {
-        onSeanceViewLocalizer(Localizer);
-      }) {
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(TreeView_);
   TreeView_->setModel(&SeanceModel_);
   TreeView_->expandAll();
@@ -83,7 +82,7 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   //    SeanceModel_.clear();
 }
 
-void CSeanceViewImpl::onSeanceViewLocalizer(const CLocalizer& Localizer) {
+void CSeanceViewImpl::setLocale(const CLocalizer& Localizer) {
   SeanceModel_.setLocale(Localizer);
 }
 

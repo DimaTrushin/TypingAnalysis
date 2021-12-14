@@ -60,7 +60,7 @@ public Q_SLOTS:
 private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
-  void onSeanceViewLocalizer(const CLocalizer&);
+  void setLocale(const CLocalizer&);
 
   bool isRowSelected(int) const;
   void selectRow(int);
