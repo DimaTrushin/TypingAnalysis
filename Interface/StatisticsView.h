@@ -7,6 +7,7 @@
 
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Local/Localizer.h"
 #include "Qt/SessionStatisticsModel.h"
 
 QT_BEGIN_NAMESPACE
@@ -29,18 +30,26 @@ class CStatisticsViewImpl {
   using CStatisticsDescription =
       CSessionStatisticsModel::CStatisticsDescription;
 
+  using CLocalizer = NSLocal::CStatisticsViewLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+
 public:
   CStatisticsViewImpl(QTableView* TableView);
   CTextDataObserver* textDataInput();
+  CLocalizerObserver* localizerInput();
 
 private:
   void handleTextData(const CTextData& Data);
 
   CStatisticsDescription createStatisticsData(const CTextData& Data);
 
+  void setLocale(const CLocalizer& Localizer);
+
   QTableView* TableView_;
   CSessionStatisticsModel StatisticsModel_;
   CTextDataInput TextDataInput_;
+  CLocalizerInput LocalizerInput_;
 };
 } // namespace NSStatisticsViewDetail
 

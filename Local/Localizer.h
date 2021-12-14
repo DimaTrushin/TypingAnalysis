@@ -41,6 +41,31 @@ private:
   QString CurrentSeance_;
 };
 
+class CStatisticsViewLocalizer {
+public:
+  template<class TStatisticsViewLocale>
+  static CStatisticsViewLocalizer make() {
+    return CStatisticsViewLocalizer(
+        NSLocalizerDetail::Data<TStatisticsViewLocale>());
+  }
+
+  const QString& data() const {
+    return Data_;
+  }
+  const QString& value() const {
+    return Value_;
+  }
+
+private:
+  template<class TStatisticsViewLocale>
+  CStatisticsViewLocalizer(NSLocalizerDetail::Data<TStatisticsViewLocale>)
+      : Data_(TStatisticsViewLocale::Data),
+        Value_(TStatisticsViewLocale::Value) {
+  }
+  QString Data_;
+  QString Value_;
+};
+
 class CTextModeViewLocalizer {
 public:
   template<class TTextModeViewLocale>
@@ -256,6 +281,10 @@ public:
     return SeanceViewLocalizer_;
   }
 
+  const CStatisticsViewLocalizer& getStatisticsViewLocalizer() const {
+    return StatisticsViewLocalizer_;
+  }
+
   const CTextModeViewLocalizer& getTextModeViewLocalizer() const {
     return TextModeViewLocalizer_;
   }
@@ -273,6 +302,8 @@ private:
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
       : SeanceViewLocalizer_(
             CSeanceViewLocalizer::make<TLocale::CSeanceView>()),
+        StatisticsViewLocalizer_(
+            CStatisticsViewLocalizer::make<TLocale::CStatisticsView>()),
         TextModeViewLocalizer_(
             CTextModeViewLocalizer::make<TLocale::CTextModeView>()),
         SpeedPlotterLocalizer_(
@@ -281,6 +312,7 @@ private:
             CKeySchemePlotterLocalizer::make<TLocale::CKeySchemePlotter>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
+  CStatisticsViewLocalizer StatisticsViewLocalizer_;
   CTextModeViewLocalizer TextModeViewLocalizer_;
   CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
   CKeySchemePlotterLocalizer KeySchemePlotterLocalizer_;

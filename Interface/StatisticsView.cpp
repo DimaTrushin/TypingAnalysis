@@ -13,13 +13,19 @@ namespace NSStatisticsViewDetail {
 
 CStatisticsViewImpl::CStatisticsViewImpl(QTableView* TableView)
     : TableView_(TableView),
-      TextDataInput_([this](const CTextData& Data) { handleTextData(Data); }) {
+      TextDataInput_([this](const CTextData& Data) { handleTextData(Data); }),
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(TableView_);
   TableView_->setModel(&StatisticsModel_);
 }
 
 CStatisticsViewImpl::CTextDataObserver* CStatisticsViewImpl::textDataInput() {
   return &TextDataInput_;
+}
+
+CStatisticsViewImpl::CLocalizerObserver* CStatisticsViewImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
@@ -60,6 +66,10 @@ CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
       {"Mistake Route Length Supremum",
        QString::number(Data.textTree()->getMistakeRoutesLengthSupremum())});
   return Statistics;
+}
+
+void CStatisticsViewImpl::setLocale(const CLocalizer& Localizer) {
+  StatisticsModel_.setLocale(Localizer);
 }
 } // namespace NSStatisticsViewDetail
 

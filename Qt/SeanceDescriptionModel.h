@@ -20,7 +20,7 @@ class CSeanceDescriptionModel : public QAbstractItemModel {
   using CSeance = NSKernel::CSeance;
   using CSession = NSKernel::CSession;
 
-  using CSeanceViewLocalizer = NSLocal::CSeanceViewLocalizer;
+  using CLocalizer = NSLocal::CSeanceViewLocalizer;
 
 public:
   struct CDescription {
@@ -44,7 +44,7 @@ public:
   bool appendFromSeance(const CSeance&);
   bool clear();
 
-  void setLocale(const CSeanceViewLocalizer& Localizer);
+  void setLocale(const CLocalizer& Localizer);
 
 Q_SIGNALS:
   void selectionChanged(int level, int index);

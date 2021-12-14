@@ -58,12 +58,18 @@ bool CSessionStatisticsModel::setStatistics(CStatisticsDescription&& NewData) {
   return true;
 }
 
+void CSessionStatisticsModel::setLocale(const CLocalizer& Localizer) {
+  DataName_ = Localizer.data();
+  ValueName_ = Localizer.value();
+  Q_EMIT headerDataChanged(Qt::Horizontal, 0, 1);
+}
+
 QString CSessionStatisticsModel::headerName(int column) const {
   switch (column) {
   case 0:
-    return kDefaultDataName_;
+    return DataName_;
   case 1:
-    return kDefaultValueName_;
+    return ValueName_;
   default:
     return "";
   }

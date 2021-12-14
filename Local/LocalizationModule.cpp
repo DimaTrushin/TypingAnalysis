@@ -13,6 +13,12 @@ void CLocalizationModuleImpl::subscribeToSeanceViewLocalizer(
   SeanceViewLocalizerOutput_.subscribe(obs);
 }
 
+void CLocalizationModuleImpl::subscribeToStatisticsViewLocalizer(
+    CStatisticsViewLocalizerObserver* obs) {
+  assert(obs);
+  StatistiscViewLocalizerOutput_.subscribe(obs);
+}
+
 void CLocalizationModuleImpl::subscribeToTextModeViewLocalizer(
     CTextModeViewLocalizerObserver* obs) {
   assert(obs);
@@ -35,6 +41,13 @@ CLocalizationModuleImpl::CSeanceViewLocalizerObservable
 NSLocalizationModuleDetail::CLocalizationModuleImpl::makeSeanceViewLocalizer() {
   return CSeanceViewLocalizerObservable([this]() -> CSeanceViewGetType {
     return Localizer_.getSeanceViewLocalizer();
+  });
+}
+
+CLocalizationModuleImpl::CStatisticsViewLocalizerObservable
+CLocalizationModuleImpl::makeStatisticsViewLocalizer() {
+  return CStatisticsViewLocalizerObservable([this]() -> CStatisticsViewGetType {
+    return Localizer_.getStatisticsViewLocalizer();
   });
 }
 

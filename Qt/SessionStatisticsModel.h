@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 
 #include "Kernel/TextData.h"
+#include "Local/Localizer.h"
+
 #include <deque>
 
 namespace NSApplication {
@@ -13,6 +15,7 @@ class CSessionStatisticsModel : public QAbstractTableModel {
   Q_OBJECT
 
   using CTextData = NSKernel::CTextData;
+  using CLocalizer = NSLocal::CStatisticsViewLocalizer;
 
 public:
   struct CDescription {
@@ -31,14 +34,15 @@ public:
 
   bool clear();
   bool setStatistics(CStatisticsDescription&&);
+  void setLocale(const CLocalizer& Localizer);
 
 private:
   QString headerName(int column) const;
 
   bool isValid(const QModelIndex& index) const;
 
-  static constexpr const char kDefaultDataName_[] = "Data";
-  static constexpr const char kDefaultValueName_[] = "Value";
+  QString DataName_;
+  QString ValueName_;
 
   CStatisticsDescription Data_;
 };

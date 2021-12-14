@@ -121,7 +121,7 @@ bool CSeanceDescriptionModel::clear() {
   return true;
 }
 
-void CSeanceDescriptionModel::setLocale(const CSeanceViewLocalizer& Localizer) {
+void CSeanceDescriptionModel::setLocale(const CLocalizer& Localizer) {
   Description_ = Localizer.description();
   Size_ = Localizer.size();
   Q_EMIT headerDataChanged(Qt::Horizontal, 0, 1);

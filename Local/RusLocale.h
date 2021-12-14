@@ -11,6 +11,11 @@ struct CRusLocale {
     static constexpr const char* CurrentSeance = "Текущий сеанс";
   };
 
+  struct CStatisticsView {
+    static constexpr const char* Data = "Данные";
+    static constexpr const char* Value = "Значение";
+  };
+
   struct CTextModeView {
     static constexpr const char* TextMode = "Тексторвый режим";
     static constexpr const char* Raw = "Сырой";
