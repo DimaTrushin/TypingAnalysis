@@ -31,17 +31,26 @@ class CLocalizationModuleImpl {
       NSLibrary::CObservable<CSpeedPlotterLocalizer>;
   using CSpeedPlotterGetType = CSpeedPlotterLocalizerObserver::CGetType;
 
+  using CKeySchemePlotterLocalizerObserver =
+      NSLibrary::CObserver<CKeySchemePlotterLocalizer>;
+  using CKeySchemePlotterLocalizerObservable =
+      NSLibrary::CObservable<CKeySchemePlotterLocalizer>;
+  using CKeySchemePlotterGetType = CKeySchemePlotterLocalizerObserver::CGetType;
+
 public:
   CLocalizationModuleImpl() = default;
 
-  void subcribeToSeanceViewLocalizer(CSeanceViewLocalizerObserver* obs);
+  void subscribeToSeanceViewLocalizer(CSeanceViewLocalizerObserver* obs);
   void subscribeToTextModeViewLocalizer(CTextModeViewLocalizerObserver* obs);
   void subscribeToSpeedPlotterLocalizer(CSpeedPlotterLocalizerObserver* obs);
+  void
+  subscribeToKeySchemePlotterLocalizer(CKeySchemePlotterLocalizerObserver* obs);
 
 private:
   CSeanceViewLocalizerObservable makeSeanceViewLocalizer();
   CTextModeViewLocalizerObservable makeTextModeViewLocalizer();
   CSpeedPlotterLocalizerObservable makeSpeedPlotterLocalizer();
+  CKeySchemePlotterLocalizerObservable makeKeySchemePlotterLocalizer();
 
   CLocalizer Localizer_ = CLocalizer::make<CRusLocale>();
 
@@ -51,6 +60,8 @@ private:
       makeTextModeViewLocalizer();
   CSpeedPlotterLocalizerObservable SpeedPlotterLocalizerOutput_ =
       makeSpeedPlotterLocalizer();
+  CKeySchemePlotterLocalizerObservable KeySchemePlotterLocalizerOutput_ =
+      makeKeySchemePlotterLocalizer();
 };
 
 } // namespace NSLocalizationModuleDetail

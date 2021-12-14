@@ -50,7 +50,9 @@ private:
 CKeySchemePlotterImpl::CKeySchemePlotterImpl(QwtPlot* Plot)
     : Plot_(Plot), KeySchemeInput_([this](const CKeyScheme& KeyScheme) {
         handleKeyScheme(KeyScheme);
-      }) {
+      }),
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(Plot_);
   adjustPlot();
   setAxis();
@@ -61,6 +63,11 @@ CKeySchemePlotterImpl::CKeySchemePlotterImpl(QwtPlot* Plot)
 CKeySchemePlotterImpl::CKeySchemeObserver*
 CKeySchemePlotterImpl::keySchemeInput() {
   return &KeySchemeInput_;
+}
+
+CKeySchemePlotterImpl::CLocalizerObserver*
+CKeySchemePlotterImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CKeySchemePlotterImpl::handleKeyScheme(const CKeyScheme& KeyScheme) {
@@ -76,19 +83,23 @@ void CKeySchemePlotterImpl::handleKeyScheme(const CKeyScheme& KeyScheme) {
 
 void CKeySchemePlotterImpl::adjustPlot() {
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  Plot_->setTitle("Key Scheme");
+  if (LocalizerInput_.hasValue())
+    Plot_->setTitle(LocalizerInput_.data()->get().title());
   Plot_->setMinimumHeight(300);
 }
 
 void CKeySchemePlotterImpl::setAxis() {
-  Plot_->setAxisTitle(QwtAxis::XBottom, "Time, ms");
   Plot_->setAxisScale(QwtAxis::XBottom, kDefaultLeftBorder,
                       kDefaultRightBorder);
   Plot_->setAxisScaleDraw(QwtAxis::YLeft, new LabelDefaultScaleDraw());
   Plot_->setAxisScale(QwtAxis::YLeft, -0.5, 9.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, 10);
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
-  Plot_->setAxisTitle(QwtAxis::YLeft, "Fingers");
+  if (LocalizerInput_.hasValue())
+    Plot_->setAxisTitle(QwtAxis::YLeft,
+                        LocalizerInput_.data()->get().fingerAxisTitle());
+  else
+    Plot_->setAxisTitle(QwtAxis::YLeft, "");
 }
 
 void CKeySchemePlotterImpl::setGrid() {
@@ -122,7 +133,11 @@ void CKeySchemePlotterImpl::setYAxisNames(const CKeyScheme& KeyScheme) {
                       static_cast<double>(KeyScheme.size()) - 0.5, 1.0);
   Plot_->setAxisMaxMajor(QwtAxis::YLeft, static_cast<int>(KeyScheme.size()));
   Plot_->setAxisMaxMinor(QwtAxis::YLeft, 3);
-  Plot_->setAxisTitle(QwtAxis::YLeft, "Fingers");
+  if (LocalizerInput_.hasValue())
+    Plot_->setAxisTitle(QwtAxis::YLeft,
+                        LocalizerInput_.data()->get().fingerAxisTitle());
+  else
+    Plot_->setAxisTitle(QwtAxis::YLeft, "");
 }
 
 void CKeySchemePlotterImpl::drawKeysAt(int Position,
@@ -204,29 +219,31 @@ QColor CKeySchemePlotterImpl::shade(QColor Color, unsigned char Depth) {
 QString CKeySchemePlotterImpl::getFingerName(const CFinger& Finger) const {
   // TO DO
   // preliminary implementation
+  if (!LocalizerInput_.hasValue())
+    return "";
   switch (Finger.id()) {
   case EFingerEnum::Left | EFingerEnum::Thumb:
-    return "Left Thumb";
+    return LocalizerInput_.data()->get().leftThumb();
   case EFingerEnum::Left | EFingerEnum::Index:
-    return "Left Index";
+    return LocalizerInput_.data()->get().leftIndex();
   case EFingerEnum::Left | EFingerEnum::Middle:
-    return "Left Middle";
+    return LocalizerInput_.data()->get().leftMiddle();
   case EFingerEnum::Left | EFingerEnum::Ring:
-    return "Left Ring";
+    return LocalizerInput_.data()->get().leftRing();
   case EFingerEnum::Left | EFingerEnum::Pinky:
-    return "Left Pinky";
+    return LocalizerInput_.data()->get().leftPinky();
   case EFingerEnum::Right | EFingerEnum::Thumb:
-    return "Right Thumb";
+    return LocalizerInput_.data()->get().rightThumb();
   case EFingerEnum::Right | EFingerEnum::Index:
-    return "Right Index";
+    return LocalizerInput_.data()->get().rightIndex();
   case EFingerEnum::Right | EFingerEnum::Middle:
-    return "Right Middle";
+    return LocalizerInput_.data()->get().rightMiddle();
   case EFingerEnum::Right | EFingerEnum::Ring:
-    return "Right Ring";
+    return LocalizerInput_.data()->get().rightRing();
   case EFingerEnum::Right | EFingerEnum::Pinky:
-    return "Right Pinky";
+    return LocalizerInput_.data()->get().rightPinky();
   case EFingerEnum::Undefined:
-    return "Undefined";
+    return LocalizerInput_.data()->get().undefined();
   default:
     return "";
   }
@@ -241,6 +258,14 @@ CKeySchemePlotterImpl::getFingerNames(const CKeyScheme& KeyScheme) const {
     ++iter;
   }
   return Names;
+}
+
+void CKeySchemePlotterImpl::setLocale(const CLocalizer& Localizer) {
+  Plot_->setTitle(Localizer.title());
+  Plot_->setAxisTitle(QwtAxis::XBottom, Localizer.timeAxisTitle());
+  Plot_->setAxisTitle(QwtAxis::YLeft, Localizer.fingerAxisTitle());
+  if (KeySchemeInput_.hasValue())
+    setYAxisNames(KeySchemeInput_.data()->get());
 }
 
 } // namespace NSKeySchemePlotterDetail

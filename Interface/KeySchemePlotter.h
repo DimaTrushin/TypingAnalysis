@@ -4,6 +4,7 @@
 #include "Kernel/KeyScheme.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Local/Localizer.h"
 
 #include <QColor>
 
@@ -34,12 +35,17 @@ class CKeySchemePlotterImpl {
   using CKeySchemeObserver = NSLibrary::CObserver<CKeyScheme>;
   using CKeySchemeInput = NSLibrary::CHotInput<CKeyScheme>;
 
+  using CLocalizer = NSLocal::CKeySchemePlotterLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+
   using CKeySegmentContainer = CKeyScheme::CKeySegmentContainer;
 
 public:
   CKeySchemePlotterImpl(QwtPlot* Plot);
 
   CKeySchemeObserver* keySchemeInput();
+  CLocalizerObserver* localizerInput();
 
 private:
   void handleKeyScheme(const CKeyScheme& KeyScheme);
@@ -64,12 +70,15 @@ private:
   QString getFingerName(const CFinger& Finger) const;
   std::vector<QString> getFingerNames(const CKeyScheme& KeyScheme) const;
 
+  void setLocale(const CLocalizer& Localizer);
+
   static constexpr const double kDefaultLeftBorder = 0.0;
   static constexpr const double kDefaultRightBorder = 3000.0;
 
   QwtPlot* Plot_;
   CKeySchemePalette KeySchemePalette_;
   CKeySchemeInput KeySchemeInput_;
+  CLocalizerInput LocalizerInput_;
 };
 
 } // namespace NSKeySchemePlotterDetail

@@ -160,6 +160,91 @@ private:
   QString Derivative3Name_;
 };
 
+class CKeySchemePlotterLocalizer {
+public:
+  template<class TKeySchemePlotterLocale>
+  static CKeySchemePlotterLocalizer make() {
+    return CKeySchemePlotterLocalizer(
+        NSLocalizerDetail::Data<TKeySchemePlotterLocale>());
+  }
+  const QString& title() const {
+    return Title_;
+  }
+  const QString& fingerAxisTitle() const {
+    return FingerAxisTitle_;
+  }
+  const QString& timeAxisTitle() const {
+    return TimeAxisTitle_;
+  }
+  const QString& leftThumb() const {
+    return LeftThumb_;
+  }
+  const QString& leftIndex() const {
+    return LeftIndex_;
+  }
+  const QString& leftMiddle() const {
+    return LeftMiddle_;
+  }
+  const QString& leftRing() const {
+    return LeftRing_;
+  }
+  const QString& leftPinky() const {
+    return LeftPinky_;
+  }
+  const QString& rightThumb() const {
+    return RightThumb_;
+  }
+  const QString& rightIndex() const {
+    return RightIndex_;
+  }
+  const QString& rightMiddle() const {
+    return RightMiddle_;
+  }
+  const QString& rightRing() const {
+    return RightRing_;
+  }
+  const QString& rightPinky() const {
+    return RightPinky_;
+  }
+  const QString& undefined() const {
+    return Undefined_;
+  }
+
+private:
+  template<class TKeySchemePlotterLocale>
+  CKeySchemePlotterLocalizer(NSLocalizerDetail::Data<TKeySchemePlotterLocale>)
+      : Title_(TKeySchemePlotterLocale::Title),
+        FingerAxisTitle_(TKeySchemePlotterLocale::FingerAxisTitle),
+        TimeAxisTitle_(TKeySchemePlotterLocale::TimeAxisTitle),
+        LeftThumb_(TKeySchemePlotterLocale::LeftThumb),
+        LeftIndex_(TKeySchemePlotterLocale::LeftIndex),
+        LeftMiddle_(TKeySchemePlotterLocale::LeftMiddle),
+        LeftRing_(TKeySchemePlotterLocale::LeftRing),
+        LeftPinky_(TKeySchemePlotterLocale::LeftPinky),
+        RightThumb_(TKeySchemePlotterLocale::RightThumb),
+        RightIndex_(TKeySchemePlotterLocale::RightIndex),
+        RightMiddle_(TKeySchemePlotterLocale::RightMiddle),
+        RightRing_(TKeySchemePlotterLocale::RightRing),
+        RightPinky_(TKeySchemePlotterLocale::RightPinky),
+        Undefined_(TKeySchemePlotterLocale::Undefined) {
+  }
+
+  QString Title_;
+  QString FingerAxisTitle_;
+  QString TimeAxisTitle_;
+  QString LeftThumb_;
+  QString LeftIndex_;
+  QString LeftMiddle_;
+  QString LeftRing_;
+  QString LeftPinky_;
+  QString RightThumb_;
+  QString RightIndex_;
+  QString RightMiddle_;
+  QString RightRing_;
+  QString RightPinky_;
+  QString Undefined_;
+};
+
 class CLocalizer {
 public:
   template<class TLocale>
@@ -179,6 +264,10 @@ public:
     return SpeedPlotterLocalizer_;
   }
 
+  const CKeySchemePlotterLocalizer& getKeySchemePlotterLocalizer() const {
+    return KeySchemePlotterLocalizer_;
+  }
+
 private:
   template<class TLocale>
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
@@ -187,11 +276,14 @@ private:
         TextModeViewLocalizer_(
             CTextModeViewLocalizer::make<TLocale::CTextModeView>()),
         SpeedPlotterLocalizer_(
-            CSpeedPlotterLocalizer::make<TLocale::CSpeedPlotter>()) {
+            CSpeedPlotterLocalizer::make<TLocale::CSpeedPlotter>()),
+        KeySchemePlotterLocalizer_(
+            CKeySchemePlotterLocalizer::make<TLocale::CKeySchemePlotter>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CTextModeViewLocalizer TextModeViewLocalizer_;
   CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
+  CKeySchemePlotterLocalizer KeySchemePlotterLocalizer_;
 };
 
 } // namespace NSLocal
