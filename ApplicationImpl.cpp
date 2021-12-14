@@ -31,9 +31,11 @@ CApplicationImpl::CApplicationImpl()
   KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
 
   LocalizationModule_->subcribeToSeanceViewLocalizer(
-      MainSeanceView_->seanceViewLocalizerInput());
+      MainSeanceView_->localizerInput());
   LocalizationModule_->subscribeToTextModeViewLocalizer(
-      TextModeView_->textModeViewLocalizerInput());
+      TextModeView_->localizerInput());
+  LocalizationModule_->subscribeToSpeedPlotterLocalizer(
+      SpeedPlotter_->localizerInput());
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   {

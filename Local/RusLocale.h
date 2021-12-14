@@ -23,6 +23,17 @@ struct CRusLocale {
     static constexpr const char* Ctrl = "Ctrl";
     static constexpr const char* Alt = "Alt";
   };
+
+  struct CSpeedPlotter {
+    static constexpr const char* PlotterTitle = "Плотность скорости";
+    static constexpr const char* HorizontalAxisTitle = "Скорость, знаки/минута";
+    static constexpr const char* Density1Name = "Плотность";
+    static constexpr const char* Derivative1Name = "Производная";
+    static constexpr const char* Density2Name = "Плотность М-Б";
+    static constexpr const char* Derivative2Name = "Производная М-Б";
+    static constexpr const char* Density3Name = "Плотность Р";
+    static constexpr const char* Derivative3Name = "Производная Р";
+  };
 };
 
 } // namespace NSLocal

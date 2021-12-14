@@ -40,10 +40,9 @@ class CSeanceViewImpl : public QObject {
   using CIndexObservable = NSLibrary::CObservableData<Index>;
   using CIndexGetType = CIndexObserver::CGetType;
 
-  using CSeanceViewLocalizer = NSLocal::CSeanceViewLocalizer;
-  using CSeanceViewLocalizerObserver =
-      NSLibrary::CObserver<CSeanceViewLocalizer>;
-  using CSeanceViewLocalizerInput = NSLibrary::CHotInput<CSeanceViewLocalizer>;
+  using CLocalizer = NSLocal::CSeanceViewLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
   using CSupressor = NSLibrary::CSupressor;
 
@@ -53,7 +52,7 @@ public:
   CSeanceViewDataObserver* currentSeanceViewDataInput();
   void subscribeToSessionIndex(CIndexObserver* obs);
 
-  CSeanceViewLocalizerObserver* seanceViewLocalizerInput();
+  CLocalizerObserver* localizerInput();
 
 public Q_SLOTS:
   void onSelectionChanged(int level, int index);
@@ -61,7 +60,7 @@ public Q_SLOTS:
 private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
-  void onSeanceViewLocalizer(const CSeanceViewLocalizer&);
+  void onSeanceViewLocalizer(const CLocalizer&);
 
   bool isRowSelected(int) const;
   void selectRow(int);
@@ -74,7 +73,7 @@ private:
   CSeanceDescriptionModel SeanceModel_;
   CSeanceViewDataInput CurrentSeanceViewData_;
   CIndexObservable IndexOutput_;
-  CSeanceViewLocalizerInput SeanceViewLocalizerInput_;
+  CLocalizerInput LocalizerInput_;
 };
 
 } // namespace NSSeanceViewDetail

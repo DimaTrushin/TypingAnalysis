@@ -21,7 +21,7 @@ class CApplicationGUI {
   using CSeanceView = NSInterface::CSeanceView;
   using CTextModeView = NSInterface::CTextModeView;
   using CTextPrinter = NSInterface::CTextPrinter;
-  using CPlotter = NSInterface::CPlotter;
+  using CPlotter = NSInterface::CSpeedPlotter;
   using CStatisticsView = NSInterface::CStatisticsView;
   using CKeySchemePlotter = NSInterface::CKeySchemePlotter;
 

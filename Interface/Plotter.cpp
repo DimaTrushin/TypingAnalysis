@@ -13,40 +13,46 @@ namespace NSInterface {
 
 namespace NSPlotterDetail {
 
-CPlotterImpl::CPlotterImpl(QwtPlot* Plot)
+CSpeedPlotterImpl::CSpeedPlotterImpl(QwtPlot* Plot)
     : Plot_(Plot), SpeedDataInput_([this](const CPlotData& PlotData) {
         handlePlotData(PlotData);
-      }) {
+      }),
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(Plot_);
   adjustPlot();
   setCurves();
 }
 
-NSPlotterDetail::CPlotterImpl::CPlotDataObserver*
-NSPlotterDetail::CPlotterImpl::speedDataInput() {
+NSPlotterDetail::CSpeedPlotterImpl::CPlotDataObserver*
+NSPlotterDetail::CSpeedPlotterImpl::speedDataInput() {
   return &SpeedDataInput_;
 }
 
-void CPlotterImpl::legendChecked(const QVariant& itemInfo, bool on, int) {
+CSpeedPlotterImpl::CLocalizerObserver* CSpeedPlotterImpl::localizerInput() {
+  return &LocalizerInput_;
+}
+
+void CSpeedPlotterImpl::legendChecked(const QVariant& itemInfo, bool on, int) {
   QwtPlotItem* plotItem = Plot_->infoToItem(itemInfo);
   if (plotItem)
     plotItem->setVisible(on);
   Plot_->replot();
 }
 
-CPlotterImpl::~CPlotterImpl() = default;
+CSpeedPlotterImpl::~CSpeedPlotterImpl() = default;
 
-void CPlotterImpl::adjustPlot() {
+void CSpeedPlotterImpl::adjustPlot() {
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  Plot_->setTitle("Speed density");
+  //  Plot_->setTitle("");
   std::unique_ptr<QwtLegend> Legend = std::make_unique<QwtLegend>();
   Legend->setDefaultItemMode(QwtLegendData::Checkable);
   QObject::connect(Legend.get(), &QwtLegend::checked, this,
-                   &CPlotterImpl::legendChecked);
+                   &CSpeedPlotterImpl::legendChecked);
   Plot_->insertLegend(Legend.release(), QwtPlot::RightLegend);
 
   Plot_->setAxisVisible(QwtAxis::YRight);
-  Plot_->setAxisTitle(QwtAxis::XBottom, "Speed, symbols/minute");
+  //  Plot_->setAxisTitle(QwtAxis::XBottom, "");
 
   std::unique_ptr<QwtPlotGrid> grid = std::make_unique<QwtPlotGrid>();
   grid->enableXMin(true);
@@ -55,10 +61,9 @@ void CPlotterImpl::adjustPlot() {
   grid.release()->attach(Plot_);
 }
 
-void CPlotterImpl::setCurves() {
+void CSpeedPlotterImpl::setCurves() {
 
-  std::unique_ptr<QwtPlotCurve> Speed0 =
-      std::make_unique<QwtPlotCurve>("Density");
+  std::unique_ptr<QwtPlotCurve> Speed0 = std::make_unique<QwtPlotCurve>("");
   Speed0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   Speed0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   Speed0->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -68,8 +73,7 @@ void CPlotterImpl::setCurves() {
   Speed0_->attach(Plot_);
   checkItem(Speed0_, true);
 
-  std::unique_ptr<QwtPlotCurve> Speed1 =
-      std::make_unique<QwtPlotCurve>("Derivative");
+  std::unique_ptr<QwtPlotCurve> Speed1 = std::make_unique<QwtPlotCurve>("");
   Speed1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   Speed1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   Speed1->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -80,8 +84,7 @@ void CPlotterImpl::setCurves() {
   Speed1_->attach(Plot_);
   checkItem(Speed1_, true);
 
-  std::unique_ptr<QwtPlotCurve> SpeedMB0 =
-      std::make_unique<QwtPlotCurve>("DensityMB");
+  std::unique_ptr<QwtPlotCurve> SpeedMB0 = std::make_unique<QwtPlotCurve>("");
   SpeedMB0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   SpeedMB0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   SpeedMB0->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -91,8 +94,7 @@ void CPlotterImpl::setCurves() {
   SpeedMB0_->attach(Plot_);
   checkItem(SpeedMB0_, true);
 
-  std::unique_ptr<QwtPlotCurve> SpeedMB1 =
-      std::make_unique<QwtPlotCurve>("Derivative");
+  std::unique_ptr<QwtPlotCurve> SpeedMB1 = std::make_unique<QwtPlotCurve>("");
   SpeedMB1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   SpeedMB1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   SpeedMB1->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -103,8 +105,7 @@ void CPlotterImpl::setCurves() {
   SpeedMB1_->attach(Plot_);
   checkItem(SpeedMB1_, true);
 
-  std::unique_ptr<QwtPlotCurve> SpeedR0 =
-      std::make_unique<QwtPlotCurve>("DensitRL");
+  std::unique_ptr<QwtPlotCurve> SpeedR0 = std::make_unique<QwtPlotCurve>("");
   SpeedR0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   SpeedR0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   SpeedR0->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -114,8 +115,7 @@ void CPlotterImpl::setCurves() {
   SpeedR0_->attach(Plot_);
   checkItem(SpeedR0_, true);
 
-  std::unique_ptr<QwtPlotCurve> SpeedR1 =
-      std::make_unique<QwtPlotCurve>("Derivative");
+  std::unique_ptr<QwtPlotCurve> SpeedR1 = std::make_unique<QwtPlotCurve>("");
   SpeedR1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
   SpeedR1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
   SpeedR1->setCurveAttribute(QwtPlotCurve::Fitted, true);
@@ -127,7 +127,7 @@ void CPlotterImpl::setCurves() {
   checkItem(SpeedR1_, true);
 }
 
-void CPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
+void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
 
   QwtLegend* lgd = qobject_cast<QwtLegend*>(Plot_->legend());
 
@@ -142,7 +142,8 @@ void CPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
   }
 }
 
-void NSPlotterDetail::CPlotterImpl::handlePlotData(const CPlotData& PlotData) {
+void NSPlotterDetail::CSpeedPlotterImpl::handlePlotData(
+    const CPlotData& PlotData) {
   Speed0_->setRawSamples(PlotData.dataX(), PlotData.dataY0(),
                          PlotData.gridSize());
   Speed1_->setRawSamples(PlotData.dataX(), PlotData.dataY1(),
@@ -156,6 +157,17 @@ void NSPlotterDetail::CPlotterImpl::handlePlotData(const CPlotData& PlotData) {
   SpeedR1_->setRawSamples(PlotData.dataX(), PlotData.dataYR1(),
                           PlotData.gridSize());
   Plot_->replot();
+}
+
+void CSpeedPlotterImpl::setLocale(const CLocalizer& Localizer) {
+  Plot_->setTitle(Localizer.plotterTitle());
+  Plot_->setAxisTitle(QwtAxis::XBottom, Localizer.horizontalAxisTitle());
+  Speed0_->setTitle(Localizer.density1Name());
+  Speed1_->setTitle(Localizer.derivative1Name());
+  SpeedMB0_->setTitle(Localizer.density2Name());
+  SpeedMB1_->setTitle(Localizer.derivative2Name());
+  SpeedR0_->setTitle(Localizer.density3Name());
+  SpeedR1_->setTitle(Localizer.derivative3Name());
 }
 
 } // namespace NSPlotterDetail

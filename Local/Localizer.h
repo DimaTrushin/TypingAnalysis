@@ -104,6 +104,62 @@ private:
   QString Alt_;
 };
 
+class CSpeedPlotterLocalizer {
+public:
+  template<class TSpeedPlotterLocale>
+  static CSpeedPlotterLocalizer make() {
+    return CSpeedPlotterLocalizer(
+        NSLocalizerDetail::Data<TSpeedPlotterLocale>());
+  }
+
+  const QString& plotterTitle() const {
+    return PlotterTitle_;
+  }
+  const QString& horizontalAxisTitle() const {
+    return HorizontalAxisTitle_;
+  }
+  const QString& density1Name() const {
+    return Density1Name_;
+  }
+  const QString& derivative1Name() const {
+    return Derivative1Name_;
+  }
+  const QString& density2Name() const {
+    return Density2Name_;
+  }
+  const QString& derivative2Name() const {
+    return Derivative2Name_;
+  }
+  const QString& density3Name() const {
+    return Density3Name_;
+  }
+  const QString& derivative3Name() const {
+    return Derivative3Name_;
+  }
+
+private:
+  template<class TSpeedPlotterLocale>
+  CSpeedPlotterLocalizer(NSLocalizerDetail::Data<TSpeedPlotterLocale>)
+      : PlotterTitle_(TSpeedPlotterLocale::PlotterTitle),
+        HorizontalAxisTitle_(TSpeedPlotterLocale::HorizontalAxisTitle),
+        Density1Name_(TSpeedPlotterLocale::Density1Name),
+        Derivative1Name_(TSpeedPlotterLocale::Derivative1Name),
+        Density2Name_(TSpeedPlotterLocale::Density2Name),
+        Derivative2Name_(TSpeedPlotterLocale::Derivative2Name),
+        Density3Name_(TSpeedPlotterLocale::Density3Name),
+        Derivative3Name_(TSpeedPlotterLocale::Derivative3Name) {
+  }
+
+  QString PlotterTitle_;
+  QString HorizontalAxisTitle_;
+  QString Density1Name_;
+  QString Derivative1Name_;
+  QString Density2Name_;
+  QString Derivative2Name_;
+  QString Density3Name_;
+  QString Derivative3Name_;
+};
+
 class CLocalizer {
 public:
   template<class TLocale>
@@ -119,16 +175,23 @@ public:
     return TextModeViewLocalizer_;
   }
 
+  const CSpeedPlotterLocalizer& getSpeedPlotterLocalizer() const {
+    return SpeedPlotterLocalizer_;
+  }
+
 private:
   template<class TLocale>
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
       : SeanceViewLocalizer_(
             CSeanceViewLocalizer::make<TLocale::CSeanceView>()),
         TextModeViewLocalizer_(
-            CTextModeViewLocalizer::make<TLocale::CTextModeView>()) {
+            CTextModeViewLocalizer::make<TLocale::CTextModeView>()),
+        SpeedPlotterLocalizer_(
+            CSpeedPlotterLocalizer::make<TLocale::CSpeedPlotter>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CTextModeViewLocalizer TextModeViewLocalizer_;
+  CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
 };
 
 } // namespace NSLocal

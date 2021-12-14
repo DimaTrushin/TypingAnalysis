@@ -33,11 +33,9 @@ class CTextModeViewImpl : public QObject {
   using CTextModeInput = NSLibrary::CHotInput<CTextMode>;
   using CTextModeObservable = NSLibrary::CObservableData<CTextMode>;
 
-  using CTextModeViewLocalizer = NSLocal::CTextModeViewLocalizer;
-  using CTextModeViewLocalizerObserver =
-      NSLibrary::CObserver<CTextModeViewLocalizer>;
-  using CTextModeViewLocalizerInput =
-      NSLibrary::CHotInput<CTextModeViewLocalizer>;
+  using CLocalizer = NSLocal::CTextModeViewLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
   using CSupressor = NSLibrary::CSupressor;
 
@@ -68,7 +66,7 @@ public:
   CTextModeViewImpl(const CInitData& InitData);
 
   CTextModeObserver* textModeInput();
-  CTextModeViewLocalizerObserver* textModeViewLocalizerInput();
+  CLocalizerObserver* localizerInput();
   void subscribeToTextMode(CTextModeObserver*);
 
 public Q_SLOTS:
@@ -94,7 +92,7 @@ private:
   void onTextModeInput(const CTextMode& Mode);
   CTextMode getCurrentTextMode() const;
   bool areSwitchesInCorrectState() const;
-  void setLocale(const CTextModeViewLocalizer& Localizer);
+  void setLocale(const CLocalizer& Localizer);
 
   QButtonGroup* TextModeGroup_;
   QGroupBox* TextModeBox_;
@@ -125,7 +123,7 @@ private:
 
   CTextModeInput TextModeInput_;
   CTextModeObservable TextModeOutput_;
-  CTextModeViewLocalizerInput TextModeViewLocalizerInput_;
+  CLocalizerInput LocalizerInput_;
 };
 } // namespace NSTextModeViewDetail
 

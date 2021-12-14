@@ -19,6 +19,12 @@ void CLocalizationModuleImpl::subscribeToTextModeViewLocalizer(
   TextModeViewLocalizerOutput_.subscribe(obs);
 }
 
+void CLocalizationModuleImpl::subscribeToSpeedPlotterLocalizer(
+    CSpeedPlotterLocalizerObserver* obs) {
+  assert(obs);
+  SpeedPlotterLocalizerOutput_.subscribe(obs);
+}
+
 CLocalizationModuleImpl::CSeanceViewLocalizerObservable
 NSLocalizationModuleDetail::CLocalizationModuleImpl::makeSeanceViewLocalizer() {
   return CSeanceViewLocalizerObservable([this]() -> CSeanceViewGetType {
@@ -30,6 +36,13 @@ CLocalizationModuleImpl::CTextModeViewLocalizerObservable
 CLocalizationModuleImpl::makeTextModeViewLocalizer() {
   return CTextModeViewLocalizerObservable([this]() -> CTextModeViewGetType {
     return Localizer_.getTextModeViewLocalizer();
+  });
+}
+
+CLocalizationModuleImpl::CSpeedPlotterLocalizerObservable
+CLocalizationModuleImpl::makeSpeedPlotterLocalizer() {
+  return CSpeedPlotterLocalizerObservable([this]() -> CSpeedPlotterGetType {
+    return Localizer_.getSpeedPlotterLocalizer();
   });
 }
 } // namespace NSLocalizationModuleDetail

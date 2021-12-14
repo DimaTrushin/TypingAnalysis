@@ -14,7 +14,7 @@ CSeanceViewImpl::CSeanceViewImpl(QTreeView* TreeView)
       CurrentSeanceViewData_(
           [this](const CSeanceViewData& data) { onCurrentSeanceConnect(data); },
           [this](const CSeanceViewData& data) { onCurrentSeanceNotify(data); }),
-      SeanceViewLocalizerInput_([this](const CSeanceViewLocalizer& Localizer) {
+      LocalizerInput_([this](const CLocalizer& Localizer) {
         onSeanceViewLocalizer(Localizer);
       }) {
   assert(TreeView_);
@@ -37,9 +37,8 @@ void CSeanceViewImpl::subscribeToSessionIndex(CIndexObserver* obs) {
   IndexOutput_.subscribe(obs);
 }
 
-CSeanceViewImpl::CSeanceViewLocalizerObserver*
-CSeanceViewImpl::seanceViewLocalizerInput() {
-  return &SeanceViewLocalizerInput_;
+CSeanceViewImpl::CLocalizerObserver* CSeanceViewImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CSeanceViewImpl::onSelectionChanged(int, int index) {
@@ -84,8 +83,7 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   //    SeanceModel_.clear();
 }
 
-void CSeanceViewImpl::onSeanceViewLocalizer(
-    const CSeanceViewLocalizer& Localizer) {
+void CSeanceViewImpl::onSeanceViewLocalizer(const CLocalizer& Localizer) {
   SeanceModel_.setLocale(Localizer);
 }
 

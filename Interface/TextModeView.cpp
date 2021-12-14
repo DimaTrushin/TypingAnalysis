@@ -26,10 +26,8 @@ CTextModeViewImpl::CTextModeViewImpl(const CInitData& InitData)
       AltNon_(InitData.AltNon), AltAll_(InitData.AltAll),
       AltEssential_(InitData.AltEssential),
       TextModeInput_([this](const CTextMode& Mode) { onTextModeInput(Mode); }),
-      TextModeViewLocalizerInput_(
-          [this](const CTextModeViewLocalizer& Localizer) {
-            setLocale(Localizer);
-          }) {
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(TextModeGroup_);
   assert(TextModeBox_);
   assert(Raw_);
@@ -68,9 +66,8 @@ CTextModeViewImpl::CTextModeObserver* CTextModeViewImpl::textModeInput() {
   return &TextModeInput_;
 }
 
-CTextModeViewImpl::CTextModeViewLocalizerObserver*
-CTextModeViewImpl::textModeViewLocalizerInput() {
-  return &TextModeViewLocalizerInput_;
+CTextModeViewImpl::CLocalizerObserver* CTextModeViewImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CTextModeViewImpl::subscribeToTextMode(CTextModeObserver* obs) {
@@ -223,7 +220,7 @@ bool CTextModeViewImpl::areSwitchesInCorrectState() const {
          CtrlGroup_->checkedId() != -1 && AltGroup_->checkedId() != -1;
 }
 
-void CTextModeViewImpl::setLocale(const CTextModeViewLocalizer& Localizer) {
+void CTextModeViewImpl::setLocale(const CLocalizer& Localizer) {
   qDebug() << "setLocale TextModeView";
   TextModeBox_->setTitle(Localizer.textMode());
   Raw_->setText(Localizer.raw());

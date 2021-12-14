@@ -8,6 +8,7 @@
 #include "Kernel/PlotData.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Local/Localizer.h"
 
 class QwtPlot;
 class QwtPlotCurve;
@@ -18,18 +19,23 @@ namespace NSInterface {
 
 namespace NSPlotterDetail {
 
-class CPlotterImpl : public QObject {
+class CSpeedPlotterImpl : public QObject {
   Q_OBJECT
 
   using CPlotData = NSKernel::CPlotData;
   using CPlotDataObserver = NSLibrary::CObserver<CPlotData>;
   using CPlotDataInput = NSLibrary::CHotInput<CPlotData>;
 
+  using CLocalizer = NSLocal::CSpeedPlotterLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+
 public:
-  CPlotterImpl(QwtPlot*);
-  ~CPlotterImpl();
+  CSpeedPlotterImpl(QwtPlot*);
+  ~CSpeedPlotterImpl();
 
   CPlotDataObserver* speedDataInput();
+  CLocalizerObserver* localizerInput();
 
 public Q_SLOTS:
   void legendChecked(const QVariant&, bool, int);
@@ -41,6 +47,8 @@ private:
 
   void handlePlotData(const CPlotData& PlotData);
 
+  void setLocale(const CLocalizer& Localizer);
+
   QwtPlot* Plot_;
   QwtPlotCurve* Speed0_;
   QwtPlotCurve* Speed1_;
@@ -49,11 +57,13 @@ private:
   QwtPlotCurve* SpeedR0_;
   QwtPlotCurve* SpeedR1_;
   CPlotDataInput SpeedDataInput_;
+  CLocalizerInput LocalizerInput_;
 };
 
 } // namespace NSPlotterDetail
 
-using CPlotter = NSLibrary::CViewWrapper<NSPlotterDetail::CPlotterImpl>;
+using CSpeedPlotter =
+    NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication
