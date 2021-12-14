@@ -49,6 +49,15 @@ private:
 
   void setLocale(const CLocalizer& Localizer);
 
+  QString title() const;
+  QString horizontalAxisTitle() const;
+  QString density1Name() const;
+  QString derivative1Name() const;
+  QString density2Name() const;
+  QString derivative2Name() const;
+  QString density3Name() const;
+  QString derivative3Name() const;
+
   QwtPlot* Plot_;
   QwtPlotCurve* Speed0_;
   QwtPlotCurve* Speed1_;
