@@ -43,10 +43,17 @@ class CLocalizationModuleImpl {
       NSLibrary::CObservable<CKeySchemePlotterLocalizer>;
   using CKeySchemePlotterGetType = CKeySchemePlotterLocalizerObserver::CGetType;
 
+  using CStatisticsLocalizerObserver =
+      NSLibrary::CObserver<CStatisticsLocalizer>;
+  using CStatisticsLocalizerObservable =
+      NSLibrary::CObservable<CStatisticsLocalizer>;
+  using CStatisticsGetType = CStatisticsLocalizerObserver::CGetType;
+
 public:
   CLocalizationModuleImpl() = default;
 
   void subscribeToSeanceViewLocalizer(CSeanceViewLocalizerObserver* obs);
+  void subscribeToStatisticsLocalizer(CStatisticsLocalizerObserver* obs);
   void
   subscribeToStatisticsViewLocalizer(CStatisticsViewLocalizerObserver* obs);
   void subscribeToTextModeViewLocalizer(CTextModeViewLocalizerObserver* obs);
@@ -57,6 +64,7 @@ public:
 private:
   CSeanceViewLocalizerObservable makeSeanceViewLocalizer();
   CStatisticsViewLocalizerObservable makeStatisticsViewLocalizer();
+  CStatisticsLocalizerObservable makeStatisticsLocalizer();
   CTextModeViewLocalizerObservable makeTextModeViewLocalizer();
   CSpeedPlotterLocalizerObservable makeSpeedPlotterLocalizer();
   CKeySchemePlotterLocalizerObservable makeKeySchemePlotterLocalizer();
@@ -67,6 +75,8 @@ private:
       makeSeanceViewLocalizer();
   CStatisticsViewLocalizerObservable StatistiscViewLocalizerOutput_ =
       makeStatisticsViewLocalizer();
+  CStatisticsLocalizerObservable StatisticsLocalizerOutput_ =
+      makeStatisticsLocalizer();
   CTextModeViewLocalizerObservable TextModeViewLocalizerOutput_ =
       makeTextModeViewLocalizer();
   CSpeedPlotterLocalizerObservable SpeedPlotterLocalizerOutput_ =

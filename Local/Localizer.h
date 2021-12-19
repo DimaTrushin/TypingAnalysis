@@ -66,6 +66,70 @@ private:
   QString Value_;
 };
 
+class CStatisticsLocalizer {
+public:
+  template<class TStatisticsLocale>
+  static CStatisticsLocalizer make() {
+    return CStatisticsLocalizer(NSLocalizerDetail::Data<TStatisticsLocale>());
+  }
+  const QString& fullTextLength() const {
+    return FullTextLength_;
+  }
+  const QString& printedTextLength() const {
+    return PrintedTextLength_;
+  }
+  const QString& deletedSymbols() const {
+    return DeletedSymbols_;
+  }
+  const QString& mistakePlaces() const {
+    return MistakePlaces_;
+  }
+  const QString& mistakes() const {
+    return Mistakes_;
+  }
+  const QString& mistakesPercent() const {
+    return MistakesPercent_;
+  }
+  const QString& fullTextDuration() const {
+    return FullTextDuration_;
+  }
+  const QString& printedTextDuration() const {
+    return PrintedTextDuration_;
+  }
+  const QString& fullTextSpeed() const {
+    return FullTextSpeed_;
+  }
+  const QString& printedTextSpeed() const {
+    return PrintedTextSpeed_;
+  }
+
+private:
+  template<class TStatisticsLocale>
+  CStatisticsLocalizer(NSLocalizerDetail::Data<TStatisticsLocale>)
+      : FullTextLength_(TStatisticsLocale::FullTextLength),
+        PrintedTextLength_(TStatisticsLocale::PrintedTextLength),
+        DeletedSymbols_(TStatisticsLocale::DeletedSymbols),
+        MistakePlaces_(TStatisticsLocale::MistakePlaces),
+        Mistakes_(TStatisticsLocale::Mistakes),
+        MistakesPercent_(TStatisticsLocale::MistakesPercent),
+        FullTextDuration_(TStatisticsLocale::FullTextDuration),
+        PrintedTextDuration_(TStatisticsLocale::PrintedTextDuration),
+        FullTextSpeed_(TStatisticsLocale::FullTextSpeed),
+        PrintedTextSpeed_(TStatisticsLocale::PrintedTextSpeed) {
+  }
+
+  QString FullTextLength_;
+  QString PrintedTextLength_;
+  QString DeletedSymbols_;
+  QString MistakePlaces_;
+  QString Mistakes_;
+  QString MistakesPercent_;
+  QString FullTextDuration_;
+  QString PrintedTextDuration_;
+  QString FullTextSpeed_;
+  QString PrintedTextSpeed_;
+};
+
 class CTextModeViewLocalizer {
 public:
   template<class TTextModeViewLocale>
@@ -285,6 +349,10 @@ public:
     return StatisticsViewLocalizer_;
   }
 
+  const CStatisticsLocalizer& getStatisticsLoalizer() const {
+    return StatisticsLocalizer_;
+  }
+
   const CTextModeViewLocalizer& getTextModeViewLocalizer() const {
     return TextModeViewLocalizer_;
   }
@@ -304,6 +372,8 @@ private:
             CSeanceViewLocalizer::make<TLocale::CSeanceView>()),
         StatisticsViewLocalizer_(
             CStatisticsViewLocalizer::make<TLocale::CStatisticsView>()),
+        StatisticsLocalizer_(
+            CStatisticsLocalizer::make<TLocale::CStatistics>()),
         TextModeViewLocalizer_(
             CTextModeViewLocalizer::make<TLocale::CTextModeView>()),
         SpeedPlotterLocalizer_(
@@ -313,6 +383,7 @@ private:
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CStatisticsViewLocalizer StatisticsViewLocalizer_;
+  CStatisticsLocalizer StatisticsLocalizer_;
   CTextModeViewLocalizer TextModeViewLocalizer_;
   CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
   CKeySchemePlotterLocalizer KeySchemePlotterLocalizer_;

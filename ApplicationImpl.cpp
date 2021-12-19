@@ -39,7 +39,9 @@ CApplicationImpl::CApplicationImpl()
   LocalizationModule_->subscribeToKeySchemePlotterLocalizer(
       KeySchemePlotter_->localizerInput());
   LocalizationModule_->subscribeToStatisticsViewLocalizer(
-      StatisticsView_->localizerInput());
+      StatisticsView_->viewLocalizerInput());
+  LocalizationModule_->subscribeToStatisticsLocalizer(
+      StatisticsView_->statisticsLocalizerInput());
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   {

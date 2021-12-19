@@ -60,6 +60,14 @@ long long CTime::toSecondsI() const {
   return Microseconds_ / kMicrosecondsInSeconds;
 }
 
+long long CTime::toMinutesI() const {
+  return Microseconds_ / kMicrosecondsInMinutes;
+}
+
+long long CTime::toHoursI() const {
+  return Microseconds_ / kMicrosecondsInHours;
+}
+
 double CTime::toMicroSecondsF() const {
   return static_cast<double>(Microseconds_);
 }
@@ -70,6 +78,14 @@ double CTime::toMilliSecondsF() const {
 
 double CTime::toSecondsF() const {
   return Microseconds_ / static_cast<double>(kMicrosecondsInSeconds);
+}
+
+double CTime::toMinutesF() const {
+  return Microseconds_ / static_cast<double>(kMicrosecondsInMinutes);
+}
+
+double CTime::toHoursF() const {
+  return Microseconds_ / static_cast<double>(kMicrosecondsInHours);
 }
 
 CTime::CTime(long long microseconds) : Microseconds_(microseconds) {

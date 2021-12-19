@@ -106,13 +106,13 @@ CTextDataTreeImpl::CIndex CTextDataTreeImpl::getFullTextLength() const {
   return Tree_.size() - 1;
 }
 
-// CTextDataTree::CIndex CTextDataTree::getTextLength(ETextMode TextMode) const
-// {
-//  if (TextMode == ETextMode::Full)
-//    return getFullTextLength();
-//  assert(TextMode == ETextMode::Printed);
-//  return getPrintedTextLength();
-//}
+CTextDataTreeImpl::CIndex
+CTextDataTreeImpl::getTextLength(ETextMode TextMode) const {
+  if (TextMode == ETextMode::Full)
+    return getFullTextLength();
+  assert(TextMode == ETextMode::Printed);
+  return getPrintedTextLength();
+}
 
 CTextDataTreeImpl::CIndex
 CTextDataTreeImpl::getDeletionSeriesLengthSupremum() const {
@@ -158,30 +158,66 @@ CTextDataTreeImpl::getMistakeRoutesLengthSupremum() const {
   return lengthSupremum;
 }
 
-// bool CTextDataTree::isTextEmpty(ETextMode TextMode) const {
-//  if (getTextLength(TextMode) == 0)
-//    return true;
-//  return false;
-//}
+double CTextDataTreeImpl::percentOfMistakeRoutes() const {
+  if (getPrintedTextLength() == 0)
+    return 0.;
+  return static_cast<double>(getNumberOfMistakeRoutes()) * 100. /
+         getPrintedTextLength();
+}
 
-// microseconds CTextDataTree::getFirstPressingTime(ETextMode TextMode) const {
-//  if (isTextEmpty(TextMode))
-//    return 0;
-//  return beginText(TextMode)->getPressingTime();
-//}
+bool CTextDataTreeImpl::isTextEmpty(ETextMode TextMode) const {
+  if (getTextLength(TextMode) == 0)
+    return true;
+  return false;
+}
 
-// microseconds CTextDataTree::getLastPressingTime(ETextMode TextMode) const {
-//  if (TextMode == ETextMode::Full)
-//    return getLastFullTextPressingTime();
-//  assert(TextMode == ETextMode::Printed);
-//  return getLastPrintedTextPressingTime();
-//}
+CTime CTextDataTreeImpl::getFirstPressingTime(ETextMode TextMode) const {
+  if (isTextEmpty(TextMode))
+    return {};
+  switch (TextMode) {
+  case ETextMode::Full:
+    return beginFullText()->getPressingTime();
+  case ETextMode::Printed:
+    return beginPrintedText()->getPressingTime();
+  default:
+    assert(false);
+    return {};
+  }
+}
 
-// microseconds CTextDataTree::getTextDurationTime(ETextMode TextMode) const {
-//  if (isTextEmpty(TextMode))
-//    return 0;
-//  return getLastPressingTime(TextMode) - getFirstPressingTime(TextMode);
-//}
+CTime CTextDataTreeImpl::getLastPressingTime(ETextMode TextMode) const {
+  if (isTextEmpty(TextMode))
+    return {};
+  switch (TextMode) {
+  case ETextMode::Full:
+    return Tree_.data(Tree_.size() - 1).getPressingTime();
+  case ETextMode::Printed:
+    return FinalElement_->getPressingTime();
+  default:
+    assert(false);
+    return {};
+  }
+}
+
+CTime CTextDataTreeImpl::getTextDurationTime(ETextMode TextMode) const {
+  if (isTextEmpty(TextMode))
+    return {};
+  return getLastPressingTime(TextMode) - getFirstPressingTime(TextMode);
+}
+
+CTime CTextDataTreeImpl::getPrintedTextDuration() const {
+  if (getPrintedTextLength() == 0)
+    return {};
+  return FinalElement_->getPressingTime() -
+         beginPrintedText()->getPressingTime();
+}
+
+CTime CTextDataTreeImpl::getFullTextDuration() const {
+  if (getFullTextLength() == 0)
+    return {};
+  return Tree_.data(Tree_.size() - 1).getPressingTime() -
+         beginFullText()->getPressingTime();
+}
 
 // CTextDataTree::CConstBasicIterator
 // CTextDataTree::beginText(ETextMode TextMode) const {

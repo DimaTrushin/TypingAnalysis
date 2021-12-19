@@ -104,16 +104,20 @@ public:
   CIndex getPrintedTextLength() const;
   CIndex getFullTextLength() const;
 
-  //  CIndex getTextLength(ETextMode TextMode) const;
+  CIndex getTextLength(ETextMode TextMode) const;
   CIndex getDeletionSeriesLengthSupremum() const;
   CIndex getNumberOfMistakePlaces() const;
   CIndex getNumberOfMistakeRoutes() const;
   CIndex getMistakeRoutesLengthSupremum() const;
+  double percentOfMistakeRoutes() const;
 
-  //  bool isTextEmpty(ETextMode TextMode) const;
-  //  microseconds getFirstPressingTime(ETextMode TextMode) const;
-  //  microseconds getLastPressingTime(ETextMode TextMode) const;
-  //  microseconds getTextDurationTime(ETextMode TextMode) const;
+  bool isTextEmpty(ETextMode TextMode) const;
+  CTime getFirstPressingTime(ETextMode TextMode) const;
+  CTime getLastPressingTime(ETextMode TextMode) const;
+  CTime getTextDurationTime(ETextMode TextMode) const;
+
+  CTime getPrintedTextDuration() const;
+  CTime getFullTextDuration() const;
 
   //  CConstBasicIterator beginText(ETextMode TextMode) const;
   //  CBasicIterator beginText(ETextMode TextMode);

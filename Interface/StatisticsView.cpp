@@ -14,8 +14,12 @@ namespace NSStatisticsViewDetail {
 CStatisticsViewImpl::CStatisticsViewImpl(QTableView* TableView)
     : TableView_(TableView),
       TextDataInput_([this](const CTextData& Data) { handleTextData(Data); }),
-      LocalizerInput_(
-          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
+      ViewLocalizerInput_([this](const CViewLocalizer& Localizer) {
+        setViewLocale(Localizer);
+      }),
+      StatisticsLocalizerInput_([this](const CStatisticsLocalizer& Localizer) {
+        setStatisticsLocale(Localizer);
+      }) {
   assert(TableView_);
   TableView_->setModel(&StatisticsModel_);
 }
@@ -24,8 +28,14 @@ CStatisticsViewImpl::CTextDataObserver* CStatisticsViewImpl::textDataInput() {
   return &TextDataInput_;
 }
 
-CStatisticsViewImpl::CLocalizerObserver* CStatisticsViewImpl::localizerInput() {
-  return &LocalizerInput_;
+CStatisticsViewImpl::CViewLocalizerObserver*
+CStatisticsViewImpl::viewLocalizerInput() {
+  return &ViewLocalizerInput_;
+}
+
+CStatisticsViewImpl::CStatisticsLocalizerObserver*
+CStatisticsViewImpl::statisticsLocalizerInput() {
+  return &StatisticsLocalizerInput_;
 }
 
 void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
@@ -39,37 +49,105 @@ void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
 CStatisticsViewImpl::CStatisticsDescription
 CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
   CStatisticsDescription Statistics;
+  const NSKernel::CTextDataTree& Tree = Data.textTree();
+
   Statistics.push_back(
-      {"Places With Deletion",
-       QString::number(Data.textTree()->getNumberOfPlacesWithDeletion())});
+      {printedTextLength(), QString::number(Tree->getPrintedTextLength())});
   Statistics.push_back(
-      {"Deletion Series",
-       QString::number(Data.textTree()->getNumberOfDeletionSeries())});
+      {fullTextLength(), QString::number(Tree->getFullTextLength())});
   Statistics.push_back(
-      {"Deleted Symbols",
-       QString::number(Data.textTree()->getNumberOfDeletedSymbols())});
+      {deletedSymbols(), QString::number(Tree->getNumberOfDeletedSymbols())});
   Statistics.push_back(
-      {"Return Points",
-       QString::number(Data.textTree()->getNumberOfReturnPoints())});
+      {mistakePlaces(), QString::number(Tree->getNumberOfMistakePlaces())});
   Statistics.push_back(
-      {"Tree size", QString::number(Data.textTree()->getTreeSize())});
+      {mistakes(), QString::number(Tree->getNumberOfMistakeRoutes())});
   Statistics.push_back(
-      {"Deletion Length Supremum",
-       QString::number(Data.textTree()->getDeletionSeriesLengthSupremum())});
+      {mistakesPercent(), QString::number(Tree->percentOfMistakeRoutes())});
   Statistics.push_back(
-      {"Mistake Places",
-       QString::number(Data.textTree()->getNumberOfMistakePlaces())});
+      {printedTextDuration(),
+       QString::number(Tree->getPrintedTextDuration().toSecondsF())});
   Statistics.push_back(
-      {"Mistake Routes",
-       QString::number(Data.textTree()->getNumberOfMistakeRoutes())});
+      {fullTextDuration(),
+       QString::number(Tree->getFullTextDuration().toSecondsF())});
   Statistics.push_back(
-      {"Mistake Route Length Supremum",
-       QString::number(Data.textTree()->getMistakeRoutesLengthSupremum())});
+      {printedTextSpeed(),
+       QString::number(Tree->getPrintedTextLength() /
+                       Tree->getPrintedTextDuration().toMinutesF())});
+  Statistics.push_back(
+      {fullTextSpeed(),
+       QString::number(Tree->getFullTextLength() /
+                       Tree->getFullTextDuration().toMinutesF())});
   return Statistics;
 }
 
-void CStatisticsViewImpl::setLocale(const CLocalizer& Localizer) {
+void CStatisticsViewImpl::setViewLocale(const CViewLocalizer& Localizer) {
   StatisticsModel_.setLocale(Localizer);
+}
+
+void CStatisticsViewImpl::setStatisticsLocale(const CStatisticsLocalizer&) {
+  if (!TextDataInput_.hasValue())
+    return;
+  handleTextData(*TextDataInput_.data());
+}
+
+QString CStatisticsViewImpl::fullTextLength() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().fullTextLength();
+}
+
+QString CStatisticsViewImpl::printedTextLength() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().printedTextLength();
+}
+
+QString CStatisticsViewImpl::deletedSymbols() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().deletedSymbols();
+}
+
+QString CStatisticsViewImpl::mistakePlaces() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().mistakePlaces();
+}
+
+QString CStatisticsViewImpl::mistakes() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().mistakes();
+}
+
+QString CStatisticsViewImpl::mistakesPercent() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().mistakesPercent();
+}
+
+QString CStatisticsViewImpl::fullTextDuration() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().fullTextDuration();
+}
+
+QString CStatisticsViewImpl::printedTextDuration() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().printedTextDuration();
+}
+
+QString CStatisticsViewImpl::fullTextSpeed() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().fullTextSpeed();
+}
+
+QString CStatisticsViewImpl::printedTextSpeed() const {
+  if (!StatisticsLocalizerInput_.hasValue())
+    return "";
+  return StatisticsLocalizerInput_.data()->get().printedTextSpeed();
 }
 } // namespace NSStatisticsViewDetail
 

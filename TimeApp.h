@@ -22,14 +22,20 @@ public:
   long long toMicroSecondsI() const;
   long long toMilliSecondsI() const;
   long long toSecondsI() const;
+  long long toMinutesI() const;
+  long long toHoursI() const;
 
   double toMicroSecondsF() const;
   double toMilliSecondsF() const;
   double toSecondsF() const;
+  double toMinutesF() const;
+  double toHoursF() const;
 
-  static constexpr long long kMicrosecondsInMilliseconds = 1000;
-  static constexpr long long kMicrosecondsInSeconds = 1000000;
-  static constexpr long long kMillisecondsInSeconds = 1000;
+  static constexpr long long kMicrosecondsInMilliseconds = 1'000;
+  static constexpr long long kMicrosecondsInSeconds = 1'000'000;
+  static constexpr long long kMillisecondsInSeconds = 1'000;
+  static constexpr long long kMicrosecondsInMinutes = 60'000'000;
+  static constexpr long long kMicrosecondsInHours = 3'600'000'000;
 
 protected:
   CTime(long long microseconds);

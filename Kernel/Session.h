@@ -10,6 +10,7 @@ namespace NSKernel {
 
 class CSession : protected std::vector<CKeyEvent> {
   using CBase = std::vector<CKeyEvent>;
+  using CIndex = int64_t;
 
 public:
   using CBase::CBase;

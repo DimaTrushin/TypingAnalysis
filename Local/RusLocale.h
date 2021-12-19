@@ -15,7 +15,23 @@ struct CRusLocale {
     static constexpr const char* Data = "Данные";
     static constexpr const char* Value = "Значение";
   };
-
+  struct CStatistics {
+    static constexpr const char* FullTextLength = "Длительность полного текста";
+    static constexpr const char* PrintedTextLength =
+        "Длительность напечатанного текста";
+    static constexpr const char* DeletedSymbols = "Удалено символов";
+    static constexpr const char* MistakePlaces = "Мест с ошибками";
+    static constexpr const char* Mistakes = "Ошибок";
+    static constexpr const char* MistakesPercent = "Процент ошибок";
+    static constexpr const char* FullTextDuration =
+        "Продолжительность полного текста, сек";
+    static constexpr const char* PrintedTextDuration =
+        "Продолжительность напечатанного текста, сек";
+    static constexpr const char* FullTextSpeed =
+        "Скорость полного текста, знак/мин";
+    static constexpr const char* PrintedTextSpeed =
+        "Скорость напечатанного текста, знак/мин";
+  };
   struct CTextModeView {
     static constexpr const char* TextMode = "Тексторвый режим";
     static constexpr const char* Raw = "Сырой";

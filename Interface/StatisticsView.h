@@ -30,26 +30,45 @@ class CStatisticsViewImpl {
   using CStatisticsDescription =
       CSessionStatisticsModel::CStatisticsDescription;
 
-  using CLocalizer = NSLocal::CStatisticsViewLocalizer;
-  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
-  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+  using CViewLocalizer = NSLocal::CStatisticsViewLocalizer;
+  using CViewLocalizerObserver = NSLibrary::CObserver<CViewLocalizer>;
+  using CViewLocalizerInput = NSLibrary::CHotInput<CViewLocalizer>;
+
+  using CStatisticsLocalizer = NSLocal::CStatisticsLocalizer;
+  using CStatisticsLocalizerObserver =
+      NSLibrary::CObserver<CStatisticsLocalizer>;
+  using CStatisticsLocalizerInput = NSLibrary::CHotInput<CStatisticsLocalizer>;
 
 public:
   CStatisticsViewImpl(QTableView* TableView);
   CTextDataObserver* textDataInput();
-  CLocalizerObserver* localizerInput();
+  CViewLocalizerObserver* viewLocalizerInput();
+  CStatisticsLocalizerObserver* statisticsLocalizerInput();
 
 private:
   void handleTextData(const CTextData& Data);
 
   CStatisticsDescription createStatisticsData(const CTextData& Data);
 
-  void setLocale(const CLocalizer& Localizer);
+  void setViewLocale(const CViewLocalizer& Localizer);
+  void setStatisticsLocale(const CStatisticsLocalizer& Localizer);
+
+  QString fullTextLength() const;
+  QString printedTextLength() const;
+  QString deletedSymbols() const;
+  QString mistakePlaces() const;
+  QString mistakes() const;
+  QString mistakesPercent() const;
+  QString fullTextDuration() const;
+  QString printedTextDuration() const;
+  QString fullTextSpeed() const;
+  QString printedTextSpeed() const;
 
   QTableView* TableView_;
   CSessionStatisticsModel StatisticsModel_;
   CTextDataInput TextDataInput_;
-  CLocalizerInput LocalizerInput_;
+  CViewLocalizerInput ViewLocalizerInput_;
+  CStatisticsLocalizerInput StatisticsLocalizerInput_;
 };
 } // namespace NSStatisticsViewDetail
 

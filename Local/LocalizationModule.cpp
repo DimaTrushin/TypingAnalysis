@@ -13,6 +13,12 @@ void CLocalizationModuleImpl::subscribeToSeanceViewLocalizer(
   SeanceViewLocalizerOutput_.subscribe(obs);
 }
 
+void CLocalizationModuleImpl::subscribeToStatisticsLocalizer(
+    CStatisticsLocalizerObserver* obs) {
+  assert(obs);
+  StatisticsLocalizerOutput_.subscribe(obs);
+}
+
 void CLocalizationModuleImpl::subscribeToStatisticsViewLocalizer(
     CStatisticsViewLocalizerObserver* obs) {
   assert(obs);
@@ -48,6 +54,13 @@ CLocalizationModuleImpl::CStatisticsViewLocalizerObservable
 CLocalizationModuleImpl::makeStatisticsViewLocalizer() {
   return CStatisticsViewLocalizerObservable([this]() -> CStatisticsViewGetType {
     return Localizer_.getStatisticsViewLocalizer();
+  });
+}
+
+CLocalizationModuleImpl::CStatisticsLocalizerObservable
+CLocalizationModuleImpl::makeStatisticsLocalizer() {
+  return CStatisticsLocalizerObservable([this]() -> CStatisticsGetType {
+    return Localizer_.getStatisticsLoalizer();
   });
 }
 
