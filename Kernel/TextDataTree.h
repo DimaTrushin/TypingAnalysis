@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSKERNEL_CTEXTDATATREE_H
 #define NSAPPLICATION_NSKERNEL_CTEXTDATATREE_H
 
+#include "KeyFlags.h"
 #include "Keyboard/KeyPosition.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/VTree.h"
@@ -85,7 +86,8 @@ public:
 
   void clear();
   void add(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
-           ESymbolStatus Status, CKeyPosition Position, CTime ResponseTime);
+           ESymbolStatus Status, CKeyPosition Position, CTime ResponseTime,
+           CKeyFlags Flags);
   void addData(const CTextNode& TextData);
   void addData(CTextNode&& TextData);
   // action for Backspace
@@ -280,7 +282,7 @@ public:
   // Default status = ESymbolStatus::TextSymbol
   explicit CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
                      ESymbolStatus Status, CKeyPosition Position,
-                     CTime ResponseTime);
+                     CTime ResponseTime, CKeyFlags Flags);
 
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
@@ -321,6 +323,7 @@ private:
   CTime ReleaseTime_;
   CTime ResponseTime_;
   QChar Symbol_;
+  CKeyFlags Flags_ = 0;
   unsigned char Depth_ = 0;
   ESymbolStatus SymbolStatus_ = ESymbolStatus::TextSymbol;
   CKeyPosition KeyPosition_ = CKeyPosEnum::UNKN;

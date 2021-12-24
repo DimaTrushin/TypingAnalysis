@@ -31,7 +31,8 @@ void CSessionToTreeConverter::handleEvent_(const CKeyEvent& KeyEvent,
       Target->add(KeyEvent.getSymbol(i), KeyEvent.getPressingTime(),
                   KeyEvent.getReleasingTime(), ESymbolStatus::TextSymbol,
                   KeyEvent.getPosition(),
-                  KeyEvent.getPressingTime() - LastPressedTime_);
+                  KeyEvent.getPressingTime() - LastPressedTime_,
+                  KeyEvent.getFlags());
       LastPressedTime_ = KeyEvent.getPressingTime();
     }
 

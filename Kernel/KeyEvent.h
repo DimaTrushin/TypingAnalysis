@@ -26,6 +26,7 @@ public:
 
   bool isSameKey(const CKeyEvent& KeyEvent) const;
   bool isAutoRepeat() const;
+  CKeyFlags getFlags() const;
 
   CKeyPosition getPosition() const;
   CKeyID getID() const;

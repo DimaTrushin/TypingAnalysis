@@ -30,6 +30,10 @@ bool CKeyEvent::isAutoRepeat() const {
   return Flags_ & CKeyFlagsEnum::AutoRepeat;
 }
 
+CKeyFlags CKeyEvent::getFlags() const {
+  return Flags_;
+}
+
 CKeyEvent::CKeyPosition CKeyEvent::getPosition() const {
   return KeyPosition_;
 }

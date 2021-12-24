@@ -7,7 +7,7 @@ namespace NSTextDataTreeDetail {
 
 CTextDataTreeImpl::CTextDataTreeImpl()
     : Tree_{CTextNode(QChar(), CTime(), CTime(), ESymbolStatus::RootSymbol,
-                      CKeyPosEnum::UNKN, CTime())} {
+                      CKeyPosEnum::UNKN, CTime(), 0)} {
 }
 
 void CTextDataTreeImpl::clear() {
@@ -18,9 +18,9 @@ void CTextDataTreeImpl::clear() {
 
 void CTextDataTreeImpl::add(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
                             ESymbolStatus Status, CKeyPosition Position,
-                            CTime ResponseTime) {
+                            CTime ResponseTime, CKeyFlags Flags) {
   addData(CTextNode(Symbol, PressingTime, ReleaseTime, Status, Position,
-                    ResponseTime));
+                    ResponseTime, Flags));
 }
 
 void CTextDataTreeImpl::addData(const CTextNode& TextData) {
@@ -645,10 +645,10 @@ CTextDataTreeImpl::CConstPrintedTextProxy::CConstPrintedTextProxy(
 
 CTextNode::CTextNode(QChar Symbol, CTime PressingTime, CTime ReleaseTime,
                      ESymbolStatus Status, CKeyPosition Position,
-                     CTime ResponseTime)
+                     CTime ResponseTime, CKeyFlags Flags)
     : PressingTime_(PressingTime), ReleaseTime_(ReleaseTime),
-      ResponseTime_(ResponseTime), Symbol_(Symbol), SymbolStatus_(Status),
-      KeyPosition_(Position) {
+      ResponseTime_(ResponseTime), Symbol_(Symbol), Flags_(Flags),
+      SymbolStatus_(Status), KeyPosition_(Position) {
 }
 
 CTime CTextNode::getPressingTime() const {
