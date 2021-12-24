@@ -67,7 +67,7 @@ struct CRusLocale {
     static constexpr const char* LeftPinky = "Левый мизинец";
     static constexpr const char* RightThumb = "Правый большой";
     static constexpr const char* RightIndex = "Правый указательный";
-    static constexpr const char* RightMiddle = "Проавый средний";
+    static constexpr const char* RightMiddle = "Правый средний";
     static constexpr const char* RightRing = "Правый безымянный";
     static constexpr const char* RightPinky = "Правый мизинец";
     static constexpr const char* Undefined = "Неопределен";
