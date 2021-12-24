@@ -27,14 +27,12 @@ public:
   const double* dataYR0() const;
   const double* dataYR1() const;
 
-  void fillY0(const CContainer& Samples, const CNormalApproximation0& F);
-  void fillY1(const CContainer& Samples, const CNormalApproximation1& F);
-  void fillYMB0(const CContainer& Samples,
-                const CMaxwellBoltzmannApproximation0& F);
-  void fillYMB1(const CContainer& Samples,
-                const CMaxwellBoltzmannApproximation1& F);
-  void fillYR0(const CContainer& Samples, const CRayleighApproximation0& F);
-  void fillYR1(const CContainer& Samples, const CRayleighApproximation1& F);
+  void fillY0(const CContainer& Samples);
+  void fillY1(const CContainer& Samples);
+  void fillYMB0(const CContainer& Samples);
+  void fillYMB1(const CContainer& Samples);
+  void fillYR0(const CContainer& Samples);
+  void fillYR1(const CContainer& Samples);
 
 private:
   static constexpr const CIndex kDefaultGridSize = 2500;

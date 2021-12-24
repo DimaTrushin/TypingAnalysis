@@ -63,56 +63,56 @@ const double* CPlotData::dataYR1() const {
   return YR1_.data();
 }
 
-void CPlotData::fillY0(const CContainer& Samples,
-                       const CNormalApproximation0& F) {
+void CPlotData::fillY0(const CContainer& Samples) {
+  CNormalApproximation0 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    Y0_[i] = F(Samples, X_[i]);
+    Y0_[i] = Function(Samples, X_[i]);
     ;
   });
 }
 
-void CPlotData::fillY1(const CContainer& Samples,
-                       const CNormalApproximation1& F) {
+void CPlotData::fillY1(const CContainer& Samples) {
+  CNormalApproximation1 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    Y1_[i] = F(Samples, X_[i]);
+    Y1_[i] = Function(Samples, X_[i]);
     ;
   });
 }
 
-void CPlotData::fillYMB0(const CContainer& Samples,
-                         const CMaxwellBoltzmannApproximation0& F) {
+void CPlotData::fillYMB0(const CContainer& Samples) {
+  CMaxwellBoltzmannApproximation0 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    YMB0_[i] = F(Samples, X_[i]);
+    YMB0_[i] = Function(Samples, X_[i]);
     ;
   });
 }
 
-void CPlotData::fillYMB1(const CContainer& Samples,
-                         const CMaxwellBoltzmannApproximation1& F) {
+void CPlotData::fillYMB1(const CContainer& Samples) {
+  CMaxwellBoltzmannApproximation1 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    YMB1_[i] = F(Samples, X_[i]);
+    YMB1_[i] = Function(Samples, X_[i]);
     ;
   });
 }
 
-void CPlotData::fillYR0(const CContainer& Samples,
-                        const CRayleighApproximation0& F) {
+void CPlotData::fillYR0(const CContainer& Samples) {
+  CRayleighApproximation0 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    YR0_[i] = F(Samples, X_[i]);
+    YR0_[i] = Function(Samples, X_[i]);
     ;
   });
 }
 
-void CPlotData::fillYR1(const CContainer& Samples,
-                        const CRayleighApproximation1& F) {
+void CPlotData::fillYR1(const CContainer& Samples) {
+  CRayleighApproximation1 Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-    YR1_[i] = F(Samples, X_[i]);
+    YR1_[i] = Function(Samples, X_[i]);
     ;
   });
 }

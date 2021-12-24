@@ -16,17 +16,8 @@ public:
   void set(CContainer&& Samples);
   const CPlotData& plotData() const;
 
-  double compute0(double arg) const;
-  double compute1(double arg) const;
-
 private:
   CContainer Samples_;
-  CNormalApproximation0 Density0_{};
-  CNormalApproximation1 Density1_{};
-  CMaxwellBoltzmannApproximation0 DensityMB0_{};
-  CMaxwellBoltzmannApproximation1 DensityMB1_{};
-  CRayleighApproximation0 DensityR0_{};
-  CRayleighApproximation1 DensityR1_{};
   CPlotData PlotData_;
 };
 

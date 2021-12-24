@@ -11,24 +11,16 @@ namespace NSKernel {
 
 void CFunctionData::set(CContainer&& Samples) {
   Samples_ = std::move(Samples);
-  PlotData_.fillY0(Samples_, Density0_);
-  PlotData_.fillY1(Samples_, Density1_);
-  PlotData_.fillYMB0(Samples_, DensityMB0_);
-  PlotData_.fillYMB1(Samples_, DensityMB1_);
-  PlotData_.fillYR0(Samples_, DensityR0_);
-  PlotData_.fillYR1(Samples_, DensityR1_);
+  PlotData_.fillY0(Samples_);
+  PlotData_.fillY1(Samples_);
+  PlotData_.fillYMB0(Samples_);
+  PlotData_.fillYMB1(Samples_);
+  PlotData_.fillYR0(Samples_);
+  PlotData_.fillYR1(Samples_);
 }
 
 const CPlotData& CFunctionData::plotData() const {
   return PlotData_;
-}
-
-double CFunctionData::compute0(double arg) const {
-  return Density0_(Samples_, arg);
-}
-
-double CFunctionData::compute1(double arg) const {
-  return Density1_(Samples_, arg);
 }
 
 namespace NSAnalyticalModuleDetail {
