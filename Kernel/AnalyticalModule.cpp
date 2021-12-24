@@ -52,8 +52,6 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
 
 CAnalyticalModuleImpl::CContainer
 CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
-  // TO DO
-  // Need to exclude auto repeat
   CContainer SpeedData;
   switch (Data.textMode()) {
   case ETextMode::Raw:
@@ -74,8 +72,6 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
 template<class TText>
 CAnalyticalModuleImpl::CContainer
 CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
-  // TO DO
-  // Need to exclude auto repeat
   CContainer SpeedData;
   if (TextView.empty())
     return SpeedData;
@@ -83,11 +79,13 @@ CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
   auto iter = TextView.begin();
   CTime PreviousTime = iter->getPressingTime();
   for (; iter != TextView.end(); ++iter) {
-    CTime ResponseTime = iter->getPressingTime() - PreviousTime;
-    // Need filter here
-    if (ResponseTime > CTime())
-      SpeedData.push_back(60. / ResponseTime.toSecondsF());
-    PreviousTime = iter->getPressingTime();
+    if (!iter->isAutoRepeat()) {
+      CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+      // Need filter here
+      if (ResponseTime > CTime())
+        SpeedData.push_back(1. / ResponseTime.toMinutesF());
+      PreviousTime = iter->getPressingTime();
+    }
   }
   return SpeedData;
 }

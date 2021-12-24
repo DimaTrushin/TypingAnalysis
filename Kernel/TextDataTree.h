@@ -318,6 +318,8 @@ public:
   CIndex numberOfMistakeRoutes() const;
   CKeyPosition getPosition() const;
 
+  bool isAutoRepeat() const;
+
 private:
   CTime PressingTime_;
   CTime ReleaseTime_;

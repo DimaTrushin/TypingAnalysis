@@ -736,5 +736,9 @@ CTextNode::CKeyPosition CTextNode::getPosition() const {
   return KeyPosition_;
 }
 
+bool CTextNode::isAutoRepeat() const {
+  return Flags_ & CKeyFlagsEnum::AutoRepeat;
+}
+
 } // namespace NSKernel
 } // namespace NSApplication
