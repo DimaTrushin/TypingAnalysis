@@ -86,6 +86,8 @@ HEADERS += \
   Kernel/KeyScheme.h \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
+  Kernel/Math.h \
+  Kernel/MathAccess.h \
   Kernel/MathFunction.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
@@ -176,6 +178,8 @@ SOURCES += \
   Kernel/KeyScheme.cpp \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
+  Kernel/Math.cpp \
+  Kernel/MathAccess.cpp \
   Kernel/MathFunction.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \

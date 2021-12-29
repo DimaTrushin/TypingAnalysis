@@ -11,12 +11,7 @@ namespace NSKernel {
 
 void CFunctionData::set(CContainer&& Samples) {
   Samples_ = std::move(Samples);
-  PlotData_.fillY0(Samples_);
-  PlotData_.fillY1(Samples_);
-  PlotData_.fillYMB0(Samples_);
-  PlotData_.fillYMB1(Samples_);
-  PlotData_.fillYR0(Samples_);
-  PlotData_.fillYR1(Samples_);
+  PlotData_.fillPlots(Samples_);
 }
 
 const CPlotData& CFunctionData::plotData() const {
