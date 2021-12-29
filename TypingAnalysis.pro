@@ -66,6 +66,7 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 HEADERS += \
   AppDebug/PerformanceLogger.h \
   Compute/CudaGate.h \
+  Compute/Functions.h \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
@@ -159,6 +160,7 @@ SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
   Compute/CudaGate.cpp \
+  Compute/Functions.cpp \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \

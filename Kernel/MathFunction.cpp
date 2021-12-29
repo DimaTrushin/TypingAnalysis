@@ -15,7 +15,7 @@ CNormalApproximation0::CNormalApproximation0(int instruction_level)
 
 double CNormalApproximation0::compute_SSE2(const std::vector<double>& means,
                                            double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CNormal<0>>(means, arg);
 }
 
 CNormalApproximation1::CNormalApproximation1()
@@ -28,7 +28,7 @@ CNormalApproximation1::CNormalApproximation1(int instruction_level)
 
 double CNormalApproximation1::compute_SSE2(const std::vector<double>& means,
                                            double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CNormal<1>>(means, arg);
 }
 
 CNormalApproximation2::CNormalApproximation2()
@@ -41,7 +41,7 @@ CNormalApproximation2::CNormalApproximation2(int instruction_level)
 
 double CNormalApproximation2::compute_SSE2(const std::vector<double>& means,
                                            double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CNormal<2>>(means, arg);
 }
 
 CMaxwellBoltzmannApproximation0::CMaxwellBoltzmannApproximation0()
@@ -56,7 +56,8 @@ CMaxwellBoltzmannApproximation0::CMaxwellBoltzmannApproximation0(
 double
 CMaxwellBoltzmannApproximation0::compute_SSE2(const std::vector<double>& means,
                                               double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CMaxwellBoltzmann<0>>(
+      means, arg);
 }
 
 CMaxwellBoltzmannApproximation1::CMaxwellBoltzmannApproximation1()
@@ -71,7 +72,8 @@ CMaxwellBoltzmannApproximation1::CMaxwellBoltzmannApproximation1(
 double
 CMaxwellBoltzmannApproximation1::compute_SSE2(const std::vector<double>& means,
                                               double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CMaxwellBoltzmann<1>>(
+      means, arg);
 }
 
 CRayleighApproximation0::CRayleighApproximation0()
@@ -84,7 +86,7 @@ CRayleighApproximation0::CRayleighApproximation0(int instruction_level)
 
 double CRayleighApproximation0::compute_SSE2(const std::vector<double>& means,
                                              double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<0>>(means, arg);
 }
 
 CRayleighApproximation1::CRayleighApproximation1()
@@ -97,7 +99,7 @@ CRayleighApproximation1::CRayleighApproximation1(int instruction_level)
 
 double CRayleighApproximation1::compute_SSE2(const std::vector<double>& means,
                                              double arg) {
-  return compute<CSse2Parameters>(means, arg);
+  return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<1>>(means, arg);
 }
 
 } // namespace NSKernel
