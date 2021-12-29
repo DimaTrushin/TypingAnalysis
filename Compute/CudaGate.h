@@ -12,6 +12,9 @@ namespace NSCompute {
 
 namespace NSCudaGateDetail {
 
+// TO DO
+// Would be ideal to preinitialize Cuda context and other required resources
+// before the first run
 class CCudaDevices {
   struct CCudaInfo {
     int ComputeMode = -1;
@@ -39,9 +42,9 @@ protected:
   void gpuDeviceInit(int devID);
   void setMaxGflopsDevice();
   uint64_t getPerformance(int devID);
-  int getClockRate(int devID);
-  int getSmPerMultiproc(int devID);
-  int getMultiProcessorCount(int devID);
+  uint64_t getClockRate(int devID);
+  uint64_t getSmPerMultiproc(int devID);
+  uint64_t getMultiProcessorCount(int devID);
 
   static constexpr const int kErrorID = -1;
 

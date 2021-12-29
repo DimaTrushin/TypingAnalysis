@@ -22,26 +22,29 @@ void CMath::fillPlotsGPU(const CVectorD& Samples, const CVectorD& X,
   assert(D1Y2);
   assert(D1Y2->size() == X.size());
 
-  // TO DO
-  // CUDA code
-
   X_.resize(X.size());
   Y_.resize(X.size());
+  S_.resize(Samples.size());
 
+  thrust::copy(Samples.begin(), Samples.end(), S_.begin());
   thrust::copy(X.begin(), X.end(), X_.begin());
-  // Compute D0Y0 in Y_
-  //  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
-  //                    ComputeNormal0(Samples))
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CNormal<0>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D0Y0->begin());
-  // Compute D1Y0 in Y_
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CNormal<1>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D1Y0->begin());
-  // Compute D0Y1 in Y_
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CMaxwellBoltzmann<0>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D0Y1->begin());
-  // Compute D1Y1 in Y_
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CMaxwellBoltzmann<1>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D1Y1->begin());
-  // Compute D0Y2 in Y_
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CRayleigh<0>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D0Y2->begin());
-  // Compute D1Y2 in Y_
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(),
+                    CCompute<CFunctions::CRayleigh<1>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D1Y2->begin());
 }
 } // namespace NSKernel

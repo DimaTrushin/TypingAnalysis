@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSCOMPUTE_CFUNCTIONS_H
 
 #include <cstdint>
+#include <cuda_runtime.h>
 
 namespace NSApplication {
 namespace NSCompute {
@@ -15,7 +16,7 @@ class CFunctions {
       2.2567583341910251477923178062431;
 
   template<typename T>
-  static T deviation(T mean) {
+  __device__ static T deviation(T mean) {
     // All constants here were chosen empirically
     return 1. / 10. * mean + 10.;
   }
@@ -31,7 +32,7 @@ public:
     // SIGSEGV segmentation fault
     // This happens only in AVX mode, probably an issue with compiler flags
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T Deviation = deviation(mean);
       T one_over_div = 1. / Deviation;
       T arg_minus_mean = arg - mean;
@@ -44,7 +45,7 @@ public:
   template<>
   struct CNormal<1> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T Deviation = deviation(mean);
       T one_over_div = 1. / Deviation;
       T arg_minus_mean = arg - mean;
@@ -59,7 +60,7 @@ public:
   template<>
   struct CNormal<2> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T Deviation = deviation(mean);
       T one_over_div = 1. / Deviation;
       T arg_minus_mean = arg - mean;
@@ -78,7 +79,7 @@ public:
   template<>
   struct CMaxwellBoltzmann<0> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T arg_square = arg * arg;
       T mean_square = mean * mean;
       return four_over_sqrt_pi * arg_square * exp(-arg_square / mean_square) /
@@ -88,7 +89,7 @@ public:
   template<>
   struct CMaxwellBoltzmann<1> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T arg_square = arg * arg;
       T mean_square = mean * mean;
       return four_over_sqrt_pi * 2. * arg * (1 - arg_square / mean_square) *
@@ -102,14 +103,14 @@ public:
   template<>
   struct CRayleigh<0> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       return arg * exp(-arg * arg / (2. * mean * mean)) / (mean * mean);
     }
   };
   template<>
   struct CRayleigh<1> {
     template<class T>
-    static T compute(T mean, double arg) {
+    __device__ static T compute(T mean, double arg) {
       T mean_square = mean * mean;
       T arg_square = arg * arg;
       return (1. - arg_square / mean_square) *

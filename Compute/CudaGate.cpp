@@ -80,11 +80,11 @@ uint64_t CCudaGateImpl::getPerformance(int devID) {
 
   if (Devices_[devID].ComputeMode == cudaComputeModeProhibited)
     return 0;
-  return (uint64_t)getMultiProcessorCount(devID) * getSmPerMultiproc(devID) *
+  return getMultiProcessorCount(devID) * getSmPerMultiproc(devID) *
          getClockRate(devID);
 }
 
-int CCudaGateImpl::getClockRate(int devID) {
+uint64_t CCudaGateImpl::getClockRate(int devID) {
   assert(devID >= 0);
   assert(devID < int(Devices_.size()));
 
@@ -98,11 +98,10 @@ int CCudaGateImpl::getClockRate(int devID) {
     return clockRate;
   default:
     throw std::runtime_error("");
-    return -1;
   }
 }
 
-int CCudaGateImpl::getSmPerMultiproc(int devID) {
+uint64_t CCudaGateImpl::getSmPerMultiproc(int devID) {
   assert(devID >= 0);
   assert(devID < int(Devices_.size()));
 
@@ -116,7 +115,7 @@ int CCudaGateImpl::getSmPerMultiproc(int devID) {
   return SmPerMultiproc;
 }
 
-int CCudaGateImpl::getMultiProcessorCount(int devID) {
+uint64_t CCudaGateImpl::getMultiProcessorCount(int devID) {
   assert(devID >= 0);
   assert(devID < int(Devices_.size()));
 
