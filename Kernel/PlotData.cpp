@@ -65,7 +65,6 @@ const double* CPlotData::dataYR1() const {
 }
 
 void CPlotData::fillPlots(const CContainer& Samples) {
-  // TO DO
   CMathAccess Math;
   Math->fillPlots(Samples, X_, &Y0_, &Y1_, &YMB0_, &YMB1_, &YR0_, &YR1_);
 }

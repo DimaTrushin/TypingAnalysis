@@ -65,6 +65,7 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 
 HEADERS += \
   AppDebug/PerformanceLogger.h \
+  Compute/CudaGate.h \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
@@ -157,6 +158,7 @@ HEADERS += \
 SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
+  Compute/CudaGate.cpp \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
@@ -329,7 +331,82 @@ linux {
   }
 }
 
+CUDA_SOURCES += \
+  Kernel/Math.cu
+
+
+win32 {
+  CUDA_SDK = $$(NVCUDASAMPLES_ROOT)
+  CUDA_DIR = $$(CUDA_PATH)
+}
+
+SYSTEM_NAME = x64
+SYSTEM_TYPE = 64
+NVCC_OPTIONS = --use_fast_math
+CUDA_ARCH = sm_61 #all # Type of CUDA architecture, for example 'compute_10', 'compute_11', 'sm_10'
+
+INCLUDEPATH += $$CUDA_DIR/include \
+               $$CUDA_SDK/common/inc
+
+QMAKE_LIBDIR += $$CUDA_DIR/lib/$$SYSTEM_NAME \
+                $$CUDA_SDK/common/lib/$$SYSTEM_NAME
+
+LIBS += \
+        -lcudart_static
+
+win32 {
+  CUDA_INC = $$join(INCLUDEPATH,'" -I"','-I"','"')
+  CUDA_OBJECTS_DIR = OBJECTS_DIR/../cuda
+
+  win32-msvc*{
+  MSVC_CUDA_FLAGS_DEBUG = /EHsc /nologo /W3 /FS /Zi
+  MSVC_CUDA_FLAGS_RELEASE = /EHsc /nologo /O2 /W3 /FS
+
+  contains(CONFIG, static_runtime) {
+    MSVC_CUDA_FLAGS_DEBUG = += /MTd
+    MSVC_CUDA_FLAGS_RELEASE += /MT
+  } else {
+    MSVC_CUDA_FLAGS_DEBUG += /MDd
+    MSVC_CUDA_FLAGS_RELEASE += /MD
+  }
+
+    CUDA_FLAGS_DEBUG = \"$$MSVC_CUDA_FLAGS_DEBUG\"
+    CUDA_FLAGS_RELEASE = \"$$MSVC_CUDA_FLAGS_RELEASE\"
+
+    OBJEXT = obj
+    COMPILE_TOOL = nvcc.exe
+  }
+}
+
+# Configuration of the Cuda compiler
+CONFIG(debug, debug|release) {
+    # Debug mode
+    cuda_d.input = CUDA_SOURCES
+    cuda_d.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}_cuda.$$OBJEXT
+    cuda_d.commands = $$CUDA_DIR/bin/$$COMPILE_TOOL -D_DEBUG $$NVCC_OPTIONS \
+                      $$CUDA_INC $$LIBS --machine $$SYSTEM_TYPE \
+                      -arch=$$CUDA_ARCH \
+                      -Xcompiler $$CUDA_FLAGS_DEBUG \
+                      -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+    cuda_d.dependency_type = TYPE_C
+    QMAKE_EXTRA_COMPILERS += cuda_d
+}
+else {
+    # Release mode
+    cuda.input = CUDA_SOURCES
+    cuda.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}_cuda.$$OBJEXT
+    cuda.commands = $$CUDA_DIR/bin/$$COMPILE_TOOL $$NVCC_OPTIONS \
+                    $$CUDA_INC $$LIBS --machine $$SYSTEM_TYPE \
+                    -arch=$$CUDA_ARCH \
+                    -Xcompiler $$CUDA_FLAGS_RELEASE \
+                    -c  -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+    cuda.dependency_type = TYPE_C
+    QMAKE_EXTRA_COMPILERS += cuda
+}
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

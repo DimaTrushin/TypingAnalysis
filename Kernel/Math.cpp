@@ -7,8 +7,7 @@ namespace NSApplication {
 namespace NSKernel {
 
 bool CMath::isGpuAvailable() const {
-  // TO DO
-  return false;
+  return CudaGate_.isAvailable();
 }
 
 void CMath::fillPlots(const CVectorD& Samples, const CVectorD& X,
@@ -107,11 +106,6 @@ void CMath::fillRPlot1(const CVectorD& Samples, const CVectorD& X,
     Y[i] = Function(Samples, X[i]);
     ;
   });
-}
-
-void CMath::fillPlotsGPU(const CVectorD& Samples, const CVectorD& X,
-                         CVectorD* D0Y0, CVectorD* D1Y0, CVectorD* D0Y1,
-                         CVectorD* D1Y1, CVectorD* D0Y2, CVectorD* D1Y2) {
 }
 
 } // namespace NSKernel
