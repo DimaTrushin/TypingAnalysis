@@ -42,29 +42,6 @@ private:
                     CVectorD* D1Y0, CVectorD* D0Y1, CVectorD* D1Y1,
                     CVectorD* D0Y2, CVectorD* D1Y2);
 
-public:
-  template<class TFunction>
-  class CCompute : protected TFunction {
-  public:
-    explicit CCompute(const CDevVectorD& data)
-        : pmeans_(data.data().get()), size_(data.size()) {
-    }
-    __device__ double operator()(double arg) const {
-      if (size_ == 0)
-        return 0.;
-      double tmp_result = 0.;
-      for (size_t i = 0; i < size_; ++i) {
-        tmp_result += TFunction::compute(pmeans_[i], arg);
-      }
-      return tmp_result / static_cast<double>(size_);
-    }
-
-  private:
-    const double* pmeans_;
-    size_t size_;
-  };
-
-private:
   CCudaGate CudaGate_;
   CDevVectorD X_;
   CDevVectorD S_;

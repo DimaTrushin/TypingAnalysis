@@ -117,7 +117,7 @@ public:
              exp(-arg_square / (2. * mean_square)) / mean_square;
     }
   };
-}; // namespace NSCompute
+};
 
 } // namespace NSCompute
 } // namespace NSApplication
