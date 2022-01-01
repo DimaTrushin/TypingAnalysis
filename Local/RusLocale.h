@@ -16,9 +16,9 @@ struct CRusLocale {
     static constexpr const char* Value = "Значение";
   };
   struct CStatistics {
-    static constexpr const char* FullTextLength = "Длительность полного текста";
+    static constexpr const char* FullTextLength = "Длина полного текста";
     static constexpr const char* PrintedTextLength =
-        "Длительность напечатанного текста";
+        "Длина напечатанного текста";
     static constexpr const char* DeletedSymbols = "Удалено символов";
     static constexpr const char* MistakePlaces = "Мест с ошибками";
     static constexpr const char* Mistakes = "Ошибок";

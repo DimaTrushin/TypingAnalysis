@@ -38,7 +38,7 @@ QVariant CSessionStatisticsModel::headerData(int section,
 }
 
 Qt::ItemFlags CSessionStatisticsModel::flags(const QModelIndex&) const {
-  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemNeverHasChildren;
+  return Qt::ItemIsEnabled | Qt::ItemNeverHasChildren;
 }
 
 bool CSessionStatisticsModel::clear() {

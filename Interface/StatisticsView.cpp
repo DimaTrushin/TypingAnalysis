@@ -62,21 +62,22 @@ CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
   Statistics.push_back(
       {mistakes(), QString::number(Tree->getNumberOfMistakeRoutes())});
   Statistics.push_back(
-      {mistakesPercent(), QString::number(Tree->percentOfMistakeRoutes())});
+      {mistakesPercent(),
+       QString::number(Tree->percentOfMistakeRoutes()) + QString(" \%")});
   Statistics.push_back(
       {printedTextDuration(),
        QString::number(Tree->getPrintedTextDuration().toSecondsF())});
-  Statistics.push_back(
-      {fullTextDuration(),
-       QString::number(Tree->getFullTextDuration().toSecondsF())});
+  //  Statistics.push_back(
+  //      {fullTextDuration(),
+  //       QString::number(Tree->getFullTextDuration().toSecondsF())});
   Statistics.push_back(
       {printedTextSpeed(),
        QString::number(Tree->getPrintedTextLength() /
                        Tree->getPrintedTextDuration().toMinutesF())});
-  Statistics.push_back(
-      {fullTextSpeed(),
-       QString::number(Tree->getFullTextLength() /
-                       Tree->getFullTextDuration().toMinutesF())});
+  //  Statistics.push_back(
+  //      {fullTextSpeed(),
+  //       QString::number(Tree->getFullTextLength() /
+  //                       Tree->getFullTextDuration().toMinutesF())});
   return Statistics;
 }
 
