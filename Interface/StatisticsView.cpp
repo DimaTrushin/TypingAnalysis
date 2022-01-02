@@ -63,7 +63,7 @@ CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
       {mistakes(), QString::number(Tree->getNumberOfMistakeRoutes())});
   Statistics.push_back(
       {mistakesPercent(),
-       QString::number(Tree->percentOfMistakeRoutes()) + QString(" \%")});
+       QString::number(Tree->percentOfMistakeRoutes()) + QString(" %")});
   Statistics.push_back(
       {printedTextDuration(),
        QString::number(Tree->getPrintedTextDuration().toSecondsF())});
