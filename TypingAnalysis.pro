@@ -345,7 +345,7 @@ win32 {
 SYSTEM_NAME = x64
 SYSTEM_TYPE = 64
 NVCC_OPTIONS = --use_fast_math
-CUDA_ARCH = sm_61 #all # Type of CUDA architecture, for example 'compute_10', 'compute_11', 'sm_10'
+CUDA_ARCH = all # Type of CUDA architecture, for example 'compute_10', 'compute_11', 'sm_10'
 
 INCLUDEPATH += $$CUDA_DIR/include \
                $$CUDA_SDK/common/inc
