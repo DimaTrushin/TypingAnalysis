@@ -1,7 +1,7 @@
-#include "MathFunction.h"
+#include "CpuFunction.h"
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 double CNormalApproximation0::compute_AVX(const std::vector<double>& means,
                                           double arg) {
@@ -42,5 +42,5 @@ double CRayleighApproximation1::compute_AVX(const std::vector<double>& means,
   return CBase::compute<CAvxParameters, CFunctions::CRayleigh<1>>(means, arg);
 }
 
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication

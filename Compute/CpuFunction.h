@@ -1,7 +1,7 @@
-#ifndef NSAPPLICATION_NSKERNEL_CMATHFUNCTION_H
-#define NSAPPLICATION_NSKERNEL_CMATHFUNCTION_H
+#ifndef NSAPPLICATION_NSCOMPUTE_CMATHFUNCTION_H
+#define NSAPPLICATION_NSCOMPUTE_CMATHFUNCTION_H
 
-#include "Compute/Functions.h"
+#include "Functions.h"
 #include "InstructionLevels.h"
 #include "Library/FunctionModuleBase.h"
 
@@ -12,7 +12,7 @@
 #include "3dparty/vectorclass/vectormath_exp.h"
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 namespace NSMathFunctionDetail {
 class CFunctionBase
@@ -147,7 +147,7 @@ private:
   static double compute_AVX(const std::vector<double>& means, double arg);
 };
 
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSKERNEL_CMATHFUNCTION_H
+#endif // NSAPPLICATION_NSCOMPUTE_CMATHFUNCTION_H

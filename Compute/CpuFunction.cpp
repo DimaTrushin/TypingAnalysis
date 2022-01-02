@@ -1,9 +1,9 @@
-#include "MathFunction.h"
+#include "CpuFunction.h"
 
 #include "SimdDetectorAccess.h"
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 CNormalApproximation0::CNormalApproximation0()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
@@ -102,5 +102,5 @@ double CRayleighApproximation1::compute_SSE2(const std::vector<double>& means,
   return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<1>>(means, arg);
 }
 
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication

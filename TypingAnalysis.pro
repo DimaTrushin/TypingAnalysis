@@ -65,6 +65,7 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 
 HEADERS += \
   AppDebug/PerformanceLogger.h \
+  Compute/CpuFunction.h \
   Compute/CudaGate.h \
   Compute/Functions.h \
   Compute/ParallelMode.h \
@@ -90,7 +91,6 @@ HEADERS += \
   Kernel/KeySchemeModule.h \
   Kernel/Math.h \
   Kernel/MathAccess.h \
-  Kernel/MathFunction.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
@@ -159,6 +159,7 @@ HEADERS += \
 SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
+  Compute/CpuFunction.cpp \
   Compute/CudaGate.cpp \
   Compute/Functions.cpp \
   Compute/ParallelMode.cpp \
@@ -184,7 +185,6 @@ SOURCES += \
   Kernel/KeySchemeModule.cpp \
   Kernel/Math.cpp \
   Kernel/MathAccess.cpp \
-  Kernel/MathFunction.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
@@ -313,7 +313,8 @@ win32 {
   win32-clang*{
   }
 
-  SOURCES_AVX += Kernel/MathFunctionAVX.cpp
+  SOURCES_AVX += \
+    Compute/CpuFunctionAVX.cpp
   avx_compiler.name = avx_compiler
   avx_compiler.input = SOURCES_AVX
   avx_compiler.dependency_type = TYPE_C
