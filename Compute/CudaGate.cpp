@@ -50,8 +50,9 @@ CCudaGateImpl::CCudaGateImpl() {
 }
 
 void CCudaGateImpl::gpuDeviceInit(int devID) {
-  assert(devID >= 0);
   assert(devID < int(Devices_.size()));
+  if (devID == kErrorID)
+    throw std::runtime_error("");
   if (Devices_[devID].ComputeMode == cudaComputeModeProhibited)
     throw std::runtime_error("");
   if (Devices_[devID].Major < 1)
@@ -64,8 +65,10 @@ void CCudaGateImpl::gpuDeviceInit(int devID) {
 
 void CCudaGateImpl::setMaxGflopsDevice() {
   uint64_t max_performance = 0;
-  int best_device = -1;
+  int best_device = kErrorID;
   for (int device = 0; device < int(Devices_.size()); ++device) {
+    if (Devices_[device].ComputeMode == cudaComputeModeProhibited)
+      continue;
     uint64_t performance = getPerformance(device);
     if (max_performance < performance) {
       max_performance = performance;
@@ -133,6 +136,7 @@ uint64_t CCudaGateImpl::getMultiProcessorCount(int devID) {
 CCudaGate::CCudaGate() {
   try {
     Gate_ = std::make_unique<CCudaGateImpl>();
+    qDebug() << "GPU is available\n";
   } catch (...) {
     qDebug() << "Cuda Gate Error\n";
   }

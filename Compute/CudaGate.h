@@ -13,8 +13,7 @@ namespace NSCompute {
 namespace NSCudaGateDetail {
 
 // TO DO
-// Would be ideal to preinitialize Cuda context and other required resources
-// before the first run
+// Would be ideal to preinitialize Cuda Context using the driver api
 class CCudaDevices {
   struct CCudaInfo {
     int ComputeMode = -1;
