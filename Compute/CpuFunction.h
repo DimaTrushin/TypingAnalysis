@@ -23,8 +23,6 @@ class CFunctionBase
   using CBase::CBase;
 
 protected:
-  using CFunctions = NSCompute::CFunctions;
-
   struct CSse2Parameters {
     using CVect = Vec2d;
     static constexpr const size_t size = 2;
@@ -61,90 +59,41 @@ protected:
 };
 } // namespace NSMathFunctionDetail
 
-class CNormalApproximation0 : public NSMathFunctionDetail::CFunctionBase {
+template<std::int64_t derivative, class = std::enable_if_t<(derivative < 3)>>
+class CNormalApproximation : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
-public:
-  CNormalApproximation0();
-  CNormalApproximation0(int instruction_level);
-
-private:
   static double compute_SSE2(const std::vector<double>& means, double arg);
   static double compute_AVX(const std::vector<double>& means, double arg);
-};
-
-class CNormalApproximation1 : public NSMathFunctionDetail::CFunctionBase {
-  using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
-  CNormalApproximation1();
-  CNormalApproximation1(int instruction_level);
-
-private:
-  static double compute_SSE2(const std::vector<double>& means, double arg);
-  static double compute_AVX(const std::vector<double>& means, double arg);
+  CNormalApproximation();
+  CNormalApproximation(int instruction_level);
 };
 
-class CNormalApproximation2 : public NSMathFunctionDetail::CFunctionBase {
-  using CBase = NSMathFunctionDetail::CFunctionBase;
-
-public:
-  CNormalApproximation2();
-  CNormalApproximation2(int instruction_level);
-
-private:
-  static double compute_SSE2(const std::vector<double>& means, double arg);
-  static double compute_AVX(const std::vector<double>& means, double arg);
-};
-
-class CMaxwellBoltzmannApproximation0
+template<std::int64_t derivative, class = std::enable_if_t<(derivative < 2)>>
+class CMaxwellBoltzmannApproximation
     : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
-public:
-  CMaxwellBoltzmannApproximation0();
-  CMaxwellBoltzmannApproximation0(int instruction_level);
-
-private:
   static double compute_SSE2(const std::vector<double>& means, double arg);
   static double compute_AVX(const std::vector<double>& means, double arg);
+
+public:
+  CMaxwellBoltzmannApproximation();
+  CMaxwellBoltzmannApproximation(int instruction_level);
 };
 
-class CMaxwellBoltzmannApproximation1
-    : public NSMathFunctionDetail::CFunctionBase {
+template<std::int64_t derivative, class = std::enable_if_t<(derivative < 2)>>
+class CRayleighApproximation : public NSMathFunctionDetail::CFunctionBase {
   using CBase = NSMathFunctionDetail::CFunctionBase;
 
-public:
-  CMaxwellBoltzmannApproximation1();
-  CMaxwellBoltzmannApproximation1(int instruction_level);
-
-private:
   static double compute_SSE2(const std::vector<double>& means, double arg);
   static double compute_AVX(const std::vector<double>& means, double arg);
-};
-
-class CRayleighApproximation0 : public NSMathFunctionDetail::CFunctionBase {
-  using CBase = NSMathFunctionDetail::CFunctionBase;
 
 public:
-  CRayleighApproximation0();
-  CRayleighApproximation0(int instruction_level);
-
-private:
-  static double compute_SSE2(const std::vector<double>& means, double arg);
-  static double compute_AVX(const std::vector<double>& means, double arg);
-};
-
-class CRayleighApproximation1 : public NSMathFunctionDetail::CFunctionBase {
-  using CBase = NSMathFunctionDetail::CFunctionBase;
-
-public:
-  CRayleighApproximation1();
-  CRayleighApproximation1(int instruction_level);
-
-private:
-  static double compute_SSE2(const std::vector<double>& means, double arg);
-  static double compute_AVX(const std::vector<double>& means, double arg);
+  CRayleighApproximation();
+  CRayleighApproximation(int instruction_level);
 };
 
 } // namespace NSCompute

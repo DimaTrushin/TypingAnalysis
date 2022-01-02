@@ -5,101 +5,120 @@
 namespace NSApplication {
 namespace NSCompute {
 
-CNormalApproximation0::CNormalApproximation0()
-    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
-}
-
-CNormalApproximation0::CNormalApproximation0(int instruction_level)
-    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
-}
-
-double CNormalApproximation0::compute_SSE2(const std::vector<double>& means,
-                                           double arg) {
+template<>
+double CNormalApproximation<0>::compute_SSE2(const std::vector<double>& means,
+                                             double arg) {
   return CBase::compute<CSse2Parameters, CFunctions::CNormal<0>>(means, arg);
 }
 
-CNormalApproximation1::CNormalApproximation1()
-    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
-}
-
-CNormalApproximation1::CNormalApproximation1(int instruction_level)
-    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
-}
-
-double CNormalApproximation1::compute_SSE2(const std::vector<double>& means,
-                                           double arg) {
+template<>
+double CNormalApproximation<1>::compute_SSE2(const std::vector<double>& means,
+                                             double arg) {
   return CBase::compute<CSse2Parameters, CFunctions::CNormal<1>>(means, arg);
 }
 
-CNormalApproximation2::CNormalApproximation2()
-    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
-}
-
-CNormalApproximation2::CNormalApproximation2(int instruction_level)
-    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
-}
-
-double CNormalApproximation2::compute_SSE2(const std::vector<double>& means,
-                                           double arg) {
+template<>
+double CNormalApproximation<2>::compute_SSE2(const std::vector<double>& means,
+                                             double arg) {
   return CBase::compute<CSse2Parameters, CFunctions::CNormal<2>>(means, arg);
 }
 
-CMaxwellBoltzmannApproximation0::CMaxwellBoltzmannApproximation0()
+template<>
+CNormalApproximation<0>::CNormalApproximation()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CMaxwellBoltzmannApproximation0::CMaxwellBoltzmannApproximation0(
-    int instruction_level)
+template<>
+CNormalApproximation<1>::CNormalApproximation()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
+
+template<>
+CNormalApproximation<2>::CNormalApproximation()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
+
+template<>
+CNormalApproximation<0>::CNormalApproximation(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double
-CMaxwellBoltzmannApproximation0::compute_SSE2(const std::vector<double>& means,
-                                              double arg) {
+template<>
+CNormalApproximation<1>::CNormalApproximation(int instruction_level)
+    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
+}
+
+template<>
+CNormalApproximation<2>::CNormalApproximation(int instruction_level)
+    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
+}
+
+template<>
+double CMaxwellBoltzmannApproximation<0>::compute_SSE2(
+    const std::vector<double>& means, double arg) {
   return CBase::compute<CSse2Parameters, CFunctions::CMaxwellBoltzmann<0>>(
       means, arg);
 }
 
-CMaxwellBoltzmannApproximation1::CMaxwellBoltzmannApproximation1()
+template<>
+double CMaxwellBoltzmannApproximation<1>::compute_SSE2(
+    const std::vector<double>& means, double arg) {
+  return CBase::compute<CSse2Parameters, CFunctions::CMaxwellBoltzmann<0>>(
+      means, arg);
+}
+
+template<>
+CMaxwellBoltzmannApproximation<0>::CMaxwellBoltzmannApproximation()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CMaxwellBoltzmannApproximation1::CMaxwellBoltzmannApproximation1(
+template<>
+CMaxwellBoltzmannApproximation<1>::CMaxwellBoltzmannApproximation()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
+
+template<>
+CMaxwellBoltzmannApproximation<0>::CMaxwellBoltzmannApproximation(
     int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double
-CMaxwellBoltzmannApproximation1::compute_SSE2(const std::vector<double>& means,
-                                              double arg) {
-  return CBase::compute<CSse2Parameters, CFunctions::CMaxwellBoltzmann<1>>(
-      means, arg);
-}
-
-CRayleighApproximation0::CRayleighApproximation0()
-    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
-}
-
-CRayleighApproximation0::CRayleighApproximation0(int instruction_level)
+template<>
+CMaxwellBoltzmannApproximation<1>::CMaxwellBoltzmannApproximation(
+    int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double CRayleighApproximation0::compute_SSE2(const std::vector<double>& means,
-                                             double arg) {
+template<>
+double CRayleighApproximation<0>::compute_SSE2(const std::vector<double>& means,
+                                               double arg) {
   return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<0>>(means, arg);
 }
 
-CRayleighApproximation1::CRayleighApproximation1()
+template<>
+double CRayleighApproximation<1>::compute_SSE2(const std::vector<double>& means,
+                                               double arg) {
+  return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<1>>(means, arg);
+}
+
+template<>
+CRayleighApproximation<0>::CRayleighApproximation()
     : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
 }
 
-CRayleighApproximation1::CRayleighApproximation1(int instruction_level)
+template<>
+CRayleighApproximation<1>::CRayleighApproximation()
+    : CBase(&compute_AVX, &compute_SSE2, CSimdDetectorAccess()->level()) {
+}
+
+template<>
+CRayleighApproximation<0>::CRayleighApproximation(int instruction_level)
     : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
-double CRayleighApproximation1::compute_SSE2(const std::vector<double>& means,
-                                             double arg) {
-  return CBase::compute<CSse2Parameters, CFunctions::CRayleigh<1>>(means, arg);
+template<>
+CRayleighApproximation<1>::CRayleighApproximation(int instruction_level)
+    : CBase(&compute_AVX, &compute_SSE2, instruction_level) {
 }
 
 } // namespace NSCompute
