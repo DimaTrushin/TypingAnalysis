@@ -46,6 +46,8 @@ protected:
   uint64_t getSmPerMultiproc(int devID);
   uint64_t getMultiProcessorCount(int devID);
 
+  void setCudaContext();
+
   static constexpr const int kErrorID = -1;
 
   int CurrentDevice_ = kErrorID;

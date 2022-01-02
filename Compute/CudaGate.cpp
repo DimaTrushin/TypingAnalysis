@@ -46,6 +46,7 @@ void CCudaDevices::initializeDevicesInfo() {
 
 CCudaGateImpl::CCudaGateImpl() {
   setMaxGflopsDevice();
+  setCudaContext();
 }
 
 void CCudaGateImpl::gpuDeviceInit(int devID) {

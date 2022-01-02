@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSKERNEL_CPLOTDATA_H
 #define NSAPPLICATION_NSKERNEL_CPLOTDATA_H
 
-#include "MathFunction.h"
+#include "Compute/CpuFunction.h"
 
 #include <vector>
 

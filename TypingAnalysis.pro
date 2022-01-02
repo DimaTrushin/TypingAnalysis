@@ -335,6 +335,7 @@ linux {
 }
 
 CUDA_SOURCES += \
+  Compute/CudaGate.cu \
   Kernel/Math.cu
 
 
@@ -412,4 +413,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+
