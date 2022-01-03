@@ -9,7 +9,7 @@ enum class ETextMode : unsigned char { Raw, Full, Printed };
 enum class EModifierMode : unsigned char { Non, All, Essential };
 
 struct CTextMode {
-  ETextMode TextMode = ETextMode::Raw;
+  ETextMode TextMode = ETextMode::Printed;
   EModifierMode ShiftMode = EModifierMode::Non;
   EModifierMode CtrlMode = EModifierMode::Non;
   EModifierMode AltMode = EModifierMode::Non;
