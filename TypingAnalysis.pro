@@ -68,6 +68,7 @@ HEADERS += \
   Compute/CpuFunction.h \
   Compute/CudaGate.h \
   Compute/Functions.h \
+  Compute/Math.h \
   Compute/ParallelMode.h \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
@@ -89,7 +90,6 @@ HEADERS += \
   Kernel/KeyScheme.h \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
-  Kernel/Math.h \
   Kernel/MathAccess.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
@@ -162,6 +162,7 @@ SOURCES += \
   Compute/CpuFunction.cpp \
   Compute/CudaGate.cpp \
   Compute/Functions.cpp \
+  Compute/Math.cpp \
   Compute/ParallelMode.cpp \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
@@ -183,7 +184,6 @@ SOURCES += \
   Kernel/KeyScheme.cpp \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
-  Kernel/Math.cpp \
   Kernel/MathAccess.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
@@ -336,7 +336,7 @@ linux {
 
 CUDA_SOURCES += \
   Compute/CudaGate.cu \
-  Kernel/Math.cu
+  Compute/Math.cu
 
 
 win32 {
@@ -414,4 +414,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+
 

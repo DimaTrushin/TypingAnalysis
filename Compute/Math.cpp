@@ -1,10 +1,10 @@
 #include "Math.h"
 
-#include "Compute/CpuFunction.h"
+#include "CpuFunction.h"
 #include "ParallelModuleAccess.h"
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 bool CMath::isGpuAvailable() const {
   return CudaGate_.isAvailable();
@@ -35,7 +35,7 @@ void CMath::fillNormalPlot0(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CNormalApproximation<0> Function;
+  CNormalApproximation<0> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -48,7 +48,7 @@ void CMath::fillNormalPlot1(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CNormalApproximation<1> Function;
+  CNormalApproximation<1> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -61,7 +61,7 @@ void CMath::fillMBPlot0(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CMaxwellBoltzmannApproximation<0> Function;
+  CMaxwellBoltzmannApproximation<0> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -74,7 +74,7 @@ void CMath::fillMBPlot1(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CMaxwellBoltzmannApproximation<1> Function;
+  CMaxwellBoltzmannApproximation<1> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -87,7 +87,7 @@ void CMath::fillRPlot0(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CRayleighApproximation<0> Function;
+  CRayleighApproximation<0> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -100,7 +100,7 @@ void CMath::fillRPlot1(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CRayleighApproximation<1> Function;
+  CRayleighApproximation<1> Function;
   CParallelAccess Parallel;
   Parallel->for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
@@ -108,5 +108,5 @@ void CMath::fillRPlot1(const CVectorD& Samples, const CVectorD& X,
   });
 }
 
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication

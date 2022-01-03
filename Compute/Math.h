@@ -1,22 +1,19 @@
-#ifndef NSAPPLICATION_NSKERNEL_CMATH_H
-#define NSAPPLICATION_NSKERNEL_CMATH_H
+#ifndef NSAPPLICATION_NSCOMPUTE_CMATH_H
+#define NSAPPLICATION_NSCOMPUTE_CMATH_H
 
-#include "../Compute/CudaGate.h"
-#include "../Compute/Functions.h"
+#include "CudaGate.h"
+#include "Functions.h"
 #include <thrust/device_vector.h>
 #include <vector>
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 // TO DO
-// Move to NSCompute
 // This object depends on Parallel module, need to make this dependence explicit
 class CMath {
   using CDevVectorD = thrust::device_vector<double>;
   using CVectorD = std::vector<double>;
-  using CCudaGate = NSCompute::CCudaGate;
-  using CFunctions = NSCompute::CFunctions;
 
 public:
   bool isGpuAvailable() const;
@@ -48,7 +45,7 @@ private:
   CDevVectorD Y_;
 };
 
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSKERNEL_CMATH_H
+#endif // NSAPPLICATION_NSCOMPUTE_CMATH_H

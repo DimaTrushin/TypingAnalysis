@@ -1,13 +1,15 @@
 #ifndef NSAPPLICATION_NSKERNEL_CMATHACCESS_H
 #define NSAPPLICATION_NSKERNEL_CMATHACCESS_H
 
-#include "Kernel/Math.h"
+#include "Compute/Math.h"
 #include "Library/Singleton/AnyGlobalAccess.h"
 
 namespace NSApplication {
 namespace NSKernel {
 
 namespace NSMathDetail {
+
+using CMath = NSCompute::CMath;
 
 class CMainMathModule;
 

@@ -4,13 +4,14 @@
 #include <thrust/transform_reduce.h>
 
 namespace NSApplication {
-namespace NSKernel {
+namespace NSCompute {
 
 namespace {
 
 template<class TFunction>
 class CCompute {
   using CDevVectorD = thrust::device_vector<double>;
+
 public:
   explicit CCompute(const CDevVectorD& data)
       : pmeans_(data.data().get()), size_(data.size()) {
@@ -73,5 +74,5 @@ void CMath::fillPlotsGPU(const CVectorD& Samples, const CVectorD& X,
                     CCompute<CFunctions::CRayleigh<1>>(S_));
   thrust::copy(Y_.begin(), Y_.end(), D1Y2->begin());
 }
-} // namespace NSKernel
+} // namespace NSCompute
 } // namespace NSApplication
