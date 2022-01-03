@@ -9,6 +9,8 @@
 namespace NSApplication {
 namespace NSCompute {
 
+class CParallelModule;
+
 // TO DO
 // This object depends on Parallel module, need to make this dependence explicit
 class CMath {
@@ -16,6 +18,8 @@ class CMath {
   using CVectorD = std::vector<double>;
 
 public:
+  CMath(CParallelModule& Parallel);
+
   bool isGpuAvailable() const;
 
   void fillPlots(const CVectorD& Samples, const CVectorD& X, CVectorD* D0Y0,
@@ -39,6 +43,7 @@ private:
                     CVectorD* D1Y0, CVectorD* D0Y1, CVectorD* D1Y1,
                     CVectorD* D0Y2, CVectorD* D1Y2);
 
+  CParallelModule& Parallel_;
   CCudaGate CudaGate_;
   CDevVectorD X_;
   CDevVectorD S_;

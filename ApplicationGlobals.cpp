@@ -16,7 +16,7 @@ CApplicationGlobals::CApplicationGlobals() {
   CAppStatusInit MainAppStatusAccessorInit;
   CSimdDetectorInit MainSimdDetector;
   CParallelInit MainComputerInit(NSCompute::EParallelMode::Tbb);
-  NSKernel::CMathInit MainMath;
+  NSKernel::CMathInit MainMath(*CParallelAccess());
 }
 
 } // namespace NSApplication

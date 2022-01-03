@@ -9,7 +9,11 @@
 
 namespace NSApplication {
 namespace NSCompute {
-using CParallelModuleImpl = CParallelWin;
+
+class CParallelModule : public CParallelWin {
+  using CBase = CParallelWin;
+  using CBase::CBase;
+};
 
 } // namespace NSCompute
 } // namespace NSApplication
@@ -21,7 +25,11 @@ using CParallelModuleImpl = CParallelWin;
 
 namespace NSApplication {
 namespace NSCompute {
-using CParallelModuleImpl = CParallelMac;
+
+class CParallelModule : public CParallelMac {
+  using CBase = CParallelMac;
+  using CBase::CBase;
+};
 
 } // namespace NSCompute
 } // namespace NSApplication
@@ -32,7 +40,11 @@ using CParallelModuleImpl = CParallelMac;
 
 namespace NSApplication {
 namespace NSCompute {
-using CParallelModuleImpl = CParallelLin;
+
+class CParallelModule : public CParallelLin {
+  using CBase = CParallelLin;
+  using CBase::CBase;
+};
 
 } // namespace NSCompute
 } // namespace NSApplication

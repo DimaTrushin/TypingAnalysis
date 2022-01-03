@@ -11,7 +11,7 @@ namespace nl = NSLibrary;
 
 class CMainParallelModule;
 
-using CParallelModule = NSCompute::CParallelModuleImpl;
+using CParallelModule = NSCompute::CParallelModule;
 
 class CMainParallelModuleInitializer
     : nl::CAnyGlobalInitializer<CParallelModule, CMainParallelModule> {

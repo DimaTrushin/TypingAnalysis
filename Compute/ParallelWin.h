@@ -14,6 +14,7 @@ namespace NSCompute {
 
 class CParallelWin {
 public:
+  CParallelWin() = default;
   CParallelWin(EParallelMode Mode);
 
   template<class TIndex, class TFunction>
@@ -55,7 +56,7 @@ private:
 #ifdef _MSC_VER
   static constexpr const EParallelMode kDefaultMode = EParallelMode::Ppl;
 #else
-  static constexpr const EParallelMode kDefaultMode = EParallelMode::Serial;
+  static constexpr const EParallelMode kDefaultMode = EParallelMode::Tbb;
 #endif
 
   CParallelSerial SerialComputer_;
