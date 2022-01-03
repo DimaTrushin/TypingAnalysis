@@ -97,4 +97,8 @@ nmake install
 
 5. Go to Project(icon on the left panel) Add "Conan install" as the first step before qmake for "Debug", "Release", and "Profile" modes.
 
+6. If you compiled with static runtime, you should add an additional argument to Connan (in each building mode):
+
+-s "compiler.runtime=MT"
+
 
