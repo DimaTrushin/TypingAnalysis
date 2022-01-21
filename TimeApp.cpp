@@ -2,6 +2,18 @@
 
 namespace NSApplication {
 
+CTime CTime::MicroSeconds(long long microseconds) {
+  return CTime(microseconds);
+}
+
+CTime CTime::MilliSeconds(long long milliseconds) {
+  return CTime(kMicrosecondsInMilliseconds * milliseconds);
+}
+
+CTime CTime::Seconds(long long seconds) {
+  return CTime(kMicrosecondsInSeconds * seconds);
+}
+
 CTime operator+(const CTime& first, const CTime& second) {
   return CTime(first.Microseconds_ + second.Microseconds_);
 }
@@ -89,16 +101,6 @@ double CTime::toHoursF() const {
 }
 
 CTime::CTime(long long microseconds) : Microseconds_(microseconds) {
-}
-
-MicroSeconds::MicroSeconds(long long microseconds) : CTime(microseconds) {
-}
-
-MilliSeconds::MilliSeconds(long long milliseconds)
-    : CTime(kMicrosecondsInMilliseconds * milliseconds) {
-}
-
-Seconds::Seconds(long long seconds) : CTime(kMicrosecondsInSeconds * seconds) {
 }
 
 } // namespace NSApplication

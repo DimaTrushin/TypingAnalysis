@@ -69,7 +69,7 @@ private:
 
   CRawSeance RawSeance_{1};
   CPressedKeys PressedKeys_;
-  CTimeOptional TimeLimit_{Seconds(10)};
+  CTimeOptional TimeLimit_{CTime::Seconds(10)};
   CTime LastEvent_{};
 };
 

@@ -6,6 +6,11 @@ namespace NSApplication {
 class CTime {
 public:
   CTime() = default;
+
+  static CTime MicroSeconds(long long microseconds);
+  static CTime MilliSeconds(long long milliseconds);
+  static CTime Seconds(long long seconds);
+
   friend CTime operator+(const CTime& first, const CTime& second);
   friend CTime operator-(const CTime& first, const CTime& second);
   CTime& operator+=(const CTime& other);
@@ -41,22 +46,6 @@ protected:
   CTime(long long microseconds);
   long long Microseconds_ = 0;
 };
-
-class MicroSeconds : public CTime {
-public:
-  MicroSeconds(long long microseconds);
-};
-
-class MilliSeconds : public CTime {
-public:
-  MilliSeconds(long long milliseconds);
-};
-
-class Seconds : public CTime {
-public:
-  Seconds(long long seconds);
-};
-
 } // namespace NSApplication
 
 #endif // NSAPPLICATION_CTIMEAPP_H
