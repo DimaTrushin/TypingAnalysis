@@ -36,12 +36,18 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
   NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
   // TO DO
   // Check cacher
+  auto TextOpt = Cacher_.find(data.textInfo());
+  if (TextOpt.has_value()) {
+    TextEdit_->setDocument(TextOpt->get().get());
+    return;
+  }
   CTimer Timer;
   Text_ = makeText(data);
   CTime Elapsed = Timer.get();
   if (Elapsed > TimeLimit_) {
     // TO DO
     // put in cache
+    //    Cacher_.insert(data.textInfo(), std::move(Text_));
     TextEdit_->setDocument(Text_.get());
   } else {
     TextEdit_->setDocument(Text_.get());

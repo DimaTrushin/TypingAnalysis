@@ -4,12 +4,14 @@
 #include "Kernel/TextData.h"
 #include "Kernel/TextDataTree.h"
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/Cacher.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 #include <QColor>
 #include <QPalette>
 
 #include <array>
+#include <boost/functional/hash.hpp>
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
@@ -67,6 +69,20 @@ struct CTextPalette {
 };
 
 namespace NSTextPrinterDetail {
+
+using CTextCacheKey = NSKernel::CTextMode;
+
+struct CTextCaheKeyHash {
+  size_t operator()(const CTextCacheKey& Data) const {
+    size_t seed = 0;
+    boost::hash_combine(seed, static_cast<unsigned char>(Data.TextMode));
+    boost::hash_combine(seed, static_cast<unsigned char>(Data.ShiftMode));
+    boost::hash_combine(seed, static_cast<unsigned char>(Data.CtrlMode));
+    boost::hash_combine(seed, static_cast<unsigned char>(Data.AltMode));
+    return seed;
+  };
+};
+
 class CTextPrinterImpl {
   using CTextData = NSKernel::CTextData;
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
@@ -92,6 +108,8 @@ class CTextPrinterImpl {
   using CQCharBuffer = std::vector<QChar>;
 
   using CQTextDocUptr = std::unique_ptr<QTextDocument>;
+  using CCacher =
+      NSLibrary::CCacher<CTextCacheKey, CQTextDocUptr, CTextCaheKeyHash>;
 
 public:
   explicit CTextPrinterImpl(QPlainTextEdit* TextEdit);
@@ -130,6 +148,7 @@ private:
   CQCharBuffer buffer_ = CQCharBuffer(kDefaultBufferSize);
   CTextPalette Palette_;
   CTime TimeLimit_ = CTime::MilliSeconds(20);
+  CCacher Cacher_;
 };
 
 } // namespace NSTextPrinterDetail

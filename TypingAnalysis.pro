@@ -120,6 +120,7 @@ HEADERS += \
   Library/Observer/Impl/TypeHelper.h \
   Library/Observer/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
+  Library/StlExtension/Cacher.h \
   Library/StlExtension/HeapWithAccess.h \
   Library/StlExtension/MvcWrappers.h \
   Library/StlExtension/Supressor.h \
