@@ -26,25 +26,45 @@ CTextPrinterImpl::CTextPrinterImpl(QPlainTextEdit* TextEdit)
   assert(TextEdit_);
 }
 
+CTextPrinterImpl::~CTextPrinterImpl() = default;
+
 CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
   return &TextDataInput_;
 }
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
+  // TO DO
+  // Check cacher
+  CTimer Timer;
+  Text_ = makeText(data);
+  CTime Elapsed = Timer.get();
+  if (Elapsed > TimeLimit_) {
+    // TO DO
+    // put in cache
+    TextEdit_->setDocument(Text_.get());
+  } else {
+    TextEdit_->setDocument(Text_.get());
+  }
+}
+
+CTextPrinterImpl::CQTextDocUptr
+CTextPrinterImpl::makeText(const CTextData& data) {
+  CQTextDocUptr Doc;
   switch (data.textMode()) {
   case ETextMode::Raw:
-    printFormattedText(data.rawSession());
+    Doc = makeFormattedText(data.rawSession());
     break;
   case ETextMode::Full:
-    printFormattedText(data.textConstFullView());
+    Doc = makeFormattedText(data.textConstFullView());
     break;
   case ETextMode::Printed:
-    printFormattedText(data.textConstPrintedView());
+    Doc = makeFormattedText(data.textConstPrintedView());
     break;
   default:
     assert(false);
   }
+  return Doc;
 }
 
 template<class TNode>
@@ -131,17 +151,15 @@ CTextPrinterImpl::extractToBuffer<CTextPrinterImpl::CSession::const_iterator>(
 }
 
 template<class TText>
-void CTextPrinterImpl::printFormattedText(const TText& TextView) {
-  clear();
+CTextPrinterImpl::CQTextDocUptr
+CTextPrinterImpl::makeFormattedText(const TText& TextView) {
+  CQTextDocUptr Doc = getDefaultDocUptr();
   if (TextView.empty())
-    return;
+    return Doc;
   auto iter = TextView.cbegin();
   auto sentinel = TextView.cend();
-  // TO DO
-  // This is still a bad solution. Need to speed up this part.
-  QTextDocument* Doc = getDefaultDocument();
-  QTextCursor Cursor = QTextCursor(Doc);
 
+  QTextCursor Cursor = QTextCursor(Doc.get());
   CStatusData CurrentStatus = getStatus(*iter);
   while (CurrentStatus.Status != EKeyStatus::End) {
     CStatusData NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
@@ -149,7 +167,7 @@ void CTextPrinterImpl::printFormattedText(const TText& TextView) {
     insertTextFromBuffer(&Cursor);
     CurrentStatus = NewStatus;
   }
-  TextEdit_->setDocument(Doc);
+  return Doc;
 }
 
 void CTextPrinterImpl::setFormat(CStatusData Status,
@@ -177,12 +195,12 @@ QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
   return QColor::fromHsv(h, s, l);
 }
 
-QTextDocument* CTextPrinterImpl::getDefaultDocument() const {
-  QTextDocument* Doc = new QTextDocument(TextEdit_);
+CTextPrinterImpl::CQTextDocUptr CTextPrinterImpl::getDefaultDocUptr() {
+  CQTextDocUptr Doc = std::make_unique<QTextDocument>();
   QFont t;
   t.setPointSize(kDefaultFontSize);
   Doc->setDefaultFont(t);
-  Doc->setDocumentLayout(new QPlainTextDocumentLayout(Doc));
+  Doc->setDocumentLayout(new QPlainTextDocumentLayout(Doc.get()));
   return Doc;
 }
 

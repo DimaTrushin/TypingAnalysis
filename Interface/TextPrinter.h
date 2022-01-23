@@ -91,13 +91,18 @@ class CTextPrinterImpl {
 
   using CQCharBuffer = std::vector<QChar>;
 
+  using CQTextDocUptr = std::unique_ptr<QTextDocument>;
+
 public:
   explicit CTextPrinterImpl(QPlainTextEdit* TextEdit);
+  ~CTextPrinterImpl();
 
   CTextDataObserver* textDataInput();
 
 private:
   void handleTextData(const CTextData& data);
+  CQTextDocUptr makeText(const CTextData& data);
+
   template<class TNode>
   CStatusData getStatus(const TNode& Node) const;
   template<class TConstIterator>
@@ -105,7 +110,7 @@ private:
                               const TConstIterator sentinel,
                               TConstIterator* pIter);
   template<class TText>
-  void printFormattedText(const TText& TextView);
+  CQTextDocUptr makeFormattedText(const TText& TextView);
 
   void setFormat(CStatusData Status, QTextCursor* pTextCursor) const;
   void insertTextFromBuffer(QTextCursor* pTextCursor) const;
@@ -114,16 +119,17 @@ private:
   void setDefaultBackgroundColor();
 
   static QColor shade(QColor Color, unsigned char Depth);
-
-  QTextDocument* getDefaultDocument() const;
+  static CQTextDocUptr getDefaultDocUptr();
 
   static constexpr const size_t kDefaultBufferSize = 128;
   static constexpr const int kDefaultFontSize = 14;
 
   QPlainTextEdit* TextEdit_;
+  CQTextDocUptr Text_;
   CTextDataInput TextDataInput_;
   CQCharBuffer buffer_ = CQCharBuffer(kDefaultBufferSize);
   CTextPalette Palette_;
+  CTime TimeLimit_ = CTime::MilliSeconds(20);
 };
 
 } // namespace NSTextPrinterDetail
