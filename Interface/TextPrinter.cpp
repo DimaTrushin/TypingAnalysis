@@ -20,6 +20,32 @@ bool operator!=(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
 
 namespace NSTextPrinterDetail {
 
+bool operator==(const CTextCacheKey& lhs, const CTextCacheKey& rhs) {
+  return lhs.pSession == rhs.pSession &&
+         lhs.TextMode.TextMode == rhs.TextMode.TextMode &&
+         (lhs.TextMode.TextMode == NSKernel::ETextMode::Raw ||
+          lhs.TextMode == rhs.TextMode);
+}
+
+bool operator!=(const CTextCacheKey& lhs, const CTextCacheKey& rhs) {
+  return !(lhs == rhs);
+}
+
+size_t CTextCaheKeyHash::operator()(const CTextCacheKey& Data) const {
+  size_t seed = 0;
+  boost::hash_combine(seed, Data.pSession);
+  boost::hash_combine(seed, static_cast<unsigned char>(Data.TextMode.TextMode));
+  if (Data.TextMode.TextMode != NSKernel::ETextMode::Raw) {
+    boost::hash_combine(seed,
+                        static_cast<unsigned char>(Data.TextMode.ShiftMode));
+    boost::hash_combine(seed,
+                        static_cast<unsigned char>(Data.TextMode.CtrlMode));
+    boost::hash_combine(seed,
+                        static_cast<unsigned char>(Data.TextMode.AltMode));
+  }
+  return seed;
+}
+
 CTextPrinterImpl::CTextPrinterImpl(QPlainTextEdit* TextEdit)
     : TextEdit_(TextEdit),
       TextDataInput_([this](const CTextData& data) { handleTextData(data); }) {
@@ -34,9 +60,7 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
-  // TO DO
-  // Check cacher
-  auto TextOpt = Cacher_.find(data.textInfo());
+  auto TextOpt = Cacher_.find({&data.rawSession(), data.textInfo()});
   if (TextOpt.has_value()) {
     TextEdit_->setDocument(TextOpt->get().get());
     return;
@@ -45,10 +69,10 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
   Text_ = makeText(data);
   CTime Elapsed = Timer.get();
   if (Elapsed > TimeLimit_) {
-    // TO DO
-    // put in cache
-    //    Cacher_.insert(data.textInfo(), std::move(Text_));
-    TextEdit_->setDocument(Text_.get());
+    auto Data =
+        Cacher_.insert({&data.rawSession(), data.textInfo()}, std::move(Text_));
+    assert(Data != nullptr);
+    TextEdit_->setDocument(Data->get());
   } else {
     TextEdit_->setDocument(Text_.get());
   }

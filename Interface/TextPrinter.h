@@ -70,17 +70,17 @@ struct CTextPalette {
 
 namespace NSTextPrinterDetail {
 
-using CTextCacheKey = NSKernel::CTextMode;
+struct CTextCacheKey {
+  const NSKernel::CSession* pSession;
+  NSKernel::CTextMode TextMode;
+
+  friend bool operator==(const CTextCacheKey& lhs, const CTextCacheKey& rhs);
+  friend bool operator!=(const CTextCacheKey& lhs, const CTextCacheKey& rhs);
+};
 
 struct CTextCaheKeyHash {
-  size_t operator()(const CTextCacheKey& Data) const {
-    size_t seed = 0;
-    boost::hash_combine(seed, static_cast<unsigned char>(Data.TextMode));
-    boost::hash_combine(seed, static_cast<unsigned char>(Data.ShiftMode));
-    boost::hash_combine(seed, static_cast<unsigned char>(Data.CtrlMode));
-    boost::hash_combine(seed, static_cast<unsigned char>(Data.AltMode));
-    return seed;
-  };
+  size_t operator()(const CTextCacheKey& Data) const;
+  ;
 };
 
 class CTextPrinterImpl {
