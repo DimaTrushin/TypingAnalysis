@@ -34,7 +34,14 @@ void CSeanceManagerImpl::makeSessions() {
 }
 
 void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {
-  SeanceMaker_.add(KeyPressing);
+  switch (KeyPressing.KeyID) {
+    using CKeyIDEnum = NSKeyboard::CKeyIDEnum;
+  case CKeyIDEnum::Esc:
+    makeSessions();
+    break;
+  default:
+    SeanceMaker_.add(KeyPressing);
+  }
 }
 
 void CSeanceManagerImpl::handle(const CKeyReleasing& KeyReleasing) {
