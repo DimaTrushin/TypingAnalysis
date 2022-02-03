@@ -133,7 +133,7 @@ private:
   CTextDataInput TextDataInput_;
   CQCharBuffer buffer_ = CQCharBuffer(kDefaultBufferSize);
   CTextPalette Palette_;
-  CTime TimeLimit_ = CTime::MilliSeconds(20);
+  CTime TimeLimit_ = CTime::MilliSeconds(50);
   CCacher Cacher_;
 };
 

@@ -9,6 +9,11 @@
 namespace NSApplication {
 namespace NSKernel {
 
+CFunctionData::CFunctionData(CContainer&& Samples)
+    : Samples_(std::move(Samples)) {
+  PlotData_.fillPlots(Samples_);
+}
+
 void CFunctionData::set(CContainer&& Samples) {
   Samples_ = std::move(Samples);
   PlotData_.fillPlots(Samples_);
@@ -19,11 +24,10 @@ const CPlotData& CFunctionData::plotData() const {
 }
 
 namespace NSAnalyticalModuleDetail {
+
 CAnalyticalModuleImpl::CAnalyticalModuleImpl()
     : TextData_([this](const CTextData& Data) { handleTextData(Data); }),
-      DensityOut_([this]() -> CPlotDataGetType {
-        return std::cref(SpeedData_.plotData());
-      }) {
+      DensityOut_([]() -> CPlotDataGetType { return std::nullopt; }) {
 }
 
 CAnalyticalModuleImpl::CTextDataObserver*
@@ -39,10 +43,30 @@ void CAnalyticalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
 void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
   NSAppDebug::CTimeAnchor Anchor("math & notify time =");
 
-  // preliminary implementation
+  auto FuncOpt = SpeedDataCacher_.find({&Data.rawSession(), Data.textInfo()});
+  if (FuncOpt.has_value()) {
+    DensityOut_.setSource([&FuncOpt]() -> CPlotDataGetType {
+      return std::cref(FuncOpt->get()->plotData());
+    });
+    return;
+  }
+  CTimer Timer;
   CContainer Samples = getSpeedData(Data);
-  SpeedData_.set(std::move(Samples));
-  DensityOut_.notify();
+  SpeedData_ = std::make_unique<CFunctionData>(std::move(Samples));
+  CTime Elapsed = Timer.get();
+
+  if (Elapsed > TimeLimit_) {
+    auto SpeedData = SpeedDataCacher_.insert(
+        {&Data.rawSession(), Data.textInfo()}, std::move(SpeedData_));
+    assert(SpeedData != nullptr);
+    DensityOut_.setSource([SpeedData]() -> CPlotDataGetType {
+      return std::cref(SpeedData->get()->plotData());
+    });
+  } else {
+    DensityOut_.setSource([this]() -> CPlotDataGetType {
+      return std::cref(SpeedData_->plotData());
+    });
+  }
 }
 
 CAnalyticalModuleImpl::CContainer

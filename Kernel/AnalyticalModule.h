@@ -5,6 +5,7 @@
 #include "Library/StlExtension/MvcWrappers.h"
 #include "PlotData.h"
 #include "TextData.h"
+#include "TextModeCacher.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -13,6 +14,8 @@ class CFunctionData {
   using CContainer = std::vector<double>;
 
 public:
+  CFunctionData(CContainer&& Samples);
+
   void set(CContainer&& Samples);
   const CPlotData& plotData() const;
 
@@ -32,6 +35,9 @@ class CAnalyticalModuleImpl {
   using CPlotDataObservable = NSLibrary::CObservable<CPlotData>;
   using CPlotDataGetType = CPlotDataObserver::CGetType;
 
+  using CFunctionDataPtr = std::unique_ptr<CFunctionData>;
+  using CCacher = CTextModeCacher<CFunctionDataPtr>;
+
 public:
   CAnalyticalModuleImpl();
 
@@ -45,7 +51,9 @@ private:
   template<class TText>
   CContainer getSpeedData(const TText& TextView) const;
 
-  CFunctionData SpeedData_;
+  CFunctionDataPtr SpeedData_;
+  CTime TimeLimit_ = CTime::MilliSeconds(50);
+  CCacher SpeedDataCacher_;
   CTextDataInput TextData_;
   CPlotDataObservable DensityOut_;
 };
