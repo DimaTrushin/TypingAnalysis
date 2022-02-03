@@ -3,6 +3,7 @@
 
 #include "Kernel/TextData.h"
 #include "Kernel/TextDataTree.h"
+#include "Kernel/TextModeCacher.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/Cacher.h"
 #include "Library/StlExtension/MvcWrappers.h"
@@ -11,7 +12,6 @@
 #include <QPalette>
 
 #include <array>
-#include <boost/functional/hash.hpp>
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
@@ -70,19 +70,6 @@ struct CTextPalette {
 
 namespace NSTextPrinterDetail {
 
-struct CTextCacheKey {
-  const NSKernel::CSession* pSession;
-  NSKernel::CTextMode TextMode;
-
-  friend bool operator==(const CTextCacheKey& lhs, const CTextCacheKey& rhs);
-  friend bool operator!=(const CTextCacheKey& lhs, const CTextCacheKey& rhs);
-};
-
-struct CTextCaheKeyHash {
-  size_t operator()(const CTextCacheKey& Data) const;
-  ;
-};
-
 class CTextPrinterImpl {
   using CTextData = NSKernel::CTextData;
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
@@ -108,8 +95,7 @@ class CTextPrinterImpl {
   using CQCharBuffer = std::vector<QChar>;
 
   using CQTextDocUptr = std::unique_ptr<QTextDocument>;
-  using CCacher =
-      NSLibrary::CCacher<CTextCacheKey, CQTextDocUptr, CTextCaheKeyHash>;
+  using CCacher = NSKernel::CTextModeCacher<CQTextDocUptr>;
 
 public:
   explicit CTextPrinterImpl(QPlainTextEdit* TextEdit);
