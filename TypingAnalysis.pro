@@ -370,7 +370,7 @@ win32 {
   MSVC_CUDA_FLAGS_RELEASE = /EHsc /nologo /O2 /W3 /FS
 
   contains(CONFIG, static_runtime) {
-    MSVC_CUDA_FLAGS_DEBUG = += /MTd
+    MSVC_CUDA_FLAGS_DEBUG += /MTd
     MSVC_CUDA_FLAGS_RELEASE += /MT
   } else {
     MSVC_CUDA_FLAGS_DEBUG += /MDd
