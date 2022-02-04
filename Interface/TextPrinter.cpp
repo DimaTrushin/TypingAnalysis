@@ -195,7 +195,7 @@ QColor CTextPrinterImpl::shade(QColor Color, unsigned char Depth) {
   int h, s, l;
   Depth = std::min<unsigned char>(Depth, 10);
   Color.getHsv(&h, &s, &l);
-  l = (l > 15 * Depth ? l - 15 * Depth : 0);
+  l = (l > 20 * Depth ? l - 20 * Depth : 0);
   return QColor::fromHsv(h, s, l);
 }
 
