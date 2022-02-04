@@ -48,6 +48,8 @@ class CSeanceMaker {
 
   using CTimeOptional = std::optional<CTime>;
 
+  using CIndex = int64_t;
+
 public:
   void add(const CKeyPressing& KeyPressing);
   void add(const CKeyReleasing& KeyReleasing);
@@ -66,6 +68,9 @@ private:
 
   CRawSession& CurrentSession();
   const CRawSession& CurrentSession() const;
+
+  static CIndex getTextLengh(const CRawSession& Session);
+  static bool hasText(const CRawSession& Session);
 
   CRawSeance RawSeance_{1};
   CPressedKeys PressedKeys_;

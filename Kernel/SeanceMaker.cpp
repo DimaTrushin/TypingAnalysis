@@ -60,10 +60,9 @@ bool CSeanceMaker::transferTo(CSeance* Seance) {
   if (!PressedKeys_.empty())
     releaseAllKeysNow();
   for (auto& RawSession : RawSeance_)
-    if (!RawSession.empty()) {
+    if (hasText(RawSession)) {
       // TO DO
-      // Add filter ignoring small sessions or sessions with no symbol keys
-      // or any other filtering method
+      // Add filter ignoring small sessions or any other filtering method
       hasNewData = true;
       Seance->emplace_back(RawSession.begin(), RawSession.end());
     }
@@ -125,6 +124,22 @@ CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() {
 const CSeanceMaker::CRawSession& CSeanceMaker::CurrentSession() const {
   assert(!RawSeance_.empty());
   return RawSeance_.back();
+}
+
+CSeanceMaker::CIndex CSeanceMaker::getTextLengh(const CRawSession& Session) {
+  CIndex size = 0;
+  for (const auto& Key : Session) {
+    size += Key.getTextSize();
+  }
+  return size;
+}
+
+bool CSeanceMaker::hasText(const CRawSession& Session) {
+  for (const auto& Key : Session) {
+    if (Key.getTextSize() > 0)
+      return true;
+  }
+  return false;
 }
 
 } // namespace NSKernel
