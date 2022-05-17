@@ -59,6 +59,7 @@ void CSeanceViewImpl::onCurrentSeanceConnect(const CSeanceViewData& data) {
   // 2) pass the description to the Model
   // 3) make a separate object to make the description
   appendFromSeance(data.Seance);
+  // Seems like I do not need these 4 lines
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);
   else
@@ -70,6 +71,7 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
   appendFromSeance(data.Seance);
+  // Seems like I do not need these 4 lines
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);
   else
@@ -81,10 +83,6 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   //  } else
   //    SeanceModel_.clear();
 }
-
-// void CSeanceViewImpl::setLocale(const CLocalizer& Localizer) {
-//  CSeanceDescriptionModel::setLocale(Localizer);
-//}
 
 bool CSeanceViewImpl::isRowSelected(int row) const {
   return TreeView_->selectionModel()->isSelected(IndexOfItem(row));

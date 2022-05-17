@@ -60,7 +60,6 @@ public Q_SLOTS:
 private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
-  //  void setLocale(const CLocalizer&);
 
   bool isRowSelected(int) const;
   void selectRow(int);
@@ -70,7 +69,6 @@ private:
   CSupressor FromModel_;
   CSupressor MySignal_;
   QTreeView* TreeView_;
-  //  CSeanceDescriptionModel SeanceModel_;
   CSeanceViewDataInput CurrentSeanceViewData_;
   CIndexObservable IndexOutput_;
   CLocalizerInput LocalizerInput_;
