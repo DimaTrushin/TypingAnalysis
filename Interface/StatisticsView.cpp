@@ -21,7 +21,7 @@ CStatisticsViewImpl::CStatisticsViewImpl(QTableView* TableView)
         setStatisticsLocale(Localizer);
       }) {
   assert(TableView_);
-  TableView_->setModel(&StatisticsModel_);
+  TableView_->setModel(this);
 }
 
 CStatisticsViewImpl::CTextDataObserver* CStatisticsViewImpl::textDataInput() {
@@ -43,7 +43,7 @@ void CStatisticsViewImpl::handleTextData(const CTextData& Data) {
   // TO DO
   // Need to
   // 1) make a separate object to make statistics
-  StatisticsModel_.setStatistics(createStatisticsData(Data));
+  setStatistics(createStatisticsData(Data));
 }
 
 CStatisticsViewImpl::CStatisticsDescription
@@ -67,22 +67,15 @@ CStatisticsViewImpl::createStatisticsData(const CTextData& Data) {
   Statistics.push_back(
       {printedTextDuration(),
        QString::number(Tree->getPrintedTextDuration().toSecondsF())});
-  //  Statistics.push_back(
-  //      {fullTextDuration(),
-  //       QString::number(Tree->getFullTextDuration().toSecondsF())});
   Statistics.push_back(
       {printedTextSpeed(),
        QString::number(Tree->getPrintedTextLength() /
                        Tree->getPrintedTextDuration().toMinutesF())});
-  //  Statistics.push_back(
-  //      {fullTextSpeed(),
-  //       QString::number(Tree->getFullTextLength() /
-  //                       Tree->getFullTextDuration().toMinutesF())});
   return Statistics;
 }
 
 void CStatisticsViewImpl::setViewLocale(const CViewLocalizer& Localizer) {
-  StatisticsModel_.setLocale(Localizer);
+  setLocale(Localizer);
 }
 
 void CStatisticsViewImpl::setStatisticsLocale(const CStatisticsLocalizer&) {

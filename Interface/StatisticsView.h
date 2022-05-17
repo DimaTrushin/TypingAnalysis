@@ -19,7 +19,8 @@ namespace NSInterface {
 
 namespace NSStatisticsViewDetail {
 
-class CStatisticsViewImpl {
+class CStatisticsViewImpl : public NSQt::CSessionStatisticsModel {
+  Q_OBJECT
   using CSessionStatisticsModel = NSQt::CSessionStatisticsModel;
 
   using CTextData = NSKernel::CTextData;
@@ -65,7 +66,6 @@ private:
   QString printedTextSpeed() const;
 
   QTableView* TableView_;
-  CSessionStatisticsModel StatisticsModel_;
   CTextDataInput TextDataInput_;
   CViewLocalizerInput ViewLocalizerInput_;
   CStatisticsLocalizerInput StatisticsLocalizerInput_;

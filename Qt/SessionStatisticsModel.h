@@ -41,6 +41,8 @@ private:
 
   bool isValid(const QModelIndex& index) const;
 
+  int size() const;
+
   QString DataName_;
   QString ValueName_;
 

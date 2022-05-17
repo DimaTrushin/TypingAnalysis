@@ -6,7 +6,7 @@ namespace NSQt {
 int CSessionStatisticsModel::rowCount(const QModelIndex& index) const {
   if (index.isValid())
     return 0;
-  return static_cast<int>(Data_.size());
+  return size();
 }
 
 int CSessionStatisticsModel::columnCount(const QModelIndex& index) const {
@@ -42,9 +42,9 @@ Qt::ItemFlags CSessionStatisticsModel::flags(const QModelIndex&) const {
 }
 
 bool CSessionStatisticsModel::clear() {
-  if (Data_.size() == 0)
+  if (size() == 0)
     return false;
-  beginRemoveRows(QModelIndex(), 0, static_cast<int>(Data_.size() - 1));
+  beginRemoveRows(QModelIndex(), 0, size() - 1);
   Data_.clear();
   endRemoveRows();
   return true;
@@ -76,8 +76,12 @@ QString CSessionStatisticsModel::headerName(int column) const {
 }
 
 bool CSessionStatisticsModel::isValid(const QModelIndex& index) const {
-  return index.isValid() && index.column() < 2 &&
-         size_t(index.row()) < Data_.size();
+  return index.isValid() && index.column() >= 0 && index.column() < 2 &&
+         index.row() >= 0 && index.row() < size();
+}
+
+int CSessionStatisticsModel::size() const {
+  return static_cast<int>(Data_.size());
 }
 
 } // namespace NSQt
