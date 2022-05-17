@@ -21,7 +21,7 @@ namespace NSInterface {
 
 namespace NSSeanceViewDetail {
 
-class CSeanceViewImpl : public QObject {
+class CSeanceViewImpl : public NSQt::CSeanceDescriptionModel {
   Q_OBJECT
   using CSeanceDescriptionModel = NSQt::CSeanceDescriptionModel;
 
@@ -60,7 +60,7 @@ public Q_SLOTS:
 private:
   void onCurrentSeanceConnect(const CSeanceViewData&);
   void onCurrentSeanceNotify(const CSeanceViewData&);
-  void setLocale(const CLocalizer&);
+  //  void setLocale(const CLocalizer&);
 
   bool isRowSelected(int) const;
   void selectRow(int);
@@ -70,7 +70,7 @@ private:
   CSupressor FromModel_;
   CSupressor MySignal_;
   QTreeView* TreeView_;
-  CSeanceDescriptionModel SeanceModel_;
+  //  CSeanceDescriptionModel SeanceModel_;
   CSeanceViewDataInput CurrentSeanceViewData_;
   CIndexObservable IndexOutput_;
   CLocalizerInput LocalizerInput_;

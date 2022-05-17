@@ -17,13 +17,13 @@ CSeanceViewImpl::CSeanceViewImpl(QTreeView* TreeView)
       LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(TreeView_);
-  TreeView_->setModel(&SeanceModel_);
+  TreeView_->setModel(this);
   TreeView_->expandAll();
   QObject::connect(TreeView_->selectionModel(),
-                   &QItemSelectionModel::selectionChanged, &SeanceModel_,
+                   &QItemSelectionModel::selectionChanged, this,
                    &CSeanceDescriptionModel::onSelectionChanged);
-  QObject::connect(&SeanceModel_, &CSeanceDescriptionModel::selectionChanged,
-                   this, &CSeanceViewImpl::onSelectionChanged);
+  QObject::connect(this, &CSeanceDescriptionModel::selectionChanged, this,
+                   &CSeanceViewImpl::onSelectionChanged);
 }
 
 CSeanceViewImpl::CSeanceViewDataObserver*
@@ -52,13 +52,13 @@ void CSeanceViewImpl::onCurrentSeanceConnect(const CSeanceViewData& data) {
   if (MySignal_.isLocked())
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
-  SeanceModel_.clear();
+  clear();
   // TO DO
   // Need to
   // 1) add here a function to compute seance description to append
   // 2) pass the description to the Model
   // 3) make a separate object to make the description
-  SeanceModel_.appendFromSeance(data.Seance);
+  appendFromSeance(data.Seance);
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);
   else
@@ -69,7 +69,7 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   if (MySignal_.isLocked())
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
-  SeanceModel_.appendFromSeance(data.Seance);
+  appendFromSeance(data.Seance);
   if (data.CurrentSession >= 0)
     reselect(data.CurrentSession);
   else
@@ -82,16 +82,16 @@ void CSeanceViewImpl::onCurrentSeanceNotify(const CSeanceViewData& data) {
   //    SeanceModel_.clear();
 }
 
-void CSeanceViewImpl::setLocale(const CLocalizer& Localizer) {
-  SeanceModel_.setLocale(Localizer);
-}
+// void CSeanceViewImpl::setLocale(const CLocalizer& Localizer) {
+//  CSeanceDescriptionModel::setLocale(Localizer);
+//}
 
 bool CSeanceViewImpl::isRowSelected(int row) const {
-  return TreeView_->selectionModel()->isSelected(SeanceModel_.IndexOfItem(row));
+  return TreeView_->selectionModel()->isSelected(IndexOfItem(row));
 }
 
 void CSeanceViewImpl::selectRow(int row) {
-  TreeView_->selectionModel()->select(SeanceModel_.IndexOfItem(row),
+  TreeView_->selectionModel()->select(IndexOfItem(row),
                                       QItemSelectionModel::Rows |
                                           QItemSelectionModel::ClearAndSelect);
 }
@@ -106,8 +106,6 @@ void CSeanceViewImpl::clearSelection() {
 }
 
 } // namespace NSSeanceViewDetail
-
-// namespace NSSeanceViewDetail
 
 } // namespace NSInterface
 } // namespace NSApplication
