@@ -48,6 +48,7 @@ void CTextPrinterImpl::handleTextData(const CTextData& data) {
     assert(Data != nullptr);
     TextEdit_->setDocument(Data->get());
   } else {
+    // Debuger dies here. Do not know what is the issue.
     TextEdit_->setDocument(Text_.get());
   }
 }

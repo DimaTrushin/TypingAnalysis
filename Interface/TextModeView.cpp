@@ -221,7 +221,6 @@ bool CTextModeViewImpl::areSwitchesInCorrectState() const {
 }
 
 void CTextModeViewImpl::setLocale(const CLocalizer& Localizer) {
-  qDebug() << "setLocale TextModeView";
   TextModeBox_->setTitle(Localizer.textMode());
   Raw_->setText(Localizer.raw());
   Full_->setText(Localizer.full());
