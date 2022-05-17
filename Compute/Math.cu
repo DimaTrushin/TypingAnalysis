@@ -53,6 +53,9 @@ void CMath::fillPlotsGPU(const CVectorD& Samples, const CVectorD& X,
   Y_.resize(X.size());
   S_.resize(Samples.size());
 
+  // TO DO
+  // std::vector does not work here in debug
+  // should change it to thrust::host_vector
   thrust::copy(Samples.begin(), Samples.end(), S_.begin());
   thrust::copy(X.begin(), X.end(), X_.begin());
   thrust::transform(X_.begin(), X_.end(), Y_.begin(),
