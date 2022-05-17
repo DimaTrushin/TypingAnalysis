@@ -30,7 +30,9 @@ struct CRusLocale {
     static constexpr const char* FullTextSpeed =
         "Скорость полного текста, знак/мин";
     static constexpr const char* PrintedTextSpeed =
-        "Скорость напечатанного текста, знак/мин";
+        "Скорость (реальная), знак/мин";
+    static constexpr const char* MaxLikelihoodSpeed =
+        "Скорость (несущая), знак/мин";
   };
   struct CTextModeView {
     static constexpr const char* TextMode = "Тексторвый режим";

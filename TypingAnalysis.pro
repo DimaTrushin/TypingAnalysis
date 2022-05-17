@@ -83,6 +83,7 @@ HEADERS += \
   Interface/TextModeController.h \
   Interface/TextModeView.h \
   Interface/TextPrinter.h \
+  Kernel/AnalyticData.h \
   Kernel/AnalyticalModule.h \
   Kernel/FingerLayout.h \
   Kernel/KeyEvent.h \
@@ -181,6 +182,7 @@ SOURCES += \
   Interface/TextModeController.cpp \
   Interface/TextModeView.cpp \
   Interface/TextPrinter.cpp \
+  Kernel/AnalyticData.cpp \
   Kernel/AnalyticalModule.cpp \
   Kernel/FingerLayout.cpp \
   Kernel/KeyEvent.cpp \

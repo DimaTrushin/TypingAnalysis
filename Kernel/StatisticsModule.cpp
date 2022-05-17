@@ -7,13 +7,13 @@ namespace NSStatisticsModuleDetail {
 CStatisticsModuleImpl::CStatisticsModuleImpl()
     : LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }),
-      TextDataInput_(
-          [this](const CTextData& TextData) { handleTextData(TextData); }) {
+      AnalyticDataInput_(
+          [this](const CAnalyticData& Data) { handleAnalyticData(Data); }) {
 }
 
-CStatisticsModuleImpl::CTextDataObserver*
-CStatisticsModuleImpl::textDataInput() {
-  return &TextDataInput_;
+CStatisticsModuleImpl::CAnalyticDataObserver*
+CStatisticsModuleImpl::analyticDataInput() {
+  return &AnalyticDataInput_;
 }
 
 CStatisticsModuleImpl::CLocalizerInput*
@@ -27,14 +27,14 @@ void CStatisticsModuleImpl::subscribeToStatisticsDescription(
 }
 
 void CStatisticsModuleImpl::setLocale(const CLocalizer&) {
-  if (!TextDataInput_.hasValue())
+  if (!AnalyticDataInput_.hasValue())
     return;
-  handleTextData(*TextDataInput_.data());
+  handleAnalyticData(*AnalyticDataInput_.data());
 }
 
-void CStatisticsModuleImpl::handleTextData(const CTextData& Data) {
+void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
   CStatisticsDescription Statistics;
-  const NSKernel::CTextDataTree& Tree = Data.textTree();
+  const NSKernel::CTextDataTree& Tree = Data.textData().textTree();
 
   Statistics.push_back(
       {printedTextLength(), QString::number(Tree->getPrintedTextLength())});
@@ -56,6 +56,8 @@ void CStatisticsModuleImpl::handleTextData(const CTextData& Data) {
       {printedTextSpeed(),
        QString::number(Tree->getPrintedTextLength() /
                        Tree->getPrintedTextDuration().toMinutesF())});
+  Statistics.push_back(
+      {maxLikelihoodSpeed(), QString::number(Data.plotData().max0().x)});
   StatisticsDescriptionOutput_.set(std::move(Statistics));
 }
 
@@ -117,6 +119,12 @@ QString CStatisticsModuleImpl::printedTextSpeed() const {
   if (!LocalizerInput_.hasValue())
     return "";
   return LocalizerInput_.data()->get().printedTextSpeed();
+}
+
+QString CStatisticsModuleImpl::maxLikelihoodSpeed() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().maxLikelihoodSpeed();
 }
 
 } // namespace NSStatisticsModuleDetail

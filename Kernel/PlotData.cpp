@@ -64,9 +64,14 @@ const double* CPlotData::dataYR1() const {
   return YR1_.data();
 }
 
+CPlotData::CPointData CPlotData::max0() const {
+  return {X_[index_max0_], Y0_[index_max0_]};
+}
+
 void CPlotData::fillPlots(const CContainer& Samples) {
   CMathAccess Math;
   Math->fillPlots(Samples, X_, &Y0_, &Y1_, &YMB0_, &YMB1_, &YR0_, &YR1_);
+  find_max0();
 }
 
 // void CPlotData::fillY0(const CContainer& Samples) {
@@ -127,6 +132,17 @@ void CPlotData::fillX() {
   double step = (Maximum_ - Minimum_) / (X_.size() - 1);
   for (size_t i = 0; i < X_.size(); ++i) {
     X_[i] = Minimum_ + step * i;
+  }
+}
+
+void CPlotData::find_max0() {
+  double max0 = Y0_[0];
+  index_max0_ = 0;
+  for (size_t i = 1; i < X_.size(); ++i) {
+    if (Y0_[i] > max0) {
+      max0 = Y0_[i];
+      index_max0_ = i;
+    }
   }
 }
 

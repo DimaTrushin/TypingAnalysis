@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSKERNEL_CSTATISTICSMODULE_H
 #define NSAPPLICATION_NSKERNEL_CSTATISTICSMODULE_H
 
+#include "AnalyticData.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
 #include "StatisticsDescription.h"
-#include "TextData.h"
 
 #include <deque>
 
@@ -15,9 +15,9 @@ namespace NSKernel {
 namespace NSStatisticsModuleDetail {
 
 class CStatisticsModuleImpl {
-  using CTextData = NSKernel::CTextData;
-  using CTextDataObserver = NSLibrary::CObserver<CTextData>;
-  using CTextDataInput = NSLibrary::CHotInput<CTextData>;
+  using CAnalyticData = NSKernel::CAnalyticData;
+  using CAnalyticDataObserver = NSLibrary::CObserver<CAnalyticData>;
+  using CAnalyticDataInput = NSLibrary::CHotInput<CAnalyticData>;
 
   using CStatisticsDescriptionObserver =
       NSLibrary::CObserver<CStatisticsDescription>;
@@ -32,14 +32,14 @@ class CStatisticsModuleImpl {
 
 public:
   CStatisticsModuleImpl();
-  CTextDataObserver* textDataInput();
+  CAnalyticDataObserver* analyticDataInput();
   CLocalizerInput* localizerInput();
   void subscribeToStatisticsDescription(CStatisticsDescriptionObserver* obs);
 
 private:
   void setLocale(const CLocalizer& Localizer);
 
-  void handleTextData(const CTextData& Data);
+  void handleAnalyticData(const CAnalyticData& Data);
 
   QString fullTextLength() const;
   QString printedTextLength() const;
@@ -51,9 +51,10 @@ private:
   QString printedTextDuration() const;
   QString fullTextSpeed() const;
   QString printedTextSpeed() const;
+  QString maxLikelihoodSpeed() const;
 
   CLocalizerInput LocalizerInput_;
-  CTextDataInput TextDataInput_;
+  CAnalyticDataInput AnalyticDataInput_;
   CStatisticsDescriptionObservable StatisticsDescriptionOutput_;
 };
 

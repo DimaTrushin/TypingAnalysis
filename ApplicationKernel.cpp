@@ -15,7 +15,8 @@ CApplicationKernel::CApplicationKernel() {
   TextModule_->subscribeToTextData(KeySchemeModule_->textDataInput());
   UserData_->subscribeToFingerLayout(KeySchemeModule_->fingerLayoutInput());
 
-  TextModule_->subscribeToTextData(StatisticsModule_->textDataInput());
+  AnalyticalModule_->subscribeToAnalyticData(
+      StatisticsModule_->analyticDataInput());
   LocalizationModule_->subscribeToStatisticsLocalizer(
       StatisticsModule_->localizerInput());
 }

@@ -102,6 +102,9 @@ public:
   const QString& printedTextSpeed() const {
     return PrintedTextSpeed_;
   }
+  const QString& maxLikelihoodSpeed() const {
+    return MaxLikelihoodSpeed_;
+  }
 
 private:
   template<class TStatisticsLocale>
@@ -115,7 +118,8 @@ private:
         FullTextDuration_(TStatisticsLocale::FullTextDuration),
         PrintedTextDuration_(TStatisticsLocale::PrintedTextDuration),
         FullTextSpeed_(TStatisticsLocale::FullTextSpeed),
-        PrintedTextSpeed_(TStatisticsLocale::PrintedTextSpeed) {
+        PrintedTextSpeed_(TStatisticsLocale::PrintedTextSpeed),
+        MaxLikelihoodSpeed_(TStatisticsLocale::MaxLikelihoodSpeed) {
   }
 
   QString FullTextLength_;
@@ -128,6 +132,7 @@ private:
   QString PrintedTextDuration_;
   QString FullTextSpeed_;
   QString PrintedTextSpeed_;
+  QString MaxLikelihoodSpeed_;
 };
 
 class CTextModeViewLocalizer {

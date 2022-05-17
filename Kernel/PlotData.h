@@ -27,6 +27,13 @@ public:
   const double* dataYR0() const;
   const double* dataYR1() const;
 
+  struct CPointData {
+    double x;
+    double y;
+  };
+
+  CPointData max0() const;
+
   void fillPlots(const CContainer& Samples);
 
   //  void fillY0(const CContainer& Samples);
@@ -42,6 +49,7 @@ private:
   static constexpr const double kMinimum = 1.;
 
   void fillX();
+  void find_max0();
 
   bool isCorrect_() const;
 
@@ -54,6 +62,7 @@ private:
   CContainer YR1_;
   double Maximum_ = kMaximum;
   double Minimum_ = kMinimum;
+  size_t index_max0_;
 };
 
 } // namespace NSKernel

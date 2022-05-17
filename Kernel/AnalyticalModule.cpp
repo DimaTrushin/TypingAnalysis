@@ -40,6 +40,11 @@ void CAnalyticalModuleImpl::subscribeToSpeedData(CPlotDataObserver* obs) {
   DensityOut_.subscribe(obs);
 }
 
+void CAnalyticalModuleImpl::subscribeToAnalyticData(
+    CAnalyticDataObserver* obs) {
+  AnalyticDataOut_.subscribe(obs);
+}
+
 void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
   NSAppDebug::CTimeAnchor Anchor("math & notify time =");
 
@@ -49,6 +54,8 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
         [&plot = FuncOpt->get()->plotData()]() -> CPlotDataGetType {
           return std::cref(plot);
         });
+    AnalyticDataOut_.set(
+        CAnalyticData{std::cref(Data), std::cref(FuncOpt->get()->plotData())});
     return;
   }
   CTimer Timer;
@@ -64,10 +71,14 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
         [&plot = SpeedData->get()->plotData()]() -> CPlotDataGetType {
           return std::cref(plot);
         });
+    AnalyticDataOut_.set(CAnalyticData{
+        std::cref(Data), std::cref(SpeedData->get()->plotData())});
   } else {
     DensityOut_.setSource([this]() -> CPlotDataGetType {
       return std::cref(SpeedData_->plotData());
     });
+    AnalyticDataOut_.set(
+        CAnalyticData{std::cref(Data), std::cref(SpeedData_->plotData())});
   }
 }
 
