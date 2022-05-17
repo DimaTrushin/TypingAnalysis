@@ -14,6 +14,10 @@ CApplicationKernel::CApplicationKernel() {
 
   TextModule_->subscribeToTextData(KeySchemeModule_->textDataInput());
   UserData_->subscribeToFingerLayout(KeySchemeModule_->fingerLayoutInput());
+
+  TextModule_->subscribeToTextData(StatisticsModule_->textDataInput());
+  LocalizationModule_->subscribeToStatisticsLocalizer(
+      StatisticsModule_->localizerInput());
 }
 
 } // namespace NSApplication

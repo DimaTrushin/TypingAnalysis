@@ -99,6 +99,8 @@ HEADERS += \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
   Kernel/SessionToTreeConverter.h \
+  Kernel/StatisticsDescription.h \
+  Kernel/StatisticsModule.h \
   Kernel/TextData.h \
   Kernel/TextDataTree.h \
   Kernel/TextMode.h \
@@ -195,6 +197,8 @@ SOURCES += \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
   Kernel/SessionToTreeConverter.cpp \
+  Kernel/StatisticsDescription.cpp \
+  Kernel/StatisticsModule.cpp \
   Kernel/TextData.cpp \
   Kernel/TextDataTree.cpp \
   Kernel/TextMode.cpp \

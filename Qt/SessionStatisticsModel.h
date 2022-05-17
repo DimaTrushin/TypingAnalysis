@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 
+#include "Kernel/StatisticsDescription.h"
 #include "Kernel/TextData.h"
 #include "Local/Localizer.h"
 
@@ -17,13 +18,10 @@ class CSessionStatisticsModel : public QAbstractTableModel {
   using CTextData = NSKernel::CTextData;
   using CLocalizer = NSLocal::CStatisticsViewLocalizer;
 
-public:
-  struct CDescription {
-    QString Data;
-    QString Value;
-  };
-  using CStatisticsDescription = std::deque<CDescription>;
+  using CDescription = NSKernel::CDescription;
+  using CStatisticsDescription = NSKernel::CStatisticsDescription;
 
+public:
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   int columnCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index,
@@ -33,7 +31,7 @@ public:
   Qt::ItemFlags flags(const QModelIndex& index) const override;
 
   bool clear();
-  bool setStatistics(CStatisticsDescription&&);
+  bool printStatistics(const CStatisticsDescription&);
   void setLocale(const CLocalizer& Localizer);
 
 private:
@@ -41,12 +39,13 @@ private:
 
   bool isValid(const QModelIndex& index) const;
 
-  int size() const;
+  virtual int size() const = 0;
+  virtual const CDescription& data_(int row) const = 0;
 
   QString DataName_;
   QString ValueName_;
 
-  CStatisticsDescription Data_;
+  int size_ = 0;
 };
 
 } // namespace NSQt

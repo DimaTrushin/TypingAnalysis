@@ -26,7 +26,6 @@ CApplicationImpl::CApplicationImpl()
   TextModule_->subscribeToTextData(MainTextPrinter_->textDataInput());
 
   AnalyticalModule_->subscribeToSpeedData(SpeedPlotter_->speedDataInput());
-  TextModule_->subscribeToTextData(StatisticsView_->textDataInput());
 
   KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
 
@@ -39,9 +38,10 @@ CApplicationImpl::CApplicationImpl()
   LocalizationModule_->subscribeToKeySchemePlotterLocalizer(
       KeySchemePlotter_->localizerInput());
   LocalizationModule_->subscribeToStatisticsViewLocalizer(
-      StatisticsView_->viewLocalizerInput());
-  LocalizationModule_->subscribeToStatisticsLocalizer(
-      StatisticsView_->statisticsLocalizerInput());
+      StatisticsView_->localizerInput());
+
+  StatisticsModule_->subscribeToStatisticsDescription(
+      StatisticsView_->statisticsDescriptionInput());
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   {

@@ -6,6 +6,7 @@
 #include "Kernel/KeySchemeModule.h"
 #include "Kernel/SeanceManager.h"
 #include "Kernel/SessionSelector.h"
+#include "Kernel/StatisticsModule.h"
 #include "Kernel/TextModule.h"
 #include "Kernel/UserDataModule.h"
 #include "Local/LocalizationModule.h"
@@ -19,6 +20,7 @@ class CApplicationKernel : protected CApplicationGlobals {
   using CAnalyticalModule = NSKernel::CAnalyticalModule;
   using CUserDataModule = NSKernel::CUserDataModule;
   using CKeySchemeModule = NSKernel::CKeySchemeModule;
+  using CStatisticsModule = NSKernel::CStatisticsModule;
   using CLocalizationModule = NSLocal::CLocalizationModule;
 
 public:
@@ -31,6 +33,7 @@ protected:
   CAnalyticalModule AnalyticalModule_;
   CUserDataModule UserData_;
   CKeySchemeModule KeySchemeModule_;
+  CStatisticsModule StatisticsModule_;
   CLocalizationModule LocalizationModule_;
 };
 

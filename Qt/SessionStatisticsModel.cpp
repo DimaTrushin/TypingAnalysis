@@ -21,9 +21,9 @@ QVariant CSessionStatisticsModel::data(const QModelIndex& index,
     return QVariant();
   switch (index.column()) {
   case 0:
-    return Data_[index.row()].Data;
+    return data_(index.row()).Data;
   case 1:
-    return Data_[index.row()].Value;
+    return data_(index.row()).Value;
   default:
     return QVariant();
   }
@@ -42,18 +42,19 @@ Qt::ItemFlags CSessionStatisticsModel::flags(const QModelIndex&) const {
 }
 
 bool CSessionStatisticsModel::clear() {
-  if (size() == 0)
+  if (size_ == 0)
     return false;
-  beginRemoveRows(QModelIndex(), 0, size() - 1);
-  Data_.clear();
+  beginRemoveRows(QModelIndex(), 0, size_ - 1);
+  size_ = 0;
   endRemoveRows();
   return true;
 }
 
-bool CSessionStatisticsModel::setStatistics(CStatisticsDescription&& NewData) {
+bool CSessionStatisticsModel::printStatistics(
+    const CStatisticsDescription& Data) {
   clear();
-  beginInsertRows(QModelIndex(), 0, static_cast<int>(NewData.size() - 1));
-  Data_ = std::move(NewData);
+  beginInsertRows(QModelIndex(), 0, static_cast<int>(Data.size() - 1));
+  size_ = static_cast<int>(Data.size());
   endInsertRows();
   return true;
 }
@@ -78,10 +79,6 @@ QString CSessionStatisticsModel::headerName(int column) const {
 bool CSessionStatisticsModel::isValid(const QModelIndex& index) const {
   return index.isValid() && index.column() >= 0 && index.column() < 2 &&
          index.row() >= 0 && index.row() < size();
-}
-
-int CSessionStatisticsModel::size() const {
-  return static_cast<int>(Data_.size());
 }
 
 } // namespace NSQt

@@ -5,6 +5,7 @@
 
 #include <memory>
 
+#include "Kernel/StatisticsDescription.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
@@ -27,48 +28,30 @@ class CStatisticsViewImpl : public NSQt::CSessionStatisticsModel {
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
-  using CDescription = CSessionStatisticsModel::CDescription;
-  using CStatisticsDescription =
-      CSessionStatisticsModel::CStatisticsDescription;
+  using CDescription = NSKernel::CDescription;
+  using CStatisticsDescription = NSKernel::CStatisticsDescription;
+  using CStatisticsObserver = NSLibrary::CObserver<CStatisticsDescription>;
+  using CStatisticsInput = NSLibrary::CHotInput<CStatisticsDescription>;
 
-  using CViewLocalizer = NSLocal::CStatisticsViewLocalizer;
-  using CViewLocalizerObserver = NSLibrary::CObserver<CViewLocalizer>;
-  using CViewLocalizerInput = NSLibrary::CHotInput<CViewLocalizer>;
-
-  using CStatisticsLocalizer = NSLocal::CStatisticsLocalizer;
-  using CStatisticsLocalizerObserver =
-      NSLibrary::CObserver<CStatisticsLocalizer>;
-  using CStatisticsLocalizerInput = NSLibrary::CHotInput<CStatisticsLocalizer>;
+  using CLocalizer = NSLocal::CStatisticsViewLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
 public:
   CStatisticsViewImpl(QTableView* TableView);
-  CTextDataObserver* textDataInput();
-  CViewLocalizerObserver* viewLocalizerInput();
-  CStatisticsLocalizerObserver* statisticsLocalizerInput();
+  CLocalizerObserver* localizerInput();
+  CStatisticsObserver* statisticsDescriptionInput();
 
 private:
-  void handleTextData(const CTextData& Data);
+  void handleStatistics(const CStatisticsDescription& Statistics);
+  void setViewLocale(const CLocalizer& Localizer);
 
-  CStatisticsDescription createStatisticsData(const CTextData& Data);
-
-  void setViewLocale(const CViewLocalizer& Localizer);
-  void setStatisticsLocale(const CStatisticsLocalizer& Localizer);
-
-  QString fullTextLength() const;
-  QString printedTextLength() const;
-  QString deletedSymbols() const;
-  QString mistakePlaces() const;
-  QString mistakes() const;
-  QString mistakesPercent() const;
-  QString fullTextDuration() const;
-  QString printedTextDuration() const;
-  QString fullTextSpeed() const;
-  QString printedTextSpeed() const;
+  int size() const override;
+  const CDescription& data_(int row) const override;
 
   QTableView* TableView_;
-  CTextDataInput TextDataInput_;
-  CViewLocalizerInput ViewLocalizerInput_;
-  CStatisticsLocalizerInput StatisticsLocalizerInput_;
+  CLocalizerInput ViewLocalizerInput_;
+  CStatisticsInput StatisticsInput_;
 };
 } // namespace NSStatisticsViewDetail
 
