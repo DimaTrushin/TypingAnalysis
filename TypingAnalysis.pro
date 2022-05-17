@@ -356,7 +356,22 @@ win32 {
 SYSTEM_NAME = x64
 SYSTEM_TYPE = 64
 NVCC_OPTIONS = --use_fast_math
-CUDA_ARCH = all # Type of CUDA architecture, for example 'compute_10', 'compute_11', 'sm_10'
+
+# Type of CUDA architecture
+CUDA_ARCH = sm_30 \
+  -gencode=arch=compute_30,code=sm_30 \
+  -gencode=arch=compute_35,code=sm_35 \
+  -gencode=arch=compute_37,code=sm_37 \
+  -gencode=arch=compute_50,code=sm_50 \
+  -gencode=arch=compute_52,code=sm_52 \
+  -gencode=arch=compute_53,code=sm_53 \
+  -gencode=arch=compute_60,code=sm_60 \
+  -gencode=arch=compute_61,code=sm_61 \
+  -gencode=arch=compute_62,code=sm_62 \
+  -gencode=arch=compute_70,code=sm_70 \
+  -gencode=arch=compute_72,code=sm_72 \
+  -gencode=arch=compute_75,code=sm_75 \
+  -gencode=arch=compute_75,code=compute_75
 
 INCLUDEPATH += $$CUDA_DIR/include \
                $$CUDA_SDK/common/inc
