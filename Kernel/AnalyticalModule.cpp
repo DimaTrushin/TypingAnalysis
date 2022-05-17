@@ -45,9 +45,10 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
 
   auto FuncOpt = SpeedDataCacher_.find({&Data.rawSession(), Data.textInfo()});
   if (FuncOpt.has_value()) {
-    DensityOut_.setSource([&FuncOpt]() -> CPlotDataGetType {
-      return std::cref(FuncOpt->get()->plotData());
-    });
+    DensityOut_.setSource(
+        [&plot = FuncOpt->get()->plotData()]() -> CPlotDataGetType {
+          return std::cref(plot);
+        });
     return;
   }
   CTimer Timer;
@@ -59,9 +60,10 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
     auto SpeedData = SpeedDataCacher_.insert(
         {&Data.rawSession(), Data.textInfo()}, std::move(SpeedData_));
     assert(SpeedData != nullptr);
-    DensityOut_.setSource([SpeedData]() -> CPlotDataGetType {
-      return std::cref(SpeedData->get()->plotData());
-    });
+    DensityOut_.setSource(
+        [&plot = SpeedData->get()->plotData()]() -> CPlotDataGetType {
+          return std::cref(plot);
+        });
   } else {
     DensityOut_.setSource([this]() -> CPlotDataGetType {
       return std::cref(SpeedData_->plotData());
