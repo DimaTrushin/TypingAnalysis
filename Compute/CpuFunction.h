@@ -40,10 +40,14 @@ protected:
     using CVect = typename TParameters::CVect;
     using CFunction = TFunction;
     CVect tmp_result = 0;
+#ifdef _MSC_VER
 #pragma warning(disable : 4146)
+#endif
     size_t regular_part =
         means.size() & static_cast<size_t>(-TParameters::size);
+#ifdef _MSC_VER
 #pragma warning(default : 4146)
+#endif
     int leftover = static_cast<int>(means.size() - regular_part);
     CVect means_block;
     const double* data = means.data();

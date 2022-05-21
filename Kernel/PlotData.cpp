@@ -1,7 +1,6 @@
 #include "PlotData.h"
 
 #include "MathModuleAccess.h"
-//#include "ParallelModuleAccess.h"
 
 #include <cassert>
 
