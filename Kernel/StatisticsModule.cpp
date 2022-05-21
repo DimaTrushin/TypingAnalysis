@@ -48,14 +48,16 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
       {mistakes(), QString::number(Tree->getNumberOfMistakeRoutes())});
   Statistics.push_back(
       {mistakesPercent(),
-       QString::number(Tree->percentOfMistakeRoutes()) + QString(" %")});
+       QString::number(Tree->percentOfMistakeRoutes(), 'f', 2) +
+           QString(" %")});
   Statistics.push_back(
       {printedTextDuration(),
-       QString::number(Tree->getPrintedTextDuration().toSecondsF())});
+       QString::number(Tree->getPrintedTextDuration().toSecondsF(), 'f', 2)});
   Statistics.push_back(
       {printedTextSpeed(),
        QString::number(Tree->getPrintedTextLength() /
-                       Tree->getPrintedTextDuration().toMinutesF())});
+                           Tree->getPrintedTextDuration().toMinutesF(),
+                       'f', 2)});
   Statistics.push_back(
       {maxLikelihoodSpeed(), QString::number(Data.plotData().max0().x)});
   StatisticsDescriptionOutput_.set(std::move(Statistics));
