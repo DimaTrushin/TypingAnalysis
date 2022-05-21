@@ -16,7 +16,7 @@ An open source software to analyze the quality of your typing skills.
 
 - [Conan](https://conan.io/)
 
-- [Cuda Toolkit v 11.](https://developer.nvidia.com/cuda-toolkit)
+- [Cuda Toolkit v 10.1](https://developer.nvidia.com/cuda-toolkit)
 
 #### Setup your Environment
 
@@ -24,7 +24,7 @@ An open source software to analyze the quality of your typing skills.
 
 2. Install Conan
 
-3. Install Cuda Toolkit v.11. Make sure the variables NVCUDASAMPLES_ROOT and CUDA_PATH are added to the PATH variable.
+3. Install Cuda Toolkit v.10.1 Make sure the variables NVCUDASAMPLES_ROOT and CUDA_PATH are added to the PATH variable.
 
 4. Install Qt. Install Qt Creator and the source code of Qt 5.15.2. Currently it is impossible to build the project with the newer version of Qt.
 
@@ -101,4 +101,6 @@ nmake install
 
 -s "compiler.runtime=MT"
 
+### Known issues
 
+Thrust library is used to speed up the computations. As a result the project cannot be compiled in debug mode.
