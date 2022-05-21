@@ -1,6 +1,6 @@
 #include "PlotData.h"
 
-#include "Kernel/MathAccess.h"
+#include "MathModuleAccess.h"
 //#include "ParallelModuleAccess.h"
 
 #include <cassert>

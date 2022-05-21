@@ -2,8 +2,8 @@
 
 #include "AppStatusAccess.h"
 #include "Compute/ParallelMode.h"
-#include "Kernel/MathAccess.h"
 #include "KeyboardHandlerAccess.h"
+#include "MathModuleAccess.h"
 #include "ParallelModuleAccess.h"
 #include "SimdDetectorAccess.h"
 #include "TimerAccess.h"
@@ -16,7 +16,7 @@ CApplicationGlobals::CApplicationGlobals() {
   CAppStatusInit MainAppStatusAccessorInit;
   CSimdDetectorInit MainSimdDetector;
   CParallelInit MainComputerInit(NSCompute::EParallelMode::Tbb);
-  NSKernel::CMathInit MainMath(*CParallelAccess());
+  CMathInit MainMath(*CParallelAccess());
 }
 
 } // namespace NSApplication

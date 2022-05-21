@@ -1,12 +1,10 @@
-#ifndef NSAPPLICATION_NSKERNEL_CMATHACCESS_H
-#define NSAPPLICATION_NSKERNEL_CMATHACCESS_H
+#ifndef NSAPPLICATION_CMATHMODULEACCESS_H
+#define NSAPPLICATION_CMATHMODULEACCESS_H
 
 #include "Compute/Math.h"
 #include "Library/Singleton/AnyGlobalAccess.h"
 
 namespace NSApplication {
-namespace NSKernel {
-
 namespace NSMathDetail {
 
 using CMath = NSCompute::CMath;
@@ -29,7 +27,6 @@ class CMathAccess : public nl::CAnyGlobalAccess<CMath, CMainMathModule> {};
 using CMathInit = NSMathDetail::CMathInitializer;
 using CMathAccess = NSMathDetail::CMathAccess;
 
-} // namespace NSKernel
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSKERNEL_CMATHACCESS_H
+#endif // NSAPPLICATION_CMATHMODULEACCESS_H

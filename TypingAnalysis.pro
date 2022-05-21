@@ -91,7 +91,6 @@ HEADERS += \
   Kernel/KeyScheme.h \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
-  Kernel/MathAccess.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
@@ -138,6 +137,7 @@ HEADERS += \
   Local/LocalizationModule.h \
   Local/Localizer.h \
   Local/RusLocale.h \
+  MathModuleAccess.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -190,7 +190,6 @@ SOURCES += \
   Kernel/KeyScheme.cpp \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
-  Kernel/MathAccess.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
@@ -216,6 +215,7 @@ SOURCES += \
   Local/LocalizationModule.cpp \
   Local/Localizer.cpp \
   Local/RusLocale.cpp \
+  MathModuleAccess.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
