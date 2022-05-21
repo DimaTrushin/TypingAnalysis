@@ -67,14 +67,18 @@ bool CModifierData::empty(ETextMode TextMode,
 }
 
 void CModifierData::push_back(const CModifierDatum& Key) {
-  Keys_.push_back(Key);
   if (Key.isEssential(ETextMode::Full))
     ++NumberOfFullEssential_;
   if (Key.isEssential(ETextMode::Printed))
     ++NumberOfPrintedEssential_;
+  Keys_.push_back(Key);
 }
 
 void CModifierData::push_back(CModifierDatum&& Key) {
+  if (Key.isEssential(ETextMode::Full))
+    ++NumberOfFullEssential_;
+  if (Key.isEssential(ETextMode::Printed))
+    ++NumberOfPrintedEssential_;
   Keys_.push_back(std::move(Key));
 }
 

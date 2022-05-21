@@ -92,6 +92,7 @@ HEADERS += \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
   Kernel/ModifiersTextData.h \
+  Kernel/ModifiersTextDataFiller.h \
   Kernel/PlotData.h \
   Kernel/Seance.h \
   Kernel/SeanceMaker.h \
@@ -192,6 +193,7 @@ SOURCES += \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
   Kernel/ModifiersTextData.cpp \
+  Kernel/ModifiersTextDataFiller.cpp \
   Kernel/PlotData.cpp \
   Kernel/Seance.cpp \
   Kernel/SeanceMaker.cpp \
