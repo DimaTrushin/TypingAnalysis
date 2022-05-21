@@ -11,8 +11,6 @@ namespace NSCompute {
 
 class CParallelModule;
 
-// TO DO
-// This object depends on Parallel module, need to make this dependence explicit
 class CMath {
   using CDevVectorD = thrust::device_vector<double>;
   using CVectorD = std::vector<double>;
