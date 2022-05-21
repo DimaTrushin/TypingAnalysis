@@ -10,14 +10,17 @@ namespace NSApplication {
 namespace NSKernel {
 
 class CModifierDatum {
+public:
   using CMultiplicity = unsigned char;
 
-public:
   explicit CModifierDatum(const CKeyEvent& Key);
 
   CMultiplicity getDependencies(ETextMode mode) const;
   void increaseDependencies(ETextMode mode, CMultiplicity amount);
   bool isEssential(ETextMode mode) const;
+
+  CTime getPressingTime() const;
+  CTime getReleasingTime() const;
 
 private:
   CKeyEvent Key_;
@@ -27,20 +30,31 @@ private:
 
 class CModifierData {
   using CContainer = std::vector<CModifierDatum>;
+  using CMultiplicity = CModifierDatum::CMultiplicity;
 
 public:
+  using iterator = CContainer::iterator;
+  using const_iterator = CContainer::const_iterator;
+
+  size_t amountOfKeys() const;
   size_t size(ETextMode TextMode, EModifierMode ModifierMode) const;
   bool empty(ETextMode TextMode, EModifierMode ModifierMode) const;
 
   void push_back(const CModifierDatum& Key);
   void push_back(CModifierDatum&& Key);
+  void clear();
+
+  iterator begin();
+  const_iterator begin() const;
+  const_iterator cbegin() const;
+  iterator end();
+  const_iterator end() const;
+  const_iterator cend() const;
 
 private:
   size_t getNumberOfEssential(ETextMode TextMode) const;
 
   CContainer Keys_;
-  size_t NumberOfPrintedEssential_ = 0;
-  size_t NumberOfFullEssential_ = 0;
 };
 
 struct CModifiersTextData {

@@ -46,6 +46,18 @@ bool CModifierDatum::isEssential(ETextMode mode) const {
   }
 }
 
+CTime CModifierDatum::getPressingTime() const {
+  return Key_.getPressingTime();
+}
+
+CTime CModifierDatum::getReleasingTime() const {
+  return Key_.getReleasingTime();
+}
+
+size_t CModifierData::amountOfKeys() const {
+  return Keys_.size();
+}
+
 size_t CModifierData::size(ETextMode TextMode,
                            EModifierMode ModifierMode) const {
   switch (ModifierMode) {
@@ -67,31 +79,46 @@ bool CModifierData::empty(ETextMode TextMode,
 }
 
 void CModifierData::push_back(const CModifierDatum& Key) {
-  if (Key.isEssential(ETextMode::Full))
-    ++NumberOfFullEssential_;
-  if (Key.isEssential(ETextMode::Printed))
-    ++NumberOfPrintedEssential_;
   Keys_.push_back(Key);
 }
 
 void CModifierData::push_back(CModifierDatum&& Key) {
-  if (Key.isEssential(ETextMode::Full))
-    ++NumberOfFullEssential_;
-  if (Key.isEssential(ETextMode::Printed))
-    ++NumberOfPrintedEssential_;
   Keys_.push_back(std::move(Key));
 }
 
+void CModifierData::clear() {
+  Keys_.clear();
+}
+
+CModifierData::iterator CModifierData::begin() {
+  return Keys_.begin();
+}
+
+CModifierData::const_iterator CModifierData::begin() const {
+  return Keys_.begin();
+}
+
+CModifierData::const_iterator CModifierData::cbegin() const {
+  return Keys_.cbegin();
+}
+
+CModifierData::iterator CModifierData::end() {
+  return Keys_.end();
+}
+
+CModifierData::const_iterator CModifierData::end() const {
+  return Keys_.end();
+}
+
+CModifierData::const_iterator CModifierData::cend() const {
+  return Keys_.cend();
+}
+
 size_t CModifierData::getNumberOfEssential(ETextMode TextMode) const {
-  switch (TextMode) {
-  case ETextMode::Full:
-    return NumberOfFullEssential_;
-  case ETextMode::Printed:
-    return NumberOfPrintedEssential_;
-  default:
-    assert(false);
-    return 0;
-  }
+  return std::count_if(Keys_.begin(), Keys_.end(),
+                       [&TextMode](const CModifierDatum& key) {
+                         return key.isEssential(TextMode);
+                       });
 }
 
 } // namespace NSKernel

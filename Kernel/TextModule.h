@@ -8,6 +8,7 @@
 #include "Kernel/TextMode.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "ModifiersTextData.h"
 
 #include <memory>
 
@@ -41,10 +42,11 @@ private:
 
   CSessionInput CurrentSession_;
   CTextMode CurrentTextMode_;
+  CTextDataTree TextDataTree_;
+  CModifiersTextData ModifierTextData_;
+  CSessionToTreeConverter TreeConverter_;
   CTextModeObservable TextModeOutput_;
   CTextDataObservable TextDataOutput_;
-  CTextDataTree TextDataTree_;
-  CSessionToTreeConverter TreeConverter_;
 };
 
 } // namespace NSTextModuleDetail
