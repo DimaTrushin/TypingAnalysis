@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "Kernel/ModifiersTextData.h"
 #include "Kernel/Session.h"
 #include "Kernel/TextDataTree.h"
 
@@ -21,7 +22,7 @@ public:
       NSTextDataTreeDetail::CTextDataTreeImpl::CConstPrintedTextProxy;
 
   CTextData(const CSession& Session, const CTextDataTree& TextTree,
-            CTextMode TextMode);
+            const CModifiersTextData& ModifiersData, CTextMode TextMode);
 
   CConstFullTextProxy textConstFullView() const;
 
@@ -39,6 +40,7 @@ public:
 private:
   std::reference_wrapper<const CSession> Session_;
   std::reference_wrapper<const CTextDataTree> TextTree_;
+  std::reference_wrapper<const CModifiersTextData> ModifiersData_;
   CTextMode TextMode_;
 };
 

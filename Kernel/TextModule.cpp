@@ -43,7 +43,8 @@ void CTextModuleImpl::handleCurrentSession(const CSession& Session) {
   TreeConverter_.convert(Session, &TextDataTree_);
   CModifiersTextDataFiller Filler;
   Filler.fill(Session, TextDataTree_, &ModifierTextData_);
-  TextDataOutput_.set(CTextData(Session, TextDataTree_, CurrentTextMode_));
+  TextDataOutput_.set(
+      CTextData(Session, TextDataTree_, ModifierTextData_, CurrentTextMode_));
 }
 } // namespace NSTextModuleDetail
 } // namespace NSKernel

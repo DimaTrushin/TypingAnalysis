@@ -4,9 +4,10 @@ namespace NSApplication {
 namespace NSKernel {
 
 CTextData::CTextData(const CSession& Session, const CTextDataTree& TextTree,
+                     const CModifiersTextData& ModifiersData,
                      CTextMode TextMode)
     : Session_(std::cref(Session)), TextTree_(std::cref(TextTree)),
-      TextMode_(TextMode) {
+      ModifiersData_(std::cref(ModifiersData)), TextMode_(TextMode) {
 }
 
 CTextData::CConstFullTextProxy CTextData::textConstFullView() const {
