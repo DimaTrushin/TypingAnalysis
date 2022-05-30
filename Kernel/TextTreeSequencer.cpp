@@ -46,8 +46,12 @@ QChar CTextTreeFullSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
-CTime CTextTreeFullSequencer::getTime() const {
+CTime CTextTreeFullSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+bool CTextTreeFullSequencer::isAutoRepeat() const {
+  return Current_->isAutoRepeat();
 }
 
 CTextTreePrintedSequencer::CTextTreePrintedSequencer(const CIterator& begin,
@@ -93,8 +97,12 @@ QChar CTextTreePrintedSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
-CTime CTextTreePrintedSequencer::getTime() const {
+CTime CTextTreePrintedSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+bool CTextTreePrintedSequencer::isAutoRepeat() const {
+  return Current_->isAutoRepeat();
 }
 
 } // namespace NSKernel

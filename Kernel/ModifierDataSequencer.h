@@ -15,7 +15,8 @@ public:
   unsigned char getDepth() const;
   CStatusData getStatusData() const;
   QChar getSymbol() const;
-  CTime getTime() const;
+  CTime getPressingTime() const;
+  bool isAutoRepeat() const;
 };
 
 class CModifierEssentialSequencer {
@@ -31,7 +32,8 @@ public:
   unsigned char getDepth() const;
   CStatusData getStatusData() const;
   QChar getSymbol() const;
-  CTime getTime() const;
+  CTime getPressingTime() const;
+  bool isAutoRepeat() const;
 
 private:
   CIterator Current_;
@@ -52,7 +54,8 @@ public:
   unsigned char getDepth() const;
   CStatusData getStatusData() const;
   QChar getSymbol() const;
-  CTime getTime() const;
+  CTime getPressingTime() const;
+  bool isAutoRepeat() const;
 
 private:
   CIterator Current_;

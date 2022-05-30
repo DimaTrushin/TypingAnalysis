@@ -87,13 +87,13 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   CContainer SpeedData;
   switch (Data.textMode()) {
   case ETextMode::Raw:
-    SpeedData = getSpeedData(Data.rawSession());
+    SpeedData = getSpeedDataS(Data.sessionSequencer());
     break;
   case ETextMode::Full:
-    SpeedData = getSpeedData(Data.textConstFullView());
+    SpeedData = getSpeedDataS(Data.fullTextSequencer());
     break;
   case ETextMode::Printed:
-    SpeedData = getSpeedData(Data.textConstPrintedView());
+    SpeedData = getSpeedDataS(Data.printedTextSequencer());
     break;
   default:
     assert(false);
@@ -101,24 +101,23 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
   return SpeedData;
 }
 
-template<class TText>
+template<class TSequencer>
 CAnalyticalModuleImpl::CContainer
-CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
-  // TO DO
-  // rewrite using sequencers
+CAnalyticalModuleImpl::getSpeedDataS(TSequencer Sequencer) const {
   CContainer SpeedData;
-  if (TextView.empty())
+  if (!Sequencer.isValid())
     return SpeedData;
-  SpeedData.reserve(TextView.size());
-  auto iter = TextView.begin();
-  CTime PreviousTime = iter->getPressingTime();
-  for (; iter != TextView.end(); ++iter) {
-    if (!iter->isAutoRepeat()) {
-      CTime ResponseTime = iter->getPressingTime() - PreviousTime;
+  //  SpeedData.reserve(size()); // there is no way to compute size with
+  //  sequencer
+
+  CTime PreviousTime = Sequencer.getPressingTime();
+  for (; Sequencer.isValid(); Sequencer.next()) {
+    if (!Sequencer.isAutoRepeat()) {
+      CTime ResponseTime = Sequencer.getPressingTime() - PreviousTime;
       // Need filter here
       if (ResponseTime > CTime())
         SpeedData.push_back(1. / ResponseTime.toMinutesF());
-      PreviousTime = iter->getPressingTime();
+      PreviousTime = Sequencer.getPressingTime();
     }
   }
   return SpeedData;

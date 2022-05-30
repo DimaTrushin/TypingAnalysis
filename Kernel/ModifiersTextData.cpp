@@ -46,6 +46,10 @@ bool CModifierDatum::isEssential(ETextMode mode) const {
   }
 }
 
+bool CModifierDatum::isAutoRepeat() const {
+  return Key_.isAutoRepeat();
+}
+
 CTime CModifierDatum::getPressingTime() const {
   return Key_.getPressingTime();
 }

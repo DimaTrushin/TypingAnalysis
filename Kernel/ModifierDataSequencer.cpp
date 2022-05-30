@@ -26,8 +26,12 @@ QChar CModifierNonSequencer::getSymbol() const {
   return QChar();
 }
 
-CTime CModifierNonSequencer::getTime() const {
+CTime CModifierNonSequencer::getPressingTime() const {
   return CTime();
+}
+
+bool CModifierNonSequencer::isAutoRepeat() const {
+  return false;
 }
 
 CModifierEssentialSequencer::CModifierEssentialSequencer(const CIterator& begin,
@@ -66,8 +70,12 @@ QChar CModifierEssentialSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
-CTime CModifierEssentialSequencer::getTime() const {
+CTime CModifierEssentialSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+bool CModifierEssentialSequencer::isAutoRepeat() const {
+  return Current_->isAutoRepeat();
 }
 
 CModifierAllSequencer::CModifierAllSequencer(const CIterator& begin,
@@ -102,8 +110,12 @@ QChar CModifierAllSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
-CTime CModifierAllSequencer::getTime() const {
+CTime CModifierAllSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+bool CModifierAllSequencer::isAutoRepeat() const {
+  return Current_->isAutoRepeat();
 }
 
 } // namespace NSKernel

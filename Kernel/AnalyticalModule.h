@@ -54,8 +54,8 @@ private:
   void handleTextData(const CTextData& Data);
 
   CContainer getSpeedData(const CTextData& Data) const;
-  template<class TText>
-  CContainer getSpeedData(const TText& TextView) const;
+  template<class TSequencer>
+  CContainer getSpeedDataS(TSequencer Sequencer) const;
 
   CFunctionDataPtr SpeedData_;
   CTime TimeLimit_ = CTime::MilliSeconds(50);

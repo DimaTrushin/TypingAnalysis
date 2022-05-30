@@ -51,8 +51,12 @@ QChar CSessionTextSequencer::getSymbol() const {
   }
 }
 
-CTime CSessionTextSequencer::getTime() const {
+CTime CSessionTextSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+bool CSessionTextSequencer::isAutoRepeat() const {
+  return Current_->isAutoRepeat();
 }
 
 } // namespace NSKernel

@@ -20,7 +20,7 @@ public:
   virtual unsigned char getDepth() const = 0;
   virtual CStatusData getStatusData() const = 0;
   virtual QChar getSymbol() const = 0;
-  virtual CTime getTime() const = 0;
+  virtual CTime getPressingTime() const = 0;
 };
 
 template<class TBase, class TObject>
@@ -47,8 +47,8 @@ public:
   QChar getSymbol() const {
     return CBase::Object().getSymbol();
   }
-  CTime getTime() const {
-    return CBase::Object().getTime();
+  CTime getPressingTime() const {
+    return CBase::Object().getPressingTime();
   }
 };
 

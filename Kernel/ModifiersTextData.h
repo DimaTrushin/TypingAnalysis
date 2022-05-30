@@ -18,6 +18,7 @@ public:
   CMultiplicity getDependencies(ETextMode mode) const;
   void increaseDependencies(ETextMode mode, CMultiplicity amount);
   bool isEssential(ETextMode mode) const;
+  bool isAutoRepeat() const;
 
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
