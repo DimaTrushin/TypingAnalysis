@@ -1,9 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_TEXTPRINTER_H
 #define NSAPPLICATION_NSINTERFACE_TEXTPRINTER_H
 
-#include "Kernel/KeyStatus.h"
 #include "Kernel/TextData.h"
-#include "Kernel/TextDataTree.h"
 #include "Kernel/TextModeCacher.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/Cacher.h"
@@ -92,18 +90,10 @@ private:
   void handleTextData(const CTextData& data);
   CQTextDocUptr makeText(const CTextData& data);
 
-  template<class TNode>
-  CStatusData getStatus(const TNode& Node) const;
-  template<class TConstIterator>
-  CStatusData extractToBuffer(CStatusData Current,
-                              const TConstIterator sentinel,
-                              TConstIterator* pIter);
-  template<class TText>
-  CQTextDocUptr makeFormattedText(const TText& TextView);
-
-  CQTextDocUptr makeFormattedTextS(CSessionTextSequencer Sequencer);
-  CStatusData extractToBufferS(CStatusData StatusData,
-                               CSessionTextSequencer* pSequencer);
+  template<class TSequencer>
+  CQTextDocUptr makeFormattedText(TSequencer Sequencer);
+  template<class TSequencer>
+  CStatusData extractToBuffer(CStatusData StatusData, TSequencer* pSequencer);
 
   void setFormat(CStatusData Status, QTextCursor* pTextCursor) const;
   void insertTextFromBuffer(QTextCursor* pTextCursor) const;

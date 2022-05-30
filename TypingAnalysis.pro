@@ -110,6 +110,7 @@ HEADERS += \
   Kernel/TextMode.h \
   Kernel/TextModeCacher.h \
   Kernel/TextModule.h \
+  Kernel/TextTreeSequencer.h \
   Kernel/UserDataModule.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
@@ -213,6 +214,7 @@ SOURCES += \
   Kernel/TextMode.cpp \
   Kernel/TextModeCacher.cpp \
   Kernel/TextModule.cpp \
+  Kernel/TextTreeSequencer.cpp \
   Kernel/UserDataModule.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \

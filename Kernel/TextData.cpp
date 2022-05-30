@@ -50,5 +50,15 @@ CSessionTextSequencer CTextData::sessionSequencer() const {
   return CSessionTextSequencer(rawSession().begin(), rawSession().end());
 }
 
+CTextTreeFullSequencer CTextData::fullTextSequencer() const {
+  return CTextTreeFullSequencer(textTree()->beginFullText(),
+                                textTree()->endFullText());
+}
+
+CTextTreePrintedSequencer CTextData::printedTextSequencer() const {
+  return CTextTreePrintedSequencer(textTree()->beginPrintedText(),
+                                   textTree()->endPrintedText());
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

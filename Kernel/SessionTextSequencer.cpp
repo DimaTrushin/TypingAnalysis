@@ -17,7 +17,7 @@ void CSessionTextSequencer::next() {
 }
 
 EKeyStatus CSessionTextSequencer::getStatus() const {
-  if (Current_ == End_)
+  if (!isValid())
     return EKeyStatus::End;
   if (Current_->isBackspace())
     return EKeyStatus::Backspace;

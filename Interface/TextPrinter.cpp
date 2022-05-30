@@ -50,13 +50,13 @@ CTextPrinterImpl::makeText(const CTextData& data) {
   CQTextDocUptr Doc;
   switch (data.textMode()) {
   case ETextMode::Raw:
-    Doc = makeFormattedTextS(data.sessionSequencer());
+    Doc = makeFormattedText(data.sessionSequencer());
     break;
   case ETextMode::Full:
-    Doc = makeFormattedText(data.textConstFullView());
+    Doc = makeFormattedText(data.fullTextSequencer());
     break;
   case ETextMode::Printed:
-    Doc = makeFormattedText(data.textConstPrintedView());
+    Doc = makeFormattedText(data.printedTextSequencer());
     break;
   default:
     assert(false);
@@ -64,111 +64,9 @@ CTextPrinterImpl::makeText(const CTextData& data) {
   return Doc;
 }
 
-template<class TNode>
-CTextPrinterImpl::CStatusData
-CTextPrinterImpl::getStatus(const TNode& TextNode) const {
-  switch (TextNode.getSymbolStatus()) {
-  case ESymbolStatus::TextSymbol:
-    return {EKeyStatus::MainText, TextNode.getDepth()};
-    break;
-  case ESymbolStatus::DeletedSymbolAccidental:
-    return {EKeyStatus::AccidentallyDeleted, TextNode.getDepth()};
-    break;
-  case ESymbolStatus::DeletedSymbolRequired:
-    return {EKeyStatus::RequiredDeletion, TextNode.getDepth()};
-    break;
-  case ESymbolStatus::ErroneousSymbol:
-    return {EKeyStatus::Erroneous, TextNode.getDepth()};
-    break;
-  default:
-    assert(false);
-    return {EKeyStatus::Ignore, TextNode.getDepth()};
-    break;
-  }
-}
-
-template<>
-CTextPrinterImpl::CStatusData
-CTextPrinterImpl::getStatus<CTextPrinterImpl::CKeyEvent>(
-    const CKeyEvent& Key) const {
-  if (Key.isBackspace())
-    return {EKeyStatus::Backspace, 0};
-  if (Key.isTrackableSpecial())
-    return {EKeyStatus::Control, 0};
-  if (Key.isSilentDeadKey())
-    return {EKeyStatus::SilentDeadKey, 0};
-  if (Key.getTextSize() > 0)
-    return {EKeyStatus::MainText, 0};
-  return {EKeyStatus::Ignore, 0};
-}
-
-template<class TConstIterator>
-CTextPrinterImpl::CStatusData
-CTextPrinterImpl::extractToBuffer(CStatusData StatusData,
-                                  const TConstIterator sentinel,
-                                  TConstIterator* pIter) {
-  auto& iter = *pIter;
-  buffer_.clear();
-  while (iter != sentinel && getStatus(*iter) == StatusData) {
-    buffer_.push_back(iter->getSymbol());
-    ++iter;
-  }
-  if (iter == sentinel)
-    return {EKeyStatus::End, 0};
-  return getStatus(*iter);
-}
-
-template<>
-CTextPrinterImpl::CStatusData
-CTextPrinterImpl::extractToBuffer<CTextPrinterImpl::CSession::const_iterator>(
-    CStatusData StatusData, const CSession::const_iterator sentinel,
-    CSession::const_iterator* pIter) {
-  auto& iter = *pIter;
-  buffer_.clear();
-  while (iter != sentinel && (getStatus(*iter) == StatusData ||
-                              getStatus(*iter).Status == EKeyStatus::Ignore)) {
-    switch (StatusData.Status) {
-    case EKeyStatus::MainText:
-      assert(iter->getTextSize() > 0);
-      buffer_.push_back(iter->getLastSymbol());
-      break;
-    case EKeyStatus::Backspace:
-    case EKeyStatus::Control:
-    case EKeyStatus::SilentDeadKey:
-      buffer_.push_back(iter->getLabel().LowSymbol);
-      break;
-    default:
-      break;
-    }
-    ++iter;
-  }
-  if (iter == sentinel)
-    return {EKeyStatus::End, 0};
-  return getStatus(*iter);
-}
-
-template<class TText>
+template<class TSequencer>
 CTextPrinterImpl::CQTextDocUptr
-CTextPrinterImpl::makeFormattedText(const TText& TextView) {
-  CQTextDocUptr Doc = getDefaultDocUptr();
-  if (TextView.empty())
-    return Doc;
-  auto iter = TextView.cbegin();
-  auto sentinel = TextView.cend();
-
-  QTextCursor Cursor = QTextCursor(Doc.get());
-  CStatusData CurrentStatus = getStatus(*iter);
-  while (CurrentStatus.Status != EKeyStatus::End) {
-    CStatusData NewStatus = extractToBuffer(CurrentStatus, sentinel, &iter);
-    setFormat(CurrentStatus, &Cursor);
-    insertTextFromBuffer(&Cursor);
-    CurrentStatus = NewStatus;
-  }
-  return Doc;
-}
-
-CTextPrinterImpl::CQTextDocUptr
-CTextPrinterImpl::makeFormattedTextS(CSessionTextSequencer Sequencer) {
+CTextPrinterImpl::makeFormattedText(TSequencer Sequencer) {
   CQTextDocUptr Doc = getDefaultDocUptr();
   if (!Sequencer.isValid())
     return Doc;
@@ -176,7 +74,7 @@ CTextPrinterImpl::makeFormattedTextS(CSessionTextSequencer Sequencer) {
   QTextCursor Cursor = QTextCursor(Doc.get());
   CStatusData CurrentStatus = Sequencer.getStatusData();
   while (CurrentStatus.Status != EKeyStatus::End) {
-    CStatusData NewStatus = extractToBufferS(CurrentStatus, &Sequencer);
+    CStatusData NewStatus = extractToBuffer(CurrentStatus, &Sequencer);
     setFormat(CurrentStatus, &Cursor);
     insertTextFromBuffer(&Cursor);
     CurrentStatus = NewStatus;
@@ -184,9 +82,10 @@ CTextPrinterImpl::makeFormattedTextS(CSessionTextSequencer Sequencer) {
   return Doc;
 }
 
+template<class TSequencer>
 CTextPrinterImpl::CStatusData
-CTextPrinterImpl::extractToBufferS(CStatusData StatusData,
-                                   CSessionTextSequencer* pSequencer) {
+CTextPrinterImpl::extractToBuffer(CStatusData StatusData,
+                                  TSequencer* pSequencer) {
   auto& Sequencer = *pSequencer;
   buffer_.clear();
   while (Sequencer.isValid() && (Sequencer.getStatusData() == StatusData ||
