@@ -46,5 +46,9 @@ EModifierMode CTextData::altMode() const {
   return TextMode_.AltMode;
 }
 
+CSessionTextSequencer CTextData::sessionSequencer() const {
+  return CSessionTextSequencer(rawSession().begin(), rawSession().end());
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

@@ -3,9 +3,10 @@
 
 #include <memory>
 
-#include "Kernel/ModifiersTextData.h"
-#include "Kernel/Session.h"
-#include "Kernel/TextDataTree.h"
+#include "ModifiersTextData.h"
+#include "Session.h"
+#include "SessionTextSequencer.h"
+#include "TextDataTree.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -36,6 +37,8 @@ public:
   EModifierMode shiftMode() const;
   EModifierMode ctrlMode() const;
   EModifierMode altMode() const;
+
+  CSessionTextSequencer sessionSequencer() const;
 
 private:
   std::reference_wrapper<const CSession> Session_;

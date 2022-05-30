@@ -10,14 +10,6 @@
 namespace NSApplication {
 namespace NSInterface {
 
-bool operator==(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
-  return lhs.Status == rhs.Status && lhs.Depth == rhs.Depth;
-}
-
-bool operator!=(CTextPalette::CStatusData lhs, CTextPalette::CStatusData rhs) {
-  return !(lhs == rhs);
-}
-
 namespace NSTextPrinterDetail {
 
 CTextPrinterImpl::CTextPrinterImpl(QPlainTextEdit* TextEdit)
@@ -58,7 +50,7 @@ CTextPrinterImpl::makeText(const CTextData& data) {
   CQTextDocUptr Doc;
   switch (data.textMode()) {
   case ETextMode::Raw:
-    Doc = makeFormattedText(data.rawSession());
+    Doc = makeFormattedTextS(data.sessionSequencer());
     break;
   case ETextMode::Full:
     Doc = makeFormattedText(data.textConstFullView());
@@ -173,6 +165,36 @@ CTextPrinterImpl::makeFormattedText(const TText& TextView) {
     CurrentStatus = NewStatus;
   }
   return Doc;
+}
+
+CTextPrinterImpl::CQTextDocUptr
+CTextPrinterImpl::makeFormattedTextS(CSessionTextSequencer Sequencer) {
+  CQTextDocUptr Doc = getDefaultDocUptr();
+  if (!Sequencer.isValid())
+    return Doc;
+
+  QTextCursor Cursor = QTextCursor(Doc.get());
+  CStatusData CurrentStatus = Sequencer.getStatusData();
+  while (CurrentStatus.Status != EKeyStatus::End) {
+    CStatusData NewStatus = extractToBufferS(CurrentStatus, &Sequencer);
+    setFormat(CurrentStatus, &Cursor);
+    insertTextFromBuffer(&Cursor);
+    CurrentStatus = NewStatus;
+  }
+  return Doc;
+}
+
+CTextPrinterImpl::CStatusData
+CTextPrinterImpl::extractToBufferS(CStatusData StatusData,
+                                   CSessionTextSequencer* pSequencer) {
+  auto& Sequencer = *pSequencer;
+  buffer_.clear();
+  while (Sequencer.isValid() && (Sequencer.getStatusData() == StatusData ||
+                                 Sequencer.getStatus() == EKeyStatus::Ignore)) {
+    buffer_.push_back(Sequencer.getSymbol());
+    Sequencer.next();
+  }
+  return Sequencer.getStatusData();
 }
 
 void CTextPrinterImpl::setFormat(CStatusData Status,

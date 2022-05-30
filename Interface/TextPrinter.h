@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_TEXTPRINTER_H
 #define NSAPPLICATION_NSINTERFACE_TEXTPRINTER_H
 
+#include "Kernel/KeyStatus.h"
 #include "Kernel/TextData.h"
 #include "Kernel/TextDataTree.h"
 #include "Kernel/TextModeCacher.h"
@@ -23,26 +24,9 @@ namespace NSApplication {
 namespace NSInterface {
 
 struct CTextPalette {
-  enum EKeyStatus : unsigned char {
-    MainText,
-    AccidentallyDeleted,
-    RequiredDeletion,
-    Erroneous,
-    Backspace,
-    Control,
-    EssentialControl,
-    SilentDeadKey,
-    Ignore,
-    End,
-  };
+  using EKeyStatus = NSKernel::EKeyStatus;
 
-  struct CStatusData {
-    EKeyStatus Status;
-    unsigned char Depth;
-
-    friend bool operator==(CStatusData lhs, CStatusData rhs);
-    friend bool operator!=(CStatusData lhs, CStatusData rhs);
-  };
+  using CStatusData = NSKernel::CStatusData;
 
   std::array<QColor, EKeyStatus::End> Text{{
       {0, 0, 0} /*MainText*/,
@@ -91,6 +75,7 @@ class CTextPrinterImpl {
   using EKeyStatus = CTextPalette::EKeyStatus;
   using ESymbolStatus = NSKernel::ESymbolStatus;
   using CStatusData = CTextPalette::CStatusData;
+  using CSessionTextSequencer = NSKernel::CSessionTextSequencer;
 
   using CQCharBuffer = std::vector<QChar>;
 
@@ -115,6 +100,10 @@ private:
                               TConstIterator* pIter);
   template<class TText>
   CQTextDocUptr makeFormattedText(const TText& TextView);
+
+  CQTextDocUptr makeFormattedTextS(CSessionTextSequencer Sequencer);
+  CStatusData extractToBufferS(CStatusData StatusData,
+                               CSessionTextSequencer* pSequencer);
 
   void setFormat(CStatusData Status, QTextCursor* pTextCursor) const;
   void insertTextFromBuffer(QTextCursor* pTextCursor) const;

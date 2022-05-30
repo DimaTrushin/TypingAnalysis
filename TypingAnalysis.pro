@@ -91,6 +91,7 @@ HEADERS += \
   Kernel/KeyScheme.h \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
+  Kernel/KeyStatus.h \
   Kernel/ModifiersTextData.h \
   Kernel/ModifiersTextDataFiller.h \
   Kernel/PlotData.h \
@@ -100,6 +101,7 @@ HEADERS += \
   Kernel/SeanceViewData.h \
   Kernel/Session.h \
   Kernel/SessionSelector.h \
+  Kernel/SessionTextSequencer.h \
   Kernel/SessionToTreeConverter.h \
   Kernel/StatisticsDescription.h \
   Kernel/StatisticsModule.h \
@@ -192,6 +194,7 @@ SOURCES += \
   Kernel/KeyScheme.cpp \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
+  Kernel/KeyStatus.cpp \
   Kernel/ModifiersTextData.cpp \
   Kernel/ModifiersTextDataFiller.cpp \
   Kernel/PlotData.cpp \
@@ -201,6 +204,7 @@ SOURCES += \
   Kernel/SeanceViewData.cpp \
   Kernel/Session.cpp \
   Kernel/SessionSelector.cpp \
+  Kernel/SessionTextSequencer.cpp \
   Kernel/SessionToTreeConverter.cpp \
   Kernel/StatisticsDescription.cpp \
   Kernel/StatisticsModule.cpp \
