@@ -10,14 +10,6 @@ CTextData::CTextData(const CSession& Session, const CTextDataTree& TextTree,
       ModifiersData_(std::cref(ModifiersData)), TextMode_(TextMode) {
 }
 
-CTextData::CConstFullTextProxy CTextData::textConstFullView() const {
-  return TextTree_.get()->textConstFullView();
-}
-
-CTextData::CConstPrintedTextProxy CTextData::textConstPrintedView() const {
-  return TextTree_.get()->textConstPrintedView();
-}
-
 const CSession& CTextData::rawSession() const {
   return Session_;
 }

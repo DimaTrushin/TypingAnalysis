@@ -14,21 +14,8 @@ namespace NSKernel {
 
 class CTextData {
 public:
-  using CFullTextProxy =
-      NSTextDataTreeDetail::CTextDataTreeImpl::CFullTextProxy;
-  using CConstFullTextProxy =
-      NSTextDataTreeDetail::CTextDataTreeImpl::CConstFullTextProxy;
-  using CPrintedTextProxy =
-      NSTextDataTreeDetail::CTextDataTreeImpl::CPrintedTextProxy;
-  using CConstPrintedTextProxy =
-      NSTextDataTreeDetail::CTextDataTreeImpl::CConstPrintedTextProxy;
-
   CTextData(const CSession& Session, const CTextDataTree& TextTree,
             const CModifiersTextData& ModifiersData, CTextMode TextMode);
-
-  CConstFullTextProxy textConstFullView() const;
-
-  CConstPrintedTextProxy textConstPrintedView() const;
 
   const CSession& rawSession() const;
   const CTextDataTree& textTree() const;
