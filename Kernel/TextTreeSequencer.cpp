@@ -42,12 +42,21 @@ CStatusData CTextTreeFullSequencer::getStatusData() const {
   return {getStatus(), getDepth()};
 }
 
+CTextTreeFullSequencer::CKeyPosition
+CTextTreeFullSequencer::getPosition() const {
+  return Current_->getPosition();
+}
+
 QChar CTextTreeFullSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
 CTime CTextTreeFullSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+CTime CTextTreeFullSequencer::getReleasingTime() const {
+  return Current_->getReleasingTime();
 }
 
 bool CTextTreeFullSequencer::isAutoRepeat() const {
@@ -93,12 +102,21 @@ CStatusData CTextTreePrintedSequencer::getStatusData() const {
   return {getStatus(), getDepth()};
 }
 
+CTextTreePrintedSequencer::CKeyPosition
+CTextTreePrintedSequencer::getPosition() const {
+  return Current_->getPosition();
+}
+
 QChar CTextTreePrintedSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
 CTime CTextTreePrintedSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+CTime CTextTreePrintedSequencer::getReleasingTime() const {
+  return Current_->getReleasingTime();
 }
 
 bool CTextTreePrintedSequencer::isAutoRepeat() const {

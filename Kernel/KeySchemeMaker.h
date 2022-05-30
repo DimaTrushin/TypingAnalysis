@@ -43,8 +43,8 @@ public:
   bool empty() const;
   CIndex size() const;
   CKeySegmentBuilt getAndRelease();
-  template<class TIterator>
-  void insertKey(TIterator iter, CTime BeginTime);
+  template<class TSequencer>
+  void insertKey(const TSequencer& Sequencer, CTime BeginTime);
 
 private:
   void updateMultiplicities(CTime NewKeyTime);
@@ -62,14 +62,14 @@ public:
   CKeyScheme make(const CTextData& TextData, const CFingerLayout& Layout);
 
 private:
-  template<class TTextView>
-  CKeyScheme makeScheme(const TTextView& TextView, const CFingerLayout& Layout);
-  template<class TIterator>
-  bool isWorkDone(TIterator iter, TIterator sentinel) const;
-  template<class TIterator>
-  bool isPressingNext(TIterator iter, TIterator sentinel) const;
-  template<class TIterator>
-  void handlePressing(TIterator*);
+  template<class TSequencer>
+  CKeyScheme makeScheme(TSequencer Sequencer, const CFingerLayout& Layout);
+  template<class TSequencer>
+  bool isWorkDone(const TSequencer& Sequencer) const;
+  template<class TSequencer>
+  bool isPressingNext(const TSequencer& Sequencer) const;
+  template<class TSequencer>
+  void handlePressing(TSequencer* pSequencer);
   void handleReleasing(const CFingerLayout&, CKeyScheme*);
 
   CKeySegmentsUnderConstruction KeysSegmentsBuilt_;

@@ -59,20 +59,22 @@ CKeySegmentBuilt CKeySegmentsUnderConstruction::getAndRelease() {
   return Key;
 }
 
-template<class TIterator>
-void CKeySegmentsUnderConstruction::insertKey(TIterator iter, CTime BeginTime) {
+template<class TSequencer>
+void CKeySegmentsUnderConstruction::insertKey(const TSequencer& Sequencer,
+                                              CTime BeginTime) {
   auto iterKey = std::find_if(
       KeysBuilt_.begin(), KeysBuilt_.end(),
-      [Position = iter->getPosition()](const CKeySegmentBuilt& Segment) {
+      [Position = Sequencer.getPosition()](const CKeySegmentBuilt& Segment) {
         return Segment.KeyPosition == Position;
       });
   if (iterKey == KeysBuilt_.end()) {
-    updateMultiplicities(iter->getPressingTime() - BeginTime);
-    KeysBuilt_.push(
-        {CKeySegment(getKeyText(iter), iter->getPressingTime() - BeginTime),
-         iter->getReleasingTime() - BeginTime, iter->getPosition()});
+    updateMultiplicities(Sequencer.getPressingTime() - BeginTime);
+    KeysBuilt_.push({CKeySegment(Sequencer.getSymbol(),
+                                 Sequencer.getPressingTime() - BeginTime),
+                     Sequencer.getReleasingTime() - BeginTime,
+                     Sequencer.getPosition()});
   } else {
-    iterKey->Segment.addText(getKeyText(iter));
+    iterKey->Segment.addText(Sequencer.getSymbol());
   }
 }
 
@@ -87,30 +89,28 @@ CKeyScheme CKeySchemeMaker::make(const CTextData& TextData,
                                  const CFingerLayout& Layout) {
   switch (TextData.textMode()) {
   case ETextMode::Raw:
-    return makeScheme(TextData.rawSession(), Layout);
+    return makeScheme(TextData.sessionSequencer(), Layout);
   case ETextMode::Full:
-    return makeScheme(TextData.textConstFullView(), Layout);
+    return makeScheme(TextData.fullTextSequencer(), Layout);
   case ETextMode::Printed:
-    return makeScheme(TextData.textConstPrintedView(), Layout);
+    return makeScheme(TextData.printedTextSequencer(), Layout);
   default:
     assert(false);
     return {};
   }
 }
 
-template<class TTextView>
-CKeyScheme CKeySchemeMaker::makeScheme(const TTextView& TextView,
+template<class TSequencer>
+CKeyScheme CKeySchemeMaker::makeScheme(TSequencer Sequencer,
                                        const CFingerLayout& Layout) {
-  if (TextView.empty())
+  if (!Sequencer.isValid())
     return {};
   CKeyScheme KeyScheme = CKeyScheme::getDefaultEmpty();
-  auto iter = TextView.cbegin();
-  auto sentinel = TextView.cend();
-  BeginTime_ = iter->getPressingTime();
+  BeginTime_ = Sequencer.getPressingTime();
 
-  while (!isWorkDone(iter, sentinel)) {
-    if (isPressingNext(iter, sentinel)) {
-      handlePressing(&iter);
+  while (!isWorkDone(Sequencer)) {
+    if (isPressingNext(Sequencer)) {
+      handlePressing(&Sequencer);
     } else {
       handleReleasing(Layout, &KeyScheme);
     }
@@ -118,25 +118,25 @@ CKeyScheme CKeySchemeMaker::makeScheme(const TTextView& TextView,
   return KeyScheme;
 }
 
-template<class TIterator>
-bool CKeySchemeMaker::isWorkDone(TIterator iter, TIterator sentinel) const {
-  return (iter == sentinel) && KeysSegmentsBuilt_.empty();
+template<class TSequencer>
+bool CKeySchemeMaker::isWorkDone(const TSequencer& Sequencer) const {
+  return !Sequencer.isValid() && KeysSegmentsBuilt_.empty();
 }
 
-template<class TIterator>
-bool CKeySchemeMaker::isPressingNext(TIterator iter, TIterator sentinel) const {
-  if (iter == sentinel)
+template<class TSequencer>
+bool CKeySchemeMaker::isPressingNext(const TSequencer& Sequencer) const {
+  if (!Sequencer.isValid())
     return false;
   if (KeysSegmentsBuilt_.empty())
     return true;
-  return iter->getPressingTime() - BeginTime_ <
+  return Sequencer.getPressingTime() - BeginTime_ <
          KeysSegmentsBuilt_.getFirstReleaseTime();
 }
 
-template<class TIterator>
-void CKeySchemeMaker::handlePressing(TIterator* piter) {
-  KeysSegmentsBuilt_.insertKey(*piter, BeginTime_);
-  ++(*piter);
+template<class TSequencer>
+void CKeySchemeMaker::handlePressing(TSequencer* pSequencer) {
+  KeysSegmentsBuilt_.insertKey(*pSequencer, BeginTime_);
+  pSequencer->next();
 }
 
 void CKeySchemeMaker::handleReleasing(const CFingerLayout& Layout,

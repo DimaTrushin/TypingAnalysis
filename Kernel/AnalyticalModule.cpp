@@ -108,7 +108,7 @@ CAnalyticalModuleImpl::getSpeedDataS(TSequencer Sequencer) const {
   if (!Sequencer.isValid())
     return SpeedData;
   //  SpeedData.reserve(size()); // there is no way to compute size with
-  //  sequencer
+  //  a sequencer
 
   CTime PreviousTime = Sequencer.getPressingTime();
   for (; Sequencer.isValid(); Sequencer.next()) {

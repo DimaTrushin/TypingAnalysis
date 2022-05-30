@@ -62,6 +62,10 @@ QChar CModifierDatum::getSymbol() const {
   return Key_.getLabel().LowSymbol;
 }
 
+CModifierDatum::CKeyPosition CModifierDatum::getPosition() const {
+  return Key_.getPosition();
+}
+
 size_t CModifierData::amountOfKeys() const {
   return Keys_.size();
 }

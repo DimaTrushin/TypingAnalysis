@@ -10,6 +10,8 @@ namespace NSApplication {
 namespace NSKernel {
 
 class CModifierDatum {
+  using CKeyPosition = NSKeyboard::CKeyPosition;
+
 public:
   using CMultiplicity = unsigned char;
 
@@ -23,6 +25,7 @@ public:
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
   QChar getSymbol() const;
+  CKeyPosition getPosition() const;
 
 private:
   CKeyEvent Key_;

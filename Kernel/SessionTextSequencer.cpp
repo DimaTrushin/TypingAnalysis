@@ -38,6 +38,10 @@ CStatusData CSessionTextSequencer::getStatusData() const {
   return {getStatus(), getDepth()};
 }
 
+CSessionTextSequencer::CKeyPosition CSessionTextSequencer::getPosition() const {
+  return Current_->getPosition();
+}
+
 QChar CSessionTextSequencer::getSymbol() const {
   switch (getStatus()) {
   case EKeyStatus::MainText:
@@ -53,6 +57,10 @@ QChar CSessionTextSequencer::getSymbol() const {
 
 CTime CSessionTextSequencer::getPressingTime() const {
   return Current_->getPressingTime();
+}
+
+CTime CSessionTextSequencer::getReleasingTime() const {
+  return Current_->getReleasingTime();
 }
 
 bool CSessionTextSequencer::isAutoRepeat() const {
