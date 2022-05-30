@@ -104,6 +104,8 @@ CAnalyticalModuleImpl::getSpeedData(const CTextData& Data) const {
 template<class TText>
 CAnalyticalModuleImpl::CContainer
 CAnalyticalModuleImpl::getSpeedData(const TText& TextView) const {
+  // TO DO
+  // rewrite using sequencers
   CContainer SpeedData;
   if (TextView.empty())
     return SpeedData;

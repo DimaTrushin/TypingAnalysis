@@ -21,6 +21,7 @@ public:
 
   CTime getPressingTime() const;
   CTime getReleasingTime() const;
+  QChar getSymbol() const;
 
 private:
   CKeyEvent Key_;

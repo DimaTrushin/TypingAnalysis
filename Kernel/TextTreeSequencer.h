@@ -18,6 +18,7 @@ public:
   unsigned char getDepth() const;
   CStatusData getStatusData() const;
   QChar getSymbol() const;
+  CTime getTime() const;
 
 private:
   CIterator Current_;
@@ -35,6 +36,7 @@ public:
   unsigned char getDepth() const;
   CStatusData getStatusData() const;
   QChar getSymbol() const;
+  CTime getTime() const;
 
 private:
   CIterator Current_;

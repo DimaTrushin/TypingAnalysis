@@ -51,5 +51,9 @@ QChar CSessionTextSequencer::getSymbol() const {
   }
 }
 
+CTime CSessionTextSequencer::getTime() const {
+  return Current_->getPressingTime();
+}
+
 } // namespace NSKernel
 } // namespace NSApplication

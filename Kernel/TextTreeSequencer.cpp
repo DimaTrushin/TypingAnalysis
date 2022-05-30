@@ -46,6 +46,10 @@ QChar CTextTreeFullSequencer::getSymbol() const {
   return Current_->getSymbol();
 }
 
+CTime CTextTreeFullSequencer::getTime() const {
+  return Current_->getPressingTime();
+}
+
 CTextTreePrintedSequencer::CTextTreePrintedSequencer(const CIterator& begin,
                                                      const CIterator& end)
     : Current_(begin), End_(end) {
@@ -87,6 +91,10 @@ CStatusData CTextTreePrintedSequencer::getStatusData() const {
 
 QChar CTextTreePrintedSequencer::getSymbol() const {
   return Current_->getSymbol();
+}
+
+CTime CTextTreePrintedSequencer::getTime() const {
+  return Current_->getPressingTime();
 }
 
 } // namespace NSKernel

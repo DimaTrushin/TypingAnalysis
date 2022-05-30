@@ -92,6 +92,7 @@ HEADERS += \
   Kernel/KeySchemeMaker.h \
   Kernel/KeySchemeModule.h \
   Kernel/KeyStatus.h \
+  Kernel/ModifierDataSequencer.h \
   Kernel/ModifiersTextData.h \
   Kernel/ModifiersTextDataFiller.h \
   Kernel/PlotData.h \
@@ -111,6 +112,7 @@ HEADERS += \
   Kernel/TextModeCacher.h \
   Kernel/TextModule.h \
   Kernel/TextTreeSequencer.h \
+  Kernel/UniversalTextSequencer.h \
   Kernel/UserDataModule.h \
   Keyboard/AnyKeyboardKiller.h \
   Keyboard/KeyID.h \
@@ -196,6 +198,7 @@ SOURCES += \
   Kernel/KeySchemeMaker.cpp \
   Kernel/KeySchemeModule.cpp \
   Kernel/KeyStatus.cpp \
+  Kernel/ModifierDataSequencer.cpp \
   Kernel/ModifiersTextData.cpp \
   Kernel/ModifiersTextDataFiller.cpp \
   Kernel/PlotData.cpp \
@@ -215,6 +218,7 @@ SOURCES += \
   Kernel/TextModeCacher.cpp \
   Kernel/TextModule.cpp \
   Kernel/TextTreeSequencer.cpp \
+  Kernel/UniversalTextSequencer.cpp \
   Kernel/UserDataModule.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \

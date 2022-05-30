@@ -54,6 +54,10 @@ CTime CModifierDatum::getReleasingTime() const {
   return Key_.getReleasingTime();
 }
 
+QChar CModifierDatum::getSymbol() const {
+  return Key_.getLabel().LowSymbol;
+}
+
 size_t CModifierData::amountOfKeys() const {
   return Keys_.size();
 }
