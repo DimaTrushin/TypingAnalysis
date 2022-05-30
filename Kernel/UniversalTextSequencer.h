@@ -80,6 +80,11 @@ class CUniversalTextSequencer
 
 public:
   using CBase::CBase;
+
+  struct CFirstPressedOnTop {
+    bool operator()(const CUniversalTextSequencer& lhs,
+                    const CUniversalTextSequencer& rhs);
+  };
 };
 
 } // namespace NSKernel

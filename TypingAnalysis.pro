@@ -111,6 +111,7 @@ HEADERS += \
   Kernel/TextMode.h \
   Kernel/TextModeCacher.h \
   Kernel/TextModule.h \
+  Kernel/TextSequencer.h \
   Kernel/TextTreeSequencer.h \
   Kernel/UniversalTextSequencer.h \
   Kernel/UserDataModule.h \
@@ -217,6 +218,7 @@ SOURCES += \
   Kernel/TextMode.cpp \
   Kernel/TextModeCacher.cpp \
   Kernel/TextModule.cpp \
+  Kernel/TextSequencer.cpp \
   Kernel/TextTreeSequencer.cpp \
   Kernel/UniversalTextSequencer.cpp \
   Kernel/UserDataModule.cpp \

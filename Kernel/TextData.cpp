@@ -18,6 +18,10 @@ const CTextDataTree& CTextData::textTree() const {
   return TextTree_;
 }
 
+const CModifiersTextData& CTextData::modifiersData() const {
+  return ModifiersData_;
+}
+
 CTextMode CTextData::textInfo() const {
   return TextMode_;
 }
@@ -42,14 +46,12 @@ CSessionTextSequencer CTextData::sessionSequencer() const {
   return CSessionTextSequencer(rawSession().begin(), rawSession().end());
 }
 
-CTextTreeFullSequencer CTextData::fullTextSequencer() const {
-  return CTextTreeFullSequencer(textTree()->beginFullText(),
-                                textTree()->endFullText());
+CFullTextSequencer CTextData::fullTextSequencer() const {
+  return CFullTextSequencer(textTree(), ModifiersData_.get(), TextMode_);
 }
 
-CTextTreePrintedSequencer CTextData::printedTextSequencer() const {
-  return CTextTreePrintedSequencer(textTree()->beginPrintedText(),
-                                   textTree()->endPrintedText());
+CPrintedTextSequencer CTextData::printedTextSequencer() const {
+  return CPrintedTextSequencer(textTree(), ModifiersData_.get(), TextMode_);
 }
 
 } // namespace NSKernel

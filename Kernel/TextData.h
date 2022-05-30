@@ -7,6 +7,7 @@
 #include "Session.h"
 #include "SessionTextSequencer.h"
 #include "TextDataTree.h"
+#include "TextSequencer.h"
 #include "TextTreeSequencer.h"
 
 namespace NSApplication {
@@ -19,6 +20,7 @@ public:
 
   const CSession& rawSession() const;
   const CTextDataTree& textTree() const;
+  const CModifiersTextData& modifiersData() const;
   CTextMode textInfo() const;
 
   ETextMode textMode() const;
@@ -27,8 +29,8 @@ public:
   EModifierMode altMode() const;
 
   CSessionTextSequencer sessionSequencer() const;
-  CTextTreeFullSequencer fullTextSequencer() const;
-  CTextTreePrintedSequencer printedTextSequencer() const;
+  CFullTextSequencer fullTextSequencer() const;
+  CPrintedTextSequencer printedTextSequencer() const;
 
 private:
   std::reference_wrapper<const CSession> Session_;
