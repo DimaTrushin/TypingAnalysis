@@ -3,6 +3,7 @@
 
 #include <cuda_runtime.h>
 #include <helper_cuda.h>
+#include <thrust/device_vector.h>
 
 #include <stdint.h>
 #include <vector>
@@ -50,6 +51,9 @@ protected:
   static constexpr const int kErrorID = -1;
 
   int CurrentDevice_ = kErrorID;
+
+  thrust::device_vector<double> X_;
+  thrust::device_vector<double> Y_;
 };
 } // namespace NSCudaGateDetail
 

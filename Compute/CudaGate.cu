@@ -1,6 +1,5 @@
 #include "CudaGate.h"
 
-#include <thrust/device_vector.h>
 #include <thrust/transform.h>
 
 namespace NSApplication {
@@ -9,25 +8,23 @@ namespace NSCudaGateDetail {
 
 namespace {
 
-//class CCompute {
-//public:
-//  __device__ double operator()(double arg) const {
-//    return arg * arg;
-//  }
-//};
+class CCompute {
+public:
+  __device__ double operator()(double arg) const {
+    return arg * arg;
+  }
+};
 
 } // namespace
 
 void CCudaGateImpl::setCudaContext() {
-  // TO DO
-  // Need to implement a proper method to initialize Cuda Context.
-  // Probably need to use the driver api.
-  // This code makes the program crash on exit.
-  // I have no idea why it does not work here and works in other
-  // places in the message loop.
-//  thrust::device_vector<double> X(100);
-//  thrust::device_vector<double> Y(100);
-//  thrust::transform(X.begin(), X.end(), Y.begin(), CCompute());
+  // This initialization code does not work if X_ and Y_ are local
+  // to the function. Thus, I have to make them members of the class.
+  X_.resize(100);
+  Y_.resize(100);
+  thrust::transform(X_.begin(), X_.end(), Y_.begin(), CCompute());
+  X_.clear();
+  Y_.clear();
 }
 
 } // namespace NSCudaGateDetail
