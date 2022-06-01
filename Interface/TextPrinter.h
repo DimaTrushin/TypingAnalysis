@@ -48,6 +48,8 @@ struct CTextPalette {
       {192, 220, 192} /*SilentDeadKey*/,
       {0, 0, 0} /*Ignore*/
   }};
+
+  QColor Marker = {250, 85, 40};
 };
 
 namespace NSTextPrinterDetail {

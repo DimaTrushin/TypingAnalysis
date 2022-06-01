@@ -99,9 +99,17 @@ CTextPrinterImpl::extractToBuffer(CStatusData StatusData,
 void CTextPrinterImpl::setFormat(CStatusData Status,
                                  QTextCursor* pTextCursor) const {
   QTextCharFormat Format;
-  Format.setForeground(QBrush(Palette_.Text[Status.Status]));
-  Format.setBackground(
-      QBrush(shade(Palette_.Back[Status.Status], Status.Depth)));
+  switch (Status.Status) {
+  case EKeyStatus::Control:
+    Format.setForeground(QBrush(Status.Depth == 0 ? Palette_.Text[Status.Status]
+                                                  : Palette_.Marker));
+    Format.setBackground(QBrush(shade(Palette_.Back[Status.Status], 0)));
+    break;
+  default:
+    Format.setForeground(QBrush(Palette_.Text[Status.Status]));
+    Format.setBackground(
+        QBrush(shade(Palette_.Back[Status.Status], Status.Depth)));
+  }
   pTextCursor->setCharFormat(Format);
 }
 
