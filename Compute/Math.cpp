@@ -10,15 +10,21 @@ CMath::CMath(CParallelModule& Parallel) : Parallel_(Parallel) {
 }
 
 bool CMath::isGpuAvailable() const {
+#ifndef DISABLE_CUDA
   return CudaGate_.isAvailable();
+#else
+  return false;
+#endif
 }
 
 void CMath::fillPlots(const CVectorD& Samples, const CVectorD& X,
                       CVectorD* D0Y0, CVectorD* D1Y0, CVectorD* D0Y1,
                       CVectorD* D1Y1, CVectorD* D0Y2, CVectorD* D1Y2) {
+#ifndef DISABLE_CUDA
   if (isGpuAvailable())
     fillPlotsGPU(Samples, X, D0Y0, D1Y0, D0Y1, D1Y1, D0Y2, D1Y2);
   else
+#endif
     fillPlotsCPU(Samples, X, D0Y0, D1Y0, D0Y1, D1Y1, D0Y2, D1Y2);
 }
 

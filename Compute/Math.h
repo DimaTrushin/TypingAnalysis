@@ -1,9 +1,12 @@
 #ifndef NSAPPLICATION_NSCOMPUTE_CMATH_H
 #define NSAPPLICATION_NSCOMPUTE_CMATH_H
 
-#include "CudaGate.h"
 #include "Functions.h"
 
+#include <vector>
+
+#ifndef DISABLE_CUDA
+#include "CudaGate.h"
 #ifdef _MSC_VER
 #pragma warning(disable : 4324)
 #pragma warning(disable : 4515)
@@ -13,8 +16,7 @@
 #pragma warning(default : 4324)
 #pragma warning(default : 4515)
 #endif
-
-#include <vector>
+#endif
 
 namespace NSApplication {
 namespace NSCompute {
@@ -22,7 +24,9 @@ namespace NSCompute {
 class CParallelModule;
 
 class CMath {
+#ifndef DISABLE_CUDA
   using CDevVectorD = thrust::device_vector<double>;
+#endif
   using CVectorD = std::vector<double>;
 
 public:
@@ -47,15 +51,19 @@ private:
   void fillRPlot0(const CVectorD& Samples, const CVectorD& X, CVectorD* pY);
   void fillRPlot1(const CVectorD& Samples, const CVectorD& X, CVectorD* pY);
 
+#ifndef DISABLE_CUDA
   void fillPlotsGPU(const CVectorD& Samples, const CVectorD& X, CVectorD* D0Y0,
                     CVectorD* D1Y0, CVectorD* D0Y1, CVectorD* D1Y1,
                     CVectorD* D0Y2, CVectorD* D1Y2);
+#endif
 
   CParallelModule& Parallel_;
+#ifndef DISABLE_CUDA
   CCudaGate CudaGate_;
   CDevVectorD X_;
   CDevVectorD S_;
   CDevVectorD Y_;
+#endif
 };
 
 } // namespace NSCompute

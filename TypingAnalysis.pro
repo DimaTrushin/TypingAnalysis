@@ -8,8 +8,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17 warn_on
 
-DEFINES += KEYBOARD_HANDLER_DEBUG
+DEFINES += \
+    KEYBOARD_HANDLER_DEBUG \
+    #DISABLE_CUDA
 
+CONFIG(debug, debug|release) {
+  DEFINES += \
+      DISABLE_CUDA
+}
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -66,7 +72,7 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 HEADERS += \
   AppDebug/PerformanceLogger.h \
   Compute/CpuFunction.h \
-  Compute/CudaGate.h \
+  Compute/CudaDefines.h \
   Compute/Functions.h \
   Compute/Math.h \
   Compute/ParallelMode.h \
@@ -173,7 +179,6 @@ SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
   Compute/CpuFunction.cpp \
-  Compute/CudaGate.cpp \
   Compute/Functions.cpp \
   Compute/Math.cpp \
   Compute/ParallelMode.cpp \
@@ -322,6 +327,8 @@ contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     AppDebug/KeyboardHandlerDebugOut.cpp
 }
 
+
+
 # The custom compiler compiles on AVX level
 win32 {
   win32-msvc*{
@@ -359,71 +366,76 @@ linux {
   }
 }
 
-CUDA_SOURCES += \
-  Compute/CudaGate.cu \
-  Compute/Math.cu
+!contains(DEFINES, DISABLE_CUDA) {
+    HEADERS += Compute/CudaGate.h
+    SOURCES += Compute/CudaGate.cpp
 
 
-win32 {
-  CUDA_SDK = $$(NVCUDASAMPLES_ROOT)
-  CUDA_DIR = $$(CUDA_PATH)
-}
+  CUDA_SOURCES += \
+    Compute/CudaGate.cu \
+    Compute/Math.cu
 
-SYSTEM_NAME = x64
-SYSTEM_TYPE = 64
-NVCC_OPTIONS = --use_fast_math
+
+  win32 {
+    CUDA_SDK = $$(NVCUDASAMPLES_ROOT)
+    CUDA_DIR = $$(CUDA_PATH)
+  }
+
+  SYSTEM_NAME = x64
+  SYSTEM_TYPE = 64
+  NVCC_OPTIONS = --use_fast_math
 
 # Type of CUDA architecture
-CUDA_ARCH = sm_30 \
-  -gencode=arch=compute_30,code=sm_30 \
-  -gencode=arch=compute_35,code=sm_35 \
-  -gencode=arch=compute_37,code=sm_37 \
-  -gencode=arch=compute_50,code=sm_50 \
-  -gencode=arch=compute_52,code=sm_52 \
-  -gencode=arch=compute_53,code=sm_53 \
-  -gencode=arch=compute_60,code=sm_60 \
-  -gencode=arch=compute_61,code=sm_61 \
-  -gencode=arch=compute_62,code=sm_62 \
-  -gencode=arch=compute_70,code=sm_70 \
-  -gencode=arch=compute_72,code=sm_72 \
-  -gencode=arch=compute_75,code=sm_75 \
-  -gencode=arch=compute_75,code=compute_75
+  CUDA_ARCH = sm_30 \
+    -gencode=arch=compute_30,code=sm_30 \
+    -gencode=arch=compute_35,code=sm_35 \
+    -gencode=arch=compute_37,code=sm_37 \
+    -gencode=arch=compute_50,code=sm_50 \
+    -gencode=arch=compute_52,code=sm_52 \
+    -gencode=arch=compute_53,code=sm_53 \
+    -gencode=arch=compute_60,code=sm_60 \
+    -gencode=arch=compute_61,code=sm_61 \
+    -gencode=arch=compute_62,code=sm_62 \
+    -gencode=arch=compute_70,code=sm_70 \
+    -gencode=arch=compute_72,code=sm_72 \
+    -gencode=arch=compute_75,code=sm_75 \
+    -gencode=arch=compute_75,code=compute_75
 
-INCLUDEPATH += $$CUDA_DIR/include \
-               $$CUDA_SDK/common/inc
+  INCLUDEPATH += $$CUDA_DIR/include \
+                 $$CUDA_SDK/common/inc
 
-QMAKE_LIBDIR += $$CUDA_DIR/lib/$$SYSTEM_NAME \
-                $$CUDA_SDK/common/lib/$$SYSTEM_NAME
+  QMAKE_LIBDIR += $$CUDA_DIR/lib/$$SYSTEM_NAME \
+                  $$CUDA_SDK/common/lib/$$SYSTEM_NAME
 
-LIBS += \
-        -lcudart_static
+  LIBS += \
+          -lcudart_static
 
-win32 {
-  CUDA_INC = $$join(INCLUDEPATH,'" -I"','-I"','"')
-  CUDA_OBJECTS_DIR = OBJECTS_DIR/../cuda
+  win32 {
+    CUDA_INC = $$join(INCLUDEPATH,'" -I"','-I"','"')
+    CUDA_OBJECTS_DIR = OBJECTS_DIR/../cuda
 
-  win32-msvc*{
-  MSVC_CUDA_FLAGS_DEBUG = /EHsc /nologo /W3 /FS /Zi
-  MSVC_CUDA_FLAGS_RELEASE = /EHsc /nologo /O2 /W3 /FS
+    win32-msvc*{
+      MSVC_CUDA_FLAGS_DEBUG = /EHsc /nologo /W3 /FS /Zi
+      MSVC_CUDA_FLAGS_RELEASE = /EHsc /nologo /O2 /W3 /FS
 
-  contains(CONFIG, static_runtime) {
-    MSVC_CUDA_FLAGS_DEBUG += /MTd
-    MSVC_CUDA_FLAGS_RELEASE += /MT
-  } else {
-    MSVC_CUDA_FLAGS_DEBUG += /MDd
-    MSVC_CUDA_FLAGS_RELEASE += /MD
+      contains(CONFIG, static_runtime) {
+        MSVC_CUDA_FLAGS_DEBUG += /MTd
+        MSVC_CUDA_FLAGS_RELEASE += /MT
+      } else {
+        MSVC_CUDA_FLAGS_DEBUG += /MDd
+        MSVC_CUDA_FLAGS_RELEASE += /MD
+      }
+
+      CUDA_FLAGS_DEBUG = \"$$MSVC_CUDA_FLAGS_DEBUG\"
+      CUDA_FLAGS_RELEASE = \"$$MSVC_CUDA_FLAGS_RELEASE\"
+
+      OBJEXT = obj
+      COMPILE_TOOL = nvcc.exe
+    }
   }
-
-    CUDA_FLAGS_DEBUG = \"$$MSVC_CUDA_FLAGS_DEBUG\"
-    CUDA_FLAGS_RELEASE = \"$$MSVC_CUDA_FLAGS_RELEASE\"
-
-    OBJEXT = obj
-    COMPILE_TOOL = nvcc.exe
-  }
-}
 
 # Configuration of the Cuda compiler
-CONFIG(debug, debug|release) {
+  CONFIG(debug, debug|release) {
     # Debug mode
     cuda_d.input = CUDA_SOURCES
     cuda_d.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}_cuda.$$OBJEXT
@@ -434,8 +446,7 @@ CONFIG(debug, debug|release) {
                       -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
     cuda_d.dependency_type = TYPE_C
     QMAKE_EXTRA_COMPILERS += cuda_d
-}
-else {
+  } else {
     # Release mode
     cuda.input = CUDA_SOURCES
     cuda.output = $$CUDA_OBJECTS_DIR/${QMAKE_FILE_BASE}_cuda.$$OBJEXT
@@ -446,6 +457,7 @@ else {
                     -c  -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
     cuda.dependency_type = TYPE_C
     QMAKE_EXTRA_COMPILERS += cuda
+  }
 }
 
 # Default rules for deployment.
