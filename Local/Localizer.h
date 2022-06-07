@@ -374,17 +374,17 @@ private:
   template<class TLocale>
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
       : SeanceViewLocalizer_(
-            CSeanceViewLocalizer::make<TLocale::CSeanceView>()),
-        StatisticsViewLocalizer_(
-            CStatisticsViewLocalizer::make<TLocale::CStatisticsView>()),
+            CSeanceViewLocalizer::make<typename TLocale::CSeanceView>()),
+        StatisticsViewLocalizer_(CStatisticsViewLocalizer::make<
+                                 typename TLocale::CStatisticsView>()),
         StatisticsLocalizer_(
-            CStatisticsLocalizer::make<TLocale::CStatistics>()),
+            CStatisticsLocalizer::make<typename TLocale::CStatistics>()),
         TextModeViewLocalizer_(
-            CTextModeViewLocalizer::make<TLocale::CTextModeView>()),
+            CTextModeViewLocalizer::make<typename TLocale::CTextModeView>()),
         SpeedPlotterLocalizer_(
-            CSpeedPlotterLocalizer::make<TLocale::CSpeedPlotter>()),
-        KeySchemePlotterLocalizer_(
-            CKeySchemePlotterLocalizer::make<TLocale::CKeySchemePlotter>()) {
+            CSpeedPlotterLocalizer::make<typename TLocale::CSpeedPlotter>()),
+        KeySchemePlotterLocalizer_(CKeySchemePlotterLocalizer::make<
+                                   typename TLocale::CKeySchemePlotter>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CStatisticsViewLocalizer StatisticsViewLocalizer_;
