@@ -4,6 +4,8 @@
 #include "KeyFlags.h"
 #include "Keyboard/RawKeyEvent.h"
 
+#include <boost/serialization/access.hpp>
+
 namespace NSApplication {
 namespace NSKernel {
 
@@ -64,6 +66,18 @@ public:
   bool isSilentDeadKey() const;
 
 private:
+  friend boost::serialization::access;
+  template<class TArchive>
+  void serialize(TArchive& arch, const unsigned int) {
+    arch& KeyPosition_;
+    arch& KeyID_;
+    arch& KeyLabel_;
+    arch& KeyText_;
+    arch& Flags_;
+    arch& PressingTime_;
+    arch& ReleasingTime_;
+  }
+
   CKeyPosition KeyPosition_;
   CKeyID KeyID_;
   CLabelData KeyLabel_;

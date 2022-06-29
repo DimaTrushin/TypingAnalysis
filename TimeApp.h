@@ -1,9 +1,13 @@
 #ifndef NSAPPLICATION_CTIMEAPP_H
 #define NSAPPLICATION_CTIMEAPP_H
 
+#include <boost/serialization/access.hpp>
+
 namespace NSApplication {
 
 class CTime {
+  friend boost::serialization::access;
+
 public:
   CTime() = default;
 
@@ -44,6 +48,11 @@ public:
 
 protected:
   CTime(long long microseconds);
+  template<class TArchive>
+  void serialize(TArchive& arch, const unsigned int) {
+    arch& Microseconds_;
+  }
+
   long long Microseconds_ = 0;
 };
 } // namespace NSApplication

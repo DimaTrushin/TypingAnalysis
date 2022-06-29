@@ -3,6 +3,7 @@
 
 #include "KeyEvent.h"
 
+#include <boost/serialization/base_object.hpp>
 #include <vector>
 
 namespace NSApplication {
@@ -26,6 +27,13 @@ public:
   using CBase::cbegin;
   using CBase::cend;
   using CBase::end;
+
+private:
+  friend boost::serialization::access;
+  template<class TArchive>
+  void serialize(TArchive& arch, const unsigned int) {
+    arch& boost::serialization::base_object<CBase>(*this);
+  }
 };
 
 } // namespace NSKernel
