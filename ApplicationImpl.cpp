@@ -10,7 +10,8 @@ CApplicationImpl::CApplicationImpl()
       SessionFlusher_(SeanceManager_.model()),
       SeanceViewController_(SessionSelector_.model()),
       TextModeController_(TextModule_.model()),
-      FileActionController_(SeanceManager_.model()) {
+      FileActionController_(SeanceManager_.model()),
+      FileActionKeyboardBlocker_(CKeyboardHandlerAccess().operator->()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_->input());
   AppStatus->subscribeToAppState(SessionFlusher_->input());
@@ -31,6 +32,8 @@ CApplicationImpl::CApplicationImpl()
   KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
 
   AppActions_.subscribeToFileAction(FileActionController_->fileActionInput());
+  AppActions_.subscribeToFileActionBlocker(
+      FileActionKeyboardBlocker_->fileActoinBlockInput());
 
   LocalizationModule_->subscribeToSeanceViewLocalizer(
       MainSeanceView_->localizerInput());

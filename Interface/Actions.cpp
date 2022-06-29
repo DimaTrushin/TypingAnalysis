@@ -15,11 +15,15 @@ void CActions::subscribeToFileAction(CFileActionObserver* obs) {
   FileAction_.subscribe(obs);
 }
 
+void CActions::subscribeToFileActionBlocker(CFileActionBlockObserver* obs) {
+  FileActionBlocker_.subscribe(obs);
+}
+
 void CActions::saveFile() {
-  // Need to block keyboard interseption here
+  FileActionBlocker_.set(EFileActionBlock::Deactivate);
   QString file = QFileDialog::getSaveFileName(nullptr, QString(), QString(),
                                               "TypingAnalysis (*.ta)");
-  // Need to unblock keyboard interseption here
+  FileActionBlocker_.set(EFileActionBlock::Activate);
 
   // QWidget* parent,
   // Title "Save File",
@@ -32,10 +36,10 @@ void CActions::saveFile() {
 }
 
 void CActions::loadFile() {
-  // Need to block keyboard interseption here
+  FileActionBlocker_.set(EFileActionBlock::Deactivate);
   QString file = QFileDialog::getOpenFileName(
       nullptr, QString(), QString(), "TypingAnalysis (*.ta);;All (*.*)");
-  // Need to unblock keyboard interseption here
+  FileActionBlocker_.set(EFileActionBlock::Activate);
   FileAction_.set(CFileCommand{std::move(file), EFileAction::Load});
 }
 

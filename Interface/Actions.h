@@ -24,16 +24,23 @@ struct CFileCommand {
   EFileAction Action;
 };
 
+enum class EFileActionBlock { Activate, Deactivate };
+
 class CActions : public QObject {
   Q_OBJECT
 
   using CFileActionObserver = NSLibrary::CObserver<CFileCommand>;
   using CFileActionObservable = NSLibrary::CObservableData<CFileCommand>;
 
+  using CFileActionBlockObserver = NSLibrary::CObserver<EFileActionBlock>;
+  using CFileActionBlockObservable =
+      NSLibrary::CObservableData<EFileActionBlock>;
+
 public:
   CActions(const CActionList& ActionList);
 
   void subscribeToFileAction(CFileActionObserver* obs);
+  void subscribeToFileActionBlocker(CFileActionBlockObserver* obs);
 
 public Q_SLOTS:
   void saveFile();
@@ -41,6 +48,7 @@ public Q_SLOTS:
 
 private:
   CFileActionObservable FileAction_;
+  CFileActionBlockObservable FileActionBlocker_;
 };
 
 } // namespace NSInterface
