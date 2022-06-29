@@ -44,7 +44,8 @@ void CSeanceManagerImpl::makeSessions() {
 void CSeanceManagerImpl::saveFile(const QString& Path) {
   // TO DO
   qDebug() << "saveFile";
-  boost::filesystem::ofstream ofs(Path.toStdWString());
+  boost::filesystem::ofstream ofs(Path.toStdWString(),
+                                  std::fstream::binary | std::fstream::trunc);
   boost::archive::binary_oarchive arch(ofs);
   arch << CurrentSeance_;
 }
@@ -52,13 +53,17 @@ void CSeanceManagerImpl::saveFile(const QString& Path) {
 void CSeanceManagerImpl::loadFile(const QString& Path) {
   // TO DO
   qDebug() << "loadFile";
-  boost::filesystem::ifstream ifs(Path.toStdWString());
-  boost::archive::binary_iarchive arch(ifs);
-  CSeance Tmp;
-  arch >> Tmp;
-  for (auto& session : Tmp)
-    CurrentSeance_.emplace_back(std::move(session));
-  CurrentSeanceOutput_.notify();
+  try {
+    boost::filesystem::ifstream ifs(Path.toStdWString(), std::fstream::binary);
+    boost::archive::binary_iarchive arch(ifs);
+    CSeance Tmp;
+    arch >> Tmp;
+    for (auto& session : Tmp)
+      CurrentSeance_.emplace_back(std::move(session));
+    CurrentSeanceOutput_.notify();
+  } catch (...) {
+    // Unsupported File
+  }
 }
 
 void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {
