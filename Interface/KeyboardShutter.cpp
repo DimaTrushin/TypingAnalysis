@@ -19,9 +19,9 @@ CKeyboardShutterImpl::CStateObserver* CKeyboardShutterImpl::input() {
 
 void CKeyboardShutterImpl::switchKeyboardHandler(EAppState State) {
   if (State == EAppState::Active)
-    KeyboardHandler_->deactivate();
+    KeyboardHandler_->deactivate(NSKeyboard::CBlockerID::AppStatus);
   if (State == EAppState::Inactive)
-    KeyboardHandler_->activate();
+    KeyboardHandler_->activate(NSKeyboard::CBlockerID::AppStatus);
 }
 
 } // namespace NSCKeyboardShutterDetail

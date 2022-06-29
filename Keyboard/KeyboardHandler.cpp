@@ -27,12 +27,16 @@ CKeyboardHandler::~CKeyboardHandler() {
   stopListener();
 }
 
-void CKeyboardHandler::activate() {
-  isActive_ = true;
+void CKeyboardHandler::activate(CBlockerID::CType Blocker) {
+  BlockerFlag_ &= static_cast<CBlockerID::CType>(-1) ^ Blocker;
 }
 
-void CKeyboardHandler::deactivate() {
-  isActive_ = false;
+void CKeyboardHandler::deactivate(CBlockerID::CType Blocker) {
+  BlockerFlag_ |= Blocker;
+}
+
+bool CKeyboardHandler::isActive() const {
+  return BlockerFlag_ == CBlockerID::Active;
 }
 
 void CKeyboardHandler::subscribeToKeyPressing(
@@ -48,12 +52,12 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 }
 
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
-  if (isActive_)
+  if (isActive())
     KeyPressingOut_.set(KeyPressing);
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
-  if (isActive_)
+  if (isActive())
     KeyReleasingOut_.set(KeyReleasing);
 }
 

@@ -12,6 +12,11 @@
 namespace NSApplication {
 namespace NSKeyboard {
 
+struct CBlockerID {
+  using CType = unsigned int;
+  enum : CType { Active = 0, AppStatus = 1, FileAction = 2 };
+};
+
 // A system dependent keyboard listener lives in an independent thread
 // all exceptions of the listener are sent to corresponding slot
 // The listener dies on any exception or error
@@ -41,8 +46,10 @@ public:
   CKeyboardHandler();
   ~CKeyboardHandler();
 
-  void activate();
-  void deactivate();
+  void activate(CBlockerID::CType Blocker);
+  void deactivate(CBlockerID::CType Blocker);
+
+  bool isActive() const;
 
   void subscribeToKeyPressing(CKeyPressingObserver* Observer);
   void subscribeToKeyReleasing(CKeyReleasingObserver* Observer);
@@ -62,7 +69,8 @@ private:
   CAnyKeyboardKiller KeyboardKiller_;
   CKeyPressingOut KeyPressingOut_;
   CKeyReleasingOut KeyReleasingOut_;
-  bool isActive_ = true;
+  //  bool isActive_ = true;
+  CBlockerID::CType BlockerFlag_ = CBlockerID::Active;
 };
 
 } // namespace NSKeyboard
