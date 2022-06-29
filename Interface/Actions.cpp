@@ -11,12 +11,8 @@ CActions::CActions(const CActionList& ActionList) {
   connect(ActionList.loadFile, &QAction::triggered, this, &CActions::loadFile);
 }
 
-void CActions::subscribeToFileSave(CFilePathObserver* obs) {
-  SaveFilePath_.subscribe(obs);
-}
-
-void CActions::subscribeToFileLoad(CFilePathObserver* obs) {
-  LoadFilePath_.subscribe(obs);
+void CActions::subscribeToFileAction(CFileActionObserver* obs) {
+  FileAction_.subscribe(obs);
 }
 
 void CActions::saveFile() {
@@ -32,7 +28,7 @@ void CActions::saveFile() {
 
   if (file.isNull())
     return;
-  SaveFilePath_.set(std::move(file));
+  FileAction_.set(CFileCommand{std::move(file), EFileAction::Save});
 }
 
 void CActions::loadFile() {
@@ -40,7 +36,7 @@ void CActions::loadFile() {
   QString file = QFileDialog::getOpenFileName(
       nullptr, QString(), QString(), "TypingAnalysis (*.ta);;All (*.*)");
   // Need to unblock keyboard interseption here
-  LoadFilePath_.set(std::move(file));
+  FileAction_.set(CFileCommand{std::move(file), EFileAction::Load});
 }
 
 } // namespace NSInterface

@@ -9,7 +9,8 @@ CApplicationImpl::CApplicationImpl()
     : KeyboardShutter_(CKeyboardHandlerAccess().operator->()),
       SessionFlusher_(SeanceManager_.model()),
       SeanceViewController_(SessionSelector_.model()),
-      TextModeController_(TextModule_.model()) {
+      TextModeController_(TextModule_.model()),
+      FileActionController_(SeanceManager_.model()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_->input());
   AppStatus->subscribeToAppState(SessionFlusher_->input());
@@ -28,6 +29,8 @@ CApplicationImpl::CApplicationImpl()
   AnalyticalModule_->subscribeToSpeedData(SpeedPlotter_->speedDataInput());
 
   KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
+
+  AppActions_.subscribeToFileAction(FileActionController_->fileActionInput());
 
   LocalizationModule_->subscribeToSeanceViewLocalizer(
       MainSeanceView_->localizerInput());

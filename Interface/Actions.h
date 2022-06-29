@@ -17,25 +17,30 @@ struct CActionList {
   QAction* loadFile;
 };
 
+enum class EFileAction { Save, Load };
+
+struct CFileCommand {
+  QString Path;
+  EFileAction Action;
+};
+
 class CActions : public QObject {
   Q_OBJECT
 
-  using CFilePathObserver = NSLibrary::CObserver<QString>;
-  using CFilePathObservable = NSLibrary::CObservableData<QString>;
+  using CFileActionObserver = NSLibrary::CObserver<CFileCommand>;
+  using CFileActionObservable = NSLibrary::CObservableData<CFileCommand>;
 
 public:
   CActions(const CActionList& ActionList);
 
-  void subscribeToFileSave(CFilePathObserver* obs);
-  void subscribeToFileLoad(CFilePathObserver* obs);
+  void subscribeToFileAction(CFileActionObserver* obs);
 
 public Q_SLOTS:
   void saveFile();
   void loadFile();
 
 private:
-  CFilePathObservable SaveFilePath_;
-  CFilePathObservable LoadFilePath_;
+  CFileActionObservable FileAction_;
 };
 
 } // namespace NSInterface

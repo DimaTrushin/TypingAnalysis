@@ -1,5 +1,7 @@
 #include "SeanceManager.h"
 
+#include <QDebug>
+
 namespace NSApplication {
 namespace NSKernel {
 
@@ -31,6 +33,16 @@ void CSeanceManagerImpl::subscribeToCurrentSeance(CSeanceObserver* observer) {
 void CSeanceManagerImpl::makeSessions() {
   if (SeanceMaker_.transferTo(&CurrentSeance_))
     CurrentSeanceOutput_.notify();
+}
+
+void CSeanceManagerImpl::saveFile(const QString& Path) {
+  // TO DO
+  qDebug() << "saveFile";
+}
+
+void CSeanceManagerImpl::loadFile(const QString& Path) {
+  // TO DO
+  qDebug() << "loadFile";
 }
 
 void CSeanceManagerImpl::handle(const CKeyPressing& KeyPressing) {

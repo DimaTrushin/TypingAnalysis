@@ -33,6 +33,9 @@ public:
 
   void makeSessions();
 
+  void saveFile(const QString& Path);
+  void loadFile(const QString& Path);
+
 private:
   void handle(const CKeyPressing& KeyPressing);
   void handle(const CKeyReleasing& KeyReleasing);

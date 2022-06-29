@@ -3,6 +3,7 @@
 
 #include "ApplicationGUI.h"
 #include "ApplicationKernel.h"
+#include "Interface/FileActionController.h"
 #include "Interface/KeyboardShutter.h"
 #include "Interface/SeanceViewController.h"
 #include "Interface/SessionFlusher.h"
@@ -16,6 +17,7 @@ class CApplicationImpl : protected CApplicationKernel,
   using CSessionFlusher = NSInterface::CSessionFlusher;
   using CSeanceViewController = NSInterface::CSeanceViewController;
   using CTextModeController = NSInterface::CTextModeController;
+  using CFileActionController = NSInterface::CFileActionController;
 
 public:
   CApplicationImpl();
@@ -25,6 +27,7 @@ private:
   CSessionFlusher SessionFlusher_;
   CSeanceViewController SeanceViewController_;
   CTextModeController TextModeController_;
+  CFileActionController FileActionController_;
 };
 
 } // namespace NSApplication
