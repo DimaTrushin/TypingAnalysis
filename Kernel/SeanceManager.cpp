@@ -4,10 +4,6 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/filesystem/fstream.hpp>
 
-#include <algorithm>
-
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSKernel {
 
@@ -42,8 +38,6 @@ void CSeanceManagerImpl::makeSessions() {
 }
 
 void CSeanceManagerImpl::saveFile(const QString& Path) {
-  // TO DO
-  qDebug() << "saveFile";
   boost::filesystem::ofstream ofs(Path.toStdWString(),
                                   std::fstream::binary | std::fstream::trunc);
   boost::archive::binary_oarchive arch(ofs);
@@ -51,8 +45,6 @@ void CSeanceManagerImpl::saveFile(const QString& Path) {
 }
 
 void CSeanceManagerImpl::loadFile(const QString& Path) {
-  // TO DO
-  qDebug() << "loadFile";
   try {
     boost::filesystem::ifstream ifs(Path.toStdWString(), std::fstream::binary);
     boost::archive::binary_iarchive arch(ifs);
