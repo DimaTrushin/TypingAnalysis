@@ -18,6 +18,7 @@ class CKeyEvent {
   using CKeyTextData = NSKeyboard::CKeyTextData;
 
 public:
+  CKeyEvent() = default;
   CKeyEvent(CKeyPosition KeyPosition, CKeyID KeyID, CLabelData KeyLabel,
             CKeyTextData KeyText, CTime PressingTime,
             CKeyFlags Flags = CKeyFlagsEnum::BasicKey);

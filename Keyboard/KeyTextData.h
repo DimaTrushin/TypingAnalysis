@@ -8,7 +8,7 @@ namespace boost {
 namespace serialization {
 
 template<class Archive>
-void serialize(Archive& arch, QChar& ch, const unsigned int version) {
+void serialize(Archive& arch, QChar& ch, const unsigned int) {
   arch& ch.unicode();
 }
 

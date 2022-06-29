@@ -3,6 +3,8 @@
 
 #include "Session.h"
 
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/deque.hpp>
 #include <deque>
 
 namespace NSApplication {
@@ -22,6 +24,13 @@ public:
   using CBase::end;
 
   using CBase::operator[];
+
+private:
+  friend boost::serialization::access;
+  template<class TArchive>
+  void serialize(TArchive& arch, const unsigned int) {
+    arch& boost::serialization::base_object<CBase>(*this);
+  }
 };
 
 } // namespace NSKernel
