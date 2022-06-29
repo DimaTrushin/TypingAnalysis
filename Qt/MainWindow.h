@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <memory>
 
+#include "Interface/Actions.h"
 #include "Interface/TextModeView.h"
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +27,7 @@ namespace NSQt {
 class CMainWindow : public QMainWindow {
   Q_OBJECT
   using CTextModeInitData = NSInterface::CTextModeView::CInitData;
+  using CActionList = NSInterface::CActionList;
 
 public:
   CMainWindow(QWidget* parent = nullptr);
@@ -43,6 +45,7 @@ public:
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;
+  CActionList getActionList() const;
 
 Q_SIGNALS:
   bool closeMainWindow();

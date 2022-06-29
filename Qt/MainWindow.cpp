@@ -69,6 +69,10 @@ QwtPlot* CMainWindow::getKeySchemePlot() const {
   return KeySchemePlot_;
 }
 
+CMainWindow::CActionList CMainWindow::getActionList() const {
+  return {ui_->actionSave, ui_->actionLoad};
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();

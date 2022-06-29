@@ -81,6 +81,7 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
+  Interface/Actions.h \
   Interface/KeySchemePlotter.h \
   Interface/KeyboardShutter.h \
   Interface/Plotter.h \
@@ -187,6 +188,7 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
+  Interface/Actions.cpp \
   Interface/KeySchemePlotter.cpp \
   Interface/KeyboardShutter.cpp \
   Interface/Plotter.cpp \

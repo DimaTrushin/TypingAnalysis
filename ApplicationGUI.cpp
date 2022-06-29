@@ -8,7 +8,8 @@ CApplicationGUI::CApplicationGUI()
       MainTextPrinter_(AppWindow_.getMainTextEdit()),
       SpeedPlotter_(AppWindow_.getSpeedPlot()),
       StatisticsView_(AppWindow_.getStatisticsTable()),
-      KeySchemePlotter_(AppWindow_.getKeySchemePlot()) {
+      KeySchemePlotter_(AppWindow_.getKeySchemePlot()),
+      AppActions_(AppWindow_.getActionList()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

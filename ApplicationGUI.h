@@ -24,6 +24,7 @@ class CApplicationGUI {
   using CPlotter = NSInterface::CSpeedPlotter;
   using CStatisticsView = NSInterface::CStatisticsView;
   using CKeySchemePlotter = NSInterface::CKeySchemePlotter;
+  using CActions = NSInterface::CActions;
 
 public:
   CApplicationGUI();
@@ -41,6 +42,7 @@ protected:
   CPlotter SpeedPlotter_;
   CStatisticsView StatisticsView_;
   CKeySchemePlotter KeySchemePlotter_;
+  CActions AppActions_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();
