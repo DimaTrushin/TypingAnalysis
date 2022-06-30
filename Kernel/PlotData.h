@@ -36,13 +36,6 @@ public:
 
   void fillPlots(const CContainer& Samples);
 
-  //  void fillY0(const CContainer& Samples);
-  //  void fillY1(const CContainer& Samples);
-  //  void fillYMB0(const CContainer& Samples);
-  //  void fillYMB1(const CContainer& Samples);
-  //  void fillYR0(const CContainer& Samples);
-  //  void fillYR1(const CContainer& Samples);
-
 private:
   static constexpr const CIndex kDefaultGridSize = 2500;
   static constexpr const double kMaximum = 2500.;

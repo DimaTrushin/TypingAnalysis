@@ -73,60 +73,6 @@ void CPlotData::fillPlots(const CContainer& Samples) {
   find_max0();
 }
 
-// void CPlotData::fillY0(const CContainer& Samples) {
-//  CNormalApproximation0 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    Y0_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
-// void CPlotData::fillY1(const CContainer& Samples) {
-//  CNormalApproximation1 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    Y1_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
-// void CPlotData::fillYMB0(const CContainer& Samples) {
-//  CMaxwellBoltzmannApproximation0 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    YMB0_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
-// void CPlotData::fillYMB1(const CContainer& Samples) {
-//  CMaxwellBoltzmannApproximation1 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    YMB1_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
-// void CPlotData::fillYR0(const CContainer& Samples) {
-//  CRayleighApproximation0 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    YR0_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
-// void CPlotData::fillYR1(const CContainer& Samples) {
-//  CRayleighApproximation1 Function;
-//  CParallelAccess Parallel;
-//  Parallel->for_(size_t(0), X_.size(), [&](size_t i) {
-//    YR1_[i] = Function(Samples, X_[i]);
-//    ;
-//  });
-//}
-
 void CPlotData::fillX() {
   double step = (Maximum_ - Minimum_) / (X_.size() - 1);
   for (size_t i = 0; i < X_.size(); ++i) {
