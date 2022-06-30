@@ -1,6 +1,6 @@
 #include "SeanceManager.h"
 
-#include "FileHandler.h"
+#include "FileHandlers.h"
 
 namespace NSApplication {
 namespace NSKernel {

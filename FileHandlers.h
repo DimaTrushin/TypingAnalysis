@@ -1,5 +1,5 @@
-#ifndef NSAPPLICATION_NSKERNEL_CFILEHANDLER_H
-#define NSAPPLICATION_NSKERNEL_CFILEHANDLER_H
+#ifndef NSAPPLICATION_CFILEHANDLERS_H
+#define NSAPPLICATION_CFILEHANDLERS_H
 
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
@@ -10,9 +10,8 @@
 #include <QString>
 
 namespace NSApplication {
-namespace NSKernel {
 
-namespace NSFileHandlerDetail {
+namespace NSFileHandlersDetail {
 
 class CReaderDefines {
 public:
@@ -127,10 +126,10 @@ private:
 using CFileReaderBase = CArchiveHolder<CStreamHolder<CReaderDefines>>;
 using CFileWriterBase = CArchiveHolder<CStreamHolder<CWriterDefines>>;
 
-} // namespace NSFileHandlerDetail
+} // namespace NSFileHandlersDetail
 
-class CFileReader : public NSFileHandlerDetail::CFileReaderBase {
-  using CBase = NSFileHandlerDetail::CFileReaderBase;
+class CFileReader : public NSFileHandlersDetail::CFileReaderBase {
+  using CBase = NSFileHandlersDetail::CFileReaderBase;
 
 public:
   template<class T>
@@ -139,8 +138,8 @@ public:
     return *this;
   }
 };
-class CFileWriter : public NSFileHandlerDetail::CFileWriterBase {
-  using CBase = NSFileHandlerDetail::CFileWriterBase;
+class CFileWriter : public NSFileHandlersDetail::CFileWriterBase {
+  using CBase = NSFileHandlersDetail::CFileWriterBase;
 
 public:
   template<class T>
@@ -149,8 +148,6 @@ public:
     return *this;
   }
 };
-
-} // namespace NSKernel
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSKERNEL_CFILEHANDLER_H
+#endif // NSAPPLICATION_CFILEHANDLERS_H

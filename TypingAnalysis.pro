@@ -81,6 +81,7 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
+  FileHandlers.h \
   Interface/Actions.h \
   Interface/FileActionController.h \
   Interface/FileActionKeyboardBlocker.h \
@@ -96,7 +97,6 @@ HEADERS += \
   Interface/TextPrinter.h \
   Kernel/AnalyticData.h \
   Kernel/AnalyticalModule.h \
-  Kernel/FileHandler.h \
   Kernel/FingerLayout.h \
   Kernel/KeyEvent.h \
   Kernel/KeyFlags.h \
@@ -191,6 +191,7 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
+  FileHandlers.cpp \
   Interface/Actions.cpp \
   Interface/FileActionController.cpp \
   Interface/FileActionKeyboardBlocker.cpp \
@@ -206,7 +207,6 @@ SOURCES += \
   Interface/TextPrinter.cpp \
   Kernel/AnalyticData.cpp \
   Kernel/AnalyticalModule.cpp \
-  Kernel/FileHandler.cpp \
   Kernel/FingerLayout.cpp \
   Kernel/KeyEvent.cpp \
   Kernel/KeyFlags.cpp \
