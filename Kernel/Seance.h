@@ -14,8 +14,11 @@ class CSeance : protected std::deque<CSession> {
   using CBase = std::deque<CSession>;
 
 public:
+  using CBase::value_type;
+
   using CBase::CBase;
   using CBase::emplace_back;
+  using CBase::push_back;
   using CBase::size;
 
   using CBase::begin;

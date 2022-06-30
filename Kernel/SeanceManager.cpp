@@ -1,8 +1,6 @@
 #include "SeanceManager.h"
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/filesystem/fstream.hpp>
+#include "FileHandler.h"
 
 namespace NSApplication {
 namespace NSKernel {
@@ -38,23 +36,20 @@ void CSeanceManagerImpl::makeSessions() {
 }
 
 void CSeanceManagerImpl::saveFile(const QString& Path) {
-  boost::filesystem::ofstream ofs(Path.toStdWString(),
-                                  std::fstream::binary | std::fstream::trunc);
-  boost::archive::binary_oarchive arch(ofs);
-  arch << CurrentSeance_;
+  CFileWriter Writer;
+  Writer.open(Path);
+  if (Writer.isOpen())
+    Writer << CurrentSeance_;
 }
 
 void CSeanceManagerImpl::loadFile(const QString& Path) {
-  try {
-    boost::filesystem::ifstream ifs(Path.toStdWString(), std::fstream::binary);
-    boost::archive::binary_iarchive arch(ifs);
+  CFileReader Reader;
+  Reader.open(Path);
+  if (Reader.isOpen()) {
     CSeance Tmp;
-    arch >> Tmp;
-    for (auto& session : Tmp)
-      CurrentSeance_.emplace_back(std::move(session));
+    Reader >> Tmp;
+    std::move(Tmp.begin(), Tmp.end(), std::back_inserter(CurrentSeance_));
     CurrentSeanceOutput_.notify();
-  } catch (...) {
-    // Unsupported File
   }
 }
 

@@ -45,14 +45,6 @@ private:
   CSeanceObservable CurrentSeanceOutput_;
   CSeanceMaker SeanceMaker_;
   CSeance CurrentSeance_;
-  // TO DO
-  // Add CurrentSeance
-  // Add flush method to move RawSessions from SeanceMaker to CurrentSeance
-  // Add LoadedSeances, to load seances from files
-  // Add NewSeance Input, to load new seances
-  // Add CurrentSession Output
-  // Add SeancesDescription Output, for GUI
-  // Add Set Current Session Control, for GUI
 };
 } // namespace NSSeanceManagerDetail
 
