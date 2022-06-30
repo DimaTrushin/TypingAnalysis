@@ -5,7 +5,7 @@
 #include "Qt/AppStatus.h"
 
 namespace NSApplication {
-namespace NSAppStatusAccessDetaul {
+namespace NSAppStatusAccessDetail {
 
 namespace nl = NSLibrary;
 namespace nq = NSQt;
@@ -23,10 +23,10 @@ public:
 class CAppStatusAccess
     : public nl::CAnyGlobalAccess<nq::CAppStatus, CAppStatusMain> {};
 
-} // namespace NSAppStatusAccessDetaul
+} // namespace NSAppStatusAccessDetail
 
-using CAppStatusInit = NSAppStatusAccessDetaul::CAppStatusInit;
-using CAppStatusAccess = NSAppStatusAccessDetaul::CAppStatusAccess;
+using CAppStatusInit = NSAppStatusAccessDetail::CAppStatusInit;
+using CAppStatusAccess = NSAppStatusAccessDetail::CAppStatusAccess;
 
 } // namespace NSApplication
 
