@@ -37,9 +37,9 @@ public:
   void fillPlots(const CContainer& Samples);
 
 private:
-  static constexpr const CIndex kDefaultGridSize = 2500;
+  static constexpr const CIndex kDefaultGridSize = 2501;
   static constexpr const double kMaximum = 2500.;
-  static constexpr const double kMinimum = 1.;
+  static constexpr const double kMinimum = 0.;
 
   void fillX();
   void find_max0();

@@ -55,9 +55,11 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
        QString::number(Tree->getPrintedTextDuration().toSecondsF(), 'f', 2)});
   Statistics.push_back(
       {printedTextSpeed(),
-       QString::number(Tree->getPrintedTextLength() /
-                           Tree->getPrintedTextDuration().toMinutesF(),
-                       'f', 2)});
+       (Tree->getPrintedTextDuration().toMinutesF() > 0
+            ? QString::number(Tree->getPrintedTextLength() /
+                                  Tree->getPrintedTextDuration().toMinutesF(),
+                              'f', 2)
+            : "0")});
   Statistics.push_back(
       {maxLikelihoodSpeed(), QString::number(Data.plotData().max0().x)});
   StatisticsDescriptionOutput_.set(std::move(Statistics));

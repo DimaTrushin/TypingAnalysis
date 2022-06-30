@@ -84,7 +84,6 @@ void CMainWindow::adjustSplitters() {
   adjustSplitter3();
   adjustMainSplitter();
   adjustSplitter5();
-  adjustSplitter6();
 }
 
 void CMainWindow::adjustSplitter() {
@@ -105,10 +104,6 @@ void CMainWindow::adjustMainSplitter() {
 
 void CMainWindow::adjustSplitter5() {
   ui_->splitter_5->setSizes(QList<int>() << 8000 << 2000);
-}
-
-void CMainWindow::adjustSplitter6() {
-  ui_->splitter_6->setSizes(QList<int>() << 1200 << 8800);
 }
 
 void CMainWindow::adjustButtonGroups() {

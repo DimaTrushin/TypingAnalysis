@@ -58,7 +58,6 @@ private:
   void adjustSplitter3();
   void adjustMainSplitter();
   void adjustSplitter5();
-  void adjustSplitter6();
   void adjustButtonGroups();
   void adjustButtonGroup();
   void adjustButtonGroup2();
