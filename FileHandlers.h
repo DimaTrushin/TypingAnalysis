@@ -134,7 +134,10 @@ class CFileReader : public NSFileHandlersDetail::CFileReaderBase {
 public:
   template<class T>
   CFileReader& operator>>(T& data) {
-    CBase::archive_() >> data;
+    try {
+      CBase::archive_() >> data;
+    } catch (...) {
+    }
     return *this;
   }
 };
@@ -144,7 +147,10 @@ class CFileWriter : public NSFileHandlersDetail::CFileWriterBase {
 public:
   template<class T>
   CFileWriter& operator<<(const T& data) {
-    CBase::archive_() << data;
+    try {
+      CBase::archive_() << data;
+    } catch (...) {
+    }
     return *this;
   }
 };
