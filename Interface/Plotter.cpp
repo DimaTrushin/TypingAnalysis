@@ -14,7 +14,7 @@ namespace NSInterface {
 namespace NSPlotterDetail {
 
 CSpeedPlotterImpl::CSpeedPlotterImpl(QwtPlot* Plot)
-    : Plot_(Plot), SpeedDataInput_([this](const CPlotData& PlotData) {
+    : Plot_(Plot), SpeedDataInput_([this](CPlotDataCRef PlotData) {
         handlePlotData(PlotData);
       }),
       LocalizerInput_(

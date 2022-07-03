@@ -23,8 +23,9 @@ class CSpeedPlotterImpl : public QObject {
   Q_OBJECT
 
   using CPlotData = NSKernel::CPlotData;
-  using CPlotDataObserver = NSLibrary::CObserver<CPlotData>;
-  using CPlotDataInput = NSLibrary::CHotInput<CPlotData>;
+  using CPlotDataCRef = std::reference_wrapper<const CPlotData>;
+  using CPlotDataObserver = NSLibrary::CObserver<CPlotDataCRef>;
+  using CPlotDataInput = NSLibrary::CHotInput<CPlotDataCRef>;
 
   using CLocalizer = NSLocal::CSpeedPlotterLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

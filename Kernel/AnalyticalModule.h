@@ -32,8 +32,10 @@ class CAnalyticalModuleImpl {
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
   using CTextDataInput = NSLibrary::CHotInput<CTextData>;
 
-  using CPlotDataObserver = NSLibrary::CObserver<CPlotData>;
-  using CPlotDataObservable = NSLibrary::CObservable<CPlotData>;
+  using CPlotDataCRef = std::reference_wrapper<const CPlotData>;
+
+  using CPlotDataObserver = NSLibrary::CObserver<CPlotDataCRef>;
+  using CPlotDataObservable = NSLibrary::CObservableData<CPlotDataCRef>;
   using CPlotDataGetType = CPlotDataObserver::CGetType;
 
   using CFunctionDataPtr = std::unique_ptr<CFunctionData>;
