@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_CKEYBOARDHANDLER_H
 
 #include "AnyKeyboardKiller.h"
+#include "KeyboardBlock.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/ThreadDetachable.h"
 #include "Qt/QtLoopExceptionHandler.h"
@@ -11,11 +12,6 @@
 
 namespace NSApplication {
 namespace NSKeyboard {
-
-struct CBlockerID {
-  using CType = unsigned int;
-  enum : CType { Active = 0, AppStatus = 1, FileAction = 2 };
-};
 
 // A system dependent keyboard listener lives in an independent thread
 // all exceptions of the listener are sent to corresponding slot
@@ -42,12 +38,14 @@ class CKeyboardHandler : public CQtMessagesRegistrator {
   using CKeyPressingObserver = NSLibrary::CObserver<CKeyPressing>;
   using CKeyReleasingObserver = NSLibrary::CObserver<CKeyReleasing>;
 
+  using CPressingHistory = std::optional<CKeyPressing>;
+
 public:
   CKeyboardHandler();
   ~CKeyboardHandler();
 
-  void activate(CBlockerID::CType Blocker);
-  void deactivate(CBlockerID::CType Blocker);
+  void activate(CKeyboardBlock::Enum Blocker);
+  void deactivate(CKeyboardBlock::Enum Blocker);
 
   bool isActive() const;
 
@@ -65,12 +63,14 @@ private:
   void stopListener() const noexcept;
   static void run(CAnyKillerPromise, CKeyboardHandler*);
 
+  void handleUserBlock(const CKeyPressing&);
+
   CWorkerThread ListenerThread_;
   CAnyKeyboardKiller KeyboardKiller_;
   CKeyPressingOut KeyPressingOut_;
   CKeyReleasingOut KeyReleasingOut_;
-  //  bool isActive_ = true;
-  CBlockerID::CType BlockerFlag_ = CBlockerID::Active;
+  CKeyboardBlock Block_;
+  CPressingHistory History_;
 };
 
 } // namespace NSKeyboard

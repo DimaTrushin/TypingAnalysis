@@ -21,10 +21,10 @@ NSFileActionKeyboardBlockerDetail::CFileActionKeyboardBlockerImpl::
 void CFileActionKeyboardBlockerImpl::handleBlock(EFileActionBlock Block) {
   switch (Block) {
   case EFileActionBlock::Activate:
-    KeyboardHandler_->activate(NSKeyboard::CBlockerID::FileAction);
+    KeyboardHandler_->activate(NSKeyboard::CKeyboardBlock::Enum::FileAction);
     break;
   case EFileActionBlock::Deactivate:
-    KeyboardHandler_->deactivate(NSKeyboard::CBlockerID::FileAction);
+    KeyboardHandler_->deactivate(NSKeyboard::CKeyboardBlock::Enum::FileAction);
     break;
   default:
     break;

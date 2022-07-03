@@ -27,16 +27,16 @@ CKeyboardHandler::~CKeyboardHandler() {
   stopListener();
 }
 
-void CKeyboardHandler::activate(CBlockerID::CType Blocker) {
-  BlockerFlag_ &= static_cast<CBlockerID::CType>(-1) ^ Blocker;
+void CKeyboardHandler::activate(CKeyboardBlock::Enum Blocker) {
+  Block_.activate(Blocker);
 }
 
-void CKeyboardHandler::deactivate(CBlockerID::CType Blocker) {
-  BlockerFlag_ |= Blocker;
+void CKeyboardHandler::deactivate(CKeyboardBlock::Enum Blocker) {
+  Block_.deactivate(Blocker);
 }
 
 bool CKeyboardHandler::isActive() const {
-  return BlockerFlag_ == CBlockerID::Active;
+  return Block_.isActive();
 }
 
 void CKeyboardHandler::subscribeToKeyPressing(
@@ -54,6 +54,7 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
   if (isActive())
     KeyPressingOut_.set(KeyPressing);
+  handleUserBlock(KeyPressing);
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
@@ -80,6 +81,17 @@ void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
   } catch (...) {
     CListenerExceptionHandler React(KeyboardHandler);
   }
+}
+
+void CKeyboardHandler::handleUserBlock(const CKeyPressing& KeyPressing) {
+  if (History_.has_value()) {
+    // TO DO
+    // Should make the combination of keys adjustable
+    if (History_->KeyID == CKeyIDEnum::F8 &&
+        KeyPressing.KeyID == CKeyIDEnum::F9)
+      Block_.switchBlock(CKeyboardBlock::Enum::UserBlock);
+  }
+  History_ = KeyPressing;
 }
 
 } // namespace NSKeyboard

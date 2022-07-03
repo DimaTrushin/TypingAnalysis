@@ -131,6 +131,7 @@ HEADERS += \
   Keyboard/KeyID.h \
   Keyboard/KeyPosition.h \
   Keyboard/KeyTextData.h \
+  Keyboard/KeyboardBlock.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
   Keyboard/ListenerExceptionHandler.h \
@@ -239,6 +240,7 @@ SOURCES += \
   Kernel/UserDataModule.cpp \
   Keyboard/KeyID.cpp \
   Keyboard/KeyTextData.cpp \
+  Keyboard/KeyboardBlock.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
