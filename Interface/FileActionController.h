@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CFILEACTIONCONTROLLER_H
 #define NSAPPLICATION_NSINTERFACE_CFILEACTIONCONTROLLER_H
 
-#include "Actions.h"
+#include "FileMenu.h"
 #include "Kernel/SeanceManager.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"

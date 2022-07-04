@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CFILEACTIONKEYBOARDBLOCKER_H
 #define NSAPPLICATION_NSINTERFACE_CFILEACTIONKEYBOARDBLOCKER_H
 
-#include "Actions.h"
+#include "FileMenu.h"
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 

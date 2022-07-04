@@ -31,8 +31,8 @@ CApplicationImpl::CApplicationImpl()
 
   KeySchemeModule_->subscribeToKeyScheme(KeySchemePlotter_->keySchemeInput());
 
-  AppActions_.subscribeToFileAction(FileActionController_->fileActionInput());
-  AppActions_.subscribeToFileActionBlocker(
+  FileMenu_->subscribeToFileAction(FileActionController_->fileActionInput());
+  FileMenu_->subscribeToFileActionBlocker(
       FileActionKeyboardBlocker_->fileActoinBlockInput());
 
   LocalizationModule_->subscribeToSeanceViewLocalizer(

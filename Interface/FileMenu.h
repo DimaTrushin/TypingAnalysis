@@ -1,21 +1,18 @@
-#ifndef NSAPPLICATION_NSINTERFACE_CACTIONS_H
-#define NSAPPLICATION_NSINTERFACE_CACTIONS_H
+#ifndef NSAPPLICATION_NSINTERFACE_CFILEMENU_H
+#define NSAPPLICATION_NSINTERFACE_CFILEMENU_H
 
 #include <QObject>
 
 #include "Library/Observer/Observer.h"
+#include "Library/StlExtension/MvcWrappers.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
+class QMenu;
 QT_END_NAMESPACE
 
 namespace NSApplication {
 namespace NSInterface {
-
-struct CActionList {
-  QAction* saveFile;
-  QAction* loadFile;
-};
 
 enum class EFileAction { Save, Load };
 
@@ -26,7 +23,9 @@ struct CFileCommand {
 
 enum class EFileActionBlock { Activate, Deactivate };
 
-class CActions : public QObject {
+namespace NSFileMenuDetail {
+
+class CFileMenuImpl : public QObject {
   Q_OBJECT
 
   using CFileActionObserver = NSLibrary::CObserver<CFileCommand>;
@@ -37,7 +36,7 @@ class CActions : public QObject {
       NSLibrary::CObservableData<EFileActionBlock>;
 
 public:
-  CActions(const CActionList& ActionList);
+  explicit CFileMenuImpl(QMenu* FileMenu);
 
   void subscribeToFileAction(CFileActionObserver* obs);
   void subscribeToFileActionBlocker(CFileActionBlockObserver* obs);
@@ -47,11 +46,15 @@ public Q_SLOTS:
   void loadFile();
 
 private:
+  QMenu* Menu_;
   CFileActionObservable FileAction_;
   CFileActionBlockObservable FileActionBlocker_;
 };
+} // namespace NSFileMenuDetail
+
+using CFileMenu = NSLibrary::CViewWrapper<NSFileMenuDetail::CFileMenuImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication
 
-#endif // NSAPPLICATION_NSINTERFACE_CACTIONS_H
+#endif // NSAPPLICATION_NSINTERFACE_CFILEMENU_H

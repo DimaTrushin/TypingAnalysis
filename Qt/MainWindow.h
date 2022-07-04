@@ -4,13 +4,14 @@
 #include <QMainWindow>
 #include <memory>
 
-#include "Interface/Actions.h"
+#include "Interface/FileMenu.h"
 #include "Interface/TextModeView.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
+class QActionGroup;
 class QButtonGroup;
 class QCloseEvent;
 class QSplitter;
@@ -27,7 +28,6 @@ namespace NSQt {
 class CMainWindow : public QMainWindow {
   Q_OBJECT
   using CTextModeInitData = NSInterface::CTextModeView::CInitData;
-  using CActionList = NSInterface::CActionList;
 
 public:
   CMainWindow(QWidget* parent = nullptr);
@@ -45,13 +45,15 @@ public:
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;
-  CActionList getActionList() const;
+  QMenu* getFileMenu() const;
 
 Q_SIGNALS:
   bool closeMainWindow();
 
 private:
   void adjustStaticInterface();
+  void adjustMenu();
+  void adjustMenu(QMenu* menu, std::unique_ptr<QActionGroup>* Group);
   void adjustSplitters();
   void adjustSplitter();
   void adjustSplitter2();
@@ -70,6 +72,9 @@ private:
   std::unique_ptr<Ui::MainWindow> ui_;
   QwtPlot* SpeedPlot_;
   QwtPlot* KeySchemePlot_;
+  std::unique_ptr<QActionGroup> ShiftActions_;
+  std::unique_ptr<QActionGroup> CtrlActions_;
+  std::unique_ptr<QActionGroup> AltActions_;
 };
 } // namespace NSQt
 } // namespace NSApplication

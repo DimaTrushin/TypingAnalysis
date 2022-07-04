@@ -604,7 +604,43 @@
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
    </widget>
+   <widget class="QMenu" name="menuModifiers">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Modifiers</string>
+    </property>
+    <widget class="QMenu" name="menuShift">
+     <property name="title">
+      <string>Shift</string>
+     </property>
+     <addaction name="actionNon"/>
+     <addaction name="actionAll"/>
+     <addaction name="actionEssential"/>
+    </widget>
+    <widget class="QMenu" name="menuCtrl">
+     <property name="title">
+      <string>Ctrl</string>
+     </property>
+     <addaction name="actionNon_2"/>
+     <addaction name="actionAll_2"/>
+     <addaction name="actionEssential_2"/>
+    </widget>
+    <widget class="QMenu" name="menuAlt">
+     <property name="title">
+      <string>Alt</string>
+     </property>
+     <addaction name="actionNon_3"/>
+     <addaction name="actionAll_3"/>
+     <addaction name="actionEssential_3"/>
+    </widget>
+    <addaction name="menuShift"/>
+    <addaction name="menuCtrl"/>
+    <addaction name="menuAlt"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuModifiers"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave">
@@ -623,6 +659,81 @@
     <string>Ctrl+L</string>
    </property>
   </action>
+  <action name="actionNon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Non</string>
+   </property>
+  </action>
+  <action name="actionAll">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>All</string>
+   </property>
+  </action>
+  <action name="actionEssential">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Essential</string>
+   </property>
+  </action>
+  <action name="actionNon_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Non</string>
+   </property>
+  </action>
+  <action name="actionAll_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>All</string>
+   </property>
+  </action>
+  <action name="actionEssential_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Essential</string>
+   </property>
+  </action>
+  <action name="actionNon_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Non</string>
+   </property>
+  </action>
+  <action name="actionAll_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>All</string>
+   </property>
+  </action>
+  <action name="actionEssential_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Essential</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -637,8 +748,8 @@
      <y>50</y>
     </hint>
     <hint type="destinationlabel">
-     <x>129</x>
-     <y>103</y>
+     <x>191</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>

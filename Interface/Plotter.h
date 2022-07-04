@@ -59,6 +59,9 @@ private:
   QString density3Name() const;
   QString derivative3Name() const;
 
+  static constexpr double YLeftMinDefault_ = 0.0;
+  static constexpr double YLeftMaxDefault_ = 0.004;
+
   QwtPlot* Plot_;
   QwtPlotCurve* Speed0_;
   QwtPlotCurve* Speed1_;

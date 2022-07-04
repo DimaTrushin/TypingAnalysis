@@ -51,6 +51,7 @@ void CSpeedPlotterImpl::adjustPlot() {
                    &CSpeedPlotterImpl::legendChecked);
   Plot_->insertLegend(Legend.release(), QwtPlot::RightLegend);
 
+  Plot_->setAxisScale(QwtAxis::YLeft, YLeftMinDefault_, YLeftMaxDefault_);
   Plot_->setAxisVisible(QwtAxis::YRight);
 
   Plot_->setAxisTitle(QwtAxis::XBottom, horizontalAxisTitle());
@@ -85,7 +86,7 @@ void CSpeedPlotterImpl::setCurves() {
   Speed1->setYAxis(QwtAxis::YRight);
   Speed1_ = Speed1.release();
   Speed1_->attach(Plot_);
-  checkItem(Speed1_, true);
+  checkItem(Speed1_, false);
 
   std::unique_ptr<QwtPlotCurve> SpeedMB0 =
       std::make_unique<QwtPlotCurve>(density2Name());
@@ -96,7 +97,7 @@ void CSpeedPlotterImpl::setCurves() {
   SpeedMB0->setPen(QColor(50, 200, 50));
   SpeedMB0_ = SpeedMB0.release();
   SpeedMB0_->attach(Plot_);
-  checkItem(SpeedMB0_, true);
+  checkItem(SpeedMB0_, false);
 
   std::unique_ptr<QwtPlotCurve> SpeedMB1 =
       std::make_unique<QwtPlotCurve>(derivative2Name());
@@ -108,7 +109,7 @@ void CSpeedPlotterImpl::setCurves() {
   SpeedMB1->setYAxis(QwtAxis::YRight);
   SpeedMB1_ = SpeedMB1.release();
   SpeedMB1_->attach(Plot_);
-  checkItem(SpeedMB1_, true);
+  checkItem(SpeedMB1_, false);
 
   std::unique_ptr<QwtPlotCurve> SpeedR0 =
       std::make_unique<QwtPlotCurve>(density3Name());
@@ -119,7 +120,7 @@ void CSpeedPlotterImpl::setCurves() {
   SpeedR0->setPen(QColor(50, 200, 200));
   SpeedR0_ = SpeedR0.release();
   SpeedR0_->attach(Plot_);
-  checkItem(SpeedR0_, true);
+  checkItem(SpeedR0_, false);
 
   std::unique_ptr<QwtPlotCurve> SpeedR1 =
       std::make_unique<QwtPlotCurve>(derivative3Name());
@@ -131,7 +132,7 @@ void CSpeedPlotterImpl::setCurves() {
   SpeedR1->setYAxis(QwtAxis::YRight);
   SpeedR1_ = SpeedR1.release();
   SpeedR1_->attach(Plot_);
-  checkItem(SpeedR1_, true);
+  checkItem(SpeedR1_, false);
 }
 
 void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
@@ -144,8 +145,10 @@ void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
     QwtLegendLabel* legendLabel =
         qobject_cast<QwtLegendLabel*>(legendWidgets[0]);
 
-    if (legendLabel)
+    if (legendLabel) {
       legendLabel->setChecked(on);
+      legendLabel->checked(on);
+    }
   }
 }
 

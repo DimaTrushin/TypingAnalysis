@@ -3,6 +3,7 @@
 #include "ui_MainWindow.h"
 
 #include "qwt_plot.h"
+#include <QActionGroup>
 #include <QCloseEvent>
 
 namespace NSApplication {
@@ -14,6 +15,7 @@ CMainWindow::CMainWindow(QWidget* parent)
   addQwtPlotPanel();
   addQwtKeyScheme();
   adjustStaticInterface();
+  adjustMenu();
 }
 
 CMainWindow::~CMainWindow() = default;
@@ -69,13 +71,30 @@ QwtPlot* CMainWindow::getKeySchemePlot() const {
   return KeySchemePlot_;
 }
 
-CMainWindow::CActionList CMainWindow::getActionList() const {
-  return {ui_->actionSave, ui_->actionLoad};
+QMenu* CMainWindow::getFileMenu() const {
+  return ui_->menuFile;
 }
 
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();
+}
+
+void CMainWindow::adjustMenu() {
+  connect(ui_->radioButton, &QRadioButton::toggled,
+          ui_->menuModifiers->menuAction(), &QAction::setDisabled);
+  adjustMenu(ui_->menuShift, &ShiftActions_);
+  adjustMenu(ui_->menuCtrl, &CtrlActions_);
+  adjustMenu(ui_->menuAlt, &AltActions_);
+}
+
+void CMainWindow::adjustMenu(QMenu* menu,
+                             std::unique_ptr<QActionGroup>* Group) {
+  *Group = std::make_unique<QActionGroup>(this);
+  auto Actions = menu->actions();
+  for (auto Action : Actions)
+    (*Group)->addAction(Action);
+  Actions[0]->setChecked(true);
 }
 
 void CMainWindow::adjustSplitters() {

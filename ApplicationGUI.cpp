@@ -9,7 +9,7 @@ CApplicationGUI::CApplicationGUI()
       SpeedPlotter_(AppWindow_.getSpeedPlot()),
       StatisticsView_(AppWindow_.getStatisticsTable()),
       KeySchemePlotter_(AppWindow_.getKeySchemePlot()),
-      AppActions_(AppWindow_.getActionList()) {
+      FileMenu_(AppWindow_.getFileMenu()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();
