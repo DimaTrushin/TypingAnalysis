@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Interface/FileMenu.h"
+#include "Interface/ModifiersMenu.h"
 #include "Interface/TextModeView.h"
 
 QT_BEGIN_NAMESPACE
@@ -28,6 +29,7 @@ namespace NSQt {
 class CMainWindow : public QMainWindow {
   Q_OBJECT
   using CTextModeInitData = NSInterface::CTextModeView::CInitData;
+  using CModifiersModeInitData = NSInterface::CModifiersMenu::CInitData;
 
 public:
   CMainWindow(QWidget* parent = nullptr);
@@ -46,6 +48,7 @@ public:
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;
   QMenu* getFileMenu() const;
+  CModifiersModeInitData getModifiersMenuInit() const;
 
 Q_SIGNALS:
   bool closeMainWindow();

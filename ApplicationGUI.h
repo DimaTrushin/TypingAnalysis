@@ -25,6 +25,7 @@ class CApplicationGUI {
   using CStatisticsView = NSInterface::CStatisticsView;
   using CKeySchemePlotter = NSInterface::CKeySchemePlotter;
   using CFileMenu = NSInterface::CFileMenu;
+  using CModifiersMenu = NSInterface::CModifiersMenu;
 
 public:
   CApplicationGUI();
@@ -43,6 +44,7 @@ protected:
   CStatisticsView StatisticsView_;
   CKeySchemePlotter KeySchemePlotter_;
   CFileMenu FileMenu_;
+  CModifiersMenu ModifiersMenu_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

@@ -6,6 +6,7 @@
 #include "Interface/FileActionController.h"
 #include "Interface/FileActionKeyboardBlocker.h"
 #include "Interface/KeyboardShutter.h"
+#include "Interface/ModifiersModeController.h"
 #include "Interface/SeanceViewController.h"
 #include "Interface/SessionFlusher.h"
 #include "Interface/TextModeController.h"
@@ -20,6 +21,7 @@ class CApplicationImpl : protected CApplicationKernel,
   using CTextModeController = NSInterface::CTextModeController;
   using CFileActionController = NSInterface::CFileActionController;
   using CFileActionKeyboardBlocker = NSInterface::CFileActionKeyboardBlocker;
+  using CModifiersModeController = NSInterface::CModifiersModeController;
 
 public:
   CApplicationImpl();
@@ -31,6 +33,7 @@ private:
   CTextModeController TextModeController_;
   CFileActionController FileActionController_;
   CFileActionKeyboardBlocker FileActionKeyboardBlocker_;
+  CModifiersModeController ModifiersModeController_;
 };
 
 } // namespace NSApplication

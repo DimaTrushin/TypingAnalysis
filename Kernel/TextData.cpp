@@ -31,15 +31,15 @@ ETextMode CTextData::textMode() const {
 }
 
 EModifierMode CTextData::shiftMode() const {
-  return TextMode_.ShiftMode;
+  return TextMode_.Modifiers.ShiftMode;
 }
 
 EModifierMode CTextData::ctrlMode() const {
-  return TextMode_.CtrlMode;
+  return TextMode_.Modifiers.CtrlMode;
 }
 
 EModifierMode CTextData::altMode() const {
-  return TextMode_.AltMode;
+  return TextMode_.Modifiers.AltMode;
 }
 
 CSessionTextSequencer CTextData::sessionSequencer() const {

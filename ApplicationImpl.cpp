@@ -11,7 +11,8 @@ CApplicationImpl::CApplicationImpl()
       SeanceViewController_(SessionSelector_.model()),
       TextModeController_(TextModule_.model()),
       FileActionController_(SeanceManager_.model()),
-      FileActionKeyboardBlocker_(CKeyboardHandlerAccess().operator->()) {
+      FileActionKeyboardBlocker_(CKeyboardHandlerAccess().operator->()),
+      ModifiersModeController_(TextModule_.model()) {
   CAppStatusAccess AppStatus;
   AppStatus->subscribeToAppState(KeyboardShutter_->input());
   AppStatus->subscribeToAppState(SessionFlusher_->input());
@@ -24,6 +25,10 @@ CApplicationImpl::CApplicationImpl()
 
   TextModule_->subscribeToCurrentTextMode(TextModeView_->textModeInput());
   TextModeView_->subscribeToTextMode(TextModeController_->textModeInput());
+
+  TextModule_->subscribeToCurrentTextMode(ModifiersMenu_->modifersModeInput());
+  ModifiersMenu_->subscribeToModifiersMode(
+      ModifiersModeController_->textModeInput());
 
   TextModule_->subscribeToTextData(MainTextPrinter_->textDataInput());
 

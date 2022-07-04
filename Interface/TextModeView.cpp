@@ -125,9 +125,9 @@ void CTextModeViewImpl::toggleAltButton(int id) {
 
 void CTextModeViewImpl::toggleAllButtons(CTextMode Mode) {
   toggleTextButton(getTextInt(Mode.TextMode));
-  toggleShiftButton(getModifierInt(Mode.ShiftMode));
-  toggleCtrlButton(getModifierInt(Mode.CtrlMode));
-  toggleAltButton(getModifierInt(Mode.AltMode));
+  toggleShiftButton(getModifierInt(Mode.Modifiers.ShiftMode));
+  toggleCtrlButton(getModifierInt(Mode.Modifiers.CtrlMode));
+  toggleAltButton(getModifierInt(Mode.Modifiers.AltMode));
 }
 
 CTextModeViewImpl::ETextMode CTextModeViewImpl::getTextMode(int Id) {
@@ -210,9 +210,9 @@ void CTextModeViewImpl::onTextModeInput(const CTextMode& Mode) {
 
 CTextModeViewImpl::CTextMode CTextModeViewImpl::getCurrentTextMode() const {
   return {getTextMode(TextModeGroup_->checkedId()),
-          getModifierMod(ShiftGroup_->checkedId()),
-          getModifierMod(CtrlGroup_->checkedId()),
-          getModifierMod(AltGroup_->checkedId())};
+          {getModifierMod(ShiftGroup_->checkedId()),
+           getModifierMod(CtrlGroup_->checkedId()),
+           getModifierMod(AltGroup_->checkedId())}};
 }
 
 bool CTextModeViewImpl::areSwitchesInCorrectState() const {

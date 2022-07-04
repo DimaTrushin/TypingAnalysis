@@ -69,9 +69,9 @@ CFullTextSequencer::CFullTextSequencer(const CTextDataTree& TextTree,
                                        CTextMode mode)
     : CBase(CTextTreeFullSequencer(TextTree->beginFullText(),
                                    TextTree->endFullText())) {
-  AddModifier(Modifiers.Shifts, mode.ShiftMode);
-  AddModifier(Modifiers.Ctrls, mode.CtrlMode);
-  AddModifier(Modifiers.Alts, mode.AltMode);
+  AddModifier(Modifiers.Shifts, mode.Modifiers.ShiftMode);
+  AddModifier(Modifiers.Ctrls, mode.Modifiers.CtrlMode);
+  AddModifier(Modifiers.Alts, mode.Modifiers.AltMode);
 }
 
 void CFullTextSequencer::AddModifier(const CModifierData& Modifier,
@@ -95,9 +95,9 @@ CPrintedTextSequencer::CPrintedTextSequencer(
     CTextMode mode)
     : CBase(CTextTreePrintedSequencer(TextTree->beginPrintedText(),
                                       TextTree->endPrintedText())) {
-  AddModifier(Modifiers.Shifts, mode.ShiftMode);
-  AddModifier(Modifiers.Ctrls, mode.CtrlMode);
-  AddModifier(Modifiers.Alts, mode.AltMode);
+  AddModifier(Modifiers.Shifts, mode.Modifiers.ShiftMode);
+  AddModifier(Modifiers.Ctrls, mode.Modifiers.CtrlMode);
+  AddModifier(Modifiers.Alts, mode.Modifiers.AltMode);
 }
 
 void CPrintedTextSequencer::AddModifier(const CModifierData& Modifier,

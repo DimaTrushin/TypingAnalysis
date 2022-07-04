@@ -75,6 +75,10 @@ QMenu* CMainWindow::getFileMenu() const {
   return ui_->menuFile;
 }
 
+CMainWindow::CModifiersModeInitData CMainWindow::getModifiersMenuInit() const {
+  return {ui_->menuModifiers, ui_->menuShift, ui_->menuCtrl, ui_->menuAlt};
+}
+
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();

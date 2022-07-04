@@ -87,6 +87,8 @@ HEADERS += \
   Interface/FileMenu.h \
   Interface/KeySchemePlotter.h \
   Interface/KeyboardShutter.h \
+  Interface/ModifiersMenu.h \
+  Interface/ModifiersModeController.h \
   Interface/Plotter.h \
   Interface/SeanceView.h \
   Interface/SeanceViewController.h \
@@ -198,6 +200,8 @@ SOURCES += \
   Interface/FileMenu.cpp \
   Interface/KeySchemePlotter.cpp \
   Interface/KeyboardShutter.cpp \
+  Interface/ModifiersMenu.cpp \
+  Interface/ModifiersModeController.cpp \
   Interface/Plotter.cpp \
   Interface/SeanceView.cpp \
   Interface/SeanceViewController.cpp \

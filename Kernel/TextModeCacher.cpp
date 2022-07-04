@@ -21,12 +21,12 @@ size_t CTextCaheKeyHash::operator()(const CTextCacheKey& Data) const {
   boost::hash_combine(seed, Data.pSession);
   boost::hash_combine(seed, static_cast<unsigned char>(Data.TextMode.TextMode));
   if (Data.TextMode.TextMode != NSKernel::ETextMode::Raw) {
-    boost::hash_combine(seed,
-                        static_cast<unsigned char>(Data.TextMode.ShiftMode));
-    boost::hash_combine(seed,
-                        static_cast<unsigned char>(Data.TextMode.CtrlMode));
-    boost::hash_combine(seed,
-                        static_cast<unsigned char>(Data.TextMode.AltMode));
+    boost::hash_combine(
+        seed, static_cast<unsigned char>(Data.TextMode.Modifiers.ShiftMode));
+    boost::hash_combine(
+        seed, static_cast<unsigned char>(Data.TextMode.Modifiers.CtrlMode));
+    boost::hash_combine(
+        seed, static_cast<unsigned char>(Data.TextMode.Modifiers.AltMode));
   }
   return seed;
 }
