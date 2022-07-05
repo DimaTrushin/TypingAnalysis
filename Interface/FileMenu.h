@@ -5,6 +5,7 @@
 
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Local/Localizer.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -35,9 +36,14 @@ class CFileMenuImpl : public QObject {
   using CFileActionBlockObservable =
       NSLibrary::CObservableData<EFileActionBlock>;
 
+  using CLocalizer = NSLocal::CFileMenuLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+
 public:
   explicit CFileMenuImpl(QMenu* FileMenu);
 
+  CLocalizerObserver* localizerInput();
   void subscribeToFileAction(CFileActionObserver* obs);
   void subscribeToFileActionBlocker(CFileActionBlockObserver* obs);
 
@@ -46,9 +52,12 @@ public Q_SLOTS:
   void loadFile();
 
 private:
+  void setLocale(const CLocalizer& Localizer);
+
   QMenu* Menu_;
   CFileActionObservable FileAction_;
   CFileActionBlockObservable FileActionBlocker_;
+  CLocalizerInput LocalizerInput_;
 };
 } // namespace NSFileMenuDetail
 

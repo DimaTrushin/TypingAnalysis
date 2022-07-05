@@ -58,6 +58,12 @@ void CLocalizationModuleImpl::subscribeToKeySchemePlotterLocalizer(
   KeySchemePlotterLocalizerOutput_.subscribe(obs);
 }
 
+void CLocalizationModuleImpl::subscribeToFileMenuLocalizer(
+    CFileMenuLocalizerObserver* obs) {
+  assert(obs);
+  FileMenuLocalizerOutput_.subscribe(obs);
+}
+
 void CLocalizationModuleImpl::notifyAll() {
   SeanceViewLocalizerOutput_.notify();
   StatistiscViewLocalizerOutput_.notify();
@@ -65,6 +71,7 @@ void CLocalizationModuleImpl::notifyAll() {
   TextModeViewLocalizerOutput_.notify();
   SpeedPlotterLocalizerOutput_.notify();
   KeySchemePlotterLocalizerOutput_.notify();
+  FileMenuLocalizerOutput_.notify();
 }
 
 CLocalizationModuleImpl::CSeanceViewLocalizerObservable
@@ -108,6 +115,13 @@ CLocalizationModuleImpl::makeKeySchemePlotterLocalizer() {
       [this]() -> CKeySchemePlotterGetType {
         return Localizer_.getKeySchemePlotterLocalizer();
       });
+}
+
+CLocalizationModuleImpl::CFileMenuLocalizerObservable
+CLocalizationModuleImpl::makeFileMenuLocalizer() {
+  return CFileMenuLocalizerObservable([this]() -> CFileMenuGetType {
+    return Localizer_.getFileMenuLocalizer();
+  });
 }
 } // namespace NSLocalizationModuleDetail
 } // namespace NSLocal

@@ -51,6 +51,11 @@ class CLocalizationModuleImpl {
       NSLibrary::CObservable<CStatisticsLocalizer>;
   using CStatisticsGetType = CStatisticsLocalizerObserver::CGetType;
 
+  using CFileMenuLocalizerObserver = NSLibrary::CObserver<CFileMenuLocalizer>;
+  using CFileMenuLocalizerObservable =
+      NSLibrary::CObservable<CFileMenuLocalizer>;
+  using CFileMenuGetType = CFileMenuLocalizerObserver::CGetType;
+
 public:
   CLocalizationModuleImpl() = default;
 
@@ -64,6 +69,7 @@ public:
   void subscribeToSpeedPlotterLocalizer(CSpeedPlotterLocalizerObserver* obs);
   void
   subscribeToKeySchemePlotterLocalizer(CKeySchemePlotterLocalizerObserver* obs);
+  void subscribeToFileMenuLocalizer(CFileMenuLocalizerObserver* obs);
 
 private:
   void notifyAll();
@@ -74,6 +80,7 @@ private:
   CTextModeViewLocalizerObservable makeTextModeViewLocalizer();
   CSpeedPlotterLocalizerObservable makeSpeedPlotterLocalizer();
   CKeySchemePlotterLocalizerObservable makeKeySchemePlotterLocalizer();
+  CFileMenuLocalizerObservable makeFileMenuLocalizer();
 
   CLocalizer Localizer_ = CLocalizer::make<CRusLocale>();
 
@@ -89,6 +96,8 @@ private:
       makeSpeedPlotterLocalizer();
   CKeySchemePlotterLocalizerObservable KeySchemePlotterLocalizerOutput_ =
       makeKeySchemePlotterLocalizer();
+  CFileMenuLocalizerObservable FileMenuLocalizerOutput_ =
+      makeFileMenuLocalizer();
 };
 
 } // namespace NSLocalizationModuleDetail

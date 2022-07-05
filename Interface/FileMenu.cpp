@@ -9,12 +9,19 @@ namespace NSInterface {
 
 namespace NSFileMenuDetail {
 
-CFileMenuImpl::CFileMenuImpl(QMenu* FileMenu) : Menu_(FileMenu) {
+CFileMenuImpl::CFileMenuImpl(QMenu* FileMenu)
+    : Menu_(FileMenu), LocalizerInput_([this](const CLocalizer& Localizer) {
+        setLocale(Localizer);
+      }) {
   assert(Menu_);
   auto ActionList = Menu_->actions();
   assert(ActionList.size() == 2);
   connect(ActionList[0], &QAction::triggered, this, &CFileMenuImpl::saveFile);
   connect(ActionList[1], &QAction::triggered, this, &CFileMenuImpl::loadFile);
+}
+
+CFileMenuImpl::CLocalizerObserver* CFileMenuImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CFileMenuImpl::subscribeToFileAction(CFileActionObserver* obs) {
@@ -48,6 +55,14 @@ void CFileMenuImpl::loadFile() {
       nullptr, QString(), QString(), "TypingAnalysis (*.ta);;All (*.*)");
   FileActionBlocker_.set(EFileActionBlock::Activate);
   FileAction_.set(CFileCommand{std::move(file), EFileAction::Load});
+}
+
+void CFileMenuImpl::setLocale(const CLocalizer& Localizer) {
+  Menu_->setTitle(Localizer.menu());
+  auto ActionList = Menu_->actions();
+  assert(ActionList.size() == 2);
+  ActionList[0]->setText(Localizer.save());
+  ActionList[1]->setText(Localizer.load());
 }
 } // namespace NSFileMenuDetail
 } // namespace NSInterface

@@ -52,6 +52,8 @@ CApplicationImpl::CApplicationImpl()
       KeySchemePlotter_->localizerInput());
   LocalizationModule_->subscribeToStatisticsViewLocalizer(
       StatisticsView_->localizerInput());
+  LocalizationModule_->subscribeToFileMenuLocalizer(
+      FileMenu_->localizerInput());
 
   StatisticsModule_->subscribeToStatisticsDescription(
       StatisticsView_->statisticsDescriptionInput());
