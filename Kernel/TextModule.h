@@ -33,6 +33,7 @@ public:
   CTextModuleImpl();
   void subscribeToCurrentTextMode(CTextModeObserver* obs);
   void setCurrentTextMode(CTextMode);
+  void setCurrentETextMode(ETextMode);
   void setCurrentModifiersMode(CModifiersMode);
 
   CSessionObserver* currentSessionInput();

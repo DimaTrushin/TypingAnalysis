@@ -65,9 +65,6 @@ private:
   void adjustSplitter5();
   void adjustButtonGroups();
   void adjustButtonGroup();
-  void adjustButtonGroup2();
-  void adjustButtonGroup3();
-  void adjustButtonGroup4();
 
   void addQwtPlotPanel();
   void addQwtKeyScheme();

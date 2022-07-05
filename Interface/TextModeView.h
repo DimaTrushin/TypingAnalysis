@@ -31,7 +31,9 @@ class CTextModeViewImpl : public QObject {
   using CTextMode = NSKernel::CTextMode;
   using CTextModeObserver = NSLibrary::CObserver<CTextMode>;
   using CTextModeInput = NSLibrary::CHotInput<CTextMode>;
-  using CTextModeObservable = NSLibrary::CObservableData<CTextMode>;
+
+  using CETextModeObserver = NSLibrary::CObserver<ETextMode>;
+  using CETextModeObservable = NSLibrary::CObservableData<ETextMode>;
 
   using CLocalizer = NSLocal::CTextModeViewLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
@@ -46,40 +48,19 @@ public:
     QRadioButton* Raw;
     QRadioButton* Full;
     QRadioButton* Printed;
-    QButtonGroup* ShiftGroup;
-    QGroupBox* ShiftBox;
-    QRadioButton* ShiftNon;
-    QRadioButton* ShiftAll;
-    QRadioButton* ShiftEssential;
-    QButtonGroup* CtrlGroup;
-    QGroupBox* CtrlBox;
-    QRadioButton* CtrlNon;
-    QRadioButton* CtrlAll;
-    QRadioButton* CtrlEssential;
-    QButtonGroup* AltGroup;
-    QGroupBox* AltBox;
-    QRadioButton* AltNon;
-    QRadioButton* AltAll;
-    QRadioButton* AltEssential;
   };
 
   CTextModeViewImpl(const CInitData& InitData);
 
   CTextModeObserver* textModeInput();
   CLocalizerObserver* localizerInput();
-  void subscribeToTextMode(CTextModeObserver*);
+  void subscribeToTextMode(CETextModeObserver*);
 
 public Q_SLOTS:
   void TextButtonToggled(int id, bool checked);
-  void ShiftButtonToggled(int id, bool checked);
-  void CtrlButtonToggled(int id, bool checked);
-  void AltButtonToggled(int id, bool checked);
   void handleTextModeSwitchByGui();
 
   void toggleTextButton(int id);
-  void toggleShiftButton(int id);
-  void toggleCtrlButton(int id);
-  void toggleAltButton(int id);
 
   void toggleAllButtons(CTextMode);
 
@@ -90,7 +71,7 @@ private:
   static int getModifierInt(EModifierMode);
 
   void onTextModeInput(const CTextMode& Mode);
-  CTextMode getCurrentTextMode() const;
+  ETextMode getCurrentTextMode() const;
   bool areSwitchesInCorrectState() const;
   void setLocale(const CLocalizer& Localizer);
 
@@ -100,29 +81,11 @@ private:
   QRadioButton* Full_;
   QRadioButton* Printed_;
 
-  QButtonGroup* ShiftGroup_;
-  QGroupBox* ShiftBox_;
-  QRadioButton* ShiftNon_;
-  QRadioButton* ShiftAll_;
-  QRadioButton* ShiftEssential_;
-
-  QButtonGroup* CtrlGroup_;
-  QGroupBox* CtrlBox_;
-  QRadioButton* CtrlNon_;
-  QRadioButton* CtrlAll_;
-  QRadioButton* CtrlEssential_;
-
-  QButtonGroup* AltGroup_;
-  QGroupBox* AltBox_;
-  QRadioButton* AltNon_;
-  QRadioButton* AltAll_;
-  QRadioButton* AltEssential_;
-
   CSupressor FromModel_;
   CSupressor MySignal_;
 
   CTextModeInput TextModeInput_;
-  CTextModeObservable TextModeOutput_;
+  CETextModeObservable TextModeOutput_;
   CLocalizerInput LocalizerInput_;
 };
 } // namespace NSTextModeViewDetail

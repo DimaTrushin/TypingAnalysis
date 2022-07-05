@@ -29,6 +29,16 @@ void CTextModuleImpl::setCurrentTextMode(CTextMode Mode) {
   handleCurrentSession(*CurrentSession_.data());
 }
 
+void CTextModuleImpl::setCurrentETextMode(ETextMode Mode) {
+  if (CurrentTextMode_.TextMode == Mode)
+    return;
+  CurrentTextMode_.TextMode = Mode;
+  TextModeOutput_.notify();
+  if (!CurrentSession_.hasValue())
+    return;
+  handleCurrentSession(*CurrentSession_.data());
+}
+
 void CTextModuleImpl::setCurrentModifiersMode(CModifiersMode Mode) {
   if (CurrentTextMode_.TextMode == ETextMode::Raw)
     return;

@@ -6,7 +6,7 @@ namespace NSInterface {
 NSTextModeControllerDetail::CTextModeControllerImpl::CTextModeControllerImpl(
     CTextModuleImpl* TextModule)
     : TextModule_(TextModule),
-      TextModeInput_([this](const CTextMode& Mode) { handleTextMode(Mode); }) {
+      TextModeInput_([this](const ETextMode& Mode) { handleTextMode(Mode); }) {
   assert(TextModule_);
 }
 
@@ -16,8 +16,8 @@ NSTextModeControllerDetail::CTextModeControllerImpl::textModeInput() {
 }
 
 void NSTextModeControllerDetail::CTextModeControllerImpl::handleTextMode(
-    const CTextMode& Mode) {
-  TextModule_->setCurrentTextMode(Mode);
+    const ETextMode& Mode) {
+  TextModule_->setCurrentETextMode(Mode);
 }
 } // namespace NSInterface
 } // namespace NSApplication

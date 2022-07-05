@@ -13,10 +13,10 @@ namespace NSInterface {
 namespace NSTextModeControllerDetail {
 class CTextModeControllerImpl {
   using CTextModuleImpl = NSKernel::CTextModule::CImplementation;
-  using CTextMode = NSKernel::CTextMode;
+  using ETextMode = NSKernel::ETextMode;
 
-  using CTextModeObserver = NSLibrary::CObserver<CTextMode>;
-  using CTextModeInput = NSLibrary::CColdInput<CTextMode>;
+  using CTextModeObserver = NSLibrary::CObserver<ETextMode>;
+  using CTextModeInput = NSLibrary::CColdInput<ETextMode>;
 
 public:
   CTextModeControllerImpl(CTextModuleImpl*);
@@ -24,7 +24,7 @@ public:
   CTextModeObserver* textModeInput();
 
 private:
-  void handleTextMode(const CTextMode& Mode);
+  void handleTextMode(const ETextMode& Mode);
 
   CTextModuleImpl* TextModule_;
   CTextModeInput TextModeInput_;
