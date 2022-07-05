@@ -8,6 +8,7 @@
 #include "Library/Observer/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
+#include "Local/Localizer.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -32,6 +33,10 @@ class CModifiersMenuImpl : public QObject {
   using CModifiersModeObserver = NSLibrary::CObserver<CModifiersMode>;
   using CModifiersObservable = NSLibrary::CObservableData<CModifiersMode>;
 
+  using CLocalizer = NSLocal::CTextModeViewLocalizer;
+  using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;
+  using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
+
 public:
   struct CInitData {
     QMenu* Menu;
@@ -42,6 +47,7 @@ public:
   explicit CModifiersMenuImpl(const CInitData& InitData);
 
   CTextModeObserver* modifersModeInput();
+  CLocalizerObserver* localizerInput();
   void subscribeToModifiersMode(CModifiersModeObserver* obs);
 
 public Q_SLOTS:
@@ -67,10 +73,16 @@ private:
   void handleCtrlMode(EModifiersMode Mode);
   void handleAltMode(EModifiersMode Mode);
 
+  void setLocale(const CLocalizer& Localizer);
+  void setShiftLocale(const CLocalizer& Localizer);
+  void setCtrlLocale(const CLocalizer& Localizer);
+  void setAltLocale(const CLocalizer& Localizer);
+  void localizerMenuItems(const CLocalizer& Localizer, QMenu* Menu);
+
   EModifiersMode getShiftMode() const;
   EModifiersMode getCtrlMode() const;
   EModifiersMode getAltMode() const;
-  EModifiersMode getMode(QMenu* Menu) const;
+  static EModifiersMode getMode(QMenu* Menu);
 
   QMenu* Menu_;
   QMenu* ShiftMenu_;
@@ -82,6 +94,7 @@ private:
 
   CTextModeInput ModifiersInput_;
   CModifiersObservable ModifiersOutput_;
+  CLocalizerInput LocalizerInput_;
 };
 
 } // namespace NSModifiersMenuDetail

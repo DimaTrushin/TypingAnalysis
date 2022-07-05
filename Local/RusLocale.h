@@ -45,6 +45,7 @@ struct CRusLocale {
     static constexpr const char* Shift = "Shift";
     static constexpr const char* Ctrl = "Ctrl";
     static constexpr const char* Alt = "Alt";
+    static constexpr const char* Modifiers = "Модификаторы";
   };
 
   struct CSpeedPlotter {

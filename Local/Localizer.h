@@ -173,6 +173,9 @@ public:
   const QString& alt() const {
     return Alt_;
   }
+  const QString& modifiers() const {
+    return Modifiers_;
+  }
 
 private:
   template<class TTextModeViewLocale>
@@ -183,7 +186,8 @@ private:
         All_(TTextModeViewLocale::All),
         Essential_(TTextModeViewLocale::Essential),
         Shift_(TTextModeViewLocale::Shift), Ctrl_(TTextModeViewLocale::Ctrl),
-        Alt_(TTextModeViewLocale::Alt) {
+        Alt_(TTextModeViewLocale::Alt),
+        Modifiers_(TTextModeViewLocale::Modifiers) {
   }
 
   QString TextMode_;
@@ -196,6 +200,7 @@ private:
   QString Shift_;
   QString Ctrl_;
   QString Alt_;
+  QString Modifiers_;
 };
 
 class CSpeedPlotterLocalizer {

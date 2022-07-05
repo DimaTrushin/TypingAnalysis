@@ -12,7 +12,9 @@ CModifiersMenuImpl::CModifiersMenuImpl(const CInitData& InitData)
       CtrlMenu_(InitData.CtrlMenu), AltMenu_(InitData.AltMenu),
       ModifiersInput_([this](const CTextMode& Mode) {
         handleModifiersMode(Mode.Modifiers);
-      }) {
+      }),
+      LocalizerInput_(
+          [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(Menu_);
   assert(ShiftMenu_);
   assert(CtrlMenu_);
@@ -25,6 +27,10 @@ CModifiersMenuImpl::CModifiersMenuImpl(const CInitData& InitData)
 
 CModifiersMenuImpl::CTextModeObserver* CModifiersMenuImpl::modifersModeInput() {
   return &ModifiersInput_;
+}
+
+CModifiersMenuImpl::CLocalizerObserver* CModifiersMenuImpl::localizerInput() {
+  return &LocalizerInput_;
 }
 
 void CModifiersMenuImpl::subscribeToModifiersMode(CModifiersModeObserver* obs) {
@@ -215,6 +221,37 @@ void CModifiersMenuImpl::handleAltMode(EModifiersMode Mode) {
   }
 }
 
+void CModifiersMenuImpl::setLocale(const CLocalizer& Localizer) {
+  Menu_->setTitle(Localizer.modifiers());
+  setShiftLocale(Localizer);
+  setCtrlLocale(Localizer);
+  setAltLocale(Localizer);
+}
+
+void CModifiersMenuImpl::setShiftLocale(const CLocalizer& Localizer) {
+  ShiftMenu_->setTitle(Localizer.shift());
+  localizerMenuItems(Localizer, ShiftMenu_);
+}
+
+void CModifiersMenuImpl::setCtrlLocale(const CLocalizer& Localizer) {
+  CtrlMenu_->setTitle(Localizer.ctrl());
+  localizerMenuItems(Localizer, CtrlMenu_);
+}
+
+void CModifiersMenuImpl::setAltLocale(const CLocalizer& Localizer) {
+  AltMenu_->setTitle(Localizer.alt());
+  localizerMenuItems(Localizer, AltMenu_);
+}
+
+void CModifiersMenuImpl::localizerMenuItems(const CLocalizer& Localizer,
+                                            QMenu* Menu) {
+  auto ActionList = Menu->actions();
+  assert(ActionList.size() == 3);
+  ActionList[0]->setText(Localizer.non());
+  ActionList[1]->setText(Localizer.all());
+  ActionList[2]->setText(Localizer.essential());
+}
+
 CModifiersMenuImpl::EModifiersMode CModifiersMenuImpl::getShiftMode() const {
   return getMode(ShiftMenu_);
 }
@@ -227,8 +264,7 @@ CModifiersMenuImpl::EModifiersMode CModifiersMenuImpl::getAltMode() const {
   return getMode(AltMenu_);
 }
 
-CModifiersMenuImpl::EModifiersMode
-CModifiersMenuImpl::getMode(QMenu* Menu) const {
+CModifiersMenuImpl::EModifiersMode CModifiersMenuImpl::getMode(QMenu* Menu) {
   auto ActionList = Menu->actions();
   assert(ActionList.size() == 3);
   if (ActionList[0]->isChecked())

@@ -44,6 +44,8 @@ CApplicationImpl::CApplicationImpl()
       MainSeanceView_->localizerInput());
   LocalizationModule_->subscribeToTextModeViewLocalizer(
       TextModeView_->localizerInput());
+  LocalizationModule_->subscribeToTextModeViewLocalizer(
+      ModifiersMenu_->localizerInput());
   LocalizationModule_->subscribeToSpeedPlotterLocalizer(
       SpeedPlotter_->localizerInput());
   LocalizationModule_->subscribeToKeySchemePlotterLocalizer(
