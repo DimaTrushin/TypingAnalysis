@@ -9,7 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17 warn_on
 
 DEFINES += \
-    KEYBOARD_HANDLER_DEBUG \
+    #KEYBOARD_HANDLER_DEBUG \
     #DISABLE_CUDA
 
 CONFIG(debug, debug|release) {
