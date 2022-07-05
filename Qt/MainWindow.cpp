@@ -39,18 +39,6 @@ QButtonGroup* CMainWindow::getTextButtonGroup() const {
   return ui_->buttonGroup;
 }
 
-QButtonGroup* CMainWindow::getShiftButtonGroup() const {
-  return ui_->buttonGroup_2;
-}
-
-QButtonGroup* CMainWindow::getCtrlButtonGroup() const {
-  return ui_->buttonGroup_3;
-}
-
-QButtonGroup* CMainWindow::getAltButtonGroup() const {
-  return ui_->buttonGroup_4;
-}
-
 QPlainTextEdit* CMainWindow::getMainTextEdit() const {
   return ui_->plainTextEdit_2;
 }
@@ -73,6 +61,10 @@ QMenu* CMainWindow::getFileMenu() const {
 
 CMainWindow::CModifiersModeInitData CMainWindow::getModifiersMenuInit() const {
   return {ui_->menuModifiers, ui_->menuShift, ui_->menuCtrl, ui_->menuAlt};
+}
+
+QMenu* CMainWindow::getLanguageMenu() const {
+  return ui_->menuLanguage;
 }
 
 void CMainWindow::adjustStaticInterface() {

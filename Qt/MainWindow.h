@@ -42,15 +42,13 @@ public:
   QTreeView* getSeanceView() const;
   CTextModeInitData getTextModeInitData() const;
   QButtonGroup* getTextButtonGroup() const;
-  QButtonGroup* getShiftButtonGroup() const;
-  QButtonGroup* getCtrlButtonGroup() const;
-  QButtonGroup* getAltButtonGroup() const;
   QPlainTextEdit* getMainTextEdit() const;
   QwtPlot* getSpeedPlot() const;
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;
   QMenu* getFileMenu() const;
   CModifiersModeInitData getModifiersMenuInit() const;
+  QMenu* getLanguageMenu() const;
 
 Q_SIGNALS:
   bool closeMainWindow();

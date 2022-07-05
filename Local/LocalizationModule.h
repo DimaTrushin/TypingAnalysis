@@ -102,7 +102,7 @@ private:
 
 } // namespace NSLocalizationModuleDetail
 
-using CLocalizationModule = NSLibrary::CBasicWrapper<
+using CLocalizationModule = NSLibrary::CModelWrapper<
     NSLocalizationModuleDetail::CLocalizationModuleImpl>;
 
 } // namespace NSLocal

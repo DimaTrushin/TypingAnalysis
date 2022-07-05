@@ -10,7 +10,8 @@ CApplicationGUI::CApplicationGUI()
       StatisticsView_(AppWindow_.getStatisticsTable()),
       KeySchemePlotter_(AppWindow_.getKeySchemePlot()),
       FileMenu_(AppWindow_.getFileMenu()),
-      ModifiersMenu_(AppWindow_.getModifiersMenuInit()) {
+      ModifiersMenu_(AppWindow_.getModifiersMenuInit()),
+      LanguageMenu_(AppWindow_.getLanguageMenu()) {
   // TO DO
   // should probably move this to CApplicationImpl or CApplication
   AppWindow_.show();

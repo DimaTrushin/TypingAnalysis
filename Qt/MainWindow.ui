@@ -524,8 +524,16 @@
     <addaction name="menuCtrl"/>
     <addaction name="menuAlt"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionRus"/>
+    <addaction name="actionEng"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuModifiers"/>
+   <addaction name="menuLanguage"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave">
@@ -619,6 +627,16 @@
     <string>Essential</string>
    </property>
   </action>
+  <action name="actionRus">
+   <property name="text">
+    <string>Eng</string>
+   </property>
+  </action>
+  <action name="actionEng">
+   <property name="text">
+    <string>Rus</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -640,9 +658,6 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_4"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

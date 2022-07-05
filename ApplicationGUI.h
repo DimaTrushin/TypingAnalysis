@@ -2,6 +2,7 @@
 #define NSAPPLICATION_CAPPLICATIONGUI_H
 
 #include "Interface/KeySchemePlotter.h"
+#include "Interface/LanguageMenu.h"
 #include "Interface/Plotter.h"
 #include "Interface/SeanceView.h"
 #include "Interface/StatisticsView.h"
@@ -26,6 +27,7 @@ class CApplicationGUI {
   using CKeySchemePlotter = NSInterface::CKeySchemePlotter;
   using CFileMenu = NSInterface::CFileMenu;
   using CModifiersMenu = NSInterface::CModifiersMenu;
+  using CLanguageMenu = NSInterface::CLanguageMenu;
 
 public:
   CApplicationGUI();
@@ -45,6 +47,7 @@ protected:
   CKeySchemePlotter KeySchemePlotter_;
   CFileMenu FileMenu_;
   CModifiersMenu ModifiersMenu_;
+  CLanguageMenu LanguageMenu_;
 
 #ifdef KEYBOARD_HANDLER_DEBUG
   NSAppDebug::CKeyboardHandlerDebugOut KeyboardHandlerOut_ = mainWindow();

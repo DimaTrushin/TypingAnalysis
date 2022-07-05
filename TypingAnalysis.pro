@@ -87,6 +87,8 @@ HEADERS += \
   Interface/FileMenu.h \
   Interface/KeySchemePlotter.h \
   Interface/KeyboardShutter.h \
+  Interface/LanguageController.h \
+  Interface/LanguageMenu.h \
   Interface/ModifiersMenu.h \
   Interface/ModifiersModeController.h \
   Interface/Plotter.h \
@@ -158,6 +160,7 @@ HEADERS += \
   Library/FunctionModuleBase.h \
   Library/Selector.h \
   Local/EngLocale.h \
+  Local/Languages.h \
   Local/LocaleID.h \
   Local/LocalizationModule.h \
   Local/Localizer.h \
@@ -203,6 +206,8 @@ SOURCES += \
   Interface/FileMenu.cpp \
   Interface/KeySchemePlotter.cpp \
   Interface/KeyboardShutter.cpp \
+  Interface/LanguageController.cpp \
+  Interface/LanguageMenu.cpp \
   Interface/ModifiersMenu.cpp \
   Interface/ModifiersModeController.cpp \
   Interface/Plotter.cpp \
@@ -253,6 +258,7 @@ SOURCES += \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
   Local/EngLocale.cpp \
+  Local/Languages.cpp \
   Local/LocaleID.cpp \
   Local/LocalizationModule.cpp \
   Local/Localizer.cpp \
