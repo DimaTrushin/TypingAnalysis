@@ -344,6 +344,35 @@ private:
   QString Undefined_;
 };
 
+class CFileMenuLocalizer {
+public:
+  template<class TFileMenuLocale>
+  static CFileMenuLocalizer make() {
+    return CFileMenuLocalizer(NSLocalizerDetail::Data<TFileMenuLocale>());
+  }
+
+  const QString& menu() const {
+    return Menu_;
+  }
+  const QString& save() const {
+    return Save_;
+  }
+  const QString& load() const {
+    return Load_;
+  }
+
+private:
+  template<class TFileMenuLocale>
+  CFileMenuLocalizer(NSLocalizerDetail::Data<TFileMenuLocale>)
+      : Menu_(TFileMenuLocale::Menu), Save_(TFileMenuLocale::Save),
+        Load_(TFileMenuLocale::Load) {
+  }
+
+  QString Menu_;
+  QString Save_;
+  QString Load_;
+};
+
 class CLocalizer {
 public:
   template<class TLocale>
@@ -375,6 +404,10 @@ public:
     return KeySchemePlotterLocalizer_;
   }
 
+  const CFileMenuLocalizer& getFileMenuLocalizer() const {
+    return FileMenuLocalizer_;
+  }
+
 private:
   template<class TLocale>
   CLocalizer(NSLocalizerDetail::Data<TLocale>)
@@ -389,7 +422,9 @@ private:
         SpeedPlotterLocalizer_(
             CSpeedPlotterLocalizer::make<typename TLocale::CSpeedPlotter>()),
         KeySchemePlotterLocalizer_(CKeySchemePlotterLocalizer::make<
-                                   typename TLocale::CKeySchemePlotter>()) {
+                                   typename TLocale::CKeySchemePlotter>()),
+        FileMenuLocalizer_(
+            CFileMenuLocalizer::make<typename TLocale::CFileMenu>()) {
   }
   CSeanceViewLocalizer SeanceViewLocalizer_;
   CStatisticsViewLocalizer StatisticsViewLocalizer_;
@@ -397,6 +432,7 @@ private:
   CTextModeViewLocalizer TextModeViewLocalizer_;
   CSpeedPlotterLocalizer SpeedPlotterLocalizer_;
   CKeySchemePlotterLocalizer KeySchemePlotterLocalizer_;
+  CFileMenuLocalizer FileMenuLocalizer_;
 };
 
 } // namespace NSLocal

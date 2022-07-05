@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSLOCAL_CLOCALIZATIONMODULE_H
 
 #include "Local/EngLocale.h"
+#include "Local/LocaleID.h"
 #include "Local/Localizer.h"
 #include "Local/RusLocale.h"
 
@@ -10,8 +11,6 @@
 
 namespace NSApplication {
 namespace NSLocal {
-
-enum class ELocale : unsigned char { Rus, Eng };
 
 namespace NSLocalizationModuleDetail {
 
@@ -55,6 +54,8 @@ class CLocalizationModuleImpl {
 public:
   CLocalizationModuleImpl() = default;
 
+  void switchLocale(ELocale Lang);
+
   void subscribeToSeanceViewLocalizer(CSeanceViewLocalizerObserver* obs);
   void subscribeToStatisticsLocalizer(CStatisticsLocalizerObserver* obs);
   void
@@ -65,6 +66,8 @@ public:
   subscribeToKeySchemePlotterLocalizer(CKeySchemePlotterLocalizerObserver* obs);
 
 private:
+  void notifyAll();
+
   CSeanceViewLocalizerObservable makeSeanceViewLocalizer();
   CStatisticsViewLocalizerObservable makeStatisticsViewLocalizer();
   CStatisticsLocalizerObservable makeStatisticsLocalizer();

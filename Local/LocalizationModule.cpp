@@ -7,6 +7,21 @@ namespace NSApplication {
 namespace NSLocal {
 
 namespace NSLocalizationModuleDetail {
+void CLocalizationModuleImpl::switchLocale(ELocale Lang) {
+  switch (Lang) {
+  case ELocale::Rus:
+    Localizer_ = CLocalizer::make<CRusLocale>();
+    break;
+  case ELocale::Eng:
+    Localizer_ = CLocalizer::make<CEngLocale>();
+    break;
+  default:
+    assert(false);
+    break;
+  }
+  notifyAll();
+}
+
 void CLocalizationModuleImpl::subscribeToSeanceViewLocalizer(
     CSeanceViewLocalizerObserver* obs) {
   assert(obs);
@@ -41,6 +56,15 @@ void CLocalizationModuleImpl::subscribeToKeySchemePlotterLocalizer(
     CKeySchemePlotterLocalizerObserver* obs) {
   assert(obs);
   KeySchemePlotterLocalizerOutput_.subscribe(obs);
+}
+
+void CLocalizationModuleImpl::notifyAll() {
+  SeanceViewLocalizerOutput_.notify();
+  StatistiscViewLocalizerOutput_.notify();
+  StatisticsLocalizerOutput_.notify();
+  TextModeViewLocalizerOutput_.notify();
+  SpeedPlotterLocalizerOutput_.notify();
+  KeySchemePlotterLocalizerOutput_.notify();
 }
 
 CLocalizationModuleImpl::CSeanceViewLocalizerObservable

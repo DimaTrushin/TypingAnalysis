@@ -70,6 +70,12 @@ struct CEngLocale {
     static constexpr const char* RightPinky = "Right Pinky";
     static constexpr const char* Undefined = "Undefined";
   };
+
+  struct CFileMenu {
+    static constexpr const char* Menu = "File";
+    static constexpr const char* Save = "Save";
+    static constexpr const char* Load = "Load";
+  };
 };
 
 } // namespace NSLocal

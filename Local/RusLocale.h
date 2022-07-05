@@ -75,6 +75,12 @@ struct CRusLocale {
     static constexpr const char* RightPinky = "Правый мизинец";
     static constexpr const char* Undefined = "Неопределен";
   };
+
+  struct CFileMenu {
+    static constexpr const char* Menu = "Файл";
+    static constexpr const char* Save = "Сохранить";
+    static constexpr const char* Load = "Загрузить";
+  };
 };
 
 } // namespace NSLocal
