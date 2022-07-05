@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSLOCAL_CLOCALIZATIONMODULE_H
 #define NSAPPLICATION_NSLOCAL_CLOCALIZATIONMODULE_H
 
+#include "Local/EngLocale.h"
 #include "Local/Localizer.h"
 #include "Local/RusLocale.h"
 
@@ -9,6 +10,8 @@
 
 namespace NSApplication {
 namespace NSLocal {
+
+enum class ELocale : unsigned char { Rus, Eng };
 
 namespace NSLocalizationModuleDetail {
 

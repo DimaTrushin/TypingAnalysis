@@ -157,6 +157,7 @@ HEADERS += \
   Library/TypeList/TypeList.h \
   Library/FunctionModuleBase.h \
   Library/Selector.h \
+  Local/EngLocale.h \
   Local/LocalizationModule.h \
   Local/Localizer.h \
   Local/RusLocale.h \
@@ -249,6 +250,7 @@ SOURCES += \
   Keyboard/KeyboardListener.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
+  Local/EngLocale.cpp \
   Local/LocalizationModule.cpp \
   Local/Localizer.cpp \
   Local/RusLocale.cpp \
