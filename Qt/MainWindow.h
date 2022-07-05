@@ -26,6 +26,8 @@ class QwtPlot;
 namespace NSApplication {
 namespace NSQt {
 
+class CSpeedPlot;
+
 class CMainWindow : public QMainWindow {
   Q_OBJECT
   using CTextModeInitData = NSInterface::CTextModeView::CInitData;
@@ -62,15 +64,16 @@ private:
   void adjustSplitter2();
   void adjustSplitter3();
   void adjustMainSplitter();
-  void adjustSplitter5();
   void adjustButtonGroups();
   void adjustButtonGroup();
 
   void addQwtPlotPanel();
   void addQwtKeyScheme();
 
+  void addQwtPlotAdjusters();
+
   std::unique_ptr<Ui::MainWindow> ui_;
-  QwtPlot* SpeedPlot_;
+  CSpeedPlot* SpeedPlot_;
   QwtPlot* KeySchemePlot_;
   std::unique_ptr<QActionGroup> ShiftActions_;
   std::unique_ptr<QActionGroup> CtrlActions_;

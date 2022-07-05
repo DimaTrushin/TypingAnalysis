@@ -60,7 +60,9 @@ private:
   QString derivative3Name() const;
 
   static constexpr double YLeftMinDefault_ = 0.0;
-  static constexpr double YLeftMaxDefault_ = 0.004;
+  static constexpr double YLeftMaxDefault_ = 0.003;
+  static constexpr double XBottomMinDefault_ = 0.0;
+  static constexpr double XBottomMaxDefault_ = 2500.;
 
   QwtPlot* Plot_;
   QwtPlotCurve* Speed0_;

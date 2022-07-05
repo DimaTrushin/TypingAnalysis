@@ -52,6 +52,7 @@ void CSpeedPlotterImpl::adjustPlot() {
   Plot_->insertLegend(Legend.release(), QwtPlot::RightLegend);
 
   Plot_->setAxisScale(QwtAxis::YLeft, YLeftMinDefault_, YLeftMaxDefault_);
+  Plot_->setAxisScale(QwtAxis::XBottom, XBottomMinDefault_, XBottomMaxDefault_);
   Plot_->setAxisVisible(QwtAxis::YRight);
 
   Plot_->setAxisTitle(QwtAxis::XBottom, horizontalAxisTitle());
