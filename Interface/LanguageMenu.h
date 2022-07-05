@@ -34,6 +34,8 @@ public Q_SLOTS:
   void onActionTriggered(QAction* Action);
 
 private:
+  void setItemNames();
+
   QMenu* Menu_;
   CLocaleObservable LocaleOutput_;
 };
