@@ -65,75 +65,26 @@ void CSpeedPlotterImpl::adjustPlot() {
 }
 
 void CSpeedPlotterImpl::setCurves() {
+  setCurve(density1Name(), QColor(200, 50, 50), true, &Speed0_);
+  setCurve(derivative1Name(), QColor(50, 50, 200), false, &Speed1_);
+  setCurve(density2Name(), QColor(50, 200, 50), false, &SpeedMB0_);
+  setCurve(derivative2Name(), QColor(50, 50, 200), false, &SpeedMB1_);
+  setCurve(density3Name(), QColor(50, 200, 200), false, &SpeedR0_);
+  setCurve(derivative3Name(), QColor(50, 50, 200), false, &SpeedR1_);
+}
 
-  std::unique_ptr<QwtPlotCurve> Speed0 =
-      std::make_unique<QwtPlotCurve>(density1Name());
-  Speed0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  Speed0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  Speed0->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  Speed0->setRenderHint(QwtPlotItem::RenderAntialiased);
-  Speed0->setPen(QColor(200, 50, 50));
-  Speed0_ = Speed0.release();
-  Speed0_->attach(Plot_);
-  checkItem(Speed0_, true);
-
-  std::unique_ptr<QwtPlotCurve> Speed1 =
-      std::make_unique<QwtPlotCurve>(derivative1Name());
-  Speed1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  Speed1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  Speed1->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  Speed1->setRenderHint(QwtPlotItem::RenderAntialiased);
-  Speed1->setPen(QColor(50, 50, 200));
-  Speed1->setYAxis(QwtAxis::YRight);
-  Speed1_ = Speed1.release();
-  Speed1_->attach(Plot_);
-  checkItem(Speed1_, false);
-
-  std::unique_ptr<QwtPlotCurve> SpeedMB0 =
-      std::make_unique<QwtPlotCurve>(density2Name());
-  SpeedMB0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  SpeedMB0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  SpeedMB0->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  SpeedMB0->setRenderHint(QwtPlotItem::RenderAntialiased);
-  SpeedMB0->setPen(QColor(50, 200, 50));
-  SpeedMB0_ = SpeedMB0.release();
-  SpeedMB0_->attach(Plot_);
-  checkItem(SpeedMB0_, false);
-
-  std::unique_ptr<QwtPlotCurve> SpeedMB1 =
-      std::make_unique<QwtPlotCurve>(derivative2Name());
-  SpeedMB1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  SpeedMB1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  SpeedMB1->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  SpeedMB1->setRenderHint(QwtPlotItem::RenderAntialiased);
-  SpeedMB1->setPen(QColor(50, 50, 200));
-  SpeedMB1->setYAxis(QwtAxis::YRight);
-  SpeedMB1_ = SpeedMB1.release();
-  SpeedMB1_->attach(Plot_);
-  checkItem(SpeedMB1_, false);
-
-  std::unique_ptr<QwtPlotCurve> SpeedR0 =
-      std::make_unique<QwtPlotCurve>(density3Name());
-  SpeedR0->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  SpeedR0->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  SpeedR0->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  SpeedR0->setRenderHint(QwtPlotItem::RenderAntialiased);
-  SpeedR0->setPen(QColor(50, 200, 200));
-  SpeedR0_ = SpeedR0.release();
-  SpeedR0_->attach(Plot_);
-  checkItem(SpeedR0_, false);
-
-  std::unique_ptr<QwtPlotCurve> SpeedR1 =
-      std::make_unique<QwtPlotCurve>(derivative3Name());
-  SpeedR1->setLegendAttribute(QwtPlotCurve::LegendShowLine);
-  SpeedR1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-  SpeedR1->setCurveAttribute(QwtPlotCurve::Fitted, true);
-  SpeedR1->setRenderHint(QwtPlotItem::RenderAntialiased);
-  SpeedR1->setPen(QColor(50, 50, 200));
-  SpeedR1->setYAxis(QwtAxis::YRight);
-  SpeedR1_ = SpeedR1.release();
-  SpeedR1_->attach(Plot_);
-  checkItem(SpeedR1_, false);
+void CSpeedPlotterImpl::setCurve(const QString& Name, QColor Color,
+                                 bool Checked, QwtPlotCurve** Curve) {
+  std::unique_ptr<QwtPlotCurve> SpeedCurve =
+      std::make_unique<QwtPlotCurve>(Name);
+  SpeedCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
+  SpeedCurve->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+  SpeedCurve->setCurveAttribute(QwtPlotCurve::Fitted, true);
+  SpeedCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
+  SpeedCurve->setPen(Color);
+  *Curve = SpeedCurve.release();
+  (*Curve)->attach(Plot_);
+  checkItem(*Curve, Checked);
 }
 
 void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {

@@ -32,7 +32,7 @@ class CSpeedPlotterImpl : public QObject {
   using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
 public:
-  CSpeedPlotterImpl(QwtPlot*);
+  explicit CSpeedPlotterImpl(QwtPlot*);
   ~CSpeedPlotterImpl();
 
   CPlotDataObserver* speedDataInput();
@@ -44,6 +44,8 @@ public Q_SLOTS:
 private:
   void adjustPlot();
   void setCurves();
+  void setCurve(const QString& Name, QColor Color, bool Checked,
+                QwtPlotCurve** Curve);
   void checkItem(QwtPlotItem* item, bool on);
 
   void handlePlotData(const CPlotData& PlotData);
