@@ -60,6 +60,7 @@ void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
   if (isActive())
     KeyReleasingOut_.set(KeyReleasing);
+  handleUserBlock(KeyReleasing);
 }
 
 void CKeyboardHandler::onKeyboardException(const CQtException& message) {
@@ -84,15 +85,21 @@ void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
 }
 
 void CKeyboardHandler::handleUserBlock(const CKeyPressing& KeyPressing) {
-  if (History_.has_value()) {
+  if (BlockHistory_.has_value()) {
     // TO DO
     // Should make the combination of keys adjustable
-    if (History_->KeyID == CKeyIDEnum::F8 &&
+    if (BlockHistory_->KeyID == CKeyIDEnum::F8 &&
         KeyPressing.KeyID == CKeyIDEnum::F9)
       Block_.switchBlock(CKeyboardBlock::Enum::UserBlock);
   }
-  History_ = KeyPressing;
+  BlockHistory_ = KeyPressing;
 }
 
+void CKeyboardHandler::handleUserBlock(const CKeyReleasing& KeyReleasing) {
+  if (BlockHistory_.has_value()) {
+    if (BlockHistory_->KeyID == KeyReleasing.KeyID)
+      BlockHistory_.reset();
+  }
+}
 } // namespace NSKeyboard
 } // namespace NSApplication

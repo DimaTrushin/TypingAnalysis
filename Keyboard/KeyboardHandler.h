@@ -64,13 +64,14 @@ private:
   static void run(CAnyKillerPromise, CKeyboardHandler*);
 
   void handleUserBlock(const CKeyPressing&);
+  void handleUserBlock(const CKeyReleasing&);
 
   CWorkerThread ListenerThread_;
   CAnyKeyboardKiller KeyboardKiller_;
   CKeyPressingOut KeyPressingOut_;
   CKeyReleasingOut KeyReleasingOut_;
   CKeyboardBlock Block_;
-  CPressingHistory History_;
+  CPressingHistory BlockHistory_;
 };
 
 } // namespace NSKeyboard
