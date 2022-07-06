@@ -182,7 +182,6 @@ HEADERS += \
   InstructionLevels.h \
   KeyboardHandlerAccess.h \
   ParallelModuleAccess.h \
-  Qt/SpeedPlot.h \
   QtLoopException.h \
   SimdDetector.h \
   SimdDetectorAccess.h \
@@ -278,7 +277,6 @@ SOURCES += \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   ParallelModuleAccess.cpp \
-  Qt/SpeedPlot.cpp \
   SimdDetector.cpp \
   SimdDetectorAccess.cpp \
   TimeApp.cpp \

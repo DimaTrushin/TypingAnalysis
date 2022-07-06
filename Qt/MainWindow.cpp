@@ -2,7 +2,7 @@
 
 #include "ui_MainWindow.h"
 
-#include "SpeedPlot.h"
+#include "qwt_plot.h"
 #include <QActionGroup>
 #include <QCloseEvent>
 
@@ -13,7 +13,6 @@ CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
   addQwtPlotPanel();
-  addQwtPlotAdjusters();
   addQwtKeyScheme();
   adjustStaticInterface();
 }
@@ -42,8 +41,8 @@ QPlainTextEdit* CMainWindow::getMainTextEdit() const {
   return ui_->plainTextEdit_2;
 }
 
-QwtPlot* CMainWindow::getSpeedPlot() const {
-  return SpeedPlot_;
+CMainWindow::CSpeedPlotterInitData CMainWindow::getSpeedPlotterInit() const {
+  return {SpeedPlot_, ui_->verticalSlider, ui_->horizontalSlider};
 }
 
 QTableView* CMainWindow::getStatisticsTable() const {
@@ -105,7 +104,7 @@ void CMainWindow::adjustButtonGroup() {
 }
 
 void CMainWindow::addQwtPlotPanel() {
-  SpeedPlot_ = new CSpeedPlot(ui_->frame_8);
+  SpeedPlot_ = new QwtPlot(ui_->frame_8);
   ui_->gridLayout->addWidget(SpeedPlot_, 0, 1);
 }
 
@@ -114,11 +113,5 @@ void CMainWindow::addQwtKeyScheme() {
   ui_->verticalLayout_9->addWidget(KeySchemePlot_);
 }
 
-void CMainWindow::addQwtPlotAdjusters() {
-  connect(ui_->verticalSlider, &QSlider::valueChanged, SpeedPlot_,
-          &CSpeedPlot::adjustVerticalScale);
-  connect(ui_->horizontalSlider, &QSlider::valueChanged, SpeedPlot_,
-          &CSpeedPlot::adjustHorizontalScale);
-}
 } // namespace NSQt
 } // namespace NSApplication

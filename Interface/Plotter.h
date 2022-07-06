@@ -14,6 +14,10 @@ class QwtPlot;
 class QwtPlotCurve;
 class QwtPlotItem;
 
+QT_BEGIN_NAMESPACE
+class QSlider;
+QT_END_NAMESPACE
+
 namespace NSApplication {
 namespace NSInterface {
 
@@ -32,7 +36,13 @@ class CSpeedPlotterImpl : public QObject {
   using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
 public:
-  explicit CSpeedPlotterImpl(QwtPlot*);
+  struct CInitData {
+    QwtPlot* Plot;
+    QSlider* VerticalSlider;
+    QSlider* HorizontalSlider;
+  };
+
+  explicit CSpeedPlotterImpl(CInitData Data);
   ~CSpeedPlotterImpl();
 
   CPlotDataObserver* speedDataInput();
@@ -41,12 +51,18 @@ public:
 public Q_SLOTS:
   void legendChecked(const QVariant&, bool, int);
 
+private Q_SLOTS:
+  void adjustVerticalScale(int);
+  void adjustHorizontalScale(int);
+
 private:
   void adjustPlot();
   void setCurves();
   void setCurve(const QString& Name, QColor Color, bool Checked,
                 QwtPlotCurve** Curve);
   void checkItem(QwtPlotItem* item, bool on);
+  void adjustSliders();
+  void connectSliders();
 
   void handlePlotData(const CPlotData& PlotData);
 
@@ -66,7 +82,21 @@ private:
   static constexpr double XBottomMinDefault_ = 0.0;
   static constexpr double XBottomMaxDefault_ = 2500.;
 
+  static constexpr int VerticalSliderMin_ = 1;
+  static constexpr int VerticalSliderMax_ = 100;
+  static constexpr int VerticalSliderPosition_ = 30;
+  static constexpr int HorizontalSliderMin_ = 1;
+  static constexpr int HorizontalSliderMax_ = 100;
+  static constexpr int HorizontalSliderPosition_ = 100;
+
+  static constexpr double VerticalStep_ =
+      YLeftMaxDefault_ / VerticalSliderPosition_;
+  static constexpr double HorizontalStep_ =
+      XBottomMaxDefault_ / HorizontalSliderMax_;
+
   QwtPlot* Plot_;
+  QSlider* VerticalSlider_;
+  QSlider* HorizontalSlider_;
   QwtPlotCurve* Speed0_;
   QwtPlotCurve* Speed1_;
   QwtPlotCurve* SpeedMB0_;
@@ -79,8 +109,15 @@ private:
 
 } // namespace NSPlotterDetail
 
-using CSpeedPlotter =
-    NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl>;
+class CSpeedPlotter
+    : public NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl> {
+  using CBase = NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl>;
+  using CSpeedPlotterImpl = NSPlotterDetail::CSpeedPlotterImpl;
+
+public:
+  using CInitData = CSpeedPlotterImpl::CInitData;
+  using CBase::CBase;
+};
 
 } // namespace NSInterface
 } // namespace NSApplication

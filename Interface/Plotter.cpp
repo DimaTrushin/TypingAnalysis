@@ -7,22 +7,30 @@
 #include "qwt_plot.h"
 #include "qwt_plot_curve.h"
 #include "qwt_plot_grid.h"
+#include <QSlider>
 
 namespace NSApplication {
 namespace NSInterface {
 
 namespace NSPlotterDetail {
 
-CSpeedPlotterImpl::CSpeedPlotterImpl(QwtPlot* Plot)
-    : Plot_(Plot), SpeedDataInput_([this](CPlotDataCRef PlotData) {
-        handlePlotData(PlotData);
-      }),
+CSpeedPlotterImpl::CSpeedPlotterImpl(CInitData Data)
+    : Plot_(Data.Plot), VerticalSlider_(Data.VerticalSlider),
+      HorizontalSlider_(Data.HorizontalSlider),
+      SpeedDataInput_(
+          [this](CPlotDataCRef PlotData) { handlePlotData(PlotData); }),
       LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(Plot_);
+  assert(VerticalSlider_);
+  assert(HorizontalSlider_);
   adjustPlot();
   setCurves();
+  adjustSliders();
+  connectSliders();
 }
+
+CSpeedPlotterImpl::~CSpeedPlotterImpl() = default;
 
 NSPlotterDetail::CSpeedPlotterImpl::CPlotDataObserver*
 NSPlotterDetail::CSpeedPlotterImpl::speedDataInput() {
@@ -40,7 +48,17 @@ void CSpeedPlotterImpl::legendChecked(const QVariant& itemInfo, bool on, int) {
   Plot_->replot();
 }
 
-CSpeedPlotterImpl::~CSpeedPlotterImpl() = default;
+void CSpeedPlotterImpl::adjustVerticalScale(int max) {
+  if (max <= 0)
+    return;
+  Plot_->setAxisScale(QwtAxis::YLeft, 0, max * VerticalStep_);
+  Plot_->replot();
+}
+
+void CSpeedPlotterImpl::adjustHorizontalScale(int max) {
+  Plot_->setAxisScale(QwtAxis::XBottom, 0, max * HorizontalStep_);
+  Plot_->replot();
+}
 
 void CSpeedPlotterImpl::adjustPlot() {
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -102,6 +120,20 @@ void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
       legendLabel->checked(on);
     }
   }
+}
+
+void CSpeedPlotterImpl::adjustSliders() {
+  VerticalSlider_->setRange(VerticalSliderMin_, VerticalSliderMax_);
+  VerticalSlider_->setValue(VerticalSliderPosition_);
+  HorizontalSlider_->setRange(HorizontalSliderMin_, HorizontalSliderMax_);
+  HorizontalSlider_->setValue(HorizontalSliderPosition_);
+}
+
+void CSpeedPlotterImpl::connectSliders() {
+  connect(VerticalSlider_, &QSlider::valueChanged, this,
+          &CSpeedPlotterImpl::adjustVerticalScale);
+  connect(HorizontalSlider_, &QSlider::valueChanged, this,
+          &CSpeedPlotterImpl::adjustHorizontalScale);
 }
 
 void NSPlotterDetail::CSpeedPlotterImpl::handlePlotData(
