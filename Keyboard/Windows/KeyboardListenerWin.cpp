@@ -96,7 +96,8 @@ void CKeyboardListenerWinImpl::HandleRawInput(LPARAM lParam) {
 
   const RAWKEYBOARD& KeyData = RawInputReader_.getKeyboardData(lParam);
 
-  CKeyPosition KeyPosition = KeyPosition_.make(KeyData.MakeCode, KeyData.Flags);
+  CKeyPosition KeyPosition =
+      KeyPosition_.make(KeyData.VKey, KeyData.MakeCode, KeyData.Flags);
   if (KeyPosition == CKeyPosEnum::UNKN)
     return;
   CKeyID KeyID = CKeyIDWin::make(KeyData.VKey, KeyData.MakeCode, KeyData.Flags);

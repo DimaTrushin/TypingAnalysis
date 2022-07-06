@@ -3,6 +3,8 @@
 #include "Seance.h"
 #include "TimerAccess.h"
 
+#include <QDebug>
+
 namespace NSApplication {
 namespace NSKernel {
 
@@ -27,6 +29,12 @@ void CSeanceMaker::add(const CKeyPressing& KeyPressing) {
     PressedKeys_.push_back(&CurrentSession().back());
   } else if (isAutoRepeatAllowed(KeyPressing.KeyID)) {
     CurrentSession().emplace_back(KeyPressing, CKeyFlagsEnum::AutoRepeat);
+  } else {
+    // TO DO
+    // This is generaly an issue situation. If this happens,
+    // there should be a fix in the listener
+    (**It) = KeyPressing;
+    assert(false);
   }
   LastEvent_ = KeyPressing.Time;
 }

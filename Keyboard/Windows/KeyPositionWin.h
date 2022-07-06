@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_NSWINDOWS_CKEYPOSITIONWIN_H
 
 #include "Keyboard/KeyPosition.h"
+#include "VkCode.h"
 #include <Windows.h>
 
 namespace NSApplication {
@@ -11,7 +12,7 @@ namespace NSWindows {
 class CKeyPositionWin {
 public:
   CKeyPositionWin() = default;
-  CKeyPosition make(USHORT MakeCode, USHORT Flag);
+  CKeyPosition make(CVKCode VK, USHORT MakeCode, USHORT Flag);
 
 private:
   CKeyPosition handle69(USHORT Flag) const;

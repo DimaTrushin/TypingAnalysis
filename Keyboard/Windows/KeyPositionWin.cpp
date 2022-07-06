@@ -8,7 +8,7 @@ namespace NSApplication {
 namespace NSKeyboard {
 namespace NSWindows {
 
-CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
+CKeyPosition CKeyPositionWin::make(CVKCode VK, USHORT MakeCode, USHORT Flag) {
   // TO DO
   // Rewrite this in the form:
   // 1) USHORT ScanCode = getScanCode(MakeCode, Flag);
@@ -26,7 +26,10 @@ CKeyPosition CKeyPositionWin::make(USHORT MakeCode, USHORT Flag) {
       result = CKeyPosEnum::KPDV;
       break;
     case 56:
-      result = CKeyPosEnum::RALT;
+      if (VK == CVK::Alt)
+        result = CKeyPosEnum::RALT;
+      else
+        result = CKeyPosEnum::UNKN;
       break;
     case 71:
       result = CKeyPosEnum::HOME;
