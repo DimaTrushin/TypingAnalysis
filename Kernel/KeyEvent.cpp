@@ -80,6 +80,16 @@ QChar CKeyEvent::getLastSymbol() const {
   return KeyText_.Symbol[KeyText_.Size - 1];
 }
 
+QChar CKeyEvent::getRawSymbol() const {
+  if (isTrackableSpecial())
+    return KeyLabel_.LowSymbol;
+  if (KeyText_.Size > 0)
+    return getLastSymbol();
+  if (KeyLabel_.Size > 0)
+    return KeyLabel_.LowSymbol;
+  return QChar();
+}
+
 QString CKeyEvent::getText() const {
   return QString(KeyText_.Symbol, KeyText_.Size);
 }

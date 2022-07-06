@@ -27,6 +27,8 @@ EKeyStatus CSessionTextSequencer::getStatus() const {
     return EKeyStatus::SilentDeadKey;
   if (Current_->getTextSize() > 0)
     return EKeyStatus::MainText;
+  if (Current_->getLabel().Size > 0)
+    return EKeyStatus::Control;
   return EKeyStatus::Ignore;
 }
 
@@ -43,16 +45,7 @@ CSessionTextSequencer::CKeyPosition CSessionTextSequencer::getPosition() const {
 }
 
 QChar CSessionTextSequencer::getSymbol() const {
-  switch (getStatus()) {
-  case EKeyStatus::MainText:
-    return Current_->getLastSymbol();
-  case EKeyStatus::Backspace:
-  case EKeyStatus::Control:
-  case EKeyStatus::SilentDeadKey:
-    return Current_->getLabel().LowSymbol;
-  default:
-    return QChar();
-  }
+  return Current_->getRawSymbol();
 }
 
 CTime CSessionTextSequencer::getPressingTime() const {

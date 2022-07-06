@@ -30,52 +30,17 @@ CKeyTextData CKeyTextMaker::getText(CVKCode VK, CKeyShifters Shifters,
 CLabelData CKeyTextMaker::getLabel(USHORT MakeCode, USHORT Flags, HKL Layout) {
   CVKCode VK = CWinKeyboardApi::getSymbolVK(MakeCode, Flags, Layout);
   VK = CWinKeyboardApi::distinguishShifters(VK, MakeCode, Flags);
-  switch (VK) {
-  case CVK::Enter:
-    return {QChar(0x2ba0), QChar(), 1};
-  case CVK::Ctrl:
-    return {QChar(0x2353), QChar(), 1};
-  case CVK::LeftCtrl:
-    return {QChar(0x2343), QChar(), 1};
-  case CVK::RightCtrl:
-    return {QChar(0x2344), QChar(), 1};
-  case CVK::Alt:
-    return {QChar(0x2338), QChar(), 1};
-  case CVK::LeftAlt:
-    return {QChar(0x2347), QChar(), 1};
-  case CVK::RightAlt:
-    return {QChar(0x2348), QChar(), 1};
-  case CVK::Shift:
-    return {QChar(0x21E7), QChar(), 1};
-  case CVK::LeftShift:
-    return {QChar(0x2B01), QChar(), 1};
-  case CVK::RightShift:
-    return {QChar(0x2B00), QChar(), 1};
-  case CVK::Backspace:
-    return {QChar(0x232B), QChar(), 1};
-  case CVK::Capslock:
-    return {QChar(0x2B89), QChar(), 1};
-  case CVK::Tab:
-    return {QChar(0x2b7e), QChar(), 1};
-  case CVK::Esc:
-    return {QChar(0x2bbe), QChar(), 1};
-  case CVK::Spacebar:
-    return {QChar(0x2423), QChar(), 1};
-  // TO DO
-  // Add the following keys:
-  // F1 -- F12, Insert, Delete, Home, End, PageUp, PageDown
-  // NumLock, LWinKey, RWinKey, MenuKey, Arrows, PrtScr, ScrollLock, Pause
-  default:
-    auto symbOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Base);
-    if (!symbOpt.has_value())
-      return {QChar(), QChar(), 0};
-    if (!symbOpt->isPrint())
-      return {QChar(), QChar(), 0};
-    auto symbShiftOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Shift);
-    if (!symbShiftOpt.has_value() || *symbOpt == *symbShiftOpt)
-      return {*symbOpt, QChar(), 1};
-    return {*symbOpt, *symbShiftOpt, 2};
-  }
+  if (VK == CVK::Spacebar)
+    return {QChar(), QChar(), 0};
+  auto symbOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Base);
+  if (!symbOpt.has_value())
+    return {QChar(), QChar(), 0};
+  if (!symbOpt->isPrint())
+    return {QChar(), QChar(), 0};
+  auto symbShiftOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Shift);
+  if (!symbShiftOpt.has_value() || *symbOpt == *symbShiftOpt)
+    return {*symbOpt, QChar(), 1};
+  return {*symbOpt, *symbShiftOpt, 2};
 }
 
 bool CKeyTextMaker::isDeadKey(CVKCode VK, CKeyShifters Shifters) const {

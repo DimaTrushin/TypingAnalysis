@@ -63,6 +63,7 @@ private:
   void stopListener() const noexcept;
   static void run(CAnyKillerPromise, CKeyboardHandler*);
 
+  bool hasSymbolOrLabel(const CKeyPressing&);
   void handleUserBlock(const CKeyPressing&);
   void handleUserBlock(const CKeyReleasing&);
 

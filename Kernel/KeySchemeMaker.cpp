@@ -11,24 +11,13 @@ bool CKeySegmentBuilt::CFirstReleasedOnTop::operator()(
 
 template<class TIterator>
 QString CKeySegmentsUnderConstruction::getKeyText(TIterator iter) {
-  // TO DO
-  // prelimenary implementation
   return iter->getSymbol();
 }
 
 template<>
 QString CKeySegmentsUnderConstruction::getKeyText<CSession::const_iterator>(
     CSession::const_iterator iter) {
-  // TO DO
-  // prelimenary implementation
-  if (iter->isTrackableSpecial() || iter->isSilentDeadKey()) {
-    return iter->getLabel().LowSymbol;
-  } else if (iter->getTextSize() > 0) {
-    return iter->getLastSymbol();
-  } else if (iter->getLabel().Size > 0) {
-    return iter->getLabel().LowSymbol;
-  }
-  return "";
+  return iter->getRawSymbol();
 }
 
 CKeySegmentsUnderConstruction::CKeyPosition

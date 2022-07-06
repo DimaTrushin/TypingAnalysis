@@ -138,6 +138,7 @@ HEADERS += \
   Keyboard/KeyboardBlock.h \
   Keyboard/KeyboardHandler.h \
   Keyboard/KeyboardListener.h \
+  Keyboard/LabelMaker.h \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
   Library/AnyObject/AnyMovable.h \
@@ -254,6 +255,7 @@ SOURCES += \
   Keyboard/KeyboardBlock.cpp \
   Keyboard/KeyboardHandler.cpp \
   Keyboard/KeyboardListener.cpp \
+  Keyboard/LabelMaker.cpp \
   Keyboard/ListenerExceptionHandler.cpp \
   Keyboard/RawKeyEvent.cpp \
   Local/EngLocale.cpp \

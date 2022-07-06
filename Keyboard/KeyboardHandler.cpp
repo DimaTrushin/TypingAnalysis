@@ -1,6 +1,7 @@
 #include "KeyboardHandler.h"
 
 #include "KeyboardListener.h"
+#include "LabelMaker.h"
 #include "ListenerExceptionHandler.h"
 #include "QtLoopException.h"
 
@@ -52,9 +53,12 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 }
 
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
-  if (isActive())
-    KeyPressingOut_.set(KeyPressing);
-  handleUserBlock(KeyPressing);
+  CKeyPressing Key = KeyPressing;
+  if (Key.KeyLabel.Size == 0)
+    Key.KeyLabel = CLabelMaker::make(KeyPressing.KeyID);
+  if (isActive() && hasSymbolOrLabel(Key))
+    KeyPressingOut_.set(Key);
+  handleUserBlock(Key);
 }
 
 void CKeyboardHandler::onKeyReleasing(const CKeyReleasing& KeyReleasing) {
@@ -82,6 +86,10 @@ void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
   } catch (...) {
     CListenerExceptionHandler React(KeyboardHandler);
   }
+}
+
+bool CKeyboardHandler::hasSymbolOrLabel(const CKeyPressing& Key) {
+  return Key.KeyText.Size > 0 || Key.KeyLabel.Size > 0;
 }
 
 void CKeyboardHandler::handleUserBlock(const CKeyPressing& KeyPressing) {
