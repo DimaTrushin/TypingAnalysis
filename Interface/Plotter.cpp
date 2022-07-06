@@ -117,7 +117,7 @@ void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
 
     if (legendLabel) {
       legendLabel->setChecked(on);
-      legendLabel->checked(on);
+      Q_EMIT legendLabel->checked(on);
     }
   }
 }
