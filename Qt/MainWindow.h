@@ -55,7 +55,6 @@ Q_SIGNALS:
 
 private:
   void adjustStaticInterface();
-  void adjustModifiersMenu();
   void adjustSplitters();
   void adjustSplitter();
   void adjustSplitter2();

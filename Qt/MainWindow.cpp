@@ -16,7 +16,6 @@ CMainWindow::CMainWindow(QWidget* parent)
   addQwtPlotAdjusters();
   addQwtKeyScheme();
   adjustStaticInterface();
-  adjustModifiersMenu();
 }
 
 CMainWindow::~CMainWindow() = default;
@@ -70,11 +69,6 @@ QMenu* CMainWindow::getLanguageMenu() const {
 void CMainWindow::adjustStaticInterface() {
   adjustSplitters();
   adjustButtonGroups();
-}
-
-void CMainWindow::adjustModifiersMenu() {
-  connect(ui_->radioButton, &QRadioButton::toggled,
-          ui_->menuModifiers->menuAction(), &QAction::setDisabled);
 }
 
 void CMainWindow::adjustSplitters() {

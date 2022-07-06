@@ -24,6 +24,7 @@ namespace NSModifiersMenuDetail {
 class CModifiersMenuImpl : public QObject {
   Q_OBJECT
   using CSupressor = NSLibrary::CSupressor;
+  using ETextMode = NSKernel::ETextMode;
 
   using EModifiersMode = NSKernel::EModifierMode;
   using CTextMode = NSKernel::CTextMode;
@@ -72,6 +73,7 @@ private:
   void connectCtrlMenu();
   void connectAltMenu();
 
+  void onTextMode(const CTextMode& TextMode);
   void handleModifiersMode(const CModifiersMode& Mode);
   void handleShiftMode(EModifiersMode Mode);
   void handleCtrlMode(EModifiersMode Mode);

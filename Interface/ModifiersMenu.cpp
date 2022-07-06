@@ -10,9 +10,7 @@ namespace NSModifiersMenuDetail {
 CModifiersMenuImpl::CModifiersMenuImpl(const CInitData& InitData)
     : Menu_(InitData.Menu), ShiftMenu_(InitData.ShiftMenu),
       CtrlMenu_(InitData.CtrlMenu), AltMenu_(InitData.AltMenu),
-      ModifiersInput_([this](const CTextMode& Mode) {
-        handleModifiersMode(Mode.Modifiers);
-      }),
+      ModifiersInput_([this](const CTextMode& Mode) { onTextMode(Mode); }),
       LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
   assert(Menu_);
@@ -176,11 +174,20 @@ void CModifiersMenuImpl::connectAltMenu() {
           &CModifiersMenuImpl::altEssentialToggled);
 }
 
-void CModifiersMenuImpl::handleModifiersMode(const CModifiersMode& Mode) {
+void CModifiersMenuImpl::onTextMode(const CTextMode& TextMode) {
   if (MySignal_.isLocked())
     return;
   std::lock_guard<CSupressor> guard(FromModel_);
 
+  if (TextMode.TextMode == ETextMode::Raw) {
+    Menu_->menuAction()->setDisabled(true);
+  } else {
+    Menu_->menuAction()->setDisabled(false);
+    handleModifiersMode(TextMode.Modifiers);
+  }
+}
+
+void CModifiersMenuImpl::handleModifiersMode(const CModifiersMode& Mode) {
   handleShiftMode(Mode.ShiftMode);
   handleCtrlMode(Mode.CtrlMode);
   handleAltMode(Mode.AltMode);
