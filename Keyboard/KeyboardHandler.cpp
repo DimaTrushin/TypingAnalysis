@@ -54,8 +54,7 @@ void CKeyboardHandler::subscribeToKeyReleasing(
 
 void CKeyboardHandler::onKeyPressing(const CKeyPressing& KeyPressing) {
   CKeyPressing Key = KeyPressing;
-  if (Key.KeyLabel.Size == 0)
-    Key.KeyLabel = CLabelMaker::make(KeyPressing.KeyID);
+  correctLabel(&Key);
   if (isActive() && hasSymbolOrLabel(Key))
     KeyPressingOut_.set(Key);
   handleUserBlock(Key);
@@ -86,6 +85,12 @@ void CKeyboardHandler::run(CAnyKillerPromise killerPromise,
   } catch (...) {
     CListenerExceptionHandler React(KeyboardHandler);
   }
+}
+
+void CKeyboardHandler::correctLabel(CKeyPressing* pKey) {
+  assert(pKey);
+  if (pKey->KeyLabel.Size == 0 || pKey->KeyID == CKeyIDEnum::Spacebar)
+    pKey->KeyLabel = CLabelMaker::make(pKey->KeyID);
 }
 
 bool CKeyboardHandler::hasSymbolOrLabel(const CKeyPressing& Key) {

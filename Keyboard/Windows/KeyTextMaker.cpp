@@ -30,8 +30,6 @@ CKeyTextData CKeyTextMaker::getText(CVKCode VK, CKeyShifters Shifters,
 CLabelData CKeyTextMaker::getLabel(USHORT MakeCode, USHORT Flags, HKL Layout) {
   CVKCode VK = CWinKeyboardApi::getSymbolVK(MakeCode, Flags, Layout);
   VK = CWinKeyboardApi::distinguishShifters(VK, MakeCode, Flags);
-  if (VK == CVK::Spacebar)
-    return {QChar(), QChar(), 0};
   auto symbOpt = Mapper(Layout).getSymbol(VK, CKeyShiftersEnum::Base);
   if (!symbOpt.has_value())
     return {QChar(), QChar(), 0};
