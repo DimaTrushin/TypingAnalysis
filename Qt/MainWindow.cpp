@@ -16,7 +16,7 @@ CMainWindow::CMainWindow(QWidget* parent)
   addQwtPlotAdjusters();
   addQwtKeyScheme();
   adjustStaticInterface();
-  adjustMenu();
+  adjustModifiersMenu();
 }
 
 CMainWindow::~CMainWindow() = default;
@@ -72,21 +72,9 @@ void CMainWindow::adjustStaticInterface() {
   adjustButtonGroups();
 }
 
-void CMainWindow::adjustMenu() {
+void CMainWindow::adjustModifiersMenu() {
   connect(ui_->radioButton, &QRadioButton::toggled,
           ui_->menuModifiers->menuAction(), &QAction::setDisabled);
-  adjustMenu(ui_->menuShift, &ShiftActions_);
-  adjustMenu(ui_->menuCtrl, &CtrlActions_);
-  adjustMenu(ui_->menuAlt, &AltActions_);
-}
-
-void CMainWindow::adjustMenu(QMenu* menu,
-                             std::unique_ptr<QActionGroup>* Group) {
-  *Group = std::make_unique<QActionGroup>(this);
-  auto Actions = menu->actions();
-  for (auto Action : Actions)
-    (*Group)->addAction(Action);
-  Actions[0]->setChecked(true);
 }
 
 void CMainWindow::adjustSplitters() {

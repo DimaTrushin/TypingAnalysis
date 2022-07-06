@@ -20,6 +20,7 @@ CModifiersMenuImpl::CModifiersMenuImpl(const CInitData& InitData)
   assert(CtrlMenu_);
   assert(AltMenu_);
 
+  adjustMenu();
   connectShiftMenu();
   connectCtrlMenu();
   connectAltMenu();
@@ -125,6 +126,21 @@ void CModifiersMenuImpl::altEssentialToggled(bool checked) {
   std::lock_guard<CSupressor> guard(MySignal_);
   ModifiersOutput_.set(
       CModifiersMode{getShiftMode(), getCtrlMode(), EModifiersMode::Essential});
+}
+
+void CModifiersMenuImpl::adjustMenu() {
+  adjustMenu(ShiftMenu_, &ShiftActions_);
+  adjustMenu(CtrlMenu_, &CtrlActions_);
+  adjustMenu(AltMenu_, &AltActions_);
+}
+
+void CModifiersMenuImpl::adjustMenu(QMenu* menu,
+                                    std::unique_ptr<QActionGroup>* Group) {
+  *Group = std::make_unique<QActionGroup>(this);
+  auto Actions = menu->actions();
+  for (auto Action : Actions)
+    (*Group)->addAction(Action);
+  Actions[0]->setChecked(true);
 }
 
 void CModifiersMenuImpl::connectShiftMenu() {

@@ -55,8 +55,7 @@ Q_SIGNALS:
 
 private:
   void adjustStaticInterface();
-  void adjustMenu();
-  void adjustMenu(QMenu* menu, std::unique_ptr<QActionGroup>* Group);
+  void adjustModifiersMenu();
   void adjustSplitters();
   void adjustSplitter();
   void adjustSplitter2();
@@ -73,9 +72,6 @@ private:
   std::unique_ptr<Ui::MainWindow> ui_;
   CSpeedPlot* SpeedPlot_;
   QwtPlot* KeySchemePlot_;
-  std::unique_ptr<QActionGroup> ShiftActions_;
-  std::unique_ptr<QActionGroup> CtrlActions_;
-  std::unique_ptr<QActionGroup> AltActions_;
 };
 } // namespace NSQt
 } // namespace NSApplication

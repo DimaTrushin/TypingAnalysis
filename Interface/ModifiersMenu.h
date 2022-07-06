@@ -12,6 +12,7 @@
 
 QT_BEGIN_NAMESPACE
 class QAction;
+class QActionGroup;
 class QMenu;
 QT_END_NAMESPACE
 
@@ -64,6 +65,9 @@ public Q_SLOTS:
   void altEssentialToggled(bool checked);
 
 private:
+  void adjustMenu();
+  void adjustMenu(QMenu* menu, std::unique_ptr<QActionGroup>* Group);
+
   void connectShiftMenu();
   void connectCtrlMenu();
   void connectAltMenu();
@@ -88,6 +92,10 @@ private:
   QMenu* ShiftMenu_;
   QMenu* CtrlMenu_;
   QMenu* AltMenu_;
+
+  std::unique_ptr<QActionGroup> ShiftActions_;
+  std::unique_ptr<QActionGroup> CtrlActions_;
+  std::unique_ptr<QActionGroup> AltActions_;
 
   CSupressor FromModel_;
   CSupressor MySignal_;
