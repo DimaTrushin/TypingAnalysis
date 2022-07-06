@@ -55,7 +55,7 @@ private:
   CContainer YR1_;
   double Maximum_ = kMaximum;
   double Minimum_ = kMinimum;
-  size_t index_max0_;
+  size_t index_max0_ = 0;
 };
 
 } // namespace NSKernel

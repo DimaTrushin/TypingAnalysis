@@ -25,7 +25,7 @@ unsigned int CSafeRawBuffer::size() const {
 
 void CSafeRawBuffer::resize(unsigned int newSize) {
   unsigned int bufferSize =
-      newSize / CAlgnBlock::size + (newSize % CAlgnBlock::size ? 1 : 0);
+      newSize / CAlgnBlock::size + ((newSize % CAlgnBlock::size) ? 1 : 0);
   Buffer_.resize(bufferSize);
   size_ = newSize;
 }

@@ -148,7 +148,8 @@ CFinger CFingerLayout::find(CKeyPosition Position) const {
   return CFinger();
 }
 
-CFingerLayout::CFingerLayout(CLayoutContainer Layout) : Layout_(Layout) {
+CFingerLayout::CFingerLayout(CLayoutContainer Layout)
+    : Layout_(std::move(Layout)) {
 }
 
 CFingerLayout::CLayoutContainer CFingerLayout::getDefaultLayout() {

@@ -87,7 +87,7 @@ void CSimpleKeyMapper::handleKeyWithShifters(CVKCode VK,
     KeyTable_[{VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], false};
   } else if (rc > 1) {
     // several symbols, ignore
-  } else if (rc < 0) {
+  } else {
     // dead key
     KeyTable_[{VK, Shifters}] = {CWinKeyboardApi::WBufferPtr()[0], true};
   }

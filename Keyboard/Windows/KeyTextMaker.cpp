@@ -45,7 +45,7 @@ bool CKeyTextMaker::isDeadKey(CVKCode VK, CKeyShifters Shifters) const {
   return CurrentMapper().isDeadKey(VK, Shifters);
 }
 
-bool CKeyTextMaker::isLayoutChanged(HKL Layout) const {
+bool CKeyTextMaker::isLayoutChanged(const HKL Layout) const {
   return Layout != CurrentLayout();
 }
 

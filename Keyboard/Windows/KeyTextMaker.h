@@ -25,7 +25,7 @@ public:
   bool isDeadKey(CVKCode VK, CKeyShifters Shifters) const;
 
 private:
-  bool isLayoutChanged(HKL Layout) const;
+  bool isLayoutChanged(const HKL Layout) const;
   void switchLayout(HKL Layout);
   CKeyTextData getKeyTextData(CVKCode VK, CKeyShifters Shifters);
   CKeyTextData getKeyTextDataWithDeadKey(CVKCode VK, CKeyShifters Shifters);

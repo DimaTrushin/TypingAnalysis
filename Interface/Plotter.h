@@ -42,7 +42,7 @@ public:
     QSlider* HorizontalSlider;
   };
 
-  explicit CSpeedPlotterImpl(CInitData Data);
+  explicit CSpeedPlotterImpl(const CInitData& Data);
   ~CSpeedPlotterImpl();
 
   CPlotDataObserver* speedDataInput();

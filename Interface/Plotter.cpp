@@ -14,7 +14,7 @@ namespace NSInterface {
 
 namespace NSPlotterDetail {
 
-CSpeedPlotterImpl::CSpeedPlotterImpl(CInitData Data)
+CSpeedPlotterImpl::CSpeedPlotterImpl(const CInitData& Data)
     : Plot_(Data.Plot), VerticalSlider_(Data.VerticalSlider),
       HorizontalSlider_(Data.HorizontalSlider),
       SpeedDataInput_(

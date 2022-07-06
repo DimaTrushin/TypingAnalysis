@@ -38,7 +38,7 @@ void CWinKeyboardApi::setKeyboardBuffer(CKeyShifters Shifters) {
   getKeyboardBuffer()[CVK::Alt] =
       (((Shifters & CKeyShiftersEnum::Alt) != 0) ? 0x80 : 0x00);
   getKeyboardBuffer()[CVK::Capslock] =
-      (Shifters & CKeyShiftersEnum::Caps ? 0x01 : 0x00);
+      ((Shifters & CKeyShiftersEnum::Caps) ? 0x01 : 0x00);
 }
 
 void CWinKeyboardApi::clearOsKeyboardState(HKL Layout) {

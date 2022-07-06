@@ -33,7 +33,7 @@ class LabelScaleDraw : public QwtScaleDraw {
   using CStringContainer = std::vector<QString>;
 
 public:
-  LabelScaleDraw(CStringContainer&& list) : Text_(std::move(list)) {
+  explicit LabelScaleDraw(CStringContainer&& list) : Text_(std::move(list)) {
   }
   QwtText label(double value) const override {
     if (value < 0 || size_t(value) >= Text_.size())

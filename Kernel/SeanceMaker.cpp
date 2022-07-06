@@ -143,11 +143,8 @@ CSeanceMaker::CIndex CSeanceMaker::getTextLengh(const CRawSession& Session) {
 }
 
 bool CSeanceMaker::hasText(const CRawSession& Session) {
-  for (const auto& Key : Session) {
-    if (Key.getTextSize() > 0)
-      return true;
-  }
-  return false;
+  return std::any_of(Session.begin(), Session.end(),
+                     [](const auto& Key) { return Key.getTextSize() > 0; });
 }
 
 } // namespace NSKernel

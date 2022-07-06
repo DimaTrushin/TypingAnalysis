@@ -71,7 +71,7 @@ bool CKeyEvent::hasText() const {
 }
 
 QChar CKeyEvent::getSymbol(unsigned char index) const {
-  assert(0 <= index && index < KeyText_.Size);
+  assert(index < KeyText_.Size);
   return KeyText_.Symbol[index];
 }
 

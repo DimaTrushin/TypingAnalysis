@@ -2,8 +2,7 @@
 
 namespace NSApplication {
 
-CTimer::CTimer() {
-  start_ = std::chrono::steady_clock::now();
+CTimer::CTimer() : start_(std::chrono::steady_clock::now()) {
 }
 
 CTime CTimer::get() const {

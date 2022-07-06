@@ -4,7 +4,7 @@ namespace NSApplication {
 namespace NSKernel {
 
 NSKeySchemeDetail::CKeySegment::CKeySegment(QString Text, CTime PressingTime)
-    : Text_(Text), PressingTime_(PressingTime) {
+    : Text_(std::move(Text)), PressingTime_(PressingTime) {
 }
 
 NSKeySchemeDetail::CKeySegment::CKeySegment(QChar Symbol, CTime PressingTime)
