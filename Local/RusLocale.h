@@ -29,6 +29,7 @@ struct CRusLocale {
         "Скорость (реальная), знак/мин";
     static constexpr const char* MaxLikelihoodSpeed =
         "Скорость (несущая), знак/мин";
+    static constexpr const char* Score = "Баллы";
 
     static constexpr const char* FullTextLengthHint =
         "Количество всех набранных символов с учетом удаленных";
@@ -52,6 +53,9 @@ struct CRusLocale {
     static constexpr const char* MaxLikelihoodSpeedHint =
         "Несущая скорость, эта скорость является точкой максимума для "
         "плотности распределения скорости (первый график)";
+    static constexpr const char* ScoreHint =
+        "Баллы начисляются за технику печати от 0 до 1, чем ближе к 1 тем "
+        "лучше";
   };
 
   struct CTextModeView {

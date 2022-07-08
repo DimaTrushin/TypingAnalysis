@@ -33,6 +33,7 @@ public:
   };
 
   CPointData max0() const;
+  double score() const;
 
   void fillPlots(const CContainer& Samples);
 
@@ -43,6 +44,7 @@ private:
 
   void fillX();
   void find_max0();
+  void find_score_();
 
   bool isCorrect_() const;
 
@@ -56,6 +58,7 @@ private:
   double Maximum_ = kMaximum;
   double Minimum_ = kMinimum;
   size_t index_max0_ = 0;
+  double Score_ = 0.;
 };
 
 } // namespace NSKernel

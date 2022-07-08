@@ -50,6 +50,7 @@ private:
   QString printedTextDuration() const;
   QString printedTextSpeed() const;
   QString maxLikelihoodSpeed() const;
+  QString score() const;
 
   QString fullTextLengthHint() const;
   QString printedTextLengthHint() const;
@@ -60,6 +61,7 @@ private:
   QString printedTextDurationHint() const;
   QString printedTextSpeedHint() const;
   QString maxLikelihoodSpeedHint() const;
+  QString scoreHint() const;
 
   CLocalizerInput LocalizerInput_;
   CAnalyticDataInput AnalyticDataInput_;

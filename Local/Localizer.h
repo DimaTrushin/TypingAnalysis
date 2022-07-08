@@ -99,6 +99,9 @@ public:
   const QString& maxLikelihoodSpeed() const {
     return MaxLikelihoodSpeed_;
   }
+  const QString& score() const {
+    return Score_;
+  }
 
   const QString& fullTextLengthHint() const {
     return FullTextLengthHint_;
@@ -127,6 +130,9 @@ public:
   const QString& maxLikelihoodSpeedHint() const {
     return MaxLikelihoodSpeedHint_;
   }
+  const QString& scoreHint() const {
+    return ScoreHint_;
+  }
 
 private:
   template<class TStatisticsLocale>
@@ -140,6 +146,7 @@ private:
         PrintedTextDuration_(TStatisticsLocale::PrintedTextDuration),
         PrintedTextSpeed_(TStatisticsLocale::PrintedTextSpeed),
         MaxLikelihoodSpeed_(TStatisticsLocale::MaxLikelihoodSpeed),
+        Score_(TStatisticsLocale::Score),
 
         FullTextLengthHint_(TStatisticsLocale::FullTextLengthHint),
         PrintedTextLengthHint_(TStatisticsLocale::PrintedTextLengthHint),
@@ -149,7 +156,8 @@ private:
         MistakesPercentHint_(TStatisticsLocale::MistakesPercentHint),
         PrintedTextDurationHint_(TStatisticsLocale::PrintedTextDurationHint),
         PrintedTextSpeedHint_(TStatisticsLocale::PrintedTextSpeedHint),
-        MaxLikelihoodSpeedHint_(TStatisticsLocale::MaxLikelihoodSpeedHint) {
+        MaxLikelihoodSpeedHint_(TStatisticsLocale::MaxLikelihoodSpeedHint),
+        ScoreHint_(TStatisticsLocale::ScoreHint) {
   }
 
   QString FullTextLength_;
@@ -161,6 +169,7 @@ private:
   QString PrintedTextDuration_;
   QString PrintedTextSpeed_;
   QString MaxLikelihoodSpeed_;
+  QString Score_;
 
   QString FullTextLengthHint_;
   QString PrintedTextLengthHint_;
@@ -171,6 +180,7 @@ private:
   QString PrintedTextDurationHint_;
   QString PrintedTextSpeedHint_;
   QString MaxLikelihoodSpeedHint_;
+  QString ScoreHint_;
 };
 
 class CTextModeViewLocalizer {

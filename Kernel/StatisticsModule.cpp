@@ -70,6 +70,8 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
   Statistics.push_back({maxLikelihoodSpeed(),
                         QString::number(Data.plotData().max0().x),
                         maxLikelihoodSpeedHint()});
+  Statistics.push_back(
+      {score(), QString::number(Data.plotData().score()), scoreHint()});
   StatisticsDescriptionOutput_.set(std::move(Statistics));
 }
 
@@ -127,6 +129,12 @@ QString CStatisticsModuleImpl::maxLikelihoodSpeed() const {
   return LocalizerInput_.data()->get().maxLikelihoodSpeed();
 }
 
+QString CStatisticsModuleImpl::score() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().score();
+}
+
 QString CStatisticsModuleImpl::fullTextLengthHint() const {
   if (!LocalizerInput_.hasValue())
     return "";
@@ -179,6 +187,12 @@ QString CStatisticsModuleImpl::maxLikelihoodSpeedHint() const {
   if (!LocalizerInput_.hasValue())
     return "";
   return LocalizerInput_.data()->get().maxLikelihoodSpeedHint();
+}
+
+QString CStatisticsModuleImpl::scoreHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().scoreHint();
 }
 
 } // namespace NSStatisticsModuleDetail

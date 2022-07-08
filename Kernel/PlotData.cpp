@@ -67,10 +67,15 @@ CPlotData::CPointData CPlotData::max0() const {
   return {X_[index_max0_], Y0_[index_max0_]};
 }
 
+double CPlotData::score() const {
+  return Score_;
+}
+
 void CPlotData::fillPlots(const CContainer& Samples) {
   CMathAccess Math;
   Math->fillPlots(Samples, X_, &Y0_, &Y1_, &YMB0_, &YMB1_, &YR0_, &YR1_);
   find_max0();
+  find_score_();
 }
 
 void CPlotData::fillX() {
@@ -89,6 +94,11 @@ void CPlotData::find_max0() {
       index_max0_ = i;
     }
   }
+}
+
+void CPlotData::find_score_() {
+  Score_ = Y0_[index_max0_] / NSCompute::CFunctions::CNormal<0>::compute(
+                                  X_[index_max0_], X_[index_max0_]);
 }
 
 bool CPlotData::isCorrect_() const {

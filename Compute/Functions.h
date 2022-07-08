@@ -3,6 +3,7 @@
 
 #include "CudaDefines.h"
 
+#include <cmath>
 #include <cstdint>
 
 #ifndef DISABLE_CUDA

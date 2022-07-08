@@ -26,6 +26,7 @@ struct CEngLocale {
         "Printed Text Duration, sec";
     static constexpr const char* PrintedTextSpeed = "Speed (real), symb/min";
     static constexpr const char* MaxLikelihoodSpeed = "Speed (main), symb/min";
+    static constexpr const char* Score = "Score";
 
     static constexpr const char* FullTextLengthHint =
         "The amount of all symbols printed including deleted ones";
@@ -49,6 +50,9 @@ struct CEngLocale {
     static constexpr const char* MaxLikelihoodSpeedHint =
         "The main speed, it is the maximum of the speed density (the "
         "first plot)";
+    static constexpr const char* ScoreHint =
+        "The score of the typing technique measured from 0 to 1, the closer to "
+        "1 is better";
   };
 
   struct CTextModeView {
