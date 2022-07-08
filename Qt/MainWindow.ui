@@ -290,6 +290,9 @@
                          <pointsize>14</pointsize>
                         </font>
                        </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
                       </widget>
                       <widget class="QFrame" name="frame_8">
                        <property name="frameShape">
