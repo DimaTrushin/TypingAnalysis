@@ -23,17 +23,37 @@ struct CRusLocale {
     static constexpr const char* MistakePlaces = "Мест с ошибками";
     static constexpr const char* Mistakes = "Ошибок";
     static constexpr const char* MistakesPercent = "Процент ошибок";
-    static constexpr const char* FullTextDuration =
-        "Продолжительность полного текста, сек";
     static constexpr const char* PrintedTextDuration =
         "Продолжительность напечатанного текста, сек";
-    static constexpr const char* FullTextSpeed =
-        "Скорость полного текста, знак/мин";
     static constexpr const char* PrintedTextSpeed =
         "Скорость (реальная), знак/мин";
     static constexpr const char* MaxLikelihoodSpeed =
         "Скорость (несущая), знак/мин";
+
+    static constexpr const char* FullTextLengthHint =
+        "Количество всех набранных символов с учетом удаленных";
+    static constexpr const char* PrintedTextLengthHint =
+        "Количество напечатанных символов без учета удаленных";
+    static constexpr const char* DeletedSymbolsHint =
+        "Количество удаленных символов";
+    static constexpr const char* MistakePlacesHint =
+        "Количество символов, на которых сделана ошибка (на одном символе "
+        "можно стелать больше одной ошибки)";
+    static constexpr const char* MistakesHint = "Количество сделаных ошибок";
+    static constexpr const char* MistakesPercentHint =
+        "Процент ошибок, вычисляется E/L*100, где E - количество ошибок, L - "
+        "длина набранного текста (не включая удаленные символы)";
+    static constexpr const char* PrintedTextDurationHint =
+        "Время потраченное на набор текста, вычисляется как разность "
+        "между временем нажатием последнего символа и первого символа";
+    static constexpr const char* PrintedTextSpeedHint =
+        "Средняя скорость, вычисляется как L/T, где L - длина напечатанного "
+        "текста, T - продолжительность напечатанного текста";
+    static constexpr const char* MaxLikelihoodSpeedHint =
+        "Несущая скорость, эта скорость является точкой максимума для "
+        "плотности распределения скорости (первый график)";
   };
+
   struct CTextModeView {
     static constexpr const char* TextMode = "Тексторвый режим";
     static constexpr const char* Raw = "Сырой";
@@ -46,6 +66,21 @@ struct CRusLocale {
     static constexpr const char* Ctrl = "Ctrl";
     static constexpr const char* Alt = "Alt";
     static constexpr const char* Modifiers = "Модификаторы";
+
+    static constexpr const char* RawHint =
+        "Режим, в котором показываются все нажатые клавиши";
+    static constexpr const char* FullHint =
+        "Режим, в котором показывается набранный текст с учетом удаленных "
+        "символов";
+    static constexpr const char* PrintedHint =
+        "Режим, в котором показывается набранный текст";
+    static constexpr const char* NonHint =
+        "Не отображать нажатия данной клавиши";
+    static constexpr const char* AllHint =
+        "Отображать все нажатия данной клавиши";
+    static constexpr const char* EssentialHint =
+        "Отображать только те нажатия, которые повлияли на текст в данном "
+        "режиме";
   };
 
   struct CSpeedPlotter {
@@ -57,6 +92,16 @@ struct CRusLocale {
     static constexpr const char* Derivative2Name = "Производная М-Б";
     static constexpr const char* Density3Name = "Плотность Р";
     static constexpr const char* Derivative3Name = "Производная Р";
+
+    static constexpr const char* LegendHint =
+        "Плотность распределения скорости - это \"непрерывная\" гистограмма "
+        "для скорости.\n1) Плотность распределения "
+        "восстанавливаемая с помощью нормального шума\n2) "
+        "Производная плотности (1), нужна для лучшего понимания дефектов "
+        "плотности\n3) Плотность распределения восстанавливаемая с "
+        "помощью шума Максвела-Больцмана\n4) Производная плотности "
+        "(3)\n5) Плотность восстанавливаемая с помощью шума "
+        "Релея\n6) Производная плотности (5)";
   };
 
   struct CKeySchemePlotter {

@@ -271,8 +271,11 @@ void CModifiersMenuImpl::localizerMenuItems(const CLocalizer& Localizer,
   auto ActionList = Menu->actions();
   assert(ActionList.size() == 3);
   ActionList[0]->setText(Localizer.non());
+  ActionList[0]->setToolTip(Localizer.nonHint());
   ActionList[1]->setText(Localizer.all());
+  ActionList[1]->setToolTip(Localizer.allHint());
   ActionList[2]->setText(Localizer.essential());
+  ActionList[2]->setToolTip(Localizer.essentialHint());
 }
 
 CModifiersMenuImpl::EModifiersMode CModifiersMenuImpl::getShiftMode() const {

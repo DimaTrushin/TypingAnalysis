@@ -17,16 +17,13 @@ int CSessionStatisticsModel::columnCount(const QModelIndex& index) const {
 
 QVariant CSessionStatisticsModel::data(const QModelIndex& index,
                                        int role) const {
-  if (role != Qt::DisplayRole || !isValid(index))
+  if (!isValid(index))
     return QVariant();
-  switch (index.column()) {
-  case 0:
-    return data_(index.row()).Data;
-  case 1:
-    return data_(index.row()).Value;
-  default:
-    return QVariant();
-  }
+  if (role == Qt::DisplayRole)
+    return getData(index.row(), index.column());
+  if (role == Qt::ToolTipRole)
+    return getHint(index.row(), index.column());
+  return QVariant();
 }
 
 QVariant CSessionStatisticsModel::headerData(int section,
@@ -63,6 +60,21 @@ void CSessionStatisticsModel::setLocale(const CLocalizer& Localizer) {
   DataName_ = Localizer.data();
   ValueName_ = Localizer.value();
   Q_EMIT headerDataChanged(Qt::Horizontal, 0, 1);
+}
+
+QVariant CSessionStatisticsModel::getData(int row, int column) const {
+  switch (column) {
+  case 0:
+    return data_(row).Data;
+  case 1:
+    return data_(row).Value;
+  default:
+    return QVariant();
+  }
+}
+
+QVariant CSessionStatisticsModel::getHint(int row, int) const {
+  return data_(row).Hint;
 }
 
 QString CSessionStatisticsModel::headerName(int column) const {

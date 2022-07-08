@@ -90,20 +90,42 @@ public:
   const QString& mistakesPercent() const {
     return MistakesPercent_;
   }
-  const QString& fullTextDuration() const {
-    return FullTextDuration_;
-  }
   const QString& printedTextDuration() const {
     return PrintedTextDuration_;
-  }
-  const QString& fullTextSpeed() const {
-    return FullTextSpeed_;
   }
   const QString& printedTextSpeed() const {
     return PrintedTextSpeed_;
   }
   const QString& maxLikelihoodSpeed() const {
     return MaxLikelihoodSpeed_;
+  }
+
+  const QString& fullTextLengthHint() const {
+    return FullTextLengthHint_;
+  }
+  const QString& printedTextLengthHint() const {
+    return PrintedTextLengthHint_;
+  }
+  const QString& deletedSymbolsHint() const {
+    return DeletedSymbolsHint_;
+  }
+  const QString& mistakePlacesHint() const {
+    return MistakePlacesHint_;
+  }
+  const QString& mistakesHint() const {
+    return MistakesHint_;
+  }
+  const QString& mistakesPercentHint() const {
+    return MistakesPercentHint_;
+  }
+  const QString& printedTextDurationHint() const {
+    return PrintedTextDurationHint_;
+  }
+  const QString& printedTextSpeedHint() const {
+    return PrintedTextSpeedHint_;
+  }
+  const QString& maxLikelihoodSpeedHint() const {
+    return MaxLikelihoodSpeedHint_;
   }
 
 private:
@@ -115,11 +137,19 @@ private:
         MistakePlaces_(TStatisticsLocale::MistakePlaces),
         Mistakes_(TStatisticsLocale::Mistakes),
         MistakesPercent_(TStatisticsLocale::MistakesPercent),
-        FullTextDuration_(TStatisticsLocale::FullTextDuration),
         PrintedTextDuration_(TStatisticsLocale::PrintedTextDuration),
-        FullTextSpeed_(TStatisticsLocale::FullTextSpeed),
         PrintedTextSpeed_(TStatisticsLocale::PrintedTextSpeed),
-        MaxLikelihoodSpeed_(TStatisticsLocale::MaxLikelihoodSpeed) {
+        MaxLikelihoodSpeed_(TStatisticsLocale::MaxLikelihoodSpeed),
+
+        FullTextLengthHint_(TStatisticsLocale::FullTextLengthHint),
+        PrintedTextLengthHint_(TStatisticsLocale::PrintedTextLengthHint),
+        DeletedSymbolsHint_(TStatisticsLocale::DeletedSymbolsHint),
+        MistakePlacesHint_(TStatisticsLocale::MistakePlacesHint),
+        MistakesHint_(TStatisticsLocale::MistakesHint),
+        MistakesPercentHint_(TStatisticsLocale::MistakesPercentHint),
+        PrintedTextDurationHint_(TStatisticsLocale::PrintedTextDurationHint),
+        PrintedTextSpeedHint_(TStatisticsLocale::PrintedTextSpeedHint),
+        MaxLikelihoodSpeedHint_(TStatisticsLocale::MaxLikelihoodSpeedHint) {
   }
 
   QString FullTextLength_;
@@ -128,11 +158,19 @@ private:
   QString MistakePlaces_;
   QString Mistakes_;
   QString MistakesPercent_;
-  QString FullTextDuration_;
   QString PrintedTextDuration_;
-  QString FullTextSpeed_;
   QString PrintedTextSpeed_;
   QString MaxLikelihoodSpeed_;
+
+  QString FullTextLengthHint_;
+  QString PrintedTextLengthHint_;
+  QString DeletedSymbolsHint_;
+  QString MistakePlacesHint_;
+  QString MistakesHint_;
+  QString MistakesPercentHint_;
+  QString PrintedTextDurationHint_;
+  QString PrintedTextSpeedHint_;
+  QString MaxLikelihoodSpeedHint_;
 };
 
 class CTextModeViewLocalizer {
@@ -176,6 +214,24 @@ public:
   const QString& modifiers() const {
     return Modifiers_;
   }
+  const QString& rawHint() const {
+    return RawHint_;
+  }
+  const QString& fullHint() const {
+    return FullHint_;
+  }
+  const QString& printedHint() const {
+    return PrintedHint_;
+  }
+  const QString& nonHint() const {
+    return NonHint_;
+  }
+  const QString& allHint() const {
+    return AllHint_;
+  }
+  const QString& essentialHint() const {
+    return EssentialHint_;
+  }
 
 private:
   template<class TTextModeViewLocale>
@@ -187,7 +243,14 @@ private:
         Essential_(TTextModeViewLocale::Essential),
         Shift_(TTextModeViewLocale::Shift), Ctrl_(TTextModeViewLocale::Ctrl),
         Alt_(TTextModeViewLocale::Alt),
-        Modifiers_(TTextModeViewLocale::Modifiers) {
+        Modifiers_(TTextModeViewLocale::Modifiers),
+
+        RawHint_(TTextModeViewLocale::RawHint),
+        FullHint_(TTextModeViewLocale::FullHint),
+        PrintedHint_(TTextModeViewLocale::PrintedHint),
+        NonHint_(TTextModeViewLocale::NonHint),
+        AllHint_(TTextModeViewLocale::AllHint),
+        EssentialHint_(TTextModeViewLocale::EssentialHint) {
   }
 
   QString TextMode_;
@@ -201,6 +264,13 @@ private:
   QString Ctrl_;
   QString Alt_;
   QString Modifiers_;
+
+  QString RawHint_;
+  QString FullHint_;
+  QString PrintedHint_;
+  QString NonHint_;
+  QString AllHint_;
+  QString EssentialHint_;
 };
 
 class CSpeedPlotterLocalizer {
@@ -235,6 +305,9 @@ public:
   const QString& derivative3Name() const {
     return Derivative3Name_;
   }
+  const QString& legendHint() const {
+    return LegendHint_;
+  }
 
 private:
   template<class TSpeedPlotterLocale>
@@ -246,7 +319,8 @@ private:
         Density2Name_(TSpeedPlotterLocale::Density2Name),
         Derivative2Name_(TSpeedPlotterLocale::Derivative2Name),
         Density3Name_(TSpeedPlotterLocale::Density3Name),
-        Derivative3Name_(TSpeedPlotterLocale::Derivative3Name) {
+        Derivative3Name_(TSpeedPlotterLocale::Derivative3Name),
+        LegendHint_(TSpeedPlotterLocale::LegendHint) {
   }
 
   QString PlotterTitle_;
@@ -257,6 +331,7 @@ private:
   QString Derivative2Name_;
   QString Density3Name_;
   QString Derivative3Name_;
+  QString LegendHint_;
 };
 
 class CKeySchemePlotterLocalizer {

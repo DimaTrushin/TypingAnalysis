@@ -154,8 +154,11 @@ bool CTextModeViewImpl::areSwitchesInCorrectState() const {
 void CTextModeViewImpl::setLocale(const CLocalizer& Localizer) {
   TextModeBox_->setTitle(Localizer.textMode());
   Raw_->setText(Localizer.raw());
+  Raw_->setToolTip(Localizer.rawHint());
   Full_->setText(Localizer.full());
+  Full_->setToolTip(Localizer.fullHint());
   Printed_->setText(Localizer.printed());
+  Printed_->setToolTip(Localizer.printedHint());
 }
 
 } // namespace NSTextModeViewDetail

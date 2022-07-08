@@ -36,32 +36,40 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
   CStatisticsDescription Statistics;
   const NSKernel::CTextDataTree& Tree = Data.textData().textTree();
 
-  Statistics.push_back(
-      {printedTextLength(), QString::number(Tree->getPrintedTextLength())});
-  Statistics.push_back(
-      {fullTextLength(), QString::number(Tree->getFullTextLength())});
-  Statistics.push_back(
-      {deletedSymbols(), QString::number(Tree->getNumberOfDeletedSymbols())});
-  Statistics.push_back(
-      {mistakePlaces(), QString::number(Tree->getNumberOfMistakePlaces())});
-  Statistics.push_back(
-      {mistakes(), QString::number(Tree->getNumberOfMistakeRoutes())});
+  Statistics.push_back({printedTextLength(),
+                        QString::number(Tree->getPrintedTextLength()),
+                        printedTextLengthHint()});
+  Statistics.push_back({fullTextLength(),
+                        QString::number(Tree->getFullTextLength()),
+                        fullTextLengthHint()});
+  Statistics.push_back({deletedSymbols(),
+                        QString::number(Tree->getNumberOfDeletedSymbols()),
+                        deletedSymbolsHint()});
+  Statistics.push_back({mistakePlaces(),
+                        QString::number(Tree->getNumberOfMistakePlaces()),
+                        mistakePlacesHint()});
+  Statistics.push_back({mistakes(),
+                        QString::number(Tree->getNumberOfMistakeRoutes()),
+                        mistakesHint()});
   Statistics.push_back(
       {mistakesPercent(),
-       QString::number(Tree->percentOfMistakeRoutes(), 'f', 2) +
-           QString(" %")});
+       QString::number(Tree->percentOfMistakeRoutes(), 'f', 2) + QString(" %"),
+       mistakesPercentHint()});
   Statistics.push_back(
       {printedTextDuration(),
-       QString::number(Tree->getPrintedTextDuration().toSecondsF(), 'f', 2)});
+       QString::number(Tree->getPrintedTextDuration().toSecondsF(), 'f', 2),
+       printedTextDurationHint()});
   Statistics.push_back(
       {printedTextSpeed(),
        (Tree->getPrintedTextDuration().toMinutesF() > 0
             ? QString::number(Tree->getPrintedTextLength() /
                                   Tree->getPrintedTextDuration().toMinutesF(),
                               'f', 2)
-            : "0")});
-  Statistics.push_back(
-      {maxLikelihoodSpeed(), QString::number(Data.plotData().max0().x)});
+            : "0"),
+       printedTextSpeedHint()});
+  Statistics.push_back({maxLikelihoodSpeed(),
+                        QString::number(Data.plotData().max0().x),
+                        maxLikelihoodSpeedHint()});
   StatisticsDescriptionOutput_.set(std::move(Statistics));
 }
 
@@ -101,22 +109,10 @@ QString CStatisticsModuleImpl::mistakesPercent() const {
   return LocalizerInput_.data()->get().mistakesPercent();
 }
 
-QString CStatisticsModuleImpl::fullTextDuration() const {
-  if (!LocalizerInput_.hasValue())
-    return "";
-  return LocalizerInput_.data()->get().fullTextDuration();
-}
-
 QString CStatisticsModuleImpl::printedTextDuration() const {
   if (!LocalizerInput_.hasValue())
     return "";
   return LocalizerInput_.data()->get().printedTextDuration();
-}
-
-QString CStatisticsModuleImpl::fullTextSpeed() const {
-  if (!LocalizerInput_.hasValue())
-    return "";
-  return LocalizerInput_.data()->get().fullTextSpeed();
 }
 
 QString CStatisticsModuleImpl::printedTextSpeed() const {
@@ -129,6 +125,60 @@ QString CStatisticsModuleImpl::maxLikelihoodSpeed() const {
   if (!LocalizerInput_.hasValue())
     return "";
   return LocalizerInput_.data()->get().maxLikelihoodSpeed();
+}
+
+QString CStatisticsModuleImpl::fullTextLengthHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().fullTextLengthHint();
+}
+
+QString CStatisticsModuleImpl::printedTextLengthHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().printedTextLengthHint();
+}
+
+QString CStatisticsModuleImpl::deletedSymbolsHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().deletedSymbolsHint();
+}
+
+QString CStatisticsModuleImpl::mistakePlacesHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().mistakePlacesHint();
+}
+
+QString CStatisticsModuleImpl::mistakesHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().mistakesHint();
+}
+
+QString CStatisticsModuleImpl::mistakesPercentHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().mistakesPercentHint();
+}
+
+QString CStatisticsModuleImpl::printedTextDurationHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().printedTextDurationHint();
+}
+
+QString CStatisticsModuleImpl::printedTextSpeedHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().printedTextSpeedHint();
+}
+
+QString CStatisticsModuleImpl::maxLikelihoodSpeedHint() const {
+  if (!LocalizerInput_.hasValue())
+    return "";
+  return LocalizerInput_.data()->get().maxLikelihoodSpeedHint();
 }
 
 } // namespace NSStatisticsModuleDetail

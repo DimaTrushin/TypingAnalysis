@@ -35,6 +35,9 @@ public:
   void setLocale(const CLocalizer& Localizer);
 
 private:
+  QVariant getData(int row, int column) const;
+  QVariant getHint(int row, int column) const;
+
   QString headerName(int column) const;
 
   bool isValid(const QModelIndex& index) const;

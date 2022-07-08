@@ -10,6 +10,7 @@ namespace NSKernel {
 struct CDescription {
   QString Data;
   QString Value;
+  QString Hint;
 };
 using CStatisticsDescription = std::deque<CDescription>;
 

@@ -162,6 +162,7 @@ void CSpeedPlotterImpl::setLocale(const CLocalizer& Localizer) {
   SpeedMB1_->setTitle(Localizer.derivative2Name());
   SpeedR0_->setTitle(Localizer.density3Name());
   SpeedR1_->setTitle(Localizer.derivative3Name());
+  Plot_->legend()->setToolTip(Localizer.legendHint());
 }
 
 QString CSpeedPlotterImpl::title() const {

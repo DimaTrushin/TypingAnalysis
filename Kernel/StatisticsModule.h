@@ -47,11 +47,19 @@ private:
   QString mistakePlaces() const;
   QString mistakes() const;
   QString mistakesPercent() const;
-  QString fullTextDuration() const;
   QString printedTextDuration() const;
-  QString fullTextSpeed() const;
   QString printedTextSpeed() const;
   QString maxLikelihoodSpeed() const;
+
+  QString fullTextLengthHint() const;
+  QString printedTextLengthHint() const;
+  QString deletedSymbolsHint() const;
+  QString mistakePlacesHint() const;
+  QString mistakesHint() const;
+  QString mistakesPercentHint() const;
+  QString printedTextDurationHint() const;
+  QString printedTextSpeedHint() const;
+  QString maxLikelihoodSpeedHint() const;
 
   CLocalizerInput LocalizerInput_;
   CAnalyticDataInput AnalyticDataInput_;
