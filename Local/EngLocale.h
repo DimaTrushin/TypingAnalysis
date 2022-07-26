@@ -51,8 +51,8 @@ struct CEngLocale {
         "The main speed, it is the maximum of the speed density (the "
         "first plot)";
     static constexpr const char* ScoreHint =
-        "The score of the typing technique measured from 0 to 1, the closer to "
-        "1 is better";
+        "The score of the typing technique measured from 0 to 100, the closer "
+        "to 100 is better";
   };
 
   struct CTextModeView {

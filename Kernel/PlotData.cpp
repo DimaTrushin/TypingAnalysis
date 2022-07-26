@@ -67,8 +67,8 @@ CPlotData::CPointData CPlotData::max0() const {
   return {X_[index_max0_], Y0_[index_max0_]};
 }
 
-double CPlotData::score() const {
-  return Score_;
+int CPlotData::score() const {
+  return Score_ * 100;
 }
 
 void CPlotData::fillPlots(const CContainer& Samples) {

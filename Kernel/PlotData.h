@@ -33,7 +33,7 @@ public:
   };
 
   CPointData max0() const;
-  double score() const;
+  int score() const;
 
   void fillPlots(const CContainer& Samples);
 
