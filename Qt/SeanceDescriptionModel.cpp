@@ -192,9 +192,7 @@ CSeanceDescriptionModel::getSessionDescription(const CSession& Session) const {
   size_t size = std::min(Session.size(), kDescriptionSize);
   QString Description;
   for (size_t index = 0; index < size; ++index) {
-    Description.append(Session[index].getTextSize() > 0
-                           ? Session[index].getLastSymbol()
-                           : Session[index].getLabel().LowSymbol);
+    Description.append(Session[index].getRawSymbol());
   }
   return Description;
 }

@@ -85,8 +85,11 @@ QChar CKeyEvent::getRawSymbol() const {
     return KeyLabel_.LowSymbol;
   if (KeyText_.Size > 0)
     return getLastSymbol();
-  if (KeyLabel_.Size > 0)
+  if (KeyLabel_.Size > 0) {
+    if ((Flags_ & CKeyFlagsEnum::Shift) && KeyLabel_.Size == 2)
+      return KeyLabel_.HighSymbol;
     return KeyLabel_.LowSymbol;
+  }
   return QChar();
 }
 
