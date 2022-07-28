@@ -49,14 +49,14 @@ void CSessionSelectorImpl::notifySeanceViewData(const CSeance& Seance) {
 }
 
 bool CSessionSelectorImpl::hasCurrentSession() const {
-  return !(SessionIndex_ < 0 || !Seance_.hasValue());
+  return !(SessionIndex_ < 0 || !Seance_.hasData());
 }
 
 CSessionSelectorImpl::CSessionGetType
 CSessionSelectorImpl::getCurrentSession() const {
   if (!hasCurrentSession())
     return CSessionGetType();
-  return getCurrentSessionFromSeance(*Seance_.data());
+  return getCurrentSessionFromSeance(Seance_.data_());
 }
 
 CSessionSelectorImpl::CSessionGetType

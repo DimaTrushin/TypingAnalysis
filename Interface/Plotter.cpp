@@ -166,51 +166,51 @@ void CSpeedPlotterImpl::setLocale(const CLocalizer& Localizer) {
 }
 
 QString CSpeedPlotterImpl::title() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().plotterTitle();
+  return LocalizerInput_.data_().plotterTitle();
 }
 
 QString CSpeedPlotterImpl::horizontalAxisTitle() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().horizontalAxisTitle();
+  return LocalizerInput_.data_().horizontalAxisTitle();
 }
 
 QString CSpeedPlotterImpl::density1Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().density1Name();
+  return LocalizerInput_.data_().density1Name();
 }
 
 QString CSpeedPlotterImpl::derivative1Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().derivative1Name();
+  return LocalizerInput_.data_().derivative1Name();
 }
 
 QString CSpeedPlotterImpl::density2Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().density2Name();
+  return LocalizerInput_.data_().density2Name();
 }
 
 QString CSpeedPlotterImpl::derivative2Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().derivative2Name();
+  return LocalizerInput_.data_().derivative2Name();
 }
 
 QString CSpeedPlotterImpl::density3Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().density3Name();
+  return LocalizerInput_.data_().density3Name();
 }
 
 QString CSpeedPlotterImpl::derivative3Name() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().derivative3Name();
+  return LocalizerInput_.data_().derivative3Name();
 }
 
 } // namespace NSPlotterDetail

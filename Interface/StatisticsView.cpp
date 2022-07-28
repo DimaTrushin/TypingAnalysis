@@ -38,20 +38,20 @@ void CStatisticsViewImpl::handleStatistics(
 
 void CStatisticsViewImpl::setViewLocale(const CLocalizer& Localizer) {
   setLocale(Localizer);
-  if (StatisticsInput_.hasValue())
-    handleStatistics(StatisticsInput_.data()->get());
+  if (StatisticsInput_.hasData())
+    handleStatistics(StatisticsInput_.data_());
 }
 
 int CStatisticsViewImpl::size() const {
-  if (!StatisticsInput_.hasValue())
+  if (!StatisticsInput_.hasData())
     return 0;
-  return static_cast<int>(StatisticsInput_.data()->get().size());
+  return static_cast<int>(StatisticsInput_.data_().size());
 }
 
 const CStatisticsViewImpl::CDescription&
 CStatisticsViewImpl::data_(int row) const {
   assert(size() > 0);
-  return StatisticsInput_.data()->get()[row];
+  return StatisticsInput_.data_()[row];
 }
 
 } // namespace NSStatisticsViewDetail

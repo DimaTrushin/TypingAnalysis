@@ -29,15 +29,15 @@ void CKeySchemeModuleImpl::subscribeToKeyScheme(CKeySchemeObserver* obs) {
 
 void CKeySchemeModuleImpl::handleFingerLayoutChange(
     const CFingerLayout& FingerLayout) {
-  if (!TextDataInput_.hasValue())
+  if (!TextDataInput_.hasData())
     return;
-  makeKeyScheme(*TextDataInput_.data(), FingerLayout);
+  makeKeyScheme(TextDataInput_.data_(), FingerLayout);
 }
 
 void CKeySchemeModuleImpl::handleTextData(const CTextData& TextData) {
-  if (!FingerLayoutInput_.hasValue())
+  if (!FingerLayoutInput_.hasData())
     return;
-  makeKeyScheme(TextData, *FingerLayoutInput_.data());
+  makeKeyScheme(TextData, FingerLayoutInput_.data_());
 }
 
 void CKeySchemeModuleImpl::makeKeyScheme(const CTextData& TextData,

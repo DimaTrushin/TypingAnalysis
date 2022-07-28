@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSINTERFACE_CSEANCEVIEWCONTROLLER_H
 
 #include "Kernel/SessionSelector.h"
-#include "Library/Observer/Observer.h"
+#include "Library/Observer2/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {

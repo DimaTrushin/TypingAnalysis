@@ -5,7 +5,7 @@
 
 #include "Kernel/Seance.h"
 #include "Kernel/SeanceViewData.h"
-#include "Library/Observer/Observer.h"
+#include "Library/Observer2/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {

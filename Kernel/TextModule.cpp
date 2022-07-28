@@ -24,9 +24,9 @@ void CTextModuleImpl::setCurrentTextMode(CTextMode Mode) {
     return;
   CurrentTextMode_ = Mode;
   TextModeOutput_.notify();
-  if (!CurrentSession_.hasValue())
+  if (!CurrentSession_.hasData())
     return;
-  handleCurrentSession(*CurrentSession_.data());
+  handleCurrentSession(CurrentSession_.data_());
 }
 
 void CTextModuleImpl::setCurrentETextMode(ETextMode Mode) {
@@ -34,9 +34,9 @@ void CTextModuleImpl::setCurrentETextMode(ETextMode Mode) {
     return;
   CurrentTextMode_.TextMode = Mode;
   TextModeOutput_.notify();
-  if (!CurrentSession_.hasValue())
+  if (!CurrentSession_.hasData())
     return;
-  handleCurrentSession(*CurrentSession_.data());
+  handleCurrentSession(CurrentSession_.data_());
 }
 
 void CTextModuleImpl::setCurrentModifiersMode(CModifiersMode Mode) {
@@ -46,9 +46,9 @@ void CTextModuleImpl::setCurrentModifiersMode(CModifiersMode Mode) {
     return;
   CurrentTextMode_.Modifiers = Mode;
   TextModeOutput_.notify();
-  if (!CurrentSession_.hasValue())
+  if (!CurrentSession_.hasData())
     return;
-  handleCurrentSession(*CurrentSession_.data());
+  handleCurrentSession(CurrentSession_.data_());
 }
 
 CTextModuleImpl::CSessionObserver* CTextModuleImpl::currentSessionInput() {

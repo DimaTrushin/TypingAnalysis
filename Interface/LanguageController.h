@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CLANGUAGECONTROLLER_H
 #define NSAPPLICATION_NSINTERFACE_CLANGUAGECONTROLLER_H
 
-#include "Library/Observer/Observer.h"
+#include "Library/Observer2/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/LocaleID.h"
 #include "Local/LocalizationModule.h"

@@ -210,31 +210,31 @@ QColor CKeySchemePlotterImpl::shade(QColor Color, unsigned char Depth) {
 QString CKeySchemePlotterImpl::getFingerName(const CFinger& Finger) const {
   // TO DO
   // preliminary implementation
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
   switch (Finger.id()) {
   case EFingerEnum::Left | EFingerEnum::Thumb:
-    return LocalizerInput_.data()->get().leftThumb();
+    return LocalizerInput_.data_().leftThumb();
   case EFingerEnum::Left | EFingerEnum::Index:
-    return LocalizerInput_.data()->get().leftIndex();
+    return LocalizerInput_.data_().leftIndex();
   case EFingerEnum::Left | EFingerEnum::Middle:
-    return LocalizerInput_.data()->get().leftMiddle();
+    return LocalizerInput_.data_().leftMiddle();
   case EFingerEnum::Left | EFingerEnum::Ring:
-    return LocalizerInput_.data()->get().leftRing();
+    return LocalizerInput_.data_().leftRing();
   case EFingerEnum::Left | EFingerEnum::Pinky:
-    return LocalizerInput_.data()->get().leftPinky();
+    return LocalizerInput_.data_().leftPinky();
   case EFingerEnum::Right | EFingerEnum::Thumb:
-    return LocalizerInput_.data()->get().rightThumb();
+    return LocalizerInput_.data_().rightThumb();
   case EFingerEnum::Right | EFingerEnum::Index:
-    return LocalizerInput_.data()->get().rightIndex();
+    return LocalizerInput_.data_().rightIndex();
   case EFingerEnum::Right | EFingerEnum::Middle:
-    return LocalizerInput_.data()->get().rightMiddle();
+    return LocalizerInput_.data_().rightMiddle();
   case EFingerEnum::Right | EFingerEnum::Ring:
-    return LocalizerInput_.data()->get().rightRing();
+    return LocalizerInput_.data_().rightRing();
   case EFingerEnum::Right | EFingerEnum::Pinky:
-    return LocalizerInput_.data()->get().rightPinky();
+    return LocalizerInput_.data_().rightPinky();
   case EFingerEnum::Undefined:
-    return LocalizerInput_.data()->get().undefined();
+    return LocalizerInput_.data_().undefined();
   default:
     return "";
   }
@@ -255,26 +255,26 @@ void CKeySchemePlotterImpl::setLocale(const CLocalizer& Localizer) {
   Plot_->setTitle(Localizer.title());
   Plot_->setAxisTitle(QwtAxis::XBottom, Localizer.timeAxisTitle());
   Plot_->setAxisTitle(QwtAxis::YLeft, Localizer.fingerAxisTitle());
-  if (KeySchemeInput_.hasValue())
-    setYAxisNames(KeySchemeInput_.data()->get());
+  if (KeySchemeInput_.hasData())
+    setYAxisNames(KeySchemeInput_.data_());
 }
 
 QString CKeySchemePlotterImpl::title() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().title();
+  return LocalizerInput_.data_().title();
 }
 
 QString CKeySchemePlotterImpl::timeAxisTitle() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().timeAxisTitle();
+  return LocalizerInput_.data_().timeAxisTitle();
 }
 
 QString CKeySchemePlotterImpl::fingerAxisTitle() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().fingerAxisTitle();
+  return LocalizerInput_.data_().fingerAxisTitle();
 }
 
 } // namespace NSKeySchemePlotterDetail

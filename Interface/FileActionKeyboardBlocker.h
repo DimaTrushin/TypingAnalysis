@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSINTERFACE_CFILEACTIONKEYBOARDBLOCKER_H
 
 #include "FileMenu.h"
-#include "Library/Observer/Observer.h"
+#include "Library/Observer2/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {

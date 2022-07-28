@@ -27,9 +27,9 @@ void CStatisticsModuleImpl::subscribeToStatisticsDescription(
 }
 
 void CStatisticsModuleImpl::setLocale(const CLocalizer&) {
-  if (!AnalyticDataInput_.hasValue())
+  if (!AnalyticDataInput_.hasData())
     return;
-  handleAnalyticData(*AnalyticDataInput_.data());
+  handleAnalyticData(AnalyticDataInput_.data_());
 }
 
 void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
@@ -76,123 +76,123 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
 }
 
 QString CStatisticsModuleImpl::fullTextLength() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().fullTextLength();
+  return LocalizerInput_.data_().fullTextLength();
 }
 
 QString CStatisticsModuleImpl::printedTextLength() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextLength();
+  return LocalizerInput_.data_().printedTextLength();
 }
 
 QString CStatisticsModuleImpl::deletedSymbols() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().deletedSymbols();
+  return LocalizerInput_.data_().deletedSymbols();
 }
 
 QString CStatisticsModuleImpl::mistakePlaces() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakePlaces();
+  return LocalizerInput_.data_().mistakePlaces();
 }
 
 QString CStatisticsModuleImpl::mistakes() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakes();
+  return LocalizerInput_.data_().mistakes();
 }
 
 QString CStatisticsModuleImpl::mistakesPercent() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakesPercent();
+  return LocalizerInput_.data_().mistakesPercent();
 }
 
 QString CStatisticsModuleImpl::printedTextDuration() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextDuration();
+  return LocalizerInput_.data_().printedTextDuration();
 }
 
 QString CStatisticsModuleImpl::printedTextSpeed() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextSpeed();
+  return LocalizerInput_.data_().printedTextSpeed();
 }
 
 QString CStatisticsModuleImpl::maxLikelihoodSpeed() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().maxLikelihoodSpeed();
+  return LocalizerInput_.data_().maxLikelihoodSpeed();
 }
 
 QString CStatisticsModuleImpl::score() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().score();
+  return LocalizerInput_.data_().score();
 }
 
 QString CStatisticsModuleImpl::fullTextLengthHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().fullTextLengthHint();
+  return LocalizerInput_.data_().fullTextLengthHint();
 }
 
 QString CStatisticsModuleImpl::printedTextLengthHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextLengthHint();
+  return LocalizerInput_.data_().printedTextLengthHint();
 }
 
 QString CStatisticsModuleImpl::deletedSymbolsHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().deletedSymbolsHint();
+  return LocalizerInput_.data_().deletedSymbolsHint();
 }
 
 QString CStatisticsModuleImpl::mistakePlacesHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakePlacesHint();
+  return LocalizerInput_.data_().mistakePlacesHint();
 }
 
 QString CStatisticsModuleImpl::mistakesHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakesHint();
+  return LocalizerInput_.data_().mistakesHint();
 }
 
 QString CStatisticsModuleImpl::mistakesPercentHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().mistakesPercentHint();
+  return LocalizerInput_.data_().mistakesPercentHint();
 }
 
 QString CStatisticsModuleImpl::printedTextDurationHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextDurationHint();
+  return LocalizerInput_.data_().printedTextDurationHint();
 }
 
 QString CStatisticsModuleImpl::printedTextSpeedHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().printedTextSpeedHint();
+  return LocalizerInput_.data_().printedTextSpeedHint();
 }
 
 QString CStatisticsModuleImpl::maxLikelihoodSpeedHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().maxLikelihoodSpeedHint();
+  return LocalizerInput_.data_().maxLikelihoodSpeedHint();
 }
 
 QString CStatisticsModuleImpl::scoreHint() const {
-  if (!LocalizerInput_.hasValue())
+  if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data()->get().scoreHint();
+  return LocalizerInput_.data_().scoreHint();
 }
 
 } // namespace NSStatisticsModuleDetail

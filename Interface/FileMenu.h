@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "Library/Observer/Observer.h"
+#include "Library/Observer2/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
 
