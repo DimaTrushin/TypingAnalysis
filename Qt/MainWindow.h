@@ -16,7 +16,6 @@ class QActionGroup;
 class QButtonGroup;
 class QCloseEvent;
 class QFrame;
-class QSplitter;
 class QTableView;
 class QPlainTextEdit;
 class QTreeView;
