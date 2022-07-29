@@ -49,7 +49,7 @@ struct CEngLocale {
         "printed text, T is the duration of the printed text";
     static constexpr const char* MaxLikelihoodSpeedHint =
         "The main speed, it is the maximum of the speed density (the "
-        "first plot)";
+        "first plot). It shows the speed of your physical abilities.";
     static constexpr const char* ScoreHint =
         "The score of the typing technique measured from 0 to 100, the closer "
         "to 100 is better";
