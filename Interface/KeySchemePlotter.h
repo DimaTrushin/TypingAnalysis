@@ -12,6 +12,13 @@
 
 class QwtPlot;
 
+QT_BEGIN_NAMESPACE
+class QFrame;
+class QVBoxLayout;
+// class QSlider;
+// class QGridLayout;
+QT_END_NAMESPACE
+
 namespace NSApplication {
 namespace NSInterface {
 
@@ -42,7 +49,7 @@ class CKeySchemePlotterImpl {
   using CKeySegmentContainer = CKeyScheme::CKeySegmentContainer;
 
 public:
-  CKeySchemePlotterImpl(QwtPlot* Plot);
+  CKeySchemePlotterImpl(QFrame* Frame);
 
   CKeySchemeObserver* keySchemeInput();
   CLocalizerObserver* localizerInput();
@@ -50,7 +57,7 @@ public:
 private:
   void handleKeyScheme(const CKeyScheme& KeyScheme);
 
-  void adjustPlot();
+  void adjustPlot(QVBoxLayout* Layout);
   void setAxis();
   void setGrid();
   void setNavigation();
@@ -78,6 +85,7 @@ private:
   static constexpr const double kDefaultLeftBorder = 0.0;
   static constexpr const double kDefaultRightBorder = 3000.0;
 
+  QFrame* ParentFrame_;
   QwtPlot* Plot_;
   CKeySchemePalette KeySchemePalette_;
   CKeySchemeInput KeySchemeInput_;

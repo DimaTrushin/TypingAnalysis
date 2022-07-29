@@ -12,7 +12,6 @@ namespace NSQt {
 CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
-  addQwtKeyScheme();
   adjustStaticInterface();
 }
 
@@ -48,8 +47,8 @@ QTableView* CMainWindow::getStatisticsTable() const {
   return ui_->tableView;
 }
 
-QwtPlot* CMainWindow::getKeySchemePlot() const {
-  return KeySchemePlot_;
+QFrame* CMainWindow::getKeySchemeParent() const {
+  return ui_->frame_5;
 }
 
 QMenu* CMainWindow::getFileMenu() const {
@@ -100,11 +99,6 @@ void CMainWindow::adjustButtonGroup() {
   ui_->buttonGroup->setId(ui_->radioButton, 0);
   ui_->buttonGroup->setId(ui_->radioButton_2, 1);
   ui_->buttonGroup->setId(ui_->radioButton_3, 2);
-}
-
-void CMainWindow::addQwtKeyScheme() {
-  KeySchemePlot_ = new QwtPlot(ui_->frame_5);
-  ui_->verticalLayout_9->addWidget(KeySchemePlot_);
 }
 
 } // namespace NSQt

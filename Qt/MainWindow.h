@@ -45,7 +45,7 @@ public:
   QPlainTextEdit* getMainTextEdit() const;
   QFrame* getSpeedPlotterParent() const;
   QTableView* getStatisticsTable() const;
-  QwtPlot* getKeySchemePlot() const;
+  QFrame* getKeySchemeParent() const;
   QMenu* getFileMenu() const;
   CModifiersModeInitData getModifiersMenuInit() const;
   QMenu* getLanguageMenu() const;
@@ -63,10 +63,7 @@ private:
   void adjustButtonGroups();
   void adjustButtonGroup();
 
-  void addQwtKeyScheme();
-
   std::unique_ptr<Ui::MainWindow> ui_;
-  QwtPlot* KeySchemePlot_;
 };
 } // namespace NSQt
 } // namespace NSApplication

@@ -8,7 +8,7 @@ CApplicationGUI::CApplicationGUI()
       MainTextPrinter_(AppWindow_.getMainTextEdit()),
       SpeedPlotter_(AppWindow_.getSpeedPlotterParent()),
       StatisticsView_(AppWindow_.getStatisticsTable()),
-      KeySchemePlotter_(AppWindow_.getKeySchemePlot()),
+      KeySchemePlotter_(AppWindow_.getKeySchemeParent()),
       FileMenu_(AppWindow_.getFileMenu()),
       ModifiersMenu_(AppWindow_.getModifiersMenuInit()),
       LanguageMenu_(AppWindow_.getLanguageMenu()) {

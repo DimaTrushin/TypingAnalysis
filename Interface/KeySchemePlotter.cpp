@@ -11,8 +11,10 @@
 #include "qwt_symbol.h"
 #include "qwt_text.h"
 
+#include <QFrame>
 #include <QPainterPath>
 #include <QPen>
+#include <QVBoxLayout>
 
 #include <cassert>
 
@@ -47,14 +49,16 @@ private:
 
 } // namespace
 
-CKeySchemePlotterImpl::CKeySchemePlotterImpl(QwtPlot* Plot)
-    : Plot_(Plot), KeySchemeInput_([this](const CKeyScheme& KeyScheme) {
-        handleKeyScheme(KeyScheme);
-      }),
+CKeySchemePlotterImpl::CKeySchemePlotterImpl(QFrame* Frame)
+    : ParentFrame_(Frame), Plot_(new QwtPlot(Frame)),
+      KeySchemeInput_(
+          [this](const CKeyScheme& KeyScheme) { handleKeyScheme(KeyScheme); }),
       LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
+  assert(ParentFrame_);
   assert(Plot_);
-  adjustPlot();
+  QVBoxLayout* VerticalLayout = new QVBoxLayout(ParentFrame_);
+  adjustPlot(VerticalLayout);
   setAxis();
   setGrid();
   setNavigation();
@@ -81,7 +85,8 @@ void CKeySchemePlotterImpl::handleKeyScheme(const CKeyScheme& KeyScheme) {
   Plot_->replot();
 }
 
-void CKeySchemePlotterImpl::adjustPlot() {
+void CKeySchemePlotterImpl::adjustPlot(QVBoxLayout* Layout) {
+  Layout->addWidget(Plot_);
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   Plot_->setTitle(title());
   Plot_->setMinimumHeight(300);
