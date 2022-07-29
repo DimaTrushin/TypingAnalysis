@@ -6,7 +6,7 @@
 
 #include "Interface/FileMenu.h"
 #include "Interface/ModifiersMenu.h"
-#include "Interface/Plotter.h"
+//#include "Interface/Plotter.h"
 #include "Interface/TextModeView.h"
 
 QT_BEGIN_NAMESPACE
@@ -16,6 +16,7 @@ class MainWindow;
 class QActionGroup;
 class QButtonGroup;
 class QCloseEvent;
+class QFrame;
 class QSplitter;
 class QTableView;
 class QPlainTextEdit;
@@ -31,7 +32,6 @@ class CMainWindow : public QMainWindow {
   Q_OBJECT
   using CTextModeInitData = NSInterface::CTextModeView::CInitData;
   using CModifiersModeInitData = NSInterface::CModifiersMenu::CInitData;
-  using CSpeedPlotterInitData = NSInterface::CSpeedPlotter::CInitData;
 
 public:
   CMainWindow(QWidget* parent = nullptr);
@@ -43,7 +43,7 @@ public:
   CTextModeInitData getTextModeInitData() const;
   QButtonGroup* getTextButtonGroup() const;
   QPlainTextEdit* getMainTextEdit() const;
-  CSpeedPlotterInitData getSpeedPlotterInit() const;
+  QFrame* getSpeedPlotterParent() const;
   QTableView* getStatisticsTable() const;
   QwtPlot* getKeySchemePlot() const;
   QMenu* getFileMenu() const;
@@ -63,11 +63,9 @@ private:
   void adjustButtonGroups();
   void adjustButtonGroup();
 
-  void addQwtPlotPanel();
   void addQwtKeyScheme();
 
   std::unique_ptr<Ui::MainWindow> ui_;
-  QwtPlot* SpeedPlot_;
   QwtPlot* KeySchemePlot_;
 };
 } // namespace NSQt

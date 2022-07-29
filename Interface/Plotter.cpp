@@ -7,6 +7,7 @@
 #include "qwt_plot.h"
 #include "qwt_plot_curve.h"
 #include "qwt_plot_grid.h"
+#include <QGridLayout>
 #include <QSlider>
 
 namespace NSApplication {
@@ -14,19 +15,22 @@ namespace NSInterface {
 
 namespace NSPlotterDetail {
 
-CSpeedPlotterImpl::CSpeedPlotterImpl(const CInitData& Data)
-    : Plot_(Data.Plot), VerticalSlider_(Data.VerticalSlider),
-      HorizontalSlider_(Data.HorizontalSlider),
+CSpeedPlotterImpl::CSpeedPlotterImpl(QFrame* Frame)
+    : ParentFrame_(Frame), Plot_(new QwtPlot(Frame)),
+      VerticalSlider_(new QSlider(Frame)),
+      HorizontalSlider_(new QSlider(Frame)),
       SpeedDataInput_(
           [this](CPlotDataCRef PlotData) { handlePlotData(PlotData); }),
       LocalizerInput_(
           [this](const CLocalizer& Localizer) { setLocale(Localizer); }) {
+  assert(ParentFrame_);
   assert(Plot_);
   assert(VerticalSlider_);
   assert(HorizontalSlider_);
-  adjustPlot();
+  QGridLayout* gridLayout = new QGridLayout(ParentFrame_);
+  adjustPlot(gridLayout);
   setCurves();
-  adjustSliders();
+  adjustSliders(gridLayout);
   connectSliders();
 }
 
@@ -60,7 +64,9 @@ void CSpeedPlotterImpl::adjustHorizontalScale(int max) {
   Plot_->replot();
 }
 
-void CSpeedPlotterImpl::adjustPlot() {
+void CSpeedPlotterImpl::adjustPlot(QGridLayout* gridLayout) {
+  gridLayout->addWidget(Plot_, 0, 1);
+
   Plot_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   Plot_->setTitle(title());
   std::unique_ptr<QwtLegend> Legend = std::make_unique<QwtLegend>();
@@ -122,9 +128,14 @@ void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
   }
 }
 
-void CSpeedPlotterImpl::adjustSliders() {
+void CSpeedPlotterImpl::adjustSliders(QGridLayout* gridLayout) {
+  gridLayout->addWidget(VerticalSlider_, 0, 0, 1, 1);
+  VerticalSlider_->setOrientation(Qt::Vertical);
   VerticalSlider_->setRange(VerticalSliderMin_, VerticalSliderMax_);
   VerticalSlider_->setValue(VerticalSliderPosition_);
+
+  gridLayout->addWidget(HorizontalSlider_, 1, 1, 1, 1);
+  HorizontalSlider_->setOrientation(Qt::Horizontal);
   HorizontalSlider_->setRange(HorizontalSliderMin_, HorizontalSliderMax_);
   HorizontalSlider_->setValue(HorizontalSliderPosition_);
 }

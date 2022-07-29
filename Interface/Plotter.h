@@ -15,7 +15,9 @@ class QwtPlotCurve;
 class QwtPlotItem;
 
 QT_BEGIN_NAMESPACE
+class QFrame;
 class QSlider;
+class QGridLayout;
 QT_END_NAMESPACE
 
 namespace NSApplication {
@@ -36,13 +38,7 @@ class CSpeedPlotterImpl : public QObject {
   using CLocalizerInput = NSLibrary::CHotInput<CLocalizer>;
 
 public:
-  struct CInitData {
-    QwtPlot* Plot;
-    QSlider* VerticalSlider;
-    QSlider* HorizontalSlider;
-  };
-
-  explicit CSpeedPlotterImpl(const CInitData& Data);
+  explicit CSpeedPlotterImpl(QFrame* Frame);
   ~CSpeedPlotterImpl();
 
   CPlotDataObserver* speedDataInput();
@@ -56,12 +52,12 @@ private Q_SLOTS:
   void adjustHorizontalScale(int);
 
 private:
-  void adjustPlot();
+  void adjustPlot(QGridLayout*);
   void setCurves();
   void setCurve(const QString& Name, QColor Color, bool Checked,
                 QwtPlotCurve** Curve);
   void checkItem(QwtPlotItem* item, bool on);
-  void adjustSliders();
+  void adjustSliders(QGridLayout* gridLayout);
   void connectSliders();
 
   void handlePlotData(const CPlotData& PlotData);
@@ -94,6 +90,7 @@ private:
   static constexpr double HorizontalStep_ =
       XBottomMaxDefault_ / HorizontalSliderMax_;
 
+  QFrame* ParentFrame_;
   QwtPlot* Plot_;
   QSlider* VerticalSlider_;
   QSlider* HorizontalSlider_;
@@ -109,15 +106,8 @@ private:
 
 } // namespace NSPlotterDetail
 
-class CSpeedPlotter
-    : public NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl> {
-  using CBase = NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl>;
-  using CSpeedPlotterImpl = NSPlotterDetail::CSpeedPlotterImpl;
-
-public:
-  using CInitData = CSpeedPlotterImpl::CInitData;
-  using CBase::CBase;
-};
+using CSpeedPlotter =
+    NSLibrary::CViewWrapper<NSPlotterDetail::CSpeedPlotterImpl>;
 
 } // namespace NSInterface
 } // namespace NSApplication

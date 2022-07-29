@@ -301,43 +301,6 @@
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QGridLayout" name="gridLayout">
-                        <item row="0" column="0">
-                         <widget class="QSlider" name="verticalSlider">
-                          <property name="minimum">
-                           <number>1</number>
-                          </property>
-                          <property name="maximum">
-                           <number>100</number>
-                          </property>
-                          <property name="value">
-                           <number>30</number>
-                          </property>
-                          <property name="sliderPosition">
-                           <number>30</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="horizontalSlider">
-                          <property name="minimum">
-                           <number>1</number>
-                          </property>
-                          <property name="maximum">
-                           <number>100</number>
-                          </property>
-                          <property name="sliderPosition">
-                           <number>100</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
                       </widget>
                      </widget>
                     </item>

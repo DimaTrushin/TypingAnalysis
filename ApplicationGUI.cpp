@@ -6,7 +6,7 @@ CApplicationGUI::CApplicationGUI()
     : MainSeanceView_(AppWindow_.getSeanceView()),
       TextModeView_(AppWindow_.getTextModeInitData()),
       MainTextPrinter_(AppWindow_.getMainTextEdit()),
-      SpeedPlotter_(AppWindow_.getSpeedPlotterInit()),
+      SpeedPlotter_(AppWindow_.getSpeedPlotterParent()),
       StatisticsView_(AppWindow_.getStatisticsTable()),
       KeySchemePlotter_(AppWindow_.getKeySchemePlot()),
       FileMenu_(AppWindow_.getFileMenu()),

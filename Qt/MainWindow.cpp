@@ -12,7 +12,6 @@ namespace NSQt {
 CMainWindow::CMainWindow(QWidget* parent)
     : QMainWindow(parent), ui_(std::make_unique<Ui::MainWindow>()) {
   ui_->setupUi(this);
-  addQwtPlotPanel();
   addQwtKeyScheme();
   adjustStaticInterface();
 }
@@ -41,8 +40,8 @@ QPlainTextEdit* CMainWindow::getMainTextEdit() const {
   return ui_->plainTextEdit_2;
 }
 
-CMainWindow::CSpeedPlotterInitData CMainWindow::getSpeedPlotterInit() const {
-  return {SpeedPlot_, ui_->verticalSlider, ui_->horizontalSlider};
+QFrame* CMainWindow::getSpeedPlotterParent() const {
+  return ui_->frame_8;
 }
 
 QTableView* CMainWindow::getStatisticsTable() const {
@@ -101,11 +100,6 @@ void CMainWindow::adjustButtonGroup() {
   ui_->buttonGroup->setId(ui_->radioButton, 0);
   ui_->buttonGroup->setId(ui_->radioButton_2, 1);
   ui_->buttonGroup->setId(ui_->radioButton_3, 2);
-}
-
-void CMainWindow::addQwtPlotPanel() {
-  SpeedPlot_ = new QwtPlot(ui_->frame_8);
-  ui_->gridLayout->addWidget(SpeedPlot_, 0, 1);
 }
 
 void CMainWindow::addQwtKeyScheme() {
