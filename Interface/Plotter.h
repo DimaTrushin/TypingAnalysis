@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "qwt_axis_id.h"
 #include <memory>
 
 #include "Kernel/PlotData.h"
@@ -54,8 +55,8 @@ private Q_SLOTS:
 private:
   void adjustPlot(QGridLayout*);
   void setCurves();
-  void setCurve(const QString& Name, QColor Color, bool Checked,
-                QwtPlotCurve** Curve);
+  void setCurve(const QString& Name, QwtAxisId YAxis, QColor Color,
+                bool Checked, QwtPlotCurve** Curve);
   void checkItem(QwtPlotItem* item, bool on);
   void adjustSliders(QGridLayout* gridLayout);
   void connectSliders();

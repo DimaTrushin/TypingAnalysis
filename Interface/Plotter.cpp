@@ -78,6 +78,7 @@ void CSpeedPlotterImpl::adjustPlot(QGridLayout* gridLayout) {
   Plot_->setAxisScale(QwtAxis::YLeft, YLeftMinDefault_, YLeftMaxDefault_);
   Plot_->setAxisScale(QwtAxis::XBottom, XBottomMinDefault_, XBottomMaxDefault_);
   Plot_->setAxisVisible(QwtAxis::YRight);
+  Plot_->setAxisAutoScale(QwtAxis::YRight);
 
   Plot_->setAxisTitle(QwtAxis::XBottom, horizontalAxisTitle());
 
@@ -89,16 +90,22 @@ void CSpeedPlotterImpl::adjustPlot(QGridLayout* gridLayout) {
 }
 
 void CSpeedPlotterImpl::setCurves() {
-  setCurve(density1Name(), QColor(200, 50, 50), true, &Speed0_);
-  setCurve(derivative1Name(), QColor(50, 50, 200), false, &Speed1_);
-  setCurve(density2Name(), QColor(50, 200, 50), false, &SpeedMB0_);
-  setCurve(derivative2Name(), QColor(50, 50, 200), false, &SpeedMB1_);
-  setCurve(density3Name(), QColor(50, 200, 200), false, &SpeedR0_);
-  setCurve(derivative3Name(), QColor(50, 50, 200), false, &SpeedR1_);
+  setCurve(density1Name(), QwtAxis::YLeft, QColor(200, 50, 50), true, &Speed0_);
+  setCurve(derivative1Name(), QwtAxis::YRight, QColor(50, 50, 200), false,
+           &Speed1_);
+  setCurve(density2Name(), QwtAxis::YLeft, QColor(50, 200, 50), false,
+           &SpeedMB0_);
+  setCurve(derivative2Name(), QwtAxis::YRight, QColor(50, 50, 200), false,
+           &SpeedMB1_);
+  setCurve(density3Name(), QwtAxis::YLeft, QColor(50, 200, 200), false,
+           &SpeedR0_);
+  setCurve(derivative3Name(), QwtAxis::YRight, QColor(50, 50, 200), false,
+           &SpeedR1_);
 }
 
-void CSpeedPlotterImpl::setCurve(const QString& Name, QColor Color,
-                                 bool Checked, QwtPlotCurve** Curve) {
+void CSpeedPlotterImpl::setCurve(const QString& Name, QwtAxisId YAxis,
+                                 QColor Color, bool Checked,
+                                 QwtPlotCurve** Curve) {
   std::unique_ptr<QwtPlotCurve> SpeedCurve =
       std::make_unique<QwtPlotCurve>(Name);
   SpeedCurve->setLegendAttribute(QwtPlotCurve::LegendShowLine);
@@ -106,6 +113,7 @@ void CSpeedPlotterImpl::setCurve(const QString& Name, QColor Color,
   SpeedCurve->setCurveAttribute(QwtPlotCurve::Fitted, true);
   SpeedCurve->setRenderHint(QwtPlotItem::RenderAntialiased);
   SpeedCurve->setPen(Color);
+  SpeedCurve->setAxes(QwtAxis::XBottom, YAxis);
   *Curve = SpeedCurve.release();
   (*Curve)->attach(Plot_);
   checkItem(*Curve, Checked);
