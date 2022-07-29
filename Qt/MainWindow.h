@@ -6,7 +6,6 @@
 
 #include "Interface/FileMenu.h"
 #include "Interface/ModifiersMenu.h"
-//#include "Interface/Plotter.h"
 #include "Interface/TextModeView.h"
 
 QT_BEGIN_NAMESPACE
