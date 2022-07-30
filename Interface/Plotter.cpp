@@ -137,12 +137,12 @@ void CSpeedPlotterImpl::checkItem(QwtPlotItem* item, bool on) {
 }
 
 void CSpeedPlotterImpl::adjustSliders(QGridLayout* gridLayout) {
-  gridLayout->addWidget(VerticalSlider_, 0, 0, 1, 1);
+  gridLayout->addWidget(VerticalSlider_, 0, 0);
   VerticalSlider_->setOrientation(Qt::Vertical);
   VerticalSlider_->setRange(VerticalSliderMin_, VerticalSliderMax_);
   VerticalSlider_->setValue(VerticalSliderPosition_);
 
-  gridLayout->addWidget(HorizontalSlider_, 1, 1, 1, 1);
+  gridLayout->addWidget(HorizontalSlider_, 1, 1);
   HorizontalSlider_->setOrientation(Qt::Horizontal);
   HorizontalSlider_->setRange(HorizontalSliderMin_, HorizontalSliderMax_);
   HorizontalSlider_->setValue(HorizontalSliderPosition_);
