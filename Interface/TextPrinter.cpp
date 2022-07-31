@@ -134,6 +134,7 @@ CTextPrinterImpl::CQTextDocUptr CTextPrinterImpl::getDefaultDocUptr() {
   QFont t;
   t.setPointSize(kDefaultFontSize);
   Doc->setDefaultFont(t);
+  // The following line is a part of the issue with debugger
   Doc->setDocumentLayout(new QPlainTextDocumentLayout(Doc.get()));
   return Doc;
 }
