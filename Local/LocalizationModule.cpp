@@ -1,6 +1,5 @@
 #include "LocalizationModule.h"
 
-#include <QDebug>
 #include <cassert>
 
 namespace NSApplication {

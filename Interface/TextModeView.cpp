@@ -6,8 +6,6 @@
 
 #include <mutex>
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSInterface {
 

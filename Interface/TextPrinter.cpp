@@ -5,8 +5,6 @@
 #include <QPlainTextEdit>
 #include <QTextEdit>
 
-#include <QDebug>
-
 namespace NSApplication {
 namespace NSInterface {
 
