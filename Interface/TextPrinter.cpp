@@ -26,21 +26,24 @@ CTextPrinterImpl::CTextDataObserver* CTextPrinterImpl::textDataInput() {
 
 void CTextPrinterImpl::handleTextData(const CTextData& data) {
   NSAppDebug::CTimeAnchor Anchor("TextPrinting time =");
+
+  TextEdit_->setDocument(nullptr);
   auto TextOpt = Cacher_.find({&data.rawSession(), data.textInfo()});
   if (TextOpt.has_value()) {
     TextEdit_->setDocument(TextOpt->get().get());
     return;
   }
+
   CTimer Timer;
   Text_ = makeText(data);
   CTime Elapsed = Timer.get();
+
   if (Elapsed > TimeLimit_) {
     auto Data =
         Cacher_.insert({&data.rawSession(), data.textInfo()}, std::move(Text_));
     assert(Data != nullptr);
     TextEdit_->setDocument(Data->get());
   } else {
-    // Debugger dies here. Do not know what is the issue.
     TextEdit_->setDocument(Text_.get());
   }
 }
@@ -134,7 +137,6 @@ CTextPrinterImpl::CQTextDocUptr CTextPrinterImpl::getDefaultDocUptr() {
   QFont t;
   t.setPointSize(kDefaultFontSize);
   Doc->setDefaultFont(t);
-  // The following line is a part of the issue with debugger
   Doc->setDocumentLayout(new QPlainTextDocumentLayout(Doc.get()));
   return Doc;
 }
