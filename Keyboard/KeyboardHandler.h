@@ -4,7 +4,6 @@
 #include "AnyKeyboardKiller.h"
 #include "KeyboardBlock.h"
 #include "Library/Observer2/Observer.h"
-#include "Library/StlExtension/ThreadDetachable.h"
 #include "Qt/QtLoopExceptionHandler.h"
 #include "RawKeyEvent.h"
 
@@ -31,7 +30,7 @@ class CKeyboardHandler : public CQtMessagesRegistrator {
 
   using CAnyKillerPromise = std::promise<CAnyKeyboardKiller>;
   using CAnyKillerFuture = std::future<CAnyKeyboardKiller>;
-  using CWorkerThread = NSLibrary::CThreadDetachable;
+  using CWorkerThread = std::thread;
   using CQtException = NSQt::CQtException;
   using CKeyPressingOut = NSLibrary::CObservableData<CKeyPressing>;
   using CKeyReleasingOut = NSLibrary::CObservableData<CKeyReleasing>;

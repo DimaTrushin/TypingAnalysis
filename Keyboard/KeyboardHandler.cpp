@@ -26,6 +26,7 @@ CKeyboardHandler::CKeyboardHandler() {
 
 CKeyboardHandler::~CKeyboardHandler() {
   stopListener();
+  ListenerThread_.join();
 }
 
 void CKeyboardHandler::activate(CKeyboardBlock::Enum Blocker) {
