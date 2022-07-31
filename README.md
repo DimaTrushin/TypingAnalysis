@@ -103,4 +103,4 @@ nmake install
 
 ### Known issues
 
-Thrust library is used to speed up the computations. As a result the project cannot be compiled in debug mode.
+Thrust library is used to speed up the computations. As a result CUDA is not used in debug mode.
