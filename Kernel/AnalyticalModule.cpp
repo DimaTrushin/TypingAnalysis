@@ -49,7 +49,7 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
 
   auto FuncOpt = SpeedDataCacher_.find({&Data.rawSession(), Data.textInfo()});
   if (FuncOpt.has_value()) {
-    DensityOut_.set(std::cref(FuncOpt->get()->plotData()));
+    DensityOut_.set(FuncOpt->get()->plotData());
     AnalyticDataOut_.set(
         CAnalyticData{std::cref(Data), std::cref(FuncOpt->get()->plotData())});
     return;
@@ -63,11 +63,11 @@ void CAnalyticalModuleImpl::handleTextData(const CTextData& Data) {
     auto SpeedData = SpeedDataCacher_.insert(
         {&Data.rawSession(), Data.textInfo()}, std::move(SpeedData_));
     assert(SpeedData != nullptr);
-    DensityOut_.set(std::cref(SpeedData->get()->plotData()));
+    DensityOut_.set(SpeedData->get()->plotData());
     AnalyticDataOut_.set(CAnalyticData{
         std::cref(Data), std::cref(SpeedData->get()->plotData())});
   } else {
-    DensityOut_.set(std::cref(SpeedData_->plotData()));
+    DensityOut_.set(SpeedData_->plotData());
     AnalyticDataOut_.set(
         CAnalyticData{std::cref(Data), std::cref(SpeedData_->plotData())});
   }
