@@ -8,11 +8,11 @@ namespace NSLocal {
 namespace NSLocalizationModuleDetail {
 void CLocalizationModuleImpl::switchLocale(ELocale Lang) {
   switch (Lang) {
-  case ELocale::Rus:
-    Localizer_ = CLocalizer::make<CRusLocale>();
-    break;
   case ELocale::Eng:
     Localizer_ = CLocalizer::make<CEngLocale>();
+    break;
+  case ELocale::Rus:
+    Localizer_ = CLocalizer::make<CRusLocale>();
     break;
   default:
     assert(false);

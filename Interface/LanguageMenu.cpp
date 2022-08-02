@@ -9,6 +9,7 @@ namespace NSLanguageMenuDetail {
 
 CLanguageMenuImpl::CLanguageMenuImpl(QMenu* Menu) : Menu_(Menu) {
   assert(Menu_);
+  setItems();
   setItemNames();
   connect(Menu_, &QMenu::triggered, this,
           &CLanguageMenuImpl::onActionTriggered);
@@ -26,11 +27,15 @@ void CLanguageMenuImpl::onActionTriggered(QAction* Action) {
   LocaleOutput_.set(static_cast<ELocale>(index));
 }
 
+void CLanguageMenuImpl::setItems() {
+  for (NSLocal::ELocaleType index = 0; index != NSLocal::ELocale::End; ++index)
+    Menu_->addAction(new QAction(Menu_));
+}
+
 void CLanguageMenuImpl::setItemNames() {
   auto ActionList = Menu_->actions();
-  assert(ActionList.size() == 2);
-  ActionList[0]->setText(NSLocal::CLanguages::Lang[ELocale::Eng]);
-  ActionList[1]->setText(NSLocal::CLanguages::Lang[ELocale::Rus]);
+  for (NSLocal::ELocaleType index = 0; index != NSLocal::ELocale::End; ++index)
+    ActionList[index]->setText(NSLocal::CLanguages::Lang[index]);
 }
 
 } // namespace NSLanguageMenuDetail

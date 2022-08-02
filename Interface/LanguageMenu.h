@@ -34,6 +34,7 @@ public Q_SLOTS:
   void onActionTriggered(QAction* Action);
 
 private:
+  void setItems();
   void setItemNames();
 
   QMenu* Menu_;

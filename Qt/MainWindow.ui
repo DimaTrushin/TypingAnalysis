@@ -480,8 +480,6 @@
     <property name="title">
      <string>Language</string>
     </property>
-    <addaction name="actionRus"/>
-    <addaction name="actionEng"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuModifiers"/>

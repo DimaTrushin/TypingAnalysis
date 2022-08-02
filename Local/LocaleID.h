@@ -4,7 +4,9 @@
 namespace NSApplication {
 namespace NSLocal {
 
-enum ELocale : unsigned char { Eng, Rus, End };
+using ELocaleType = unsigned char;
+
+enum ELocale : ELocaleType { Eng, Rus, End };
 
 } // namespace NSLocal
 } // namespace NSApplication
