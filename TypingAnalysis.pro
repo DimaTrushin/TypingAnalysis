@@ -81,7 +81,6 @@ HEADERS += \
   Compute/ParallelModule.h \
   Compute/ParallelSerial.h \
   Compute/ParallelTbb.h \
-  FileHandlers.h \
   Interface/FileActionController.h \
   Interface/FileActionKeyboardBlocker.h \
   Interface/FileMenu.h \
@@ -180,6 +179,7 @@ HEADERS += \
   ApplicationKernel.h \
   AppStatusAccess.h \
   ExceptionHandler.h \
+  FileHandlers.h \
   InstructionLevels.h \
   KeyboardHandlerAccess.h \
   ParallelModuleAccess.h \
@@ -196,7 +196,6 @@ SOURCES += \
   Compute/ParallelModule.cpp \
   Compute/ParallelSerial.cpp \
   Compute/ParallelTbb.cpp \
-  FileHandlers.cpp \
   Interface/FileActionController.cpp \
   Interface/FileActionKeyboardBlocker.cpp \
   Interface/FileMenu.cpp \
@@ -274,6 +273,7 @@ SOURCES += \
   ApplicationKernel.cpp \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
+  FileHandlers.cpp \
   ParallelModuleAccess.cpp \
   TimeApp.cpp \
   Timer.cpp \
@@ -344,6 +344,7 @@ contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     HEADERS += \
     AppDebug/KeyboardHandlerDebugGUI.h \
     AppDebug/KeyboardHandlerDebugOut.h
+
     SOURCES += \
     AppDebug/KeyboardHandlerDebugGUI.cpp \
     AppDebug/KeyboardHandlerDebugOut.cpp
@@ -409,13 +410,12 @@ contains(DEFINES, DISABLE_SIMD) {
 
 !contains(DEFINES, DISABLE_CUDA) {
     HEADERS += Compute/CudaGate.h
-    SOURCES += Compute/CudaGate.cpp
 
+    SOURCES += Compute/CudaGate.cpp
 
   CUDA_SOURCES += \
     Compute/CudaGate.cu \
     Compute/Math.cu
-
 
   win32 {
     CUDA_SDK = $$(NVCUDASAMPLES_ROOT)
