@@ -1,6 +1,14 @@
 #include "PlotData.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4324)
+#pragma warning(disable : 4515)
+#endif
 #include "MathModuleAccess.h"
+#ifdef _MSC_VER
+#pragma warning(default : 4324)
+#pragma warning(default : 4515)
+#endif
 
 #include <cassert>
 
@@ -68,7 +76,7 @@ CPlotData::CPointData CPlotData::max0() const {
 }
 
 int CPlotData::score() const {
-  return Score_ * 100;
+  return static_cast<int>(Score_ * 100.);
 }
 
 void CPlotData::fillPlots(const CContainer& Samples) {

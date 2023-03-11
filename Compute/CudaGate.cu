@@ -1,6 +1,14 @@
+#ifdef _MSC_VER
+#pragma warning(disable : 4324)
+#pragma warning(disable : 4515)
+#endif
 #include "CudaGate.h"
 
 #include <thrust/transform.h>
+#ifdef _MSC_VER
+#pragma warning(default : 4324)
+#pragma warning(default : 4515)
+#endif
 
 namespace NSApplication {
 namespace NSCompute {
