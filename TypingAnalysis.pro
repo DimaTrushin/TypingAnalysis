@@ -74,6 +74,7 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 HEADERS += \
   AppDebug/PerformanceLogger.h \
   Compute/CpuFunction.h \
+  Compute/CpuFunctionNoSimd.h \
   Compute/CudaDefines.h \
   Compute/Functions.h \
   Compute/Math.h \
@@ -194,6 +195,7 @@ SOURCES += \
   3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
   Compute/CpuFunction.cpp \
+  Compute/CpuFunctionNoSimd.cpp \
   Compute/Functions.cpp \
   Compute/Math.cpp \
   Compute/ParallelMode.cpp \
