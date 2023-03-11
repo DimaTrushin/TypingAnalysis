@@ -1,4 +1,12 @@
+#ifdef _MSC_VER
+#pragma warning(disable : 4324)
+#pragma warning(disable : 4515)
+#endif
 #include "Math.h"
+#ifdef _MSC_VER
+#pragma warning(default : 4324)
+#pragma warning(default : 4515)
+#endif
 
 #include "CpuFunction.h"
 #include "ParallelModule.h"
@@ -104,7 +112,7 @@ void CMath::fillRPlot1(const CVectorD& Samples, const CVectorD& X,
   assert(pY);
   assert(pY->size() == X.size());
   CVectorD& Y = *pY;
-  NSCompute::CRayleighApproximation<1> Function;
+  CRayleighApproximation<1> Function;
   Parallel_.for_(size_t(0), X.size(), [&](size_t i) {
     Y[i] = Function(Samples, X[i]);
     ;

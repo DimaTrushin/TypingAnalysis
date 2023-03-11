@@ -7,15 +7,7 @@
 
 #ifndef DISABLE_CUDA
 #include "CudaGate.h"
-#ifdef _MSC_VER
-#pragma warning(disable : 4324)
-#pragma warning(disable : 4515)
-#endif
 #include <thrust/device_vector.h>
-#ifdef _MSC_VER
-#pragma warning(default : 4324)
-#pragma warning(default : 4515)
-#endif
 #endif
 
 namespace NSApplication {

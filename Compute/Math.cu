@@ -1,4 +1,12 @@
+#ifdef _MSC_VER
+#pragma warning(disable : 4324)
+#pragma warning(disable : 4515)
+#endif
 #include "Math.h"
+#ifdef _MSC_VER
+#pragma warning(default : 4324)
+#pragma warning(default : 4515)
+#endif
 
 #include <thrust/transform.h>
 #include <thrust/transform_reduce.h>
