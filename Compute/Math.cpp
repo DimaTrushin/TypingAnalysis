@@ -8,7 +8,11 @@
 #pragma warning(default : 4515)
 #endif
 
+#ifndef DISABLE_SIMD
 #include "CpuFunction.h"
+#else
+#include "CpuFunctionNoSimd.h"
+#endif
 #include "ParallelModule.h"
 
 namespace NSApplication {

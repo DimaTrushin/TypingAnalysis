@@ -10,7 +10,8 @@ CONFIG += c++17 warn_on
 
 DEFINES += \
     KEYBOARD_HANDLER_DEBUG \
-    #DISABLE_CUDA
+    #DISABLE_CUDA \
+    #DISABLE_SIMD
 
 CONFIG(debug, debug|release) {
   DEFINES += \
@@ -73,8 +74,6 @@ include($${OUT_PWD}/conanbuildinfo.pri)
 
 HEADERS += \
   AppDebug/PerformanceLogger.h \
-  Compute/CpuFunction.h \
-  Compute/CpuFunctionNoSimd.h \
   Compute/CudaDefines.h \
   Compute/Functions.h \
   Compute/Math.h \
@@ -185,17 +184,12 @@ HEADERS += \
   KeyboardHandlerAccess.h \
   ParallelModuleAccess.h \
   QtLoopException.h \
-  SimdDetector.h \
-  SimdDetectorAccess.h \
   TimeApp.h \
   Timer.h \
   TimerAccess.h
 
 SOURCES += \
-  3dparty/vectorclass/instrset_detect.cpp \
   AppDebug/PerformanceLogger.cpp \
-  Compute/CpuFunction.cpp \
-  Compute/CpuFunctionNoSimd.cpp \
   Compute/Functions.cpp \
   Compute/Math.cpp \
   Compute/ParallelMode.cpp \
@@ -281,8 +275,6 @@ SOURCES += \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   ParallelModuleAccess.cpp \
-  SimdDetector.cpp \
-  SimdDetectorAccess.cpp \
   TimeApp.cpp \
   Timer.cpp \
   main.cpp
@@ -357,42 +349,61 @@ contains(DEFINES, KEYBOARD_HANDLER_DEBUG) {
     AppDebug/KeyboardHandlerDebugOut.cpp
 }
 
+contains(DEFINES, DISABLE_SIMD) {
+  HEADERS += \
+    Compute/CpuFunctionNoSimd.h
+
+  SOURCES += \
+    Compute/CpuFunctionNoSimd.cpp
+
+} else {
+  HEADERS += \
+    Compute/CpuFunction.h \
+    SimdDetector.h \
+    SimdDetectorAccess.h
+
+  SOURCES += \
+    3dparty/vectorclass/instrset_detect.cpp \
+    Compute/CpuFunction.cpp \
+    SimdDetector.cpp \
+    SimdDetectorAccess.cpp
 
 
-# The custom compiler compiles on AVX level
-win32 {
-  win32-msvc*{
-    QMAKE_CXXFLAGS += -EHsc
-    AVX_FLAGS = /arch:AVX
-    AVX_OUT = /Fo${QMAKE_FILE_OUT}
+  # The custom compiler compiles on AVX level
+  win32 {
+    win32-msvc*{
+      QMAKE_CXXFLAGS += -EHsc
+      AVX_FLAGS = /arch:AVX
+      AVX_OUT = /Fo${QMAKE_FILE_OUT}
+    }
+
+    win32-g++*{
+      AVX_FLAGS = -mavx
+      AVX_OUT = -o${QMAKE_FILE_OUT}
+    }
+
+    win32-clang*{
+    }
+
+    SOURCES_AVX += \
+      Compute/CpuFunctionAVX.cpp
+    avx_compiler.name = avx_compiler
+    avx_compiler.input = SOURCES_AVX
+    avx_compiler.dependency_type = TYPE_C
+    avx_compiler.variable_out = OBJECTS
+    avx_compiler.output = \
+      ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+    avx_compiler.commands = $${QMAKE_CXX} $(CXXFLAGS) $${AVX_FLAGS} \
+      $(INCPATH) -c ${QMAKE_FILE_IN} $${AVX_OUT}
+    QMAKE_EXTRA_COMPILERS += avx_compiler
   }
 
-  win32-g++*{
-    AVX_FLAGS = -mavx
-    AVX_OUT = -o${QMAKE_FILE_OUT}
-  }
+  linux {
+    linux-g++*{
+    }
 
-  win32-clang*{
-  }
-
-  SOURCES_AVX += \
-    Compute/CpuFunctionAVX.cpp
-  avx_compiler.name = avx_compiler
-  avx_compiler.input = SOURCES_AVX
-  avx_compiler.dependency_type = TYPE_C
-  avx_compiler.variable_out = OBJECTS
-  avx_compiler.output = \
-    ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
-  avx_compiler.commands = $${QMAKE_CXX} $(CXXFLAGS) $${AVX_FLAGS} \
-    $(INCPATH) -c ${QMAKE_FILE_IN} $${AVX_OUT}
-  QMAKE_EXTRA_COMPILERS += avx_compiler
-}
-
-linux {
-  linux-g++*{
-  }
-
-  linux-clang*{
+    linux-clang*{
+    }
   }
 }
 
