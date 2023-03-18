@@ -67,9 +67,21 @@ macx {
 # Kit -> Build -> Build Steps
 # Add Conan install as the first step
 
-CONFIG += conan_basic_setup
+#CONFIG += conan_basic_setup
+
 include($${OUT_PWD}/conanbuildinfo.pri)
 
+# Qwt
+INCLUDEPATH += $$CONAN_INCLUDEPATH_QWT
+LIBS += $$CONAN_LIBDIRS_QWT $$CONAN_LIBS_QWT
+# Tbb
+INCLUDEPATH += $$CONAN_INCLUDEPATH_TBB
+LIBS += $$CONAN_LIBDIRS_TBB $$CONAN_LIBS_TBB
+# Boost
+INCLUDEPATH += $$CONAN_INCLUDEPATH_BOOST
+LIBS += $$CONAN_LIBDIRS_BOOST $$CONAN_LIBS_BOOST
+LIBS += $$CONAN_SYSTEMLIBS_BOOST
+DEFINES += $$CONAN_DEFINES_BOOST
 
 
 HEADERS += \
