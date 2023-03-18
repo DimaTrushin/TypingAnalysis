@@ -12,9 +12,9 @@ An open source software to analyze the quality of your typing skills.
 
 - [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
 
-- [Qt 5.15.2](https://www.qt.io/download) with source code
+- [Qt 5.15.7](https://www.qt.io/download) with source code
 
-- [Conan](https://conan.io/)
+- [Conan 1.59](https://conan.io/)
 
 - [Cuda Toolkit v 10.1](https://developer.nvidia.com/cuda-toolkit)
 
@@ -22,11 +22,11 @@ An open source software to analyze the quality of your typing skills.
 
 1. Install Visual Studio 2019. You basically need the compiler and the debugger.
 
-2. Install Conan
+2. Install Conan 1.59. It is currently impossible to build the project with conan v2 because not all of the required recipes are compatible with conan v2.
 
 3. Install Cuda Toolkit v.10.1 Make sure the variables NVCUDASAMPLES_ROOT and CUDA_PATH are added to the PATH variable.
 
-4. Install Qt. Install Qt Creator and the source code of Qt 5.15.2. Currently it is impossible to build the project with the newer version of Qt.
+4. Install Qt. Install Qt Creator and the source code of Qt 5.15.7. Currently it is impossible to build the project with a newer version of Qt because qwt depends on this version.
 
 #### Build Qt Statically
 
@@ -89,7 +89,7 @@ nmake install
 
 1. Run QtCreator
 
-2. Go to Tools->Options->Qt Versions and add statically build version of Qt 5.15.2.
+2. Go to Tools->Options->Qt Versions and add statically build version of Qt 5.15.7.
 
 3. Go to Tools->Options->Kits and add a kit for static version of the Qt. You should choose Microsoft Visual C++ Compiler (amd64) for C and C++ code. Make sure "Force UTF-8 MSVC compiler output" flag is checked. Use statically build Qt version for this kit.
 
