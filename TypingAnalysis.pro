@@ -187,7 +187,6 @@ HEADERS += \
   Local/LocalizationModule.h \
   Local/Localizer.h \
   Local/RusLocale.h \
-  MathModuleAccess.h \
   Qt/AppState.h \
   Qt/AppStatus.h \
   Qt/MainWindow.h \
@@ -204,6 +203,7 @@ HEADERS += \
   FileHandlers.h \
   InstructionLevels.h \
   KeyboardHandlerAccess.h \
+  MathModuleAccess.h \
   ParallelModuleAccess.h \
   QtLoopException.h \
   TimeApp.h \
@@ -281,7 +281,6 @@ SOURCES += \
   Local/LocalizationModule.cpp \
   Local/Localizer.cpp \
   Local/RusLocale.cpp \
-  MathModuleAccess.cpp \
   Qt/AppState.cpp \
   Qt/AppStatus.cpp \
   Qt/MainWindow.cpp \
@@ -296,6 +295,7 @@ SOURCES += \
   AppStatusAccess.cpp \
   ExceptionHandler.cpp \
   FileHandlers.cpp \
+  MathModuleAccess.cpp \
   ParallelModuleAccess.cpp \
   TimeApp.cpp \
   Timer.cpp \
