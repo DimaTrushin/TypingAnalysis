@@ -47,6 +47,7 @@ public:
     QMenu* AltMenu;
   };
   explicit CModifiersMenuImpl(const CInitData& InitData);
+  ~CModifiersMenuImpl();
 
   CTextModeObserver* modifersModeInput();
   CLocalizerObserver* localizerInput();

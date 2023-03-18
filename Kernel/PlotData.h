@@ -1,6 +1,7 @@
 #ifndef NSAPPLICATION_NSKERNEL_CPLOTDATA_H
 #define NSAPPLICATION_NSKERNEL_CPLOTDATA_H
 
+#include <cstdint>
 #include <vector>
 
 namespace NSApplication {

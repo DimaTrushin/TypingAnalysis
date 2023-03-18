@@ -1,5 +1,6 @@
 #include "ModifiersMenu.h"
 
+#include <QActionGroup>
 #include <QMenu>
 #include <mutex>
 
@@ -23,6 +24,8 @@ CModifiersMenuImpl::CModifiersMenuImpl(const CInitData& InitData)
   connectCtrlMenu();
   connectAltMenu();
 }
+
+CModifiersMenuImpl::~CModifiersMenuImpl() = default;
 
 CModifiersMenuImpl::CTextModeObserver* CModifiersMenuImpl::modifersModeInput() {
   return &ModifiersInput_;

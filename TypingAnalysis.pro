@@ -68,7 +68,6 @@ macx {
 # Add Conan install as the first step
 
 #CONFIG += conan_basic_setup
-
 include($${OUT_PWD}/conanbuildinfo.pri)
 
 # Qwt
@@ -79,8 +78,19 @@ INCLUDEPATH += $$CONAN_INCLUDEPATH_TBB
 LIBS += $$CONAN_LIBDIRS_TBB $$CONAN_LIBS_TBB
 # Boost
 INCLUDEPATH += $$CONAN_INCLUDEPATH_BOOST
-LIBS += $$CONAN_LIBDIRS_BOOST $$CONAN_LIBS_BOOST
-LIBS += $$CONAN_SYSTEMLIBS_BOOST
+USED_BOOST_LIBS = boost_filesystem boost_wserialization boost_serialization
+win32-msvc*{
+  LIBS += $$CONAN_LIBDIRS_BOOST
+  for(var, $$list($$USED_BOOST_LIBS)) {
+    LIBS += -llib$$var
+  }
+}
+*-g++*|*-clang*{
+  LIBS += $$CONAN_LIBDIRS_BOOST
+  for(var, $$list($$USED_BOOST_LIBS)) {
+    LIBS += -l$$var
+  }
+}
 DEFINES += $$CONAN_DEFINES_BOOST
 
 
