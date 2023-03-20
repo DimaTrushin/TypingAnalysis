@@ -43,6 +43,8 @@ win32 {
   }
 
   win32-clang*{
+  DEFINES += \
+      DISABLE_CUDA
   }
 }
 
