@@ -1,14 +1,13 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CMODIFIERSMENU_H
 #define NSAPPLICATION_NSINTERFACE_CMODIFIERSMENU_H
 
-#include <QObject>
-
 #include "Kernel/TextMode.h"
-
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "Local/Localizer.h"
+
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 class QAction;

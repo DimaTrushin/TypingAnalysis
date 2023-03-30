@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSQT_CSESSIONSTATISTICSMODEL_H
 #define NSAPPLICATION_NSQT_CSESSIONSTATISTICSMODEL_H
 
-#include <QAbstractTableModel>
-
 #include "Kernel/StatisticsDescription.h"
 #include "Kernel/TextData.h"
 #include "Local/Localizer.h"
+
+#include <QAbstractTableModel>
 
 #include <deque>
 

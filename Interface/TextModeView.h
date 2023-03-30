@@ -1,15 +1,15 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CTEXTMODEVIEW_H
 #define NSAPPLICATION_NSINTERFACE_CTEXTMODEVIEW_H
 
-#include <QObject>
-
-#include <memory>
-
 #include "Kernel/TextMode.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "Local/Localizer.h"
+
+#include <QObject>
+
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 class QButtonGroup;

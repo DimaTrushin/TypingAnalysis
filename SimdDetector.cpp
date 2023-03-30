@@ -1,4 +1,5 @@
 #include "SimdDetector.h"
+
 #include "3dparty/vectorclass/instrset.h"
 #include "3dparty/vectorclass/vectorclass.h"
 

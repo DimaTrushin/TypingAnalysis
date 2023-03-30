@@ -1,9 +1,9 @@
 #ifndef NSAPPLICATION_NSKERNEL_CSEANCEVIEWDATA_H
 #define NSAPPLICATION_NSKERNEL_CSEANCEVIEWDATA_H
 
-#include <memory>
-
 #include "Kernel/Seance.h"
+
+#include <memory>
 
 namespace NSApplication {
 namespace NSKernel {

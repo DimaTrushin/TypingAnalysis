@@ -3,6 +3,7 @@
 
 #include "Keyboard/KeyPosition.h"
 #include "VkCode.h"
+
 #include <Windows.h>
 
 namespace NSApplication {

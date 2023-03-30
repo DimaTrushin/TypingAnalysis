@@ -1,6 +1,7 @@
 #include "LanguageMenu.h"
 
 #include "Local/Languages.h"
+
 #include <QMenu>
 
 namespace NSApplication {

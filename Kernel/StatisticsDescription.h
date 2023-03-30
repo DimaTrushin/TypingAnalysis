@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKERNEL_CSTATISTICSDESCRIPTION_H
 
 #include <QString>
+
 #include <deque>
 
 namespace NSApplication {

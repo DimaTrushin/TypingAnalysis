@@ -1,9 +1,9 @@
 #include "KeyMapper.h"
 
+#include "WinKeyboardApi.h"
+
 #include <cassert>
 #include <stdexcept>
-
-#include "WinKeyboardApi.h"
 
 namespace NSApplication {
 namespace NSKeyboard {

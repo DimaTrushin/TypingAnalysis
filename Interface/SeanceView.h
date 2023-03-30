@@ -1,16 +1,16 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CSEANCEVIEW_H
 #define NSAPPLICATION_NSINTERFACE_CSEANCEVIEW_H
 
-#include <QObject>
-
-#include <memory>
-
 #include "Kernel/SeanceViewData.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "Local/Localizer.h"
 #include "Qt/SeanceDescriptionModel.h"
+
+#include <QObject>
+
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 class QTreeView;

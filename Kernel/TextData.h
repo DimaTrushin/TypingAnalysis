@@ -1,14 +1,14 @@
 #ifndef NSAPPLICATION_NSKERNEL_CTEXTDATA_H
 #define NSAPPLICATION_NSKERNEL_CTEXTDATA_H
 
-#include <memory>
-
 #include "ModifiersTextData.h"
 #include "Session.h"
 #include "SessionTextSequencer.h"
 #include "TextDataTree.h"
 #include "TextSequencer.h"
 #include "TextTreeSequencer.h"
+
+#include <memory>
 
 namespace NSApplication {
 namespace NSKernel {

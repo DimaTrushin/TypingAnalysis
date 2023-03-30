@@ -9,6 +9,7 @@
 #include "RawInputReader.h"
 
 #include <QObject>
+
 #include <future>
 
 namespace NSApplication {

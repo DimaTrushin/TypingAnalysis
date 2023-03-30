@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSLOCAL_CLANGUAGES_H
 
 #include "LocaleID.h"
+
 #include <array>
 
 namespace NSApplication {

@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CFILEMENU_H
 #define NSAPPLICATION_NSINTERFACE_CFILEMENU_H
 
-#include <QObject>
-
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
+
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 class QAction;

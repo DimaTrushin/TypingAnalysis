@@ -1,11 +1,12 @@
 #ifndef NSAPPLICATION_NSQT_CSEANCEDESCRIPTIONMODEL_H
 #define NSAPPLICATION_NSQT_CSEANCEDESCRIPTIONMODEL_H
 
+#include "Local/Localizer.h"
+
 #include <QAbstractItemModel>
 #include <QItemSelection>
-#include <deque>
 
-#include "Local/Localizer.h"
+#include <deque>
 
 namespace NSApplication {
 namespace NSKernel {

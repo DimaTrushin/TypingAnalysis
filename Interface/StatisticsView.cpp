@@ -1,10 +1,11 @@
 #include "StatisticsView.h"
-#include <cassert>
 
 #include "AppDebug/PerformanceLogger.h"
 #include "TimerAccess.h"
 
 #include <QTableView>
+
+#include <cassert>
 
 namespace NSApplication {
 namespace NSInterface {

@@ -1,10 +1,10 @@
 #include "AnalyticalModule.h"
 
-#include <algorithm>
-#include <cassert>
-
 #include "AppDebug/PerformanceLogger.h"
 #include "ParallelModuleAccess.h"
+
+#include <algorithm>
+#include <cassert>
 
 namespace NSApplication {
 namespace NSKernel {

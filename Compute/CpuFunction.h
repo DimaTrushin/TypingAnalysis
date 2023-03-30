@@ -5,11 +5,11 @@
 #include "InstructionLevels.h"
 #include "Library/FunctionModuleBase.h"
 
-#include <vector>
-
 #define MAX_VECTOR_SIZE 512
 #include "3dparty/vectorclass/vectorclass.h"
 #include "3dparty/vectorclass/vectormath_exp.h"
+
+#include <vector>
 
 namespace NSApplication {
 namespace NSCompute {

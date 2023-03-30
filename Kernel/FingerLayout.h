@@ -1,10 +1,10 @@
 #ifndef NSAPPLICATION_NSKERNEL_CFINGERLAYOUT_H
 #define NSAPPLICATION_NSKERNEL_CFINGERLAYOUT_H
 
+#include "Keyboard/KeyPosition.h"
+
 #include <map>
 #include <set>
-
-#include "Keyboard/KeyPosition.h"
 
 namespace NSApplication {
 namespace NSKernel {

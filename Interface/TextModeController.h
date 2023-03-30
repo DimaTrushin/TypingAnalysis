@@ -1,11 +1,11 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CTEXTMODECONTROLLER_H
 #define NSAPPLICATION_NSINTERFACE_CTEXTMODECONTROLLER_H
 
-#include <memory>
-
 #include "Kernel/TextModule.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+
+#include <memory>
 
 namespace NSApplication {
 namespace NSInterface {

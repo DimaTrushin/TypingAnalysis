@@ -1,12 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <memory>
-
 #include "Interface/FileMenu.h"
 #include "Interface/ModifiersMenu.h"
 #include "Interface/TextModeView.h"
+
+#include <QMainWindow>
+
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

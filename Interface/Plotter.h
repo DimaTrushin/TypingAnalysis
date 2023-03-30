@@ -1,15 +1,15 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CPLOTTER_H
 #define NSAPPLICATION_NSINTERFACE_CPLOTTER_H
 
-#include <QObject>
-
-#include "qwt_axis_id.h"
-#include <memory>
-
 #include "Kernel/PlotData.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
+
+#include "qwt_axis_id.h"
+#include <QObject>
+
+#include <memory>
 
 class QwtPlot;
 class QwtPlotCurve;

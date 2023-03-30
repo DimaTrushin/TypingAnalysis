@@ -1,6 +1,7 @@
 #include "ExceptionHandler.h"
 
 #include <QMessageBox>
+
 #include <exception>
 
 namespace NSApplication {

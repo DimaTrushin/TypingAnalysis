@@ -1,8 +1,8 @@
 #include "CudaGate.h"
 
-#include <cassert>
-
 #include <QDebug>
+
+#include <cassert>
 
 namespace NSApplication {
 namespace NSCompute {

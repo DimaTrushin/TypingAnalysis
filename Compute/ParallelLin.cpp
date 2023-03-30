@@ -1,4 +1,5 @@
 #include "ParallelLin.h"
+
 #include <cassert>
 
 namespace NSApplication {

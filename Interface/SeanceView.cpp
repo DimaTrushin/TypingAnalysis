@@ -1,9 +1,9 @@
 #include "SeanceView.h"
 
+#include <QTreeView>
+
 #include <cassert>
 #include <mutex>
-
-#include <QTreeView>
 
 namespace NSApplication {
 namespace NSInterface {

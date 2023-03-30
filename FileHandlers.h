@@ -1,13 +1,12 @@
 #ifndef NSAPPLICATION_CFILEHANDLERS_H
 #define NSAPPLICATION_CFILEHANDLERS_H
 
+#include <QString>
+
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/filesystem/fstream.hpp>
-
 #include <optional>
-
-#include <QString>
 
 namespace NSApplication {
 

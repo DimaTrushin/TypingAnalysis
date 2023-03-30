@@ -3,6 +3,7 @@
 
 #include "KeyID.h"
 #include "KeyTextData.h"
+
 #include <QChar>
 
 namespace NSApplication {

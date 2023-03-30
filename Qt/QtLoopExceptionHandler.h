@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSQT_CQTLOOPEXCEPTIONHANDLER_H
 
 #include <QObject>
+
 #include <stdexcept>
 
 namespace NSApplication {

@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSKEYBOARD_CKEYTEXTDATA_H
 
 #include <QChar>
+
 #include <boost/serialization/access.hpp>
 
 namespace boost {

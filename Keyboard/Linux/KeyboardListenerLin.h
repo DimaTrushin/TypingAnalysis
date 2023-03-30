@@ -4,6 +4,7 @@
 #include "Keyboard/AnyKeyboardKiller.h"
 
 #include <QObject>
+
 #include <future>
 
 namespace NSApplication {

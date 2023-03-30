@@ -1,4 +1,5 @@
 #include "FileActionKeyboardBlocker.h"
+
 #include "Keyboard/KeyboardHandler.h"
 
 namespace NSApplication {

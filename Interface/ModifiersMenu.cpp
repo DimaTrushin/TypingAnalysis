@@ -2,6 +2,7 @@
 
 #include <QActionGroup>
 #include <QMenu>
+
 #include <mutex>
 
 namespace NSApplication {

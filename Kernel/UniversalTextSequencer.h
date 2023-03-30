@@ -5,6 +5,7 @@
 #include "Keyboard/KeyPosition.h"
 #include "Library/AnyObject/AnyMovable.h"
 #include "TimeApp.h"
+
 #include <QChar>
 
 namespace NSApplication {

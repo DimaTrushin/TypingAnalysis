@@ -8,9 +8,9 @@
 #include "TextMode.h"
 #include "TimeApp.h"
 
-#include <list>
-
 #include <QChar>
+
+#include <list>
 
 namespace NSApplication {
 namespace NSKernel {

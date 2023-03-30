@@ -2,6 +2,7 @@
 #define NSAPPLICATION_NSCOMPUTE_CPARALLELMODULE_H
 
 #include <QtGlobal>
+
 #include <memory>
 
 #ifdef Q_OS_WIN

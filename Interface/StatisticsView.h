@@ -1,15 +1,15 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CSTATISTICSVIEW_H
 #define NSAPPLICATION_NSINTERFACE_CSTATISTICSVIEW_H
 
-#include <QObject>
-
-#include <memory>
-
 #include "Kernel/StatisticsDescription.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
 #include "Qt/SessionStatisticsModel.h"
+
+#include <QObject>
+
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 class QTableView;

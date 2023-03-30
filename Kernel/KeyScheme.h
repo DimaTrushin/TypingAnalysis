@@ -1,13 +1,13 @@
 #ifndef NSAPPLICATION_NSKERNEL_CKEYSCHEME_H
 #define NSAPPLICATION_NSKERNEL_CKEYSCHEME_H
 
-#include <vector>
-
-#include <QString>
-
 #include "Kernel/FingerLayout.h"
 #include "Keyboard/KeyTextData.h"
 #include "TimeApp.h"
+
+#include <QString>
+
+#include <vector>
 
 namespace NSApplication {
 namespace NSKernel {

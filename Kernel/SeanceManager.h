@@ -1,12 +1,12 @@
 #ifndef NSAPPLICATION_NSKERNEL_CSEANCEMANAGER_H
 #define NSAPPLICATION_NSKERNEL_CSEANCEMANAGER_H
 
-#include <memory>
-
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Seance.h"
 #include "SeanceMaker.h"
+
+#include <memory>
 
 namespace NSApplication {
 namespace NSKernel {

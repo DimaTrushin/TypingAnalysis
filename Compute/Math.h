@@ -3,12 +3,12 @@
 
 #include "Functions.h"
 
-#include <vector>
-
 #ifndef DISABLE_CUDA
 #include "CudaGate.h"
 #include <thrust/device_vector.h>
 #endif
+
+#include <vector>
 
 namespace NSApplication {
 namespace NSCompute {

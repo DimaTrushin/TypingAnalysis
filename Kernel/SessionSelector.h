@@ -1,12 +1,12 @@
 #ifndef NSAPPLICATION_NSKERNEL_CSESSIONSELECTOR_H
 #define NSAPPLICATION_NSKERNEL_CSESSIONSELECTOR_H
 
-#include <memory>
-
 #include "Kernel/Seance.h"
 #include "Kernel/SeanceViewData.h"
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+
+#include <memory>
 
 namespace NSApplication {
 namespace NSKernel {

@@ -1,13 +1,13 @@
 #ifndef NSAPPLICATION_NSLOCAL_CLOCALIZATIONMODULE_H
 #define NSAPPLICATION_NSLOCAL_CLOCALIZATIONMODULE_H
 
-#include "Local/EngLocale.h"
-#include "Local/LocaleID.h"
-#include "Local/Localizer.h"
-#include "Local/RusLocale.h"
-
 #include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
+#include "Local/LocaleID.h"
+#include "Local/Localizer.h"
+
+#include "Local/EngLocale.h"
+#include "Local/RusLocale.h"
 
 namespace NSApplication {
 namespace NSLocal {

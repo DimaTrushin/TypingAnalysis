@@ -1,4 +1,5 @@
 #include "ParallelMac.h"
+
 #include <cassert>
 
 namespace NSApplication {
