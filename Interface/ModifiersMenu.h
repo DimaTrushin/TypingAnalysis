@@ -32,7 +32,7 @@ class CModifiersMenuImpl : public QObject {
 
   using CModifiersMode = NSKernel::CModifiersMode;
   using CModifiersModeObserver = NSLibrary::CObserver<CModifiersMode>;
-  using CModifiersObservable = NSLibrary::CObservableData<CModifiersMode>;
+  using CModifiersObservable = NSLibrary::CObservableDataMono<CModifiersMode>;
 
   using CLocalizer = NSLocal::CTextModeViewLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

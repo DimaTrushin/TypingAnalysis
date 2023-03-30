@@ -33,7 +33,7 @@ class CTextModeViewImpl : public QObject {
   using CTextModeInput = NSLibrary::CHotInput<CTextMode>;
 
   using CETextModeObserver = NSLibrary::CObserver<ETextMode>;
-  using CETextModeObservable = NSLibrary::CObservableData<ETextMode>;
+  using CETextModeObservable = NSLibrary::CObservableDataMono<ETextMode>;
 
   using CLocalizer = NSLocal::CTextModeViewLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

@@ -30,11 +30,11 @@ class CFileMenuImpl : public QObject {
   Q_OBJECT
 
   using CFileActionObserver = NSLibrary::CObserver<CFileCommand>;
-  using CFileActionObservable = NSLibrary::CObservableData<CFileCommand>;
+  using CFileActionObservable = NSLibrary::CObservableDataMono<CFileCommand>;
 
   using CFileActionBlockObserver = NSLibrary::CObserver<EFileActionBlock>;
   using CFileActionBlockObservable =
-      NSLibrary::CObservableData<EFileActionBlock>;
+      NSLibrary::CObservableDataMono<EFileActionBlock>;
 
   using CLocalizer = NSLocal::CFileMenuLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

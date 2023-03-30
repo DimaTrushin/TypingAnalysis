@@ -35,7 +35,7 @@ class CSeanceViewImpl : public NSQt::CSeanceDescriptionModel {
 
   using Index = NSKernel::CSeanceViewData::Index;
   using CIndexObserver = NSLibrary::CObserver<Index>;
-  using CIndexObservable = NSLibrary::CObservableData<Index>;
+  using CIndexObservable = NSLibrary::CObservableDataMono<Index>;
 
   using CLocalizer = NSLocal::CSeanceViewLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

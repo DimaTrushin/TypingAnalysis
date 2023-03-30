@@ -23,7 +23,7 @@ class CLanguageMenuImpl : public QObject {
 
   using ELocale = NSLocal::ELocale;
   using CLocaleObserver = NSLibrary::CObserver<ELocale>;
-  using CLocaleObservable = NSLibrary::CObservableData<ELocale>;
+  using CLocaleObservable = NSLibrary::CObservableDataMono<ELocale>;
 
 public:
   CLanguageMenuImpl(QMenu* Menu);
