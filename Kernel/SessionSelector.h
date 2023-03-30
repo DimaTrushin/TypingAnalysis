@@ -5,7 +5,7 @@
 
 #include "Kernel/Seance.h"
 #include "Kernel/SeanceViewData.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {
@@ -18,7 +18,7 @@ class CSessionSelectorImpl {
   using CSeanceInput = NSLibrary::CHotInput<CSeance>;
 
   using CSessionObservable = NSLibrary::CObservable<CSession>;
-  using CSessionGetType = typename NSLibrary::CSource<CSession>::CGetType;
+  using CSessionGetType = typename CSessionObservable::CGetType;
   using CSessionObserver = NSLibrary::CObserver<CSession>;
 
   using Index = CSeanceViewData::Index;

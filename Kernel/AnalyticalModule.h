@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSKERNEL_CANALYTICALMODULE_H
 
 #include "AnalyticData.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "PlotData.h"
 #include "TextData.h"
@@ -36,14 +36,12 @@ class CAnalyticalModuleImpl {
 
   using CPlotDataObserver = NSLibrary::CObserver<CPlotDataCRef>;
   using CPlotDataObservable = NSLibrary::CObservableData<CPlotDataCRef>;
-  using CPlotDataGetType = CPlotDataObserver::CGetType;
 
   using CFunctionDataPtr = std::unique_ptr<CFunctionData>;
   using CCacher = CTextModeCacher<CFunctionDataPtr>;
 
   using CAnalyticDataObserver = NSLibrary::CObserver<CAnalyticData>;
   using CAnalyticDataObservable = NSLibrary::CObservableData<CAnalyticData>;
-  using CAnalyticDataGetType = CAnalyticDataObserver::CGetType;
 
 public:
   CAnalyticalModuleImpl();

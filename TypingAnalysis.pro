@@ -165,12 +165,7 @@ HEADERS += \
   Keyboard/ListenerExceptionHandler.h \
   Keyboard/RawKeyEvent.h \
   Library/AnyObject/AnyMovable.h \
-  Library/Observer2/Impl/Observable.h \
-  Library/Observer2/Impl/ObservableImpl.h \
-  Library/Observer2/Impl/Observer.h \
-  Library/Observer2/Impl/Source.h \
-  Library/Observer2/Impl/TypeHelper.h \
-  Library/Observer2/Observer.h \
+  Library/Observer4/Observer.h \
   Library/Singleton/AnyGlobalAccess.h \
   Library/StlExtension/Cacher.h \
   Library/StlExtension/HeapWithAccess.h \

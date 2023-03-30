@@ -6,7 +6,7 @@
 #include "Kernel/TextData.h"
 #include "Kernel/TextDataTree.h"
 #include "Kernel/TextMode.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "ModifiersTextData.h"
 
@@ -19,14 +19,12 @@ namespace NSTextModuleDetail {
 class CTextModuleImpl {
   using CTextModeObserver = NSLibrary::CObserver<CTextMode>;
   using CTextModeObservable = NSLibrary::CObservable<CTextMode>;
-  using CTextModeGetType = CTextModeObserver::CGetType;
+  using CTextModeGetType = CTextModeObservable::CGetType;
 
   using CSessionObserver = NSLibrary::CObserver<CSession>;
-  using CSessionGetType = CSessionObserver::CGetType;
   using CSessionInput = NSLibrary::CHotInput<CSession>;
 
   using CTextDataObserver = NSLibrary::CObserver<CTextData>;
-  using CTextDataGetType = CTextDataObserver::CGetType;
   using CTextDataObservable = NSLibrary::CObservableData<CTextData>;
 
 public:

@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSINTERFACE_CSESSIONFLUSHER_H
 
 #include "Kernel/SeanceManager.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Qt/AppState.h"
 

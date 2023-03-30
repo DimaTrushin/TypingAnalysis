@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Seance.h"
 #include "SeanceMaker.h"
@@ -20,7 +20,7 @@ class CSeanceManagerImpl {
   using CKeyReleasingInput = NSLibrary::CHotInput<CKeyReleasing>;
 
   using CSeanceObservable = NSLibrary::CObservable<CSeance>;
-  using CSeanceGetType = typename NSLibrary::CSource<CSeance>::CGetType;
+  using CSeanceGetType = typename CSeanceObservable::CGetType;
   using CSeanceObserver = NSLibrary::CObserver<CSeance>;
 
 public:

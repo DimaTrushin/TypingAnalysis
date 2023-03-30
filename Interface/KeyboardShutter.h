@@ -1,7 +1,7 @@
 #ifndef NSAPPLICATION_NSINTERFACE_CKEYBOARDSHUTTER_H
 #define NSAPPLICATION_NSINTERFACE_CKEYBOARDSHUTTER_H
 
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Qt/AppState.h"
 

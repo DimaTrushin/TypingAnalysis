@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSKERNEL_CSTATISTICSMODULE_H
 
 #include "AnalyticData.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Local/Localizer.h"
 #include "StatisticsDescription.h"
@@ -21,8 +21,6 @@ class CStatisticsModuleImpl {
 
   using CStatisticsDescriptionObserver =
       NSLibrary::CObserver<CStatisticsDescription>;
-  using CStatisticsDescriptionGetType =
-      CStatisticsDescriptionObserver::CGetType;
   using CStatisticsDescriptionObservable =
       NSLibrary::CObservableData<CStatisticsDescription>;
 

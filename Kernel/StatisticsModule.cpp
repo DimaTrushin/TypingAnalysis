@@ -29,7 +29,7 @@ void CStatisticsModuleImpl::subscribeToStatisticsDescription(
 void CStatisticsModuleImpl::setLocale(const CLocalizer&) {
   if (!AnalyticDataInput_.hasData())
     return;
-  handleAnalyticData(AnalyticDataInput_.data_());
+  handleAnalyticData(AnalyticDataInput_.data());
 }
 
 void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
@@ -78,121 +78,121 @@ void CStatisticsModuleImpl::handleAnalyticData(const CAnalyticData& Data) {
 QString CStatisticsModuleImpl::fullTextLength() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().fullTextLength();
+  return LocalizerInput_.data().fullTextLength();
 }
 
 QString CStatisticsModuleImpl::printedTextLength() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextLength();
+  return LocalizerInput_.data().printedTextLength();
 }
 
 QString CStatisticsModuleImpl::deletedSymbols() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().deletedSymbols();
+  return LocalizerInput_.data().deletedSymbols();
 }
 
 QString CStatisticsModuleImpl::mistakePlaces() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakePlaces();
+  return LocalizerInput_.data().mistakePlaces();
 }
 
 QString CStatisticsModuleImpl::mistakes() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakes();
+  return LocalizerInput_.data().mistakes();
 }
 
 QString CStatisticsModuleImpl::mistakesPercent() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakesPercent();
+  return LocalizerInput_.data().mistakesPercent();
 }
 
 QString CStatisticsModuleImpl::printedTextDuration() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextDuration();
+  return LocalizerInput_.data().printedTextDuration();
 }
 
 QString CStatisticsModuleImpl::printedTextSpeed() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextSpeed();
+  return LocalizerInput_.data().printedTextSpeed();
 }
 
 QString CStatisticsModuleImpl::maxLikelihoodSpeed() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().maxLikelihoodSpeed();
+  return LocalizerInput_.data().maxLikelihoodSpeed();
 }
 
 QString CStatisticsModuleImpl::score() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().score();
+  return LocalizerInput_.data().score();
 }
 
 QString CStatisticsModuleImpl::fullTextLengthHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().fullTextLengthHint();
+  return LocalizerInput_.data().fullTextLengthHint();
 }
 
 QString CStatisticsModuleImpl::printedTextLengthHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextLengthHint();
+  return LocalizerInput_.data().printedTextLengthHint();
 }
 
 QString CStatisticsModuleImpl::deletedSymbolsHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().deletedSymbolsHint();
+  return LocalizerInput_.data().deletedSymbolsHint();
 }
 
 QString CStatisticsModuleImpl::mistakePlacesHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakePlacesHint();
+  return LocalizerInput_.data().mistakePlacesHint();
 }
 
 QString CStatisticsModuleImpl::mistakesHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakesHint();
+  return LocalizerInput_.data().mistakesHint();
 }
 
 QString CStatisticsModuleImpl::mistakesPercentHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().mistakesPercentHint();
+  return LocalizerInput_.data().mistakesPercentHint();
 }
 
 QString CStatisticsModuleImpl::printedTextDurationHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextDurationHint();
+  return LocalizerInput_.data().printedTextDurationHint();
 }
 
 QString CStatisticsModuleImpl::printedTextSpeedHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().printedTextSpeedHint();
+  return LocalizerInput_.data().printedTextSpeedHint();
 }
 
 QString CStatisticsModuleImpl::maxLikelihoodSpeedHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().maxLikelihoodSpeedHint();
+  return LocalizerInput_.data().maxLikelihoodSpeedHint();
 }
 
 QString CStatisticsModuleImpl::scoreHint() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().scoreHint();
+  return LocalizerInput_.data().scoreHint();
 }
 
 } // namespace NSStatisticsModuleDetail

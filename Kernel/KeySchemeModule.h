@@ -3,7 +3,7 @@
 
 #include "Kernel/KeySchemeMaker.h"
 #include "Kernel/TextData.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {

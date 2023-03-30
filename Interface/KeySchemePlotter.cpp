@@ -219,27 +219,27 @@ QString CKeySchemePlotterImpl::getFingerName(const CFinger& Finger) const {
     return "";
   switch (Finger.id()) {
   case EFingerEnum::Left | EFingerEnum::Thumb:
-    return LocalizerInput_.data_().leftThumb();
+    return LocalizerInput_.data().leftThumb();
   case EFingerEnum::Left | EFingerEnum::Index:
-    return LocalizerInput_.data_().leftIndex();
+    return LocalizerInput_.data().leftIndex();
   case EFingerEnum::Left | EFingerEnum::Middle:
-    return LocalizerInput_.data_().leftMiddle();
+    return LocalizerInput_.data().leftMiddle();
   case EFingerEnum::Left | EFingerEnum::Ring:
-    return LocalizerInput_.data_().leftRing();
+    return LocalizerInput_.data().leftRing();
   case EFingerEnum::Left | EFingerEnum::Pinky:
-    return LocalizerInput_.data_().leftPinky();
+    return LocalizerInput_.data().leftPinky();
   case EFingerEnum::Right | EFingerEnum::Thumb:
-    return LocalizerInput_.data_().rightThumb();
+    return LocalizerInput_.data().rightThumb();
   case EFingerEnum::Right | EFingerEnum::Index:
-    return LocalizerInput_.data_().rightIndex();
+    return LocalizerInput_.data().rightIndex();
   case EFingerEnum::Right | EFingerEnum::Middle:
-    return LocalizerInput_.data_().rightMiddle();
+    return LocalizerInput_.data().rightMiddle();
   case EFingerEnum::Right | EFingerEnum::Ring:
-    return LocalizerInput_.data_().rightRing();
+    return LocalizerInput_.data().rightRing();
   case EFingerEnum::Right | EFingerEnum::Pinky:
-    return LocalizerInput_.data_().rightPinky();
+    return LocalizerInput_.data().rightPinky();
   case EFingerEnum::Undefined:
-    return LocalizerInput_.data_().undefined();
+    return LocalizerInput_.data().undefined();
   default:
     return "";
   }
@@ -261,25 +261,25 @@ void CKeySchemePlotterImpl::setLocale(const CLocalizer& Localizer) {
   Plot_->setAxisTitle(QwtAxis::XBottom, Localizer.timeAxisTitle());
   Plot_->setAxisTitle(QwtAxis::YLeft, Localizer.fingerAxisTitle());
   if (KeySchemeInput_.hasData())
-    setYAxisNames(KeySchemeInput_.data_());
+    setYAxisNames(KeySchemeInput_.data());
 }
 
 QString CKeySchemePlotterImpl::title() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().title();
+  return LocalizerInput_.data().title();
 }
 
 QString CKeySchemePlotterImpl::timeAxisTitle() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().timeAxisTitle();
+  return LocalizerInput_.data().timeAxisTitle();
 }
 
 QString CKeySchemePlotterImpl::fingerAxisTitle() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().fingerAxisTitle();
+  return LocalizerInput_.data().fingerAxisTitle();
 }
 
 } // namespace NSKeySchemePlotterDetail

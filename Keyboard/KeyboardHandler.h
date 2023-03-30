@@ -3,7 +3,7 @@
 
 #include "AnyKeyboardKiller.h"
 #include "KeyboardBlock.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Qt/QtLoopExceptionHandler.h"
 #include "RawKeyEvent.h"
 

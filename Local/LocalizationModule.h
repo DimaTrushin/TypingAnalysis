@@ -6,7 +6,7 @@
 #include "Local/Localizer.h"
 #include "Local/RusLocale.h"
 
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 
 namespace NSApplication {
@@ -19,42 +19,43 @@ class CLocalizationModuleImpl {
       NSLibrary::CObserver<CSeanceViewLocalizer>;
   using CSeanceViewLocalizerObservable =
       NSLibrary::CObservable<CSeanceViewLocalizer>;
-  using CSeanceViewGetType = CSeanceViewLocalizerObserver::CGetType;
+  using CSeanceViewGetType = CSeanceViewLocalizerObservable::CGetType;
 
   using CStatisticsViewLocalizerObserver =
       NSLibrary::CObserver<CStatisticsViewLocalizer>;
   using CStatisticsViewLocalizerObservable =
       NSLibrary::CObservable<CStatisticsViewLocalizer>;
-  using CStatisticsViewGetType = CStatisticsViewLocalizerObserver::CGetType;
+  using CStatisticsViewGetType = CStatisticsViewLocalizerObservable::CGetType;
 
   using CTextModeViewLocalizerObserver =
       NSLibrary::CObserver<CTextModeViewLocalizer>;
   using CTextModeViewLocalizerObservable =
       NSLibrary::CObservable<CTextModeViewLocalizer>;
-  using CTextModeViewGetType = CTextModeViewLocalizerObserver::CGetType;
+  using CTextModeViewGetType = CTextModeViewLocalizerObservable::CGetType;
 
   using CSpeedPlotterLocalizerObserver =
       NSLibrary::CObserver<CSpeedPlotterLocalizer>;
   using CSpeedPlotterLocalizerObservable =
       NSLibrary::CObservable<CSpeedPlotterLocalizer>;
-  using CSpeedPlotterGetType = CSpeedPlotterLocalizerObserver::CGetType;
+  using CSpeedPlotterGetType = CSpeedPlotterLocalizerObservable::CGetType;
 
   using CKeySchemePlotterLocalizerObserver =
       NSLibrary::CObserver<CKeySchemePlotterLocalizer>;
   using CKeySchemePlotterLocalizerObservable =
       NSLibrary::CObservable<CKeySchemePlotterLocalizer>;
-  using CKeySchemePlotterGetType = CKeySchemePlotterLocalizerObserver::CGetType;
+  using CKeySchemePlotterGetType =
+      CKeySchemePlotterLocalizerObservable::CGetType;
 
   using CStatisticsLocalizerObserver =
       NSLibrary::CObserver<CStatisticsLocalizer>;
   using CStatisticsLocalizerObservable =
       NSLibrary::CObservable<CStatisticsLocalizer>;
-  using CStatisticsGetType = CStatisticsLocalizerObserver::CGetType;
+  using CStatisticsGetType = CStatisticsLocalizerObservable::CGetType;
 
   using CFileMenuLocalizerObserver = NSLibrary::CObserver<CFileMenuLocalizer>;
   using CFileMenuLocalizerObservable =
       NSLibrary::CObservable<CFileMenuLocalizer>;
-  using CFileMenuGetType = CFileMenuLocalizerObserver::CGetType;
+  using CFileMenuGetType = CFileMenuLocalizerObservable::CGetType;
 
 public:
   CLocalizationModuleImpl() = default;

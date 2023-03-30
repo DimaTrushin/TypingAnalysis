@@ -28,7 +28,7 @@ void CSessionSelectorImpl::subscribeToSeanceViewData(
 
 void CSessionSelectorImpl::setCurrentSession(Index SessionIndex) {
   NSAppDebug::CTimeAnchor Anchor("set session & notify time = ");
-  assert(SessionIndex < 0 || size_t(SessionIndex) < Seance_.data_().size());
+  assert(SessionIndex < 0 || size_t(SessionIndex) < Seance_.data().size());
   if (SessionIndex_ == SessionIndex)
     return;
   SessionIndex_ = SessionIndex;
@@ -55,7 +55,7 @@ CSessionSelectorImpl::CSessionGetType
 CSessionSelectorImpl::getCurrentSession() const {
   if (!hasCurrentSession())
     return CSessionGetType();
-  return getCurrentSessionFromSeance(Seance_.data_());
+  return getCurrentSessionFromSeance(Seance_.data());
 }
 
 CSessionSelectorImpl::CSessionGetType

@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "Kernel/SeanceViewData.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "Local/Localizer.h"
@@ -28,17 +28,14 @@ class CSeanceViewImpl : public NSQt::CSeanceDescriptionModel {
   using CSeance = NSKernel::CSeance;
   using CSeanceInput = NSLibrary::CHotInput<CSeance>;
   using CSeanceObserver = NSLibrary::CObserver<CSeance>;
-  using CSeanceGetType = CSeanceObserver::CGetType;
 
   using CSeanceViewData = NSKernel::CSeanceViewData;
   using CSeanceViewDataInput = NSLibrary::CInput<CSeanceViewData>;
   using CSeanceViewDataObserver = NSLibrary::CObserver<CSeanceViewData>;
-  //  using CSeanceViewDataGetType = CSeanceViewDataObserver::CGetType;
 
   using Index = NSKernel::CSeanceViewData::Index;
   using CIndexObserver = NSLibrary::CObserver<Index>;
   using CIndexObservable = NSLibrary::CObservableData<Index>;
-  using CIndexGetType = CIndexObserver::CGetType;
 
   using CLocalizer = NSLocal::CSeanceViewLocalizer;
   using CLocalizerObserver = NSLibrary::CObserver<CLocalizer>;

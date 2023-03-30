@@ -31,13 +31,13 @@ void CKeySchemeModuleImpl::handleFingerLayoutChange(
     const CFingerLayout& FingerLayout) {
   if (!TextDataInput_.hasData())
     return;
-  makeKeyScheme(TextDataInput_.data_(), FingerLayout);
+  makeKeyScheme(TextDataInput_.data(), FingerLayout);
 }
 
 void CKeySchemeModuleImpl::handleTextData(const CTextData& TextData) {
   if (!FingerLayoutInput_.hasData())
     return;
-  makeKeyScheme(TextData, FingerLayoutInput_.data_());
+  makeKeyScheme(TextData, FingerLayoutInput_.data());
 }
 
 void CKeySchemeModuleImpl::makeKeyScheme(const CTextData& TextData,

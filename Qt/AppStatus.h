@@ -2,7 +2,7 @@
 #define NSAPPLICATION_NSQT_CAPPSTATUS_H
 
 #include "AppState.h"
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 
 #include <QObject>
 

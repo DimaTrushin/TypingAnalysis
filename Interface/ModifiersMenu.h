@@ -5,7 +5,7 @@
 
 #include "Kernel/TextMode.h"
 
-#include "Library/Observer2/Observer.h"
+#include "Library/Observer4/Observer.h"
 #include "Library/StlExtension/MvcWrappers.h"
 #include "Library/StlExtension/Supressor.h"
 #include "Local/Localizer.h"

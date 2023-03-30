@@ -187,49 +187,49 @@ void CSpeedPlotterImpl::setLocale(const CLocalizer& Localizer) {
 QString CSpeedPlotterImpl::title() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().plotterTitle();
+  return LocalizerInput_.data().plotterTitle();
 }
 
 QString CSpeedPlotterImpl::horizontalAxisTitle() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().horizontalAxisTitle();
+  return LocalizerInput_.data().horizontalAxisTitle();
 }
 
 QString CSpeedPlotterImpl::density1Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().density1Name();
+  return LocalizerInput_.data().density1Name();
 }
 
 QString CSpeedPlotterImpl::derivative1Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().derivative1Name();
+  return LocalizerInput_.data().derivative1Name();
 }
 
 QString CSpeedPlotterImpl::density2Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().density2Name();
+  return LocalizerInput_.data().density2Name();
 }
 
 QString CSpeedPlotterImpl::derivative2Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().derivative2Name();
+  return LocalizerInput_.data().derivative2Name();
 }
 
 QString CSpeedPlotterImpl::density3Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().density3Name();
+  return LocalizerInput_.data().density3Name();
 }
 
 QString CSpeedPlotterImpl::derivative3Name() const {
   if (!LocalizerInput_.hasData())
     return "";
-  return LocalizerInput_.data_().derivative3Name();
+  return LocalizerInput_.data().derivative3Name();
 }
 
 } // namespace NSPlotterDetail
